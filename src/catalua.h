@@ -3,7 +3,8 @@
 #define CATA_SRC_CATALUA_H
 
 #include "type_id.h"
-
+#include "mattack_common.h"
+#include "catalua_sol.h"
 #include <memory>
 
 class Item_factory;
@@ -11,6 +12,7 @@ class map;
 class time_point;
 struct tripoint;
 class world;
+class monster;
 
 namespace cata
 {
@@ -45,7 +47,20 @@ void run_on_every_x_hooks( lua_state &state );
 void run_on_mapgen_postprocess_hooks( lua_state &state, map &m, const tripoint &p,
                                       const time_point &when );
 void reg_lua_iuse_actors( lua_state &state, Item_factory &ifactory );
+void register_monattack(sol::state& lua);
 
+class lua_mattack_wrapper : public mattack_actor
+{
+private:
+    sol::protected_function lua_function;
+
+public:
+    lua_mattack_wrapper(const mattack_id& id, sol::protected_function func);
+    ~lua_mattack_wrapper() override;
+
+    bool call(monster& m) const override;
+    std::unique_ptr<mattack_actor> clone() const override;
+    void load_internal(const JsonObject& jo, const std::string& src) override;
+};
 } // namespace cata
-
 #endif // CATA_SRC_CATALUA_H

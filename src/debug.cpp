@@ -1422,6 +1422,8 @@ detail::DebugLogGuard detail::realDebugLog( DL lev, DC cl, const char *filename,
             out << "(continued from above) " << io::enum_to_string( lev ) << ": ";
         }
 #endif
+     
+        out.flush(); // Ensure it's written immediately
 
         return DebugLogGuard( out );
     }

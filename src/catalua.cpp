@@ -1,7 +1,13 @@
 #include "catalua.h"
-
+#include "effect.h"
 #include "debug.h"
-
+#include "mattack_common.h"
+#include "monstergenerator.h"
+#include "monster.h" 
+#include "type_id.h" 
+#include "mutation.h"
+#include "flag.h"
+#include "morale_types.h"
 constexpr int LUA_API_VERSION = 2;
 
 #ifndef LUA
@@ -96,7 +102,6 @@ void run_on_every_x_hooks( lua_state & ) {}
 #else // LUA
 
 #include "catalua_sol.h"
-
 #include "avatar.h"
 #include "catalua_console.h"
 #include "catalua_impl.h"
@@ -106,6 +111,7 @@ void run_on_every_x_hooks( lua_state & ) {}
 #include "filesystem.h"
 #include "fstream_utils.h"
 #include "init.h"
+#include "game.h" 
 #include "item_factory.h"
 #include "map.h"
 #include "mod_manager.h"
@@ -125,7 +131,11 @@ std::string get_lapi_version_string()
 {
     return string_format( "%d", get_lua_api_version() );
 }
-
+void register_monattack(sol::state& lua) {
+    lua.set_function("register_monattack", [](const std::string& name, sol::protected_function lua_function) {
+        MonsterGenerator::generator().register_monattack_lua(name, lua_function);
+        });
+}
 void startup_lua_test()
 {
     sol::state lua = make_lua_state();
@@ -298,6 +308,24 @@ void init_global_state_tables( lua_state &state, const std::vector<mod_id> &modl
     // iuse functions
     gt["iuse_functions"] = lua.create_table();
 
+    gt["species_id"] = [](const std::string& id) {return species_id(id);};
+    gt["bodypart_id"] = [](const std::string& id) { return bodypart_id(id); };
+    gt["trait_id"] = sol::as_function([](const std::string& id) { return trait_id(id); });
+    gt["morale_type"] = []( const std::string &id ) {
+        return morale_type( id );
+    };    
+    gt["mutation_category_id"] = [](const std::string& id) { 
+        return mutation_category_id(id); 
+    };
+    gt["tripoint"] = [](int x, int y, int z) { return tripoint(x, y, z); };
+    gt["map"] = sol::make_reference(lua, std::ref(get_map()));
+    gt["flag_id"] = [](const std::string& id) {
+        return flag_id(id);
+        };
+    gt["register_monattack"] = [](const std::string& name, sol::protected_function lua_function) {
+        MonsterGenerator::generator().register_monattack_lua(name, lua_function);
+        };
+    gt["efftype_id"] = [](const std::string& id) { return efftype_id(id); };
     // hooks
     hooks["on_game_load"] = lua.create_table();
     hooks["on_game_save"] = lua.create_table();
@@ -407,6 +435,39 @@ void run_on_every_x_hooks( lua_state &state )
         }
     }
 }
+
+
+lua_mattack_wrapper::lua_mattack_wrapper(const mattack_id& id, sol::protected_function func)
+    : mattack_actor(id), lua_function(std::move(func)) {
+}
+
+lua_mattack_wrapper::~lua_mattack_wrapper() = default;
+
+bool lua_mattack_wrapper::call(monster& m) const {
+    cata::lua_state& state = *DynamicDataLoader::get_instance().lua;
+    sol::state& lua = state.lua;
+
+    // Create proper userdata for the monster object
+    sol::object monster_obj = sol::make_object(lua, std::ref(m));
+    
+    sol::protected_function_result res = lua_function(monster_obj);
+    if (!res.valid()) {
+        sol::error err = res;
+        debugmsg("Error in Lua monster attack function: %s", err.what());
+        return false;
+    }
+
+    return res.get<bool>();
+}
+
+std::unique_ptr<mattack_actor> lua_mattack_wrapper::clone() const {
+    return std::make_unique<lua_mattack_wrapper>(*this);
+}
+
+void lua_mattack_wrapper::load_internal(const JsonObject& jo, const std::string& src) {
+    // Implement the function as needed
+}
+
 
 } // namespace cata
 

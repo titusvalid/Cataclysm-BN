@@ -22,6 +22,7 @@
 #include "bionics.h"
 #include "bodypart.h"
 #include "catalua.h"
+#include "catalua_impl.h"
 #include "cata_utility.h"
 #include "clothing_mod.h"
 #include "clzones.h"
@@ -882,7 +883,7 @@ static void load_and_finalize_packs( loading_ui &ui, const std::string &msg,
     }
 
     cata::reg_lua_iuse_actors( *loader.lua, *item_controller );
-
+    cata::register_monattack(loader.lua->lua);
     for( const mod_id &mod : available ) {
         loader.load_data_from_path( mod->path, mod.str(), ui );
         ui.proceed();
