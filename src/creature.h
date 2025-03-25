@@ -193,6 +193,10 @@ class Creature
 
         static const std::map<std::string, creature_size> size_map;
 
+        std::unordered_map<std::string, std::string> get_values() const {
+            return values;
+        }
+
         // Like disp_name, but without any "the"
         virtual std::string get_name() const = 0;
         virtual std::string disp_name( bool possessive = false,

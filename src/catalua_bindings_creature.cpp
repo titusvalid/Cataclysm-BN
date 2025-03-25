@@ -163,6 +163,13 @@ void cata::detail::reg_creature( sol::state &lua )
         SET_FX_T( remove_value, void( const std::string & ) );
         SET_FX_T( get_value, std::string( const std::string & ) const );
 
+
+        // Add function to get all values
+        luna::set_fx(ut, "get_all_values", [](const Creature& cr) -> std::unordered_map<std::string, std::string> {
+            return cr.get_values();
+            });
+
+
         SET_FX_T( get_weight, units::mass() const );
 
         SET_FX_T( has_trait, bool( const trait_id & ) const );
@@ -277,6 +284,14 @@ void cata::detail::reg_monster( sol::state &lua )
         SET_MEMB( unique_name );
 
         // Methods
+        SET_FX_T( attack_target, Creature * () ); 
+        SET_FX_N_T( pos, "get_pos_ms", const tripoint & () const );
+        SET_FX(is_monster);
+        SET_FX(is_player);
+        SET_FX_T(disable_special, void(const std::string&));
+
+
+        SET_FX_T( has_trait, bool(const trait_id&) const );
         SET_FX_T( can_upgrade, bool() const );
         SET_FX_T( hasten_upgrade, void() );
         SET_FX_T( get_upgrade_time, int() const );
@@ -330,6 +345,13 @@ void cata::detail::reg_character( sol::state &lua )
             luna::bases<Creature>(),
             luna::no_constructor
         );
+
+        // In catalua_bindings_creature.cpp, replace the current inv_dump binding with:
+        luna::set_fx(ut, "inv_dump", [](Character& ch) -> std::vector<item*> {
+            return ch.inv_dump();
+        });
+        luna::set_fx(ut, "i_rem", &Character::i_rem);
+
 
         // Members
         SET_MEMB( name );
@@ -807,6 +829,10 @@ void cata::detail::reg_player( sol::state &lua )
                 luna::bases<Character, Creature>(),
                 luna::no_constructor
             );
+
+        luna::set_fx(ut, "assign_activity", [](player& p, const activity_id& act_id, int moves, int index, int quantity, const std::string& query) {
+            p.assign_activity(act_id, moves, index, quantity, query);
+            });
     }
 }
 
@@ -821,6 +847,10 @@ void cata::detail::reg_npc( sol::state &lua )
             luna::no_constructor
         );
 
+        luna::set_fx(ut, "get_class", [](const npc& n) {
+            // Return as std::string
+            return n.myclass.str();
+            });
         // Members
         SET_MEMB( current_activity_id );
         SET_MEMB( personality );
