@@ -532,6 +532,9 @@ class monster : public Creature, public location_visitable<monster>
         }
 
         short ignoring;
+
+        bool aggro_character = true;
+
         std::optional<time_point> lastseen_turn;
 
         // Stair data.
@@ -566,8 +569,11 @@ class monster : public Creature, public location_visitable<monster>
          */
         void on_load();
 
-        const pathfinding_settings &get_pathfinding_settings() const override;
-        std::set<tripoint> get_path_avoid() const override;
+        const pathfinding_settings &get_legacy_pathfinding_settings() const override;
+        std::set<tripoint> get_legacy_path_avoid() const override;
+
+        std::pair<PathfindingSettings, RouteSettings> get_pathfinding_pair() const override;
+
         // summoned monsters via spells
         void set_summon_time( const time_duration &length );
         // handles removing the monster if the timer runs out
@@ -601,6 +607,9 @@ class monster : public Creature, public location_visitable<monster>
         void process_trigger( mon_trigger trig, int amount );
         void process_trigger( mon_trigger trig, const std::function<int()> &amount_func );
 
+        void trigger_character_aggro( const char *reason );
+        void trigger_character_aggro_chance( int chance, const char *reason );
+
         location_vector<item> corpse_components; // Hack to make bionic corpses generate CBMs on death
 
     private:
@@ -623,6 +632,7 @@ class monster : public Creature, public location_visitable<monster>
         std::vector<tripoint> path;
         std::bitset<NUM_MEFF> effect_cache;
         std::optional<time_duration> summon_time_limit = std::nullopt;
+
 
         player *find_dragged_foe();
         void nursebot_operate( player *dragged_foe );

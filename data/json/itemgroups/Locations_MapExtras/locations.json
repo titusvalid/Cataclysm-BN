@@ -1615,7 +1615,7 @@
       { "item": "kufi", "prob": 10 },
       { "item": "kittel", "prob": 10 },
       { "item": "kippah", "prob": 10 },
-      { "item": "icon", "prob": 20 }
+      { "item": "money_bundle", "prob": 20 }
     ]
   },
   {
@@ -1865,6 +1865,7 @@
       [ "helmet_football", 5 ],
       [ "mouthpiece", 5 ],
       [ "roller_blades", 20 ],
+      [ "folding_skateboard", 10 ],
       [ "rollerskates", 10 ],
       [ "rollerskates", 10 ],
       [ "roller_shoes_off", 10 ],
