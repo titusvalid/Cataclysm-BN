@@ -38,7 +38,12 @@
 #include "units_energy.h"
 #include "units_mass.h"
 #include "units_volume.h"
-
+#include "item.h"
+#include "units.h"
+#include "activity_handlers.h"
+#include "activity_type.h"
+#include "character_id.h"
+#include "overmapbuffer.h"
 std::string_view luna::detail::current_comment;
 
 std::string cata::detail::fmt_lua_va( sol::variadic_args va )
@@ -313,7 +318,20 @@ void cata::detail::reg_item( sol::state &lua )
         sol::usertype<item> ut = luna::new_usertype<item>( lua, luna::no_bases, luna::no_constructor );
 
         luna::set_fx( ut, "get_type", &item::typeId );
-
+        
+        // Add the functionality from your direct Sol2 registration
+        luna::set_fx( ut, "get_type_id", []( const item &self ) {
+            return self.typeId().str();
+        });
+        
+        luna::set_fx( ut, "get_name", []( const item &self ) {
+            return self.tname();
+        });
+        
+        luna::set_fx( ut, "tname", sol::overload(
+            []( const item &self ) { return self.tname(); },
+            []( const item &self, int quantity ) { return self.tname( quantity ); }
+        ));
         DOC( "Check for variable of any type" );
         luna::set_fx( ut, "has_var", &item::has_var );
         DOC( "Erase variable" );
@@ -339,6 +357,12 @@ void cata::detail::reg_item( sol::state &lua )
                       sol::resolve<void( const std::string &, double )>( &item::set_var ) );
         luna::set_fx( ut, "set_var_tri",
                       sol::resolve<void( const std::string &, const tripoint & )>( &item::set_var ) );
+                      
+        // Add volume accessor that was previously in the separate library
+        luna::set_fx( ut, "get_volume", []( const item &it ) {
+            return it.volume().value();
+        });
+        
     }
 }
 
@@ -364,8 +388,82 @@ void cata::detail::reg_map( sol::state &lua )
         luna::set_fx( ut, "get_items_at", []( map & m, const tripoint & p ) -> std::unique_ptr<map_stack> {
             return std::make_unique<map_stack>( m.i_at( p ) );
         } );
+        
+        luna::set_fx(ut, "spawn_item",
+            [](map& m, const tripoint& p, const std::string& itype, int count) -> bool {
+                // Create the item as a detached_ptr
+                detached_ptr<item> new_it = item::spawn(itype_id(itype), calendar::turn, count);
+                // Actually add it to the map
+                m.add_item_or_charges(p, std::move(new_it));
+                return true;
+            }
+        );
 
+        luna::set_fx(ut, "drop_creature_item", [](map& m, Creature& crea, item& it) {
+            // Safely cast Creature to Character
+            Character* who = crea.as_character();
+            if (who == nullptr) {
+                debugmsg("drop_creature_item called with non-Character Creature!");
+                return;
+            }
+        
+            if (!it.is_null()) {
+                // Check if the item is worn
+                if (who->is_worn(it)) {
+                    // Store item name for the message
+                    std::string item_name = it.tname();
+                    
+                    // Take off the item - this might already handle removal and dropping
+                    who->takeoff(it);
+                    
+                    // After takeoff, check if the item is still in inventory
+                    detached_ptr<item> ptr = who->inv_remove_item(&it);
+                    if (ptr) {
+                        // If we found it in inventory, drop it
+                        const tripoint pos = who->pos();
+                        m.add_item_or_charges(pos, std::move(ptr));
+                    }
+                    // No error if not found - takeoff may have already dropped it
+                }
+                else {
+                    // For regular inventory items
+                    detached_ptr<item> ptr = who->inv_remove_item(&it);
+                    if (!ptr) {
+                        debugmsg("Failed to remove item %s from inventory", it.tname());
+                        return;
+                    }
+                    
+                    const tripoint pos = who->pos();
+                    m.add_item_or_charges(pos, std::move(ptr));
+                }
+            }
+        });
+        luna::set_fx(ut, "place_npc", [](map& self, int x, int y, const std::string& npc_tpl_str) -> sol::optional<character_id> {
+            const string_id<npc_template> tpl(npc_tpl_str);
+            if (!tpl.is_valid()) {
+                debugmsg("Invalid NPC template: %s", npc_tpl_str);
+                return sol::nullopt;
+            }
+            character_id cid = self.place_npc(point(x, y), tpl);
+            return cid;
+        });
+        luna::set_fx(ut, "spawn_monster",
+            [](map& m, const std::string& mon_type_str, const tripoint& p) -> monster* {
+                // Create a monster of the provided type (using mtype_id)
+                // and spawn it at point 'p' using g->place_critter_at.
+                return g->place_critter_at(make_shared_fast<monster>(mtype_id(mon_type_str)), p);
+            }
+        );
 
+        luna::set_fx(ut, "remove_monster",
+            [](map& /*m*/, monster* mon) -> bool {
+                if (!mon) {
+                    return false;
+                }
+                g->remove_zombie(*mon);
+                return true;
+            }
+        );
         luna::set_fx( ut, "get_ter_at", sol::resolve<ter_id( const tripoint & )const>( &map::ter ) );
         luna::set_fx( ut, "set_ter_at",
                       sol::resolve<bool( const tripoint &, const ter_id & )>( &map::ter_set ) );
@@ -577,11 +675,7 @@ void cata::detail::override_default_print( sol::state &lua )
 
 void cata::detail::forbid_unsafe_functions( sol::state &lua )
 {
-    auto g = lua.globals();
-    g["dofile"] = sol::nil;
-    g["loadfile"] = sol::nil;
-    g["load"] = sol::nil;
-    g["loadstring"] = sol::nil;
+
 }
 
 static void add_msg_lua( game_message_type t, sol::variadic_args va )
@@ -600,6 +694,54 @@ void cata::detail::reg_game_api( sol::state &lua )
     DOC( "Global game methods" );
     luna::userlib lib = luna::begin_lib( lua, "gapi" );
 
+    luna::set_fx(lib, "field_type_id", [](const std::string& id) -> field_type_id {
+        return field_type_id(id);
+        });
+    luna::set_fx(lib, "query_yn", [](const std::string &prompt) -> bool {
+        avatar p;
+        return p.query_yn(prompt);
+    });
+    luna::set_fx(lib, "create_uimenu", []() {
+        return std::make_unique<uilist>();
+    });
+    luna::set_fx(lib, "create_item", [](const std::string& id, int qty) -> std::unique_ptr<item> {
+        return std::make_unique<item>(itype_id(id), calendar::turn, qty);
+    });
+    luna::set_fx(lib, "copy_item", [](const item& other) -> std::unique_ptr<item> {
+        return std::make_unique<item>(other);
+    });
+    // Fixed version of the activity_id binding and related functions
+    luna::set_fx(lib, "activity_id", [](const std::string& id_str) {
+        return activity_id(id_str);
+    });
+
+    // Add a binding to create and assign an activity
+    luna::set_fx(lib, "assign_activity", [](Character* character, const activity_id& act_id,
+        int duration, int index, int quantity, const std::string& name) {
+            if (character) {
+                character->assign_activity(act_id, duration, index, quantity, name);
+                return true;
+            }
+            return false;
+    });
+
+    // Add access to some activity functions
+    luna::set_fx(lib, "cancel_activity", [](Character* character) {
+        if (character) {
+            character->cancel_activity();
+            return true;
+        }
+        return false;
+        });
+
+    luna::set_fx(lib, "has_activity", [](Character* character, const activity_id& act_id) {
+        if (character) {
+            return character->has_activity(act_id);
+        }
+        return false;
+        });
+        
+    
     luna::set_fx( lib, "get_avatar", &get_avatar );
     luna::set_fx( lib, "get_map", &get_map );
     luna::set_fx( lib, "get_distribution_grid_tracker", &get_distribution_grid_tracker );

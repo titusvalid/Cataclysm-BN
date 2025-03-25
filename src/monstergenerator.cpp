@@ -33,6 +33,7 @@
 #include "string_id.h"
 #include "translations.h"
 #include "units.h"
+#include "catalua.h"
 
 namespace io
 {
@@ -1085,6 +1086,10 @@ class mattack_hardcoded_wrapper : public mattack_actor
 mtype_special_attack::mtype_special_attack( const mattack_id &id, const mon_action_attack f )
     : mtype_special_attack( std::make_unique<mattack_hardcoded_wrapper>( id, f ) ) {}
 
+void MonsterGenerator::register_monattack_lua(const std::string& name, sol::protected_function lua_function)
+{
+    add_attack(std::make_unique<cata::lua_mattack_wrapper>(name, std::move(lua_function)));
+}
 void MonsterGenerator::add_hardcoded_attack( const std::string &type, const mon_action_attack f )
 {
     add_attack( mtype_special_attack( type, f ) );

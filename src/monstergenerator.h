@@ -15,7 +15,8 @@
 #include "pimpl.h"
 #include "translations.h"
 #include "type_id.h"
-
+#include "catalua_sol.h"
+#include "catalua.h"
 class Creature;
 class JsonObject;
 class monster;
@@ -63,6 +64,7 @@ class MonsterGenerator
         // clear monster & species definitions
         void reset();
 
+        void register_monattack_lua(const std::string& name, sol::protected_function lua_function);
         // JSON loading functions
         void load_monster( const JsonObject &jo, const std::string &src );
         void load_species( const JsonObject &jo, const std::string &src );

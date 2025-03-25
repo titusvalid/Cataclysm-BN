@@ -911,6 +911,8 @@ void npc::talk_to_u( bool radio_contact )
         if( next.id == "TALK_DONE" || d.topic_stack.empty() ) {
             d.beta->say( _( "Bye." ) );
             d.done = true;
+            get_avatar().assign_activity(activity_id("ACT_WAIT"), 1);
+
         } else if( next.id != "TALK_NONE" ) {
             d.add_topic( next );
         }
