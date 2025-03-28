@@ -44,6 +44,9 @@
 #include "activity_type.h"
 #include "character_id.h"
 #include "overmapbuffer.h"
+#include "trap.h"
+
+
 std::string_view luna::detail::current_comment;
 
 std::string cata::detail::fmt_lua_va( sol::variadic_args va )
@@ -464,6 +467,21 @@ void cata::detail::reg_map( sol::state &lua )
                 return true;
             }
         );
+        luna::set_fx(ut, "tr_at", [](const map& m, const tripoint& pos) {
+            const trap& tr = m.tr_at(pos);
+            return std::make_tuple(!tr.is_null(), tr.id.str());
+            });
+        luna::set_fx(ut, "trap_set", [](map& m, const tripoint& pos, const std::string& trap_str) {
+            // Convert the string to a trap_str_id
+            const trap_str_id tid(trap_str);
+            if (!tid.is_valid()) {
+                debugmsg("trap_set: invalid trap string id: %s", trap_str.c_str());
+                return;
+            }
+            m.trap_set(pos, tid.id());
+            });
+
+
         luna::set_fx( ut, "get_ter_at", sol::resolve<ter_id( const tripoint & )const>( &map::ter ) );
         luna::set_fx( ut, "set_ter_at",
                       sol::resolve<bool( const tripoint &, const ter_id & )>( &map::ter_set ) );
