@@ -452,9 +452,11 @@ void cata::detail::reg_map( sol::state &lua )
         });
         luna::set_fx(ut, "spawn_monster",
             [](map& m, const std::string& mon_type_str, const tripoint& p) -> monster* {
-                // Create a monster of the provided type (using mtype_id)
-                // and spawn it at point 'p' using g->place_critter_at.
-                return g->place_critter_at(make_shared_fast<monster>(mtype_id(mon_type_str)), p);
+                monster* mon_ptr = g->place_critter_at(make_shared_fast<monster>(mtype_id(mon_type_str)), p);
+                if(!mon_ptr) {
+                    debugmsg("spawn_monster failed: Can't place '%s' at (%d, %d, %d).", mon_type_str.c_str(), p.x, p.y, p.z);
+                }
+                return mon_ptr;
             }
         );
 
@@ -495,6 +497,12 @@ void cata::detail::reg_map( sol::state &lua )
         const field_type_id & fid ) -> bool {
             return !!m.field_at( p ).find_field( fid );
         } );
+        luna::set_fx( ut, "is_passable",
+            []( const map &m, const tripoint &p ) -> bool {
+                return m.passable( p );
+            }
+        );
+        
         luna::set_fx( ut, "get_field_int_at", &map::get_field_intensity );
         luna::set_fx( ut, "get_field_age_at", &map::get_field_age );
         luna::set_fx( ut, "mod_field_int_at", &map::mod_field_intensity );
