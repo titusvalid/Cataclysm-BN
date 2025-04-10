@@ -419,13 +419,6 @@ void cata::detail::reg_map( sol::state &lua )
                     // Take off the item - this might already handle removal and dropping
                     who->takeoff(it);
                     
-                    // After takeoff, check if the item is still in inventory
-                    detached_ptr<item> ptr = who->inv_remove_item(&it);
-                    if (ptr) {
-                        // If we found it in inventory, drop it
-                        const tripoint pos = who->pos();
-                        m.add_item_or_charges(pos, std::move(ptr));
-                    }
                     // No error if not found - takeoff may have already dropped it
                 }
                 else {

@@ -651,6 +651,13 @@ void Character::melee_attack( Creature &t, bool allow_special, const matec_id *f
                         ( 0.75f + strbonus );
     mod_stamina( std::min( -50, mod_sta ) );
     add_msg( m_debug, "Stamina burn: %d", std::min( -50, mod_sta ) );
+
+    // Apply action cost for active bio_hydraulics
+    const bionic_id bio_hydraulics( "bio_hydraulics" );
+    if( has_active_bionic( bio_hydraulics ) ) {
+        mod_power_level( -bio_hydraulics->power_trigger * 200.0f );
+    }
+
     mod_moves( -move_cost );
     // trigger martial arts on-attack effects
     martial_arts_data->ma_onattack_effects( *this );

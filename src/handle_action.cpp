@@ -1744,6 +1744,81 @@ bool game::handle_action()
 
     // actions allowed only while alive
     if( !u.is_dead_state() ) {
+        // Apply action cost for active bio_hydraulics, excluding movement, view shifts, and meta actions
+        const bionic_id bio_hydraulics( "bio_hydraulics" );
+        if( u.has_active_bionic( bio_hydraulics ) ) {
+            bool is_excluded_action = false;
+            switch( act ) {
+                // Movement actions (handled in on_move_effects)
+                case ACTION_MOVE_FORTH:
+                case ACTION_MOVE_FORTH_RIGHT:
+                case ACTION_MOVE_RIGHT:
+                case ACTION_MOVE_BACK_RIGHT:
+                case ACTION_MOVE_BACK:
+                case ACTION_MOVE_BACK_LEFT:
+                case ACTION_MOVE_LEFT:
+                case ACTION_MOVE_FORTH_LEFT:
+                case ACTION_MOVE_DOWN:
+                case ACTION_MOVE_UP:
+                // Movement mode toggles/menus
+                case ACTION_CYCLE_MOVE:
+                case ACTION_RESET_MOVE:
+                case ACTION_TOGGLE_RUN:
+                case ACTION_TOGGLE_CROUCH:
+                case ACTION_OPEN_MOVEMENT:
+                // View / Meta actions (handled in the block above or don't cost action points/power)
+                case ACTION_TOGGLE_MAP_MEMORY:
+                case ACTION_CENTER:
+                case ACTION_SHIFT_N:
+                case ACTION_SHIFT_NE:
+                case ACTION_SHIFT_E:
+                case ACTION_SHIFT_SE:
+                case ACTION_SHIFT_S:
+                case ACTION_SHIFT_SW:
+                case ACTION_SHIFT_W:
+                case ACTION_SHIFT_NW:
+                case ACTION_LOOK:
+                // Menus / Pause / Timeout / Null
+                case ACTION_KEYBINDINGS:
+                case ACTION_ACTIONMENU:
+                case ACTION_MAIN_MENU:
+                case ACTION_PAUSE:
+                case ACTION_TIMEOUT:
+                case ACTION_NULL:
+                case NUM_ACTIONS:
+                    is_excluded_action = true;
+                    break;
+                default:
+                    // Action is not excluded
+                    break;
+            }
+            if( !is_excluded_action ) {
+                // Determine cost multiplier based on action type
+                float cost_multiplier = 1.0f;
+                switch( act ) {
+                    // Melee combat actions - 100x multiplier
+                    case ACTION_SMASH:
+                    case ACTION_AUTOATTACK:
+                    case ACTION_THROW:
+                    case ACTION_USE_WIELDED:
+                        cost_multiplier = 200.0f;
+                        break;
+                    // Other physical actions - 10x multiplier
+                    case ACTION_FIRE: // Includes ranged and reach attacks
+                    case ACTION_BUTCHER:
+                    case ACTION_CONSTRUCT:
+                    case ACTION_DISASSEMBLE:
+                        cost_multiplier = 10.0f;
+                        break;
+                    default:
+                        // Standard action cost
+                        break;
+                }
+                // Apply power cost for the action
+                u.mod_power_level( -bio_hydraulics->power_trigger * cost_multiplier );
+            }
+        }
+
         switch( act ) {
             case ACTION_NULL:
             case NUM_ACTIONS:

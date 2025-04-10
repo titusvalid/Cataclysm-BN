@@ -9794,6 +9794,14 @@ void game::on_move_effects()
                 u.mod_power_level( -bio_jointservo->power_trigger );
             }
         }
+        const bionic_id bio_hydraulics( "bio_hydraulics" );
+        if( u.has_active_bionic( bio_hydraulics ) ) {
+            if( u.movement_mode_is( CMM_RUN ) ) {
+                u.mod_power_level( -bio_hydraulics->power_trigger * 1.6 );
+            } else {
+                u.mod_power_level( -bio_hydraulics->power_trigger );
+            }
+        }
     }
 
     if( u.movement_mode_is( CMM_RUN ) ) {
