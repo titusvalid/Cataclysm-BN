@@ -1,4 +1,6 @@
 # Cataclysm: Bright Nights 
 
 V7.0
-Just with Lua hooks added, no other differences.
+Lua hooks added, 
+Hydraulics CBM triggering automatically based on work, so no need to toggle on and off every turn,
+NPC followers granted additional commands and tighter more predictable, controllable behaviour.
