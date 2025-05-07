@@ -1,4 +1,6 @@
 #include "npc.h" // IWYU pragma: associated
+#include "debug.h"
+#define dbg(x) DebugLogFL((x),DC::Game)
 
 #include <algorithm>
 #include <cfloat>
@@ -356,6 +358,9 @@ static bool too_close( const tripoint &critter_pos, const tripoint &ally_pos, co
 
 void npc::assess_danger()
 {
+    // Calculate dynamic bravery based on current stats
+    personality.bravery = ( str_cur + dex_cur + int_cur + per_cur ) / 4;
+
     float assessment = 0.0f;
     float highest_priority = 1.0f;
     int def_radius = rules.has_flag( ally_rule::follow_close ) ? follow_distance() : 6;
@@ -383,6 +388,8 @@ void npc::assess_danger()
             def_radius = max_range;
         } else if( no_fighting ) {
             def_radius = 1;
+        } else if( rules.engagement == combat_engagement::GUARD_ME ) {
+            def_radius = 2; // Keep NPC close when guarding player
         }
     }
 
@@ -408,6 +415,8 @@ void npc::assess_danger()
                 return dist <= max_range;
             case combat_engagement::FREE_FIRE:
                 return dist <= max_range;
+            case combat_engagement::GUARD_ME: // Allow if enemy is near player OR adjacent to NPC
+                return rl_dist( c.pos(), player_character.pos() ) <= 2 || dist <= 1;
             case combat_engagement::ALL:
                 return true;
         }
@@ -424,18 +433,23 @@ void npc::assess_danger()
     const field_type_id fd_fire = ::fd_fire;
     // first, check if we're about to be consumed by fire
     // `map::get_field` uses `field_cache`, so in general case (no fire) it provides an early exit
+    // Remove fire threat calculation and fire_bad effect logic
+    /*
     for( const tripoint &pt : here.points_in_radius( pos(), 6 ) ) {
         if( pt == pos() || !here.get_field( pt, fd_fire ) || here.has_flag( TFLAG_FIRE_CONTAINER,  pt ) ) {
             continue;
         }
         const int dist = rl_dist( pos(), pt );
-        cur_threat_map[direction_from( pos(), pt )] += 2.0f * ( NPC_DANGER_MAX - dist );
+        // Reduce the threat multiplier for nearby fire to make NPCs less overly cautious
+        // Original: 2.0f * ( NPC_DANGER_MAX - dist );
+        cur_threat_map[direction_from( pos(), pt )] += 0.1f * ( NPC_DANGER_MAX - dist ); 
         if( dist < 3 && !has_effect( effect_npc_fire_bad ) ) {
             warn_about( "fire_bad", 1_minutes );
             add_effect( effect_npc_fire_bad, 5_turns );
             path.clear();
         }
     }
+    */
 
     // find our Character friends and enemies
     std::vector<weak_ptr_fast<Creature>> hostile_guys;
@@ -517,6 +531,11 @@ void npc::assess_danger()
         // critter danger is always at least NPC_DANGER_VERY_LOW
         float priority = std::max( critter_danger - 2.0f * ( scaled_distance - 1.0f ),
                                    is_too_close ? critter_danger : 0.0f );
+        // Boost priority if GUARD_ME rule is active and enemy is close to player OR adjacent to NPC
+        if( rules.engagement == combat_engagement::GUARD_ME && 
+            (rl_dist( critter.pos(), player_character.pos() ) <= 2 || dist <= 1) ) {
+            priority = NPC_DANGER_MAX + critter_danger; // Very high priority
+        }
         cur_threat_map[direction_from( pos(), critter.pos() )] += priority;
         if( priority > highest_priority ) {
             highest_priority = priority;
@@ -560,6 +579,11 @@ void npc::assess_danger()
             float priority = std::max( foe_threat - 2.0f * ( scaled_distance - 1 ),
                                        is_too_close ? std::max( foe_threat, NPC_DANGER_VERY_LOW ) :
                                        0.0f );
+            // Boost priority if GUARD_ME rule is active and enemy is close to player OR adjacent to NPC
+            if( rules.engagement == combat_engagement::GUARD_ME && 
+                (rl_dist( foe.pos(), player_character.pos() ) <= 2 || dist <= 1) ) {
+                priority = NPC_DANGER_MAX + foe_threat; // Very high priority
+            }
             cur_threat_map[direction_from( pos(), foe.pos() )] += priority;
             if( priority > highest_priority ) {
                 warn_about( warning, 1_minutes );
@@ -700,6 +724,8 @@ void npc::regen_ai_cache()
 
 void npc::move()
 {
+    dbg( DL::Info ) << string_format( "%s entering npc::move() at (%d,%d,%d)", name, pos().x, pos().y, pos().z );
+
     // don't just return from this function without doing something
     // that will eventually subtract moves, or change the NPC to a different type of action.
     // because this will result in an infinite loop
@@ -708,6 +734,28 @@ void npc::move()
     } else if( attitude == NPCATT_FLEE_TEMP && !has_effect( effect_npc_flee_player ) ) {
         set_attitude( NPCATT_NULL );
     }
+
+    // --> Add logging for fire avoidance check
+    bool sees_danger_here = sees_dangerous_field( pos() );
+    // Remove fire_bad effect check from immediate escape logic
+    // bool has_fire_effect = has_effect( effect_npc_fire_bad );
+    if( !in_vehicle && sees_danger_here /* || has_fire_effect */ ) {
+        dbg( DL::Info ) << string_format( "%s sees danger field at pos: %d", name, static_cast<int>(sees_danger_here) );
+        // Path clearing should only happen if actually standing in danger
+        //if( sees_danger_here ) {
+        path.clear();
+        dbg( DL::Info ) << string_format( "%s cleared path due to standing in danger field at pos.", name );
+        //}
+        const tripoint escape_dir = good_escape_direction( sees_danger_here );
+        dbg( DL::Info ) << string_format( "%s calculated escape direction: (%d,%d,%d) from (%d,%d,%d)", name, escape_dir.x, escape_dir.y, escape_dir.z, pos().x, pos().y, pos().z );
+        if( escape_dir != pos() ) {
+            dbg( DL::Info ) << string_format( "%s attempting to move to escape direction (%d,%d,%d)", name, escape_dir.x, escape_dir.y, escape_dir.z );
+            move_to( escape_dir );
+            return;
+        }
+        dbg( DL::Info ) << string_format( "%s escape direction is same as current pos, not escaping.", name );
+    }
+
     regen_ai_cache();
     adjust_power_cbms();
     // NPCs under operation should just stay still
@@ -716,17 +764,18 @@ void npc::move()
         return;
     }
 
+    map &here = get_map();
+    Character &player_character = get_player_character();
     npc_action action = npc_undecided;
+    Creature *target = current_target();
 
     static const std::string no_target_str = "none";
-    const Creature *target = current_target();
-    const std::string &target_name = target != nullptr ? target->disp_name() : no_target_str;
+    const std::string target_name = target != nullptr ? target->disp_name() : no_target_str;
     add_msg( m_debug, "NPC %s: target = %s, danger = %.1f, range = %d",
              name, target_name, ai_cache.danger,
              primary_weapon().is_gun() ? confident_shoot_range( primary_weapon(),
                      ranged::recoil_total( *this ) ) : primary_weapon().reach_range( *this ) );
 
-    Character &player_character = get_player_character();
     //faction opinion determines if it should consider you hostile
     if( !is_enemy() && guaranteed_hostile() && sees( player_character ) ) {
         if( is_player_ally() ) {
@@ -740,41 +789,33 @@ void npc::move()
         }
     }
 
-    /* This bypasses the logic to determine the npc action, but this all needs to be rewritten
-     * anyway.
-     * NPC won't avoid dangerous terrain while accompanying the player inside a vehicle to keep
-     * them from inadvertently getting themselves run over and/or cause vehicle related errors.
-     * NPCs flee from uncontained fires within 3 tiles
-     */
-    if( !in_vehicle && ( sees_dangerous_field( pos() ) || has_effect( effect_npc_fire_bad ) ) ) {
-        if( sees_dangerous_field( pos() ) ) {
-            path.clear();
+    regen_ai_cache();
+    assess_danger();
+    adjust_power_cbms();
+
+    // Check if we should flee based on danger vs bravery
+    bool should_flee = ai_cache.danger_assessment > static_cast<float>( personality.bravery );
+    bool wanted_to_flee = should_flee; // Track initial intention
+    dbg( DL::Info ) << string_format( "%s assessing flee: danger=%.1f, bravery=%d, should_flee=%d", 
+                                      name, ai_cache.danger_assessment, personality.bravery, static_cast<int>(should_flee) );
+
+    // Prevent fleeing if holding position, regardless of current location
+    if( rules.has_flag( ally_rule::hold_position ) ) {
+        if( should_flee ) {
+            dbg( DL::Info ) << string_format( "%s wants to flee (danger %.1f > bravery %d) but is holding position order.", name, ai_cache.danger_assessment, personality.bravery );
         }
-        const tripoint escape_dir = good_escape_direction( sees_dangerous_field( pos() ) );
-        if( escape_dir != pos() ) {
-            move_to( escape_dir );
-            return;
-        }
+        should_flee = false; // Override fleeing decision if hold_position is set
     }
 
-    // TODO: Place player-aiding actions here, with a weight
-
-    /* NPCs are fairly suicidal so at this point we will do a quick check to see if
-     * something nasty is going to happen.
-     */
-
-    if( is_enemy() && vehicle_danger( avoidance_vehicles_radius ) > 0 ) {
-        // TODO: Think about how this actually needs to work, for now assume flee from player
-        ai_cache.target = g->shared_from( player_character );
-    }
-
-    map &here = get_map();
-    if( !ai_cache.dangerous_explosives.empty() ) {
-        action = npc_escape_explosion;
-    } else if( target == &player_character && attitude == NPCATT_FLEE_TEMP ) {
+    if( should_flee ) {
+        dbg( DL::Info ) << string_format( "%s decided to flee (danger %.1f > bravery %d)", name, ai_cache.danger_assessment, personality.bravery );
+        say( "<run_away>" ); // Add say call here
         action = method_of_fleeing();
-    } else if( has_effect( effect_npc_run_away ) ) {
-        action = method_of_fleeing();
+        dbg( DL::Info ) << string_format( "%s method_of_fleeing() result: %s", name, npc_action_name( action ) );
+    } else if( wanted_to_flee ) {
+        // Log even if fleeing was overridden
+        npc_action flee_action_considered = method_of_fleeing();
+        dbg( DL::Info ) << string_format( "%s considered fleeing (action: %s) but was overridden by hold_position.", name, npc_action_name( flee_action_considered ) );
     } else if( has_effect( effect_asthma ) && ( has_charges( itype_inhaler, 1 ) ||
                has_charges( itype_oxygen_tank, 1 ) ||
                has_charges( itype_smoxygen_tank, 1 ) ) ) {
@@ -829,9 +870,18 @@ void npc::move()
         }
     }
 
+    // --> Log before goto_to_this_pos check
+    dbg( DL::Info ) << string_format( "%s BEFORE goto_check: action=%s, is_walking_with=%d, has_goto_target=%d", 
+                                        name, npc_action_name( action ), 
+                                        static_cast<int>( is_walking_with() ),
+                                        static_cast<int>( goto_to_this_pos.has_value() ) );
+
     if( action == npc_undecided && is_walking_with() && goto_to_this_pos ) {
         action = npc_goto_to_this_pos;
     }
+
+    // --> Log after goto_to_this_pos check
+    dbg( DL::Info ) << string_format( "%s AFTER goto_check: action=%s", name, npc_action_name( action ) );
 
     // check if in vehicle before doing any other follow activities
     if( action == npc_undecided && is_walking_with() && player_character.in_vehicle && !in_vehicle ) {
@@ -840,6 +890,8 @@ void npc::move()
 
     if( action == npc_undecided && is_walking_with() && rules.has_flag( ally_rule::follow_close ) &&
         rl_dist( pos(), player_character.pos() ) > follow_distance() ) {
+        dbg( DL::Info ) << string_format( "%s deciding npc_follow_player: dist=%d > follow_distance=%d", 
+                                          name, rl_dist( pos(), player_character.pos() ), follow_distance() );
         action = npc_follow_player;
     }
 
@@ -876,6 +928,7 @@ void npc::move()
         }
     }
     if( action == npc_undecided ) {
+        dbg( DL::Info ) << string_format( "%s entering final undecided block", name );
         // an interrupted activity can cause this situation. stops allied NPCs zooming off
         // like random NPCs
         if( attitude == NPCATT_ACTIVITY && !activity ) {
@@ -937,20 +990,315 @@ void npc::move()
         action = method_of_attack();
     }
 
-    add_msg( m_debug, "%s chose action %s.", name, npc_action_name( action ) );
+    dbg( DL::Info ) << string_format( "%s decided action: %s (Danger: %.1f)", name, npc_action_name( action ), ai_cache.danger );
+
+    bool is_holding_at_destination = rules.has_flag( ally_rule::hold_position ) &&
+                                     goto_to_this_pos.has_value() &&
+                                     get_map().getglobal( pos() ) == goto_to_this_pos.value();
+
+    // Explicit check: If holding position at destination, prioritize melee against adjacent hostiles
+    if( is_holding_at_destination ) {
+        Creature *adjacent_hostile = nullptr;
+        for( const tripoint &p : get_map().points_in_radius( pos(), 1 ) ) {
+            if( p == pos() ) {
+                continue;
+            }
+            Creature *critter = g->critter_at( p );
+            if( critter != nullptr && attitude_to( *critter ) == Attitude::A_HOSTILE ) {
+                adjacent_hostile = critter;
+                break;
+            }
+        }
+
+        if( adjacent_hostile != nullptr ) {
+            dbg( DL::Info ) << string_format( "%s AT DESTINATION, hostile %s adjacent. Overriding action with Melee.", name, adjacent_hostile->disp_name() );
+            action = npc_melee;
+            // Ensure the adjacent hostile is the target for execute_action
+            ai_cache.target = g->shared_from( *adjacent_hostile ); 
+        }
+    }
+
+    // Add check here: If holding position AT the destination, override movement actions with pause.
+    if( is_holding_at_destination ) {
+        bool is_movement_action = false;
+        switch( action ) {
+            // List known non-movement actions allowed even when holding
+            case npc_pause:
+            case npc_reload:
+            case npc_sleep:
+            case npc_heal:
+            case npc_use_painkiller:
+            case npc_drop_items:
+            case npc_heal_player:
+            case npc_talk_to_player:
+            case npc_mug_player:
+            case npc_aim:
+            case npc_shoot:
+            case npc_reach_attack:
+            case npc_noop: // Explicitly allow noop
+            case npc_player_activity: // Allow ongoing activities
+                break; // Not a movement action
+            // Melee needs specific check (now handled by adjacent hostile check above, 
+            // but keep this logic to prevent moving for non-adjacent melee)
+            case npc_melee: {
+                Creature *cur = current_target();
+                // Only consider it a movement action if target exists and is NOT adjacent
+                if( cur != nullptr && rl_dist( pos(), cur->pos() ) > 1 ) {
+                    is_movement_action = true; // Melee requires moving if target not adjacent
+                    dbg( DL::Info ) << string_format( "%s hold check: melee target %s is not adjacent, marking as movement.", name, cur->disp_name() );
+                } else {
+                    dbg( DL::Info ) << string_format( "%s hold check: melee target is adjacent or null, allowing.", name );
+                }
+                break;
+            }
+            // All others are considered movement actions in this context
+            default:
+                is_movement_action = true;
+                break;
+        }
+
+        if( is_movement_action ) {
+            dbg( DL::Info ) << string_format( "%s AT DESTINATION, holding position, overriding decided movement action '%s' with pause.", name, npc_action_name( action ) );
+            action = npc_pause;
+        } else {
+            dbg( DL::Info ) << string_format( "%s AT DESTINATION, holding position, decided action '%s' is non-movement, allowing.", name, npc_action_name( action ) );
+        }
+    }
+
+    dbg( DL::Info ) << string_format( "%s executing final action: %s", name, npc_action_name( action ) );
     execute_action( action );
+
+    // --> Add logic for Stay Behind/In Front missions
+    // Skip mission movement if holding position
+    if( !rules.has_flag( ally_rule::hold_position ) && 
+        ( mission == NPC_MISSION_STAY_BEHIND || mission == NPC_MISSION_STAY_IN_FRONT ) ) {
+        dbg( DL::Info ) << string_format( "%s handling mission: %s", name, ( mission == NPC_MISSION_STAY_BEHIND ? "STAY_BEHIND" : "STAY_IN_FRONT" ) );
+        Character &player = get_player_character();
+        map &here = get_map();
+        bool prioritize_melee = false;
+
+        // Check for adjacent hostiles ONLY for STAY_IN_FRONT
+        if (mission == NPC_MISSION_STAY_IN_FRONT) {
+            for( const tripoint &p : here.points_in_radius( pos(), 1 ) ) {
+                if( p == pos() ) {
+                    continue;
+                }
+                Creature *critter = g->critter_at( p );
+                if (critter != nullptr && attitude_to(*critter) == Attitude::A_HOSTILE) {
+                    ai_cache.target = g->shared_from( *critter ); // Ensure we target the adjacent hostile
+                    prioritize_melee = true;
+                    dbg( DL::Info ) << string_format( "%s (IN FRONT) found adjacent hostile %s at (%d,%d,%d). Prioritizing melee.", name, critter->disp_name(), p.x, p.y, p.z );
+                    break; // Found one, no need to check further
+                }
+            }
+        }
+
+        // Store previous player position and last movement direction
+        static std::map<int, std::pair<tripoint, point>> last_player_state_map; // Map NPC ID to {last player pos, last move dir}
+        tripoint current_player_pos = player.pos();
+        tripoint prev_player_pos;
+        point last_move_dir = point_zero;
+
+        auto it = last_player_state_map.find( getID().get_value() );
+        if (it == last_player_state_map.end() || it->second.first == tripoint_min ) {
+            // Initialize if not found or invalid
+            prev_player_pos = current_player_pos;
+            last_player_state_map[getID().get_value()] = {current_player_pos, point_zero};
+        } else {
+            prev_player_pos = it->second.first;
+            last_move_dir = it->second.second; // Retrieve last known move direction
+            // Update stored position only if player actually moved
+            if (prev_player_pos != current_player_pos) {
+                 // Will update direction later if movement occurred
+                 last_player_state_map[getID().get_value()].first = current_player_pos;
+            }
+        }
+
+        // Calculate current movement direction based on position change
+        point current_move_dir = point_zero;
+        if (current_player_pos != prev_player_pos) {
+            current_move_dir = (current_player_pos - prev_player_pos).xy();
+            // Normalize (ensure it's just one step direction)
+            if (current_move_dir.x != 0) current_move_dir.x = (current_move_dir.x > 0) ? 1 : -1;
+            if (current_move_dir.y != 0) current_move_dir.y = (current_move_dir.y > 0) ? 1 : -1;
+            // Prioritize cardinal directions if diagonal (optional, but might feel better)
+            if (current_move_dir.x != 0 && current_move_dir.y != 0) {
+                 if (std::abs(current_player_pos.x - prev_player_pos.x) >= std::abs(current_player_pos.y - prev_player_pos.y)) {
+                     current_move_dir.y = 0;
+                 } else {
+                     current_move_dir.x = 0;
+                 }
+            }
+            // Update the stored last move direction
+            last_move_dir = current_move_dir;
+            last_player_state_map[getID().get_value()].second = last_move_dir;
+        } else {
+             // Player didn't move, use the stored last_move_dir.
+             current_move_dir = last_move_dir;
+             // Final fallback if player never moved: use basic facing.
+             if (current_move_dir == point_zero) {
+                 if (player.facing == FD_LEFT) current_move_dir = point_west;
+                 else if (player.facing == FD_RIGHT) current_move_dir = point_east;
+                 // else keep point_zero, NPC will stay put relative to player? Or maybe default behind?
+                 // Defaulting to behind (south) if facing is unknown and player hasn't moved.
+                 else current_move_dir = point_south; 
+             }
+        }
+
+        // Calculate target position based on final movement direction
+        point offset = point_zero;
+        tripoint target_pos; // Declare target_pos outside the blocks
+
+        if( mission == NPC_MISSION_STAY_BEHIND ) {
+            offset = -current_move_dir; // Opposite direction of player movement/facing
+            target_pos = current_player_pos + offset; // One tile behind
+            dbg( DL::Info ) << string_format( "%s (BEHIND): Player at (%d,%d,%d), Prev (%d,%d,%d), MoveDir (%d,%d), Target: (%d,%d,%d)", name,
+                                          current_player_pos.x, current_player_pos.y, current_player_pos.z,
+                                          prev_player_pos.x, prev_player_pos.y, prev_player_pos.z,
+                                          current_move_dir.x, current_move_dir.y,
+                                          target_pos.x, target_pos.y, target_pos.z );
+        } else { // NPC_MISSION_STAY_IN_FRONT
+            offset = current_move_dir; // Same direction as player movement/facing
+            target_pos = current_player_pos + offset + offset + offset; // Target THREE tiles in front
+             dbg( DL::Info ) << string_format( "%s (IN FRONT): Player at (%d,%d,%d), Prev (%d,%d,%d), MoveDir (%d,%d), Target: (%d,%d,%d)", name,
+                                          current_player_pos.x, current_player_pos.y, current_player_pos.z,
+                                          prev_player_pos.x, prev_player_pos.y, prev_player_pos.z,
+                                          current_move_dir.x, current_move_dir.y,
+                                          target_pos.x, target_pos.y, target_pos.z );
+        }
+
+        // Ensure target Z-level matches player's Z-level
+        target_pos.z = current_player_pos.z;
+
+        if (prioritize_melee) {
+            dbg( DL::Info ) << string_format( "%s (IN FRONT) overriding movement to melee adjacent hostile %s.", name, current_target() ? current_target()->disp_name() : "UNKNOWN" );
+            action = npc_melee;
+            // Fall through to execute_action below
+        } else {
+            // Original movement/pausing logic for STAY_BEHIND/STAY_IN_FRONT
+            const int dist_to_target = rl_dist( pos(), target_pos );
+
+            // Keep NPC walking unless very close or target is impassable. Run if further away.
+            character_movemode next_mode = character_movemode::CMM_WALK;
+
+            if( dist_to_target <= 1 || here.impassable( target_pos ) ) {
+                 next_mode = character_movemode::CMM_WALK; // Walk (or pause) when close/blocked
+                 if ( pos() == target_pos ){
+                      dbg( DL::Info ) << string_format( "%s is at target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                     move_pause();
+                 } else if (here.impassable(target_pos)) {
+                     dbg( DL::Info ) << string_format( "%s target relative position (%d,%d,%d) is impassable, pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                     move_pause(); // Target impassable, just wait
+                 } else {
+                     // Close but not at target, try to walk there if possible
+                     if ( update_path( target_pos ) ) {
+                         set_movement_mode( next_mode );
+                         dbg( DL::Info ) << string_format( "%s walking towards close target relative position (%d,%d,%d).", name, target_pos.x, target_pos.y, target_pos.z );
+                         move_to_next();
+                     } else {
+                         dbg( DL::Info ) << string_format( "%s failed to find path to close target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                         move_pause(); // Can't path, just wait
+                     }
+                 }
+            } else {
+                // Target is further than 1 tile and potentially reachable
+                if( update_path( target_pos ) ) {
+                     // Always run if distance > 1 and path is found
+                     set_movement_mode( character_movemode::CMM_RUN );
+                     dbg( DL::Info ) << string_format( "%s running towards target relative position (%d,%d,%d).", name, target_pos.x, target_pos.y, target_pos.z );
+                     // Reduce move cost by 50% when running for this mission
+                     int moves_before_run = moves;
+                     move_to_next();
+                     int moves_consumed = moves_before_run - moves;
+                     moves += moves_consumed / 2; // Add back half the cost
+                     dbg( DL::Info ) << string_format( "%s run cost reduced: consumed=%d, added_back=%d, final_moves=%d", name, moves_consumed, moves_consumed / 2, moves);
+                } else {
+                     // Pathing failed, default to walking (or rather, pausing since can't path)
+                     set_movement_mode( character_movemode::CMM_WALK ); // Default to Walk if pathing failed
+                     dbg( DL::Info ) << string_format( "%s failed to find path to target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                     move_pause(); // Can't path, just wait
+                }
+            }
+            return; // Handled movement for this mission state
+        }
+    }
+    // <-- End logic for Stay Behind/In Front missions
+
+    regen_ai_cache();
+    adjust_power_cbms();
 }
 
 void npc::execute_action( npc_action action )
 {
+    // Check if we are holding position and already at the destination.
+    bool is_holding_at_destination = rules.has_flag( ally_rule::hold_position ) &&
+                                     goto_to_this_pos.has_value() &&
+                                     get_map().getglobal( pos() ) == goto_to_this_pos.value();
+
+    if( is_holding_at_destination ) {
+        dbg( DL::Info ) << string_format( "%s is at hold position (%d,%d,%d). Checking action '%s'.", name, pos().x, pos().y, pos().z, npc_action_name( action ) );
+        bool action_allowed = false;
+        switch( action ) {
+            // Actions that are clearly non-movement
+            case npc_pause:
+            case npc_reload:
+            case npc_sleep:
+            case npc_heal:
+            case npc_use_painkiller:
+            case npc_drop_items:
+            case npc_heal_player:
+            case npc_talk_to_player:
+            case npc_mug_player:
+            case npc_aim:
+                action_allowed = true;
+                break;
+            // Ranged/Reach attacks don't move the NPC
+            case npc_shoot:
+            case npc_reach_attack:
+                action_allowed = true;
+                break;
+            // Melee is allowed ONLY if the target is adjacent
+            case npc_melee: {
+                Creature *cur = current_target();
+                if( cur != nullptr && rl_dist( pos(), cur->pos() ) <= 1 ) {
+                    dbg( DL::Info ) << string_format( "%s allowing adjacent melee while holding position.", name );
+                    action_allowed = true;
+                } else {
+                    dbg( DL::Info ) << string_format( "%s blocking non-adjacent melee while holding position.", name );
+                }
+                break;
+            }
+            // All other actions imply movement away from the hold spot
+            default:
+                break; // action_allowed remains false
+        }
+
+        if( !action_allowed ) {
+            dbg( DL::Info ) << string_format( "%s overriding action '%s' with pause due to holding position.", name, npc_action_name( action ) );
+            action = npc_pause; // Force pause if action wasn't explicitly allowed
+        }
+    }
+
+    dbg( DL::Info ) << string_format( "%s executing final action: %s", name, npc_action_name( action ) );
     int oldmoves = moves;
     tripoint tar = pos();
     Creature *cur = current_target();
+
+    // Log details when executing npc_flee
     if( action == npc_flee ) {
+        dbg( DL::Info ) << string_format( "%s attempting to execute npc_flee. Current pos: (%d,%d,%d)", name, pos().x, pos().y, pos().z );
+        // Don't flee if we're holding position
+        if( rules.has_flag( ally_rule::hold_position ) ) {
+            dbg( DL::Info ) << string_format( "%s holds position instead of fleeing", name );
+            move_pause();
+            return;
+        }
         tar = good_escape_direction( false );
+        dbg( DL::Info ) << string_format( "%s calculated flee target: (%d,%d,%d)", name, tar.x, tar.y, tar.z );
     } else if( cur != nullptr ) {
         tar = cur->pos();
     }
+
     /*
       debugmsg("%s ran execute_action() with target = %d! Action %s",
                name, target, npc_action_name(action));
@@ -968,6 +1316,12 @@ void npc::execute_action( npc_action action )
         break;
 
         case npc_investigate_sound: {
+            // Don't investigate sounds if we're holding position
+            if( rules.has_flag( ally_rule::hold_position ) ) {
+                dbg( DL::Info ) << string_format( "%s holds position instead of investigating sound", name );
+                move_pause();
+                return;
+            }
             tripoint cur_pos = pos();
             update_path( here.getlocal( ai_cache.s_abs_pos ) );
             move_to_next();
@@ -1148,12 +1502,17 @@ void npc::execute_action( npc_action action )
         }
         case npc_follow_player:
             update_path( player_character.pos() );
+            dbg( DL::Info ) << string_format( "%s executing npc_follow_player: Current distance=%d, follow_distance()=%d", 
+                                              name, rl_dist( pos(), player_character.pos() ), follow_distance() );
             if( static_cast<int>( path.size() ) <= follow_distance() &&
                 player_character.posz() == posz() ) { // We're close enough to u.
+                dbg( DL::Info ) << string_format( "%s is close enough, pausing instead of following.", name );
                 move_pause();
             } else if( !path.empty() ) {
+                dbg( DL::Info ) << string_format( "%s moving to next path point to follow player.", name );
                 move_to_next();
             } else {
+                dbg( DL::Info ) << string_format( "%s path is empty, pausing instead of following.", name );
                 move_pause();
             }
             // TODO: Make it only happen when it's safe
@@ -1161,6 +1520,11 @@ void npc::execute_action( npc_action action )
             break;
 
         case npc_follow_embarked: {
+            if( rules.engagement == combat_engagement::GUARD_ME ) {
+                dbg( DL::Info ) << string_format( "%s is in GUARD_ME mode, not following embarked player.", name );
+                move_pause(); // Or perhaps try to follow on foot if player is close?
+                break;
+            }
             const optional_vpart_position vp = here.veh_at( player_character.pos() );
 
             if( !vp ) {
@@ -1275,16 +1639,37 @@ void npc::execute_action( npc_action action )
             break;
 
         case npc_goto_to_this_pos: {
+            dbg( DL::Info ) << string_format( "%s entered npc_goto_to_this_pos case", name );
             if( !goto_to_this_pos.has_value() ) {
-                debugmsg( "npc_goto_to_this_pos set to true, but no target set" );
+                dbg( DL::Error ) << string_format( "%s npc_goto_to_this_pos set to true, but no target set", disp_name() );
                 break;
             }
-            update_path( get_map().getlocal( goto_to_this_pos.value() ) );
+            const tripoint target_pos = get_map().getlocal( goto_to_this_pos.value() );
+            const int dist_to_target = rl_dist( pos(), target_pos );
+
+            // Set move mode based on distance
+            if( dist_to_target > 1 ) {
+                set_movement_mode( character_movemode::CMM_RUN );
+                dbg( DL::Info ) << string_format( "%s running towards target (%d,%d,%d). Distance: %d", name, target_pos.x, target_pos.y, target_pos.z, dist_to_target );
+            } else {
+                set_movement_mode( character_movemode::CMM_WALK ); // Ensure walking when close or at target
+            }
+
+            // If we are holding position and have reached the destination, pause.
+            if( rules.has_flag( ally_rule::hold_position ) && get_map().getglobal( pos() ) == goto_to_this_pos.value() ) {
+                dbg( DL::Info ) << string_format( "%s reached hold position at %d, %d, %d and is now holding.", name, pos().x, pos().y, pos().z );
+                move_pause();
+                break;
+            }
+            update_path( target_pos );
             move_to_next();
 
             if( get_map().getglobal( pos() ) == goto_to_this_pos.value() ) {
                 add_msg( m_debug, "%s reached target", disp_name() );
-                goto_to_this_pos = std::nullopt;
+                // Only clear the destination if not holding position
+                if( !rules.has_flag( ally_rule::hold_position ) ) {
+                    goto_to_this_pos = std::nullopt;
+                }
             }
             break;
         }
@@ -1294,10 +1679,22 @@ void npc::execute_action( npc_action action )
             break;
 
         case npc_avoid_friendly_fire:
+            // Don't avoid friendly fire if we're holding position
+            if( rules.has_flag( ally_rule::hold_position ) ) {
+                dbg( DL::Info ) << string_format( "%s holds position instead of avoiding friendly fire", name );
+                move_pause();
+                return;
+            }
             avoid_friendly_fire();
             break;
 
         case npc_escape_explosion:
+            // Don't escape explosions if we're holding position
+            if( rules.has_flag( ally_rule::hold_position ) ) {
+                dbg( DL::Info ) << string_format( "%s holds position instead of escaping explosion", name );
+                move_pause();
+                return;
+            }
             escape_explosion();
             break;
 
@@ -1326,6 +1723,7 @@ void npc::execute_action( npc_action action )
 
 npc_action npc::method_of_fleeing()
 {
+    dbg( DL::Info ) << string_format( "%s considering method_of_fleeing()", name );
     if( in_vehicle ) {
         return npc_undecided;
     }
@@ -1334,6 +1732,7 @@ npc_action npc::method_of_fleeing()
 
 npc_action npc::method_of_attack()
 {
+    dbg( DL::Info ) << string_format( "%s considering method_of_attack()", name );
     Character &player_character = get_player_character();
     Creature *critter = current_target();
     if( critter == nullptr ) {
@@ -1431,6 +1830,7 @@ npc_action npc::method_of_attack()
 
 npc_action npc::address_needs()
 {
+    dbg( DL::Info ) << string_format( "%s considering address_needs()", name );
     return address_needs( ai_cache.danger );
 }
 
@@ -1772,6 +2172,7 @@ healing_options npc::patient_assessment( const Character &c )
 
 npc_action npc::address_needs( float danger )
 {
+    dbg( DL::Info ) << string_format( "%s considering address_needs()", name );
     Character &player_character = get_player_character();
     // rng because NPCs are not meant to be hypervigilant hawks that notice everything
     // and swing into action with alarming alacrity.
@@ -1912,6 +2313,7 @@ npc_action npc::address_needs( float danger )
 
 npc_action npc::address_player()
 {
+    dbg( DL::Info ) << string_format( "%s considering address_player()", name );
     Character &player_character = get_player_character();
     if( ( attitude == NPCATT_TALK ) && sees( player_character ) ) {
         if( player_character.in_sleep_state() ) {
@@ -2216,6 +2618,7 @@ bool npc::aim()
 
 bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
 {
+    dbg( DL::Info ) << string_format( "%s attempting update_path() to %d, %d, %d", name, p.x, p.y, p.z );
     if( p == pos() ) {
         path.clear();
         return true;
@@ -2229,10 +2632,12 @@ bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
         const tripoint &last = path[path.size() - 1];
         if( last == p && ( path[0].z != posz() || rl_dist( path[0], pos() ) <= 1 ) ) {
             // Our path already leads to that point, no need to recalculate
+            dbg( DL::Info ) << string_format( "%s path already leads to target %d, %d, %d. No update needed.", name, p.x, p.y, p.z );
             return true;
         }
     }
 
+    dbg( DL::Info ) << string_format( "%s calculating new path from (%d,%d,%d) to (%d,%d,%d)", name, pos().x, pos().y, pos().z, p.x, p.y, p.z );
     auto new_path = get_map().route( pos(), p, get_legacy_pathfinding_settings( no_bashing ),
                                      get_legacy_path_avoid() );
     if( new_path.empty() ) {
@@ -2243,6 +2648,7 @@ bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
         }
         add_msg( m_debug, "Failed to path %d,%d,%d->%d,%d,%d",
                  posx(), posy(), posz(), p.x, p.y, p.z );
+        dbg( DL::Info ) << string_format( "%s path calculation FAILED from (%d,%d,%d) to (%d,%d,%d)", name, pos().x, pos().y, pos().z, p.x, p.y, p.z );
     }
 
     while( !new_path.empty() && new_path[0] == pos() ) {
@@ -2251,9 +2657,11 @@ bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
 
     if( !new_path.empty() || force ) {
         path = std::move( new_path );
+        dbg( DL::Info ) << string_format( "%s path calculation SUCCEEDED from (%d,%d,%d) to (%d,%d,%d). Path size: %d", name, pos().x, pos().y, pos().z, p.x, p.y, p.z, path.size() );
         return true;
     }
 
+    dbg( DL::Info ) << string_format( "%s path update failed or resulted in empty path (and not forced).", name );
     return false;
 }
 
@@ -2281,16 +2689,30 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
                                   here.has_floor_or_support( p + tripoint_above );
     if( sees_dangerous_field( p )
         || ( nomove != nullptr && nomove->find( p ) != nomove->end() ) ) {
-        // Move to a neighbor field instead, if possible.
-        // Maybe this code already exists somewhere?
+        // Find the best alternative neighbor field instead.
+        tripoint best_alt = pos(); // Default to pausing if no good alternative
+        int best_dist = -1;
         auto other_points = here.get_dir_circle( pos(), p );
         for( const tripoint &ot : other_points ) {
             if( could_move_onto( ot )
                 && ( nomove == nullptr || nomove->find( ot ) == nomove->end() ) ) {
-
-                p = ot;
-                break;
+                int current_dist = rl_dist( ot, pt ); // Distance from alternative to original target
+                if( best_dist == -1 || current_dist < best_dist ) {
+                    best_dist = current_dist;
+                    best_alt = ot;
+                }
             }
+        }
+        // Check if we chose an alternative different from the original target and current pos
+        if( best_alt != pt && best_alt != pos() ) {
+            p = best_alt; // Use the alternative
+            path.clear(); // Force path recalculation next turn due to detour
+            dbg( DL::Info ) << string_format( "%s avoided hazard at (%d,%d,%d), moving to (%d,%d,%d) instead. Path cleared.",
+                                               name, pt.x, pt.y, pt.z, p.x, p.y, p.z );
+        } else {
+            p = best_alt; // Use the best alternative (might be pos() meaning pause)
+            dbg( DL::Info ) << string_format( "%s could not find better alternative to hazard at (%d,%d,%d), moving to (%d,%d,%d).",
+                                               name, pt.x, pt.y, pt.z, p.x, p.y, p.z );
         }
     }
 
@@ -2515,6 +2937,7 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
 
 void npc::move_to_next()
 {
+    dbg( DL::Info ) << string_format( "%s attempting move_to_next()", name );
     while( !path.empty() && pos() == path[0] ) {
         path.erase( path.begin() );
     }
@@ -2628,8 +3051,8 @@ void npc::move_away_from( const tripoint &pt, bool no_bash_atk, std::set<tripoin
 }
 
 void npc::move_pause()
-
 {
+    dbg( DL::Info ) << string_format( "%s calling move_pause()", name );
     // make sure we're using the best weapon
     if( has_new_items ) {
         scan_new_items();
@@ -3709,7 +4132,7 @@ void npc::heal_player( player &patient )
 
 }
 
-void npc:: pretend_heal( player &patient, item &used )
+void npc::pretend_heal( player &patient, item &used )
 {
     if( get_player_character().sees( *this ) ) {
         add_msg( _( "%1$s heals %2$s." ), disp_name(),

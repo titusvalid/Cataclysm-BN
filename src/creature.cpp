@@ -279,6 +279,11 @@ bool Creature::sees( const Creature &critter ) const
         return is_player();
     }
 
+    // Monsters never see across Z-levels. Player vision depends on fov_3d setting below.
+    if (is_monster() && posz() != critter.posz()) {
+        return false;
+    }
+
     if( !fov_3d && !debug_mode && posz() != critter.posz() ) {
         return false;
     }

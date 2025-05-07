@@ -41,6 +41,7 @@
 #include "translations.h"
 #include "type_id.h"
 #include "units.h"
+#include "debug.h"
 
 class JsonIn;
 class JsonObject;
@@ -63,6 +64,8 @@ using npc_class_id = string_id<npc_class>;
 using mission_type_id = string_id<mission_type>;
 using mfaction_id = int_id<monfaction>;
 using overmap_location_str_id = string_id<overmap_location>;
+
+#define dbg(x) DebugLogFL((x),DC::Game)
 
 void parse_tags( std::string &phrase, const Character &u, const Character &me,
                  const itype_id &item_type = itype_id::NULL_ID() );
@@ -130,7 +133,9 @@ enum npc_mission : int {
     NPC_MISSION_GUARD, // Assigns an non-allied NPC to remain in place
     NPC_MISSION_GUARD_PATROL, // Assigns a non-allied NPC to guard and investigate
     NPC_MISSION_ACTIVITY, // Perform a player_activity until it is complete
-    NPC_MISSION_TRAVELLING
+    NPC_MISSION_TRAVELLING,
+    NPC_MISSION_STAY_BEHIND,   // New: Persistently stay behind player
+    NPC_MISSION_STAY_IN_FRONT  // New: Persistently stay in front of player
 };
 
 struct npc_companion_mission {
@@ -220,7 +225,8 @@ enum class combat_engagement : int {
     HIT,
     ALL,
     FREE_FIRE,
-    NO_MOVE
+    NO_MOVE,
+    GUARD_ME
 };
 const std::unordered_map<std::string, combat_engagement> combat_engagement_strs = { {
         { "ENGAGE_NONE", combat_engagement::NONE },
@@ -229,7 +235,8 @@ const std::unordered_map<std::string, combat_engagement> combat_engagement_strs 
         { "ENGAGE_HIT", combat_engagement::HIT },
         { "ENGAGE_ALL", combat_engagement::ALL },
         { "ENGAGE_FREE_FIRE", combat_engagement::FREE_FIRE },
-        { "ENGAGE_NO_MOVE", combat_engagement::NO_MOVE }
+        { "ENGAGE_NO_MOVE", combat_engagement::NO_MOVE },
+        { "ENGAGE_GUARD_ME", combat_engagement::GUARD_ME }
     }
 };
 
@@ -302,7 +309,8 @@ enum class ally_rule {
     hold_the_line = 4096,
     ignore_noise = 8192,
     forbid_engage = 16384,
-    follow_distance_2 = 32768
+    follow_distance_2 = 32768,
+    hold_position = 65536
 };
 
 struct ally_rule_data {
@@ -422,6 +430,13 @@ const std::unordered_map<std::string, ally_rule_data> ally_rule_strs = { {
                 ally_rule::follow_distance_2,
                 "<ally_rule_follow_distance_2_true_text>",
                 "<ally_rule_follow_distance_2_false_text>"
+            }
+        },
+        {
+            "hold_position", {
+                ally_rule::hold_position,
+                "<ally_rule_hold_position_true_text>",
+                "<ally_rule_hold_position_false_text>"
             }
         }
     }

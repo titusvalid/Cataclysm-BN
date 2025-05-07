@@ -55,7 +55,6 @@ static const zone_type_id zone_LOOT_PDRINK( "LOOT_PDRINK" );
 static const zone_type_id zone_LOOT_PFOOD( "LOOT_PFOOD" );
 static const zone_type_id zone_LOOT_SEEDS( "LOOT_SEEDS" );
 static const zone_type_id zone_LOOT_UNSORTED( "LOOT_UNSORTED" );
-static const zone_type_id zone_LOOT_DUMP( "LOOT_DUMP" );
 static const zone_type_id zone_LOOT_WOOD( "LOOT_WOOD" );
 static const zone_type_id zone_NO_AUTO_PICKUP( "NO_AUTO_PICKUP" );
 static const zone_type_id zone_NO_NPC_PICKUP( "NO_NPC_PICKUP" );
@@ -849,7 +848,7 @@ zone_type_id zone_manager::get_near_zone_type_for_item( const item &it,
         return *zone_check_first;
     }
 
-    if( cat.zone() && has_near( *cat.zone(), where, range ) ) {
+    if( cat.zone() ) {
         return *cat.zone();
     }
 
@@ -870,15 +869,9 @@ zone_type_id zone_manager::get_near_zone_type_for_item( const item &it,
                 return zone_LOOT_PFOOD;
             }
         }
-        if( has_near( zone_LOOT_FOOD, where, range ) ) {
-            return zone_LOOT_FOOD;
-        }
-    }
 
-    if( has_near( zone_LOOT_DUMP, where, range ) ) {
-        return zone_LOOT_DUMP;
+        return zone_LOOT_FOOD;
     }
-
 
     return zone_type_id();
 }

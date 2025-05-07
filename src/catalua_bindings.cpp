@@ -45,6 +45,10 @@
 #include "character_id.h"
 #include "overmapbuffer.h"
 #include "trap.h"
+#include "faction.h"
+#include "mission.h"
+#include "overmap.h"
+#include "string_id.h"
 
 
 std::string_view luna::detail::current_comment;
@@ -880,7 +884,52 @@ void cata::detail::reg_game_api( sol::state &lua )
         g->remove_npc_follower( p.getID() );
     } );
 
-    luna::finalize_lib( lib );
+    // Add a function to spawn a random NPC at a given location
+    luna::set_fx(lib, "spawn_random_npc_at", [](const tripoint &pos, Character *player_char) -> npc* {
+        // Validate player_char
+        if (!player_char) {
+            debugmsg("spawn_random_npc_at called with nil player character");
+            return nullptr;
+        }
+        player* p = player_char->as_player();
+        if (!p) {
+            debugmsg("spawn_random_npc_at called with non-player character");
+            return nullptr;
+        }
+
+        // Create and randomize the NPC
+        shared_ptr_fast<npc> tmp = make_shared_fast<npc>();
+        tmp->randomize();
+
+        // Use submap offset and absolute map-square coords for placement
+        point submap_offset( g->get_levx(), g->get_levy() );
+        tmp->spawn_at_precise( submap_offset, pos );
+
+        // Insert into overmap buffer
+        overmap_buffer.insert_npc(tmp);
+
+        // Form opinion of the player
+        tmp->form_opinion(*p);
+
+        // Neutral mission and optional random mission
+        tmp->mission = NPC_MISSION_NULL;
+        tmp->add_new_mission(mission::reserve_random(
+            ORIGIN_ANY_NPC, tmp->global_omt_location(), tmp->getID()));
+
+        // Create solo faction and assign
+        std::string new_fac_id = "solo_";
+        new_fac_id += tmp->name;
+        faction* new_solo_fac = g->faction_manager_ptr->add_new_faction(
+            tmp->name, faction_id(new_fac_id), faction_id("no_faction"));
+        tmp->set_fac(new_solo_fac ? new_solo_fac->id : faction_id("no_faction"));
+
+        // Load NPCs to activate the new one
+        g->load_npcs();
+
+        return tmp.get();
+    });
+
+    luna::finalize_lib(lib);
 }
 
 // We have to alias the function here because VS compiler

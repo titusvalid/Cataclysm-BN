@@ -1902,7 +1902,7 @@ void Character::recalc_sight_limits()
     }
 
     // +1 because of the ugly -1 in _from_per
-    nv_range = 1 + vision::nv_range_from_per( get_per() ) +
+    nv_range = 1 + vision::nv_range_from_per( get_per()*1.3 ) +
                vision::nv_range_from_eye_encumbrance( encumb( body_part_eyes ) );
     nv_range += best_bonus_nv;
     if( vision_mode_cache[BIRD_EYE] ) {

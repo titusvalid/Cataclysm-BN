@@ -953,5 +953,12 @@ void talk_function::npc_thankful( npc &p )
 
 void talk_function::clear_overrides( npc &p )
 {
+    dbg( DL::Info ) << string_format( "Clearing overrides for %s", p.name );
     p.rules.clear_overrides();
+    dbg( DL::Info ) << string_format( "Clearing hold_position flag for %s", p.name );
+    p.rules.clear_flag( ally_rule::hold_position );
+    p.rules.clear_flag( ally_rule::forbid_engage );
+    p.rules.clear_flag( ally_rule::follow_close );
+    p.rules.clear_flag( ally_rule::avoid_doors );
+    p.rules.clear_flag( ally_rule::hold_the_line );
 }

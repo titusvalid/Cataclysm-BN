@@ -1,4 +1,6 @@
 #include "dialogue.h" // IWYU pragma: associated
+#include "debug.h"
+#define dbg(x) DebugLogFL((x),DC::Game)
 
 #include <algorithm>
 #include <array>
@@ -201,6 +203,7 @@ enum npc_chat_menu {
     NPC_CHAT_GUARD,
     NPC_CHAT_FOLLOW,
     NPC_CHAT_MOVE_TO_POS,
+    NPC_CHAT_HOLD_POSITION,
     NPC_CHAT_AWAKE,
     NPC_CHAT_MOUNT,
     NPC_CHAT_DISMOUNT,
@@ -216,7 +219,10 @@ enum npc_chat_menu {
     NPC_CHAT_ANIMAL_VEHICLE_FOLLOW,
     NPC_CHAT_ANIMAL_VEHICLE_STOP_FOLLOW,
     NPC_CHAT_COMMAND_MAGIC_VEHICLE_FOLLOW,
-    NPC_CHAT_COMMAND_MAGIC_VEHICLE_STOP_FOLLOW
+    NPC_CHAT_COMMAND_MAGIC_VEHICLE_STOP_FOLLOW,
+    NPC_CHAT_RESUME_FOLLOW, // New command to cancel hold/move orders
+    NPC_CHAT_STAY_BEHIND,   // New command: Stay behind player
+    NPC_CHAT_STAY_IN_FRONT  // New command: Stay in front of player
 };
 
 // given a vector of NPCs, presents a menu to allow a player to pick one.
@@ -398,6 +404,7 @@ static void tell_magic_veh_stop_following()
 
 void game::chat()
 {
+    dbg( DL::Info ) << string_format( "game::chat() entered" );
     int volume = u.get_shout_volume();
 
     const std::vector<npc *> available = get_npcs_if( [&]( const npc & guy ) {
@@ -407,7 +414,8 @@ void game::chat()
     } );
     const int available_count = available.size();
     const std::vector<npc *> followers = get_npcs_if( [&]( const npc & guy ) {
-        return guy.is_player_ally() && guy.is_following() && guy.can_hear( u.pos(), volume );
+        return guy.is_player_ally() && guy.is_following() && 
+               u.posz() == guy.posz() && u.sees( guy.pos() ) && rl_dist( u.pos(), guy.pos() ) <= SEEX * 2;
     } );
     const int follower_count = followers.size();
     const std::vector<npc *> guards = get_npcs_if( [&]( const npc & guy ) {
@@ -415,6 +423,17 @@ void game::chat()
                guy.can_hear( u.pos(), volume );
     } );
     const int guard_count = guards.size();
+
+    // Identify allies who are holding position, moving to a specific spot, or staying behind/in front
+    const std::vector<npc *> resumable_followers = get_npcs_if( [&]( const npc & guy ) {
+        return guy.is_player_ally() && 
+               ( guy.rules.has_flag( ally_rule::hold_position ) || 
+                 guy.goto_to_this_pos.has_value() ||
+                 guy.mission == NPC_MISSION_STAY_BEHIND ||
+                 guy.mission == NPC_MISSION_STAY_IN_FRONT ) &&
+               u.posz() == guy.posz() && u.sees( guy.pos() ) && rl_dist( u.pos(), guy.pos() ) <= SEEX * 2;
+    } );
+    const int resumable_count = resumable_followers.size();
 
     if( u.has_trait( trait_PROF_FOODP ) && !( u.is_wearing( itype_id( "foodperson_mask" ) ) ||
             u.is_wearing( itype_id( "foodperson_mask_on" ) ) ) ) {
@@ -480,6 +499,13 @@ void game::chat()
                         _( "Tell someone to follow…" )
                       );
     }
+    // Add the new option if there are NPCs holding/moving
+    if( !resumable_followers.empty() ) {
+        nmenu.addentry( NPC_CHAT_RESUME_FOLLOW, true, 'r', resumable_count == 1 ?
+                        string_format( _( "Tell %s to follow me again" ), resumable_followers.front()->name ) :
+                        _( "Tell someone to follow me again…" )
+                      );
+    }
     if( !followers.empty() ) {
         nmenu.addentry( NPC_CHAT_GUARD, true, 'g', follower_count == 1 ?
                         string_format( _( "Tell %s to guard" ), followers.front()->name ) :
@@ -488,15 +514,27 @@ void game::chat()
         nmenu.addentry( NPC_CHAT_MOVE_TO_POS, true, 'G',
                         follower_count == 1 ? string_format( _( "Tell %s to move to location" ),
                                 followers.front()->get_name() ) : _( "Tell someone to move to location…" ) );
+        nmenu.addentry( NPC_CHAT_HOLD_POSITION, true, 'H',
+                        follower_count == 1 ? string_format( _( "Tell %s to hold position" ),
+                                followers.front()->get_name() ) : _( "Tell someone to hold position…" ) );
+        nmenu.addentry( NPC_CHAT_STAY_BEHIND, true, 'B',
+                        follower_count == 1 ? string_format( _( "Tell %s to stay behind me" ), followers.front()->name ) :
+                        _( "Tell someone to stay behind me…" )
+                      );
+        nmenu.addentry( NPC_CHAT_STAY_IN_FRONT, true, 'F',
+                        follower_count == 1 ? string_format( _( "Tell %s to stay in front of me" ), followers.front()->name ) :
+                        _( "Tell someone to stay in front of me…" )
+                      );
         nmenu.addentry( NPC_CHAT_AWAKE, true, 'w', _( "Tell everyone on your team to wake up" ) );
         nmenu.addentry( NPC_CHAT_MOUNT, true, 'M', _( "Tell everyone on your team to mount up" ) );
         nmenu.addentry( NPC_CHAT_DISMOUNT, true, 'm', _( "Tell everyone on your team to dismount" ) );
         nmenu.addentry( NPC_CHAT_DANGER, true, 'D',
                         _( "Tell everyone on your team to prepare for danger" ) );
-        nmenu.addentry( NPC_CHAT_CLEAR_OVERRIDES, true, 'r',
+        nmenu.addentry( NPC_CHAT_CLEAR_OVERRIDES, true, 'C',
                         _( "Tell everyone on your team to relax (Clear Overrides)" ) );
         nmenu.addentry( NPC_CHAT_ORDERS, true, 'o', _( "Tell everyone on your team to temporarily…" ) );
     }
+
     std::string message;
     std::string yell_msg;
     bool is_order = true;
@@ -505,6 +543,8 @@ void game::chat()
     if( nmenu.ret < 0 ) {
         return;
     }
+
+    map &here = get_map(); // Ensure map reference is available for target calculation
 
     switch( nmenu.ret ) {
         case NPC_CHAT_TALK: {
@@ -579,6 +619,40 @@ void game::chat()
             }
             break;
         }
+        case NPC_CHAT_HOLD_POSITION: {
+            const int npcselect = npc_select_menu( followers, _( "Who should hold position?" ) );
+            if( npcselect < 0 ) {
+                return;
+            }
+
+            map &here = get_map();
+            std::optional<tripoint> p = look_around();
+
+            if( !p ) {
+                return;
+            }
+
+            if( here.impassable( tripoint( *p ) ) ) {
+                add_msg( m_info, _( "This destination can't be reached." ) );
+                return;
+            }
+
+            const auto &to = p.value();
+            if( npcselect == follower_count ) {
+                for( npc *them : followers ) {
+                    them->rules.set_flag( ally_rule::hold_position );
+                    them->goto_to_this_pos = here.getglobal( to );
+                    dbg( DL::Info ) << string_format( "%s ordered to hold position at %d, %d, %d", them->name, to.x, to.y, to.z );
+                }
+                yell_msg = _( "Everyone hold position there!" );
+            } else {
+                followers[npcselect]->rules.set_flag( ally_rule::hold_position );
+                followers[npcselect]->goto_to_this_pos = here.getglobal( to );
+                yell_msg = string_format( _( "Hold position there, %s!" ), followers[npcselect]->get_name() );
+                dbg( DL::Info ) << string_format( "%s ordered to hold position at %d, %d, %d", followers[npcselect]->name, to.x, to.y, to.z );
+            }
+            break;
+        }
         case NPC_CHAT_FOLLOW: {
             const int npcselect = npc_select_menu( guards, _( "Who should follow you?" ) );
             if( npcselect < 0 ) {
@@ -646,6 +720,69 @@ void game::chat()
         case NPC_CHAT_COMMAND_MAGIC_VEHICLE_STOP_FOLLOW:
             tell_magic_veh_stop_following();
             break;
+        case NPC_CHAT_RESUME_FOLLOW: {
+            const int npcselect = npc_select_menu( resumable_followers, _( "Who should follow you again?" ) );
+            if( npcselect < 0 ) {
+                return;
+            }
+            if( npcselect == resumable_count ) {
+                for( npc *them : resumable_followers ) {
+                    talk_function::stop_guard( *them ); // Resets mission/attitude
+                    them->rules.clear_flag( ally_rule::hold_position );
+                    them->goto_to_this_pos = std::nullopt;
+                }
+                yell_msg = _( "Everyone follow me again!" );
+            } else {
+                npc *target_npc = resumable_followers[npcselect];
+                talk_function::stop_guard( *target_npc ); // Resets mission/attitude
+                target_npc->rules.clear_flag( ally_rule::hold_position );
+                target_npc->goto_to_this_pos = std::nullopt;
+                yell_msg = string_format( _( "Follow me again, %s!" ), target_npc->name );
+            }
+            break;
+        }
+        case NPC_CHAT_STAY_BEHIND: {
+            const int npcselect = npc_select_menu( followers, _( "Who should stay behind?" ) );
+            if( npcselect < 0 ) {
+                return;
+            }
+            if( npcselect == follower_count ) {
+                for( npc *them : followers ) {
+                    them->rules.clear_flag( ally_rule::hold_position );
+                    them->goto_to_this_pos = std::nullopt;
+                    them->set_mission( NPC_MISSION_STAY_BEHIND );
+                }
+                yell_msg = _( "Everyone stay behind me!" );
+            } else {
+                npc *target_npc = followers[npcselect];
+                target_npc->rules.clear_flag( ally_rule::hold_position );
+                target_npc->goto_to_this_pos = std::nullopt;
+                target_npc->set_mission( NPC_MISSION_STAY_BEHIND );
+                yell_msg = string_format( _( "Stay behind me, %s!" ), target_npc->name );
+            }
+            break;
+        }
+        case NPC_CHAT_STAY_IN_FRONT: {
+            const int npcselect = npc_select_menu( followers, _( "Who should stay in front?" ) );
+            if( npcselect < 0 ) {
+                return;
+            }
+            if( npcselect == follower_count ) {
+                for( npc *them : followers ) {
+                    them->rules.clear_flag( ally_rule::hold_position );
+                    them->goto_to_this_pos = std::nullopt;
+                    them->set_mission( NPC_MISSION_STAY_IN_FRONT );
+                }
+                yell_msg = _( "Everyone stay in front!" );
+            } else {
+                npc *target_npc = followers[npcselect];
+                target_npc->rules.clear_flag( ally_rule::hold_position );
+                target_npc->goto_to_this_pos = std::nullopt;
+                target_npc->set_mission( NPC_MISSION_STAY_IN_FRONT );
+                yell_msg = string_format( _( "Stay in front, %s!" ), target_npc->name );
+            }
+            break;
+        }
         default:
             return;
     }

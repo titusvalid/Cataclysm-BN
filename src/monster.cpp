@@ -3296,6 +3296,11 @@ void monster::hear_sound( const tripoint &source, const int vol, const int dist 
         return;
     }
 
+    // Don't track sounds across z-levels
+    if( std::abs( posz() - source.z ) > 0 ) {
+        return;
+    }
+
     static const string_id<monfaction> faction_zombie( "zombie" );
     const bool feral_friend = ( faction == faction_zombie || type->in_species( ZOMBIE ) ) &&
                               g->u.has_trait( trait_PROF_FERAL ) && !g->u.has_effect( effect_feral_infighting_punishment );
