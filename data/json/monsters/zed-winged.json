@@ -45,6 +45,7 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
+      "FILTHY",
       "HIT_AND_RUN",
       "PATH_AVOID_DANGER_1",
       "FLIES"
@@ -102,6 +103,7 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
+      "FILTHY",
       "HIT_AND_RUN",
       "PATH_AVOID_DANGER_1",
       "FLIES"
@@ -145,6 +147,7 @@
       "BASHES",
       "GROUP_BASH",
       "NO_BREATHE",
+      "FILTHY",
       "HIT_AND_RUN",
       "PATH_AVOID_DANGER_1",
       "SWARMS",

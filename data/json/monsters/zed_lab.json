@@ -48,7 +48,8 @@
       "PUSH_MON",
       "PATH_AVOID_DANGER_1",
       "CAN_OPEN_DOORS",
-      "PRIORITIZE_TARGETS"
+      "PRIORITIZE_TARGETS",
+      "FILTHY"
     ]
   },
   {
@@ -99,7 +100,8 @@
       "BLEED",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   }
 ]

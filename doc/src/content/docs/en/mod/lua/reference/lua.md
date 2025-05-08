@@ -2559,8 +2559,7 @@ Function `( Item ) -> bool`
 
 #### is_filthy
 
-DEPRECATED: Items are no longer filthy
-Function `() -> bool`
+Function `( Item ) -> bool`
 
 #### is_active
 

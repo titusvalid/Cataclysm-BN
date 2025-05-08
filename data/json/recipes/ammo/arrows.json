@@ -15,7 +15,9 @@
       [ [ "adhesive", 1, "LIST" ], [ "filament", 20, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -55,7 +57,9 @@
       [ [ "steel_tiny", 1, "LIST" ], [ "scrap_bronze", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -81,7 +85,9 @@
       [ [ "steel_tiny", 1, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -107,7 +113,9 @@
       [ [ "steel_tiny", 1, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -130,7 +138,9 @@
       [ [ "adhesive", 1, "LIST" ], [ "filament", 10, "LIST" ] ],
       [ [ "wire", 5 ], [ "pipe", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -148,7 +158,9 @@
       [ [ "adhesive", 1, "LIST" ], [ "filament", 10, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ], [ "arrow_fire_hardened_fletched", 10 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -167,7 +179,9 @@
       [ [ "bee_sting", 1 ], [ "wasp_sting", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -186,7 +200,9 @@
       [ [ "fighter_sting", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -205,7 +221,9 @@
       [ [ "teeth_serrated", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -235,7 +253,9 @@
         [ "sharp_rock", 1 ]
       ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -261,7 +281,9 @@
       [ [ "steel_tiny", 1, "LIST" ], [ "scrap_bronze", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -287,7 +309,9 @@
       [ [ "steel_tiny", 1, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -313,7 +337,9 @@
       [ [ "steel_tiny", 1, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -332,7 +358,9 @@
       [ [ "bee_sting", 1 ], [ "wasp_sting", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -351,7 +379,9 @@
       [ [ "fighter_sting", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -370,7 +400,9 @@
       [ [ "teeth_serrated", 1 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -388,7 +420,9 @@
       [ [ "adhesive", 1, "LIST" ], [ "filament", 10, "LIST" ] ],
       [ [ "wire", 4 ], [ "pipe", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -420,7 +454,9 @@
       [ [ "adhesive", 1, "LIST" ], [ "filament", 10, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ], [ "bolt_crude", 10 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -438,7 +474,9 @@
       [ [ "adhesive", 1, "LIST" ], [ "filament", 20, "LIST" ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -468,7 +506,9 @@
         [ "sharp_rock", 1 ]
       ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -502,7 +542,9 @@
         [ "diesel", 50, "NO_RECOVER" ],
         [ "biodiesel", 50, "NO_RECOVER" ]
       ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "type": "recipe",
@@ -575,7 +617,9 @@
       [ [ "plastic_chunk", 3 ] ],
       [ [ "stick", 1 ], [ "broom", 1 ], [ "2x4", 1 ], [ "bee_sting", 1 ] ],
       [ [ "fletching", 1, "LIST" ] ]
-    ]
+    ],
+    "delete_flags": [ "FILTHY" ],
+    "flags": [ "ALLOW_FILTHY" ]
   },
   {
     "result": "bolt_cf",

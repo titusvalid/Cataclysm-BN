@@ -42,7 +42,7 @@
     "vision_night": 3,
     "death_drops": "skeltal_drops",
     "death_function": [ "NORMAL" ],
-    "flags": [ "SEES", "HEARS", "BLEED", "HARDTOSHOOT", "REVIVES", "NO_BREATHE" ],
+    "flags": [ "SEES", "HEARS", "BLEED", "HARDTOSHOOT", "REVIVES", "NO_BREATHE", "FILTHY" ],
     "harvest": "mr_bones",
     "special_attacks": [ [ "DOOT", 50 ] ]
   },
@@ -71,7 +71,7 @@
     "vision_night": 3,
     "death_function": [ "MELT" ],
     "harvest": "mr_bones",
-    "flags": [ "SEES", "HEARS", "HARDTOSHOOT", "REVIVES", "NO_BREATHE", "POISON", "BONES" ]
+    "flags": [ "SEES", "HEARS", "HARDTOSHOOT", "REVIVES", "NO_BREATHE", "POISON", "BONES", "FILTHY" ]
   },
   {
     "id": "mon_bear_smoky",
@@ -115,7 +115,8 @@
       "BASHES",
       "ATTACKMON",
       "FIREPROOF",
-      "NO_BREATHE"
+      "NO_BREATHE",
+      "FILTHY"
     ]
   }
 ]

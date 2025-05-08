@@ -43,7 +43,8 @@
       "ACID_BLOOD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -107,7 +108,8 @@
       "ACID_BLOOD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -153,7 +155,8 @@
       "ACID_BLOOD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -200,7 +203,8 @@
       "ACID_BLOOD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   }
 ]

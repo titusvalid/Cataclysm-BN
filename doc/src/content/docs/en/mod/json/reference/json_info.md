@@ -157,6 +157,7 @@ the appropriate JSON file.
 | stylish_bonus     | (_optional_) Mood bonus associated with wearing fancy clothing on this part. (default: `0`)                                                                                                                                                                                             |
 | hot_morale_mod    | (_optional_) Mood effect of being too hot on this part. (default: `0`)                                                                                                                                                                                                                  |
 | cold_morale_mod   | (_optional_) Mood effect of being too cold on this part. (default: `0`)                                                                                                                                                                                                                 |
+| squeamish_penalty | (_optional_) Mood effect of wearing filthy clothing on this part. (default: `0`)                                                                                                                                                                                                        |
 | bionic_slots      | (_optional_) How many bionic slots does this part have.                                                                                                                                                                                                                                 |
 
 ```json
@@ -179,6 +180,7 @@ the appropriate JSON file.
   "stylish_bonus": 6,
   "hot_morale_mod": 2,
   "cold_morale_mod": 2,
+  "squeamish_penalty": 6,
   "base_hp": 60,
   "bionic_slots": 80
 }
@@ -643,7 +645,7 @@ wake up for the first time after 24 hours into the game.
     {
       "drop": "bionics_sci",
       "type": "bionic_group",
-      "flags": [ "NO_STERILE", "NO_PACKED" ],
+      "flags": [ "FILTHY", "NO_STERILE", "NO_PACKED" ],
       "faults": [ "fault_bionic_salvaged" ]
     },
     { "drop": "meat_tainted", "type": "flesh", "mass_ratio": 0.25 },

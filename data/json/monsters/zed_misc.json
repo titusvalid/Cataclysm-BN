@@ -56,7 +56,8 @@
       "GRABS",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -102,7 +103,8 @@
       "NOHEAD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -150,7 +152,8 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
-      "PUSH_VEH"
+      "PUSH_VEH",
+      "FILTHY"
     ]
   },
   {
@@ -198,7 +201,8 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
-      "PUSH_VEH"
+      "PUSH_VEH",
+      "FILTHY"
     ]
   },
   {
@@ -247,7 +251,8 @@
       "REVIVES",
       "PUSH_MON",
       "PUSH_VEH",
-      "NIGHT_INVISIBILITY"
+      "NIGHT_INVISIBILITY",
+      "FILTHY"
     ]
   },
   {
@@ -294,7 +299,8 @@
       "NOHEAD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -341,7 +347,8 @@
       "GRABS",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -386,7 +393,8 @@
       "BLEED",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -420,7 +428,7 @@
     "harvest": "zombie",
     "special_attacks": [ [ "STRETCH_BITE", 10 ], [ "STRETCH_ATTACK", 5 ] ],
     "death_function": [ "BLOBSPLIT" ],
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "FILTHY" ]
   },
   {
     "id": "mon_zombie_hulk",
@@ -467,7 +475,8 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
-      "PUSH_VEH"
+      "PUSH_VEH",
+      "FILTHY"
     ]
   },
   {
@@ -508,7 +517,7 @@
     "burn_into": "mon_zombie_scorched",
     "fungalize_into": "mon_zombie_fungus",
     "upgrades": { "half_life": 28, "into": "mon_zombie_predator" },
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "CLIMBS", "PUSH_MON" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "CLIMBS", "PUSH_MON", "FILTHY" ]
   },
   {
     "id": "mon_zombie_jackson",
@@ -541,7 +550,7 @@
     "special_attacks": [ [ "JACKSON", 0 ] ],
     "death_drops": "jackson_drops",
     "death_function": [ "JACKSON" ],
-    "flags": [ "SEES", "SMELLS", "WARM", "BASHES", "BLEED", "NO_BREATHE", "POISON" ]
+    "flags": [ "SEES", "SMELLS", "WARM", "BASHES", "BLEED", "NO_BREATHE", "POISON", "FILTHY" ]
   },
   {
     "id": "mon_zombie_mancroc",
@@ -601,7 +610,8 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
-      "SWIMS"
+      "SWIMS",
+      "FILTHY"
     ]
   },
   {
@@ -651,6 +661,7 @@
       "REVIVES",
       "PATH_AVOID_DANGER_2",
       "PRIORITIZE_TARGETS",
+      "FILTHY",
       "NO_FUNG_DMG",
       "BIOPROOF"
     ]
@@ -699,6 +710,7 @@
       "REVIVES",
       "PATH_AVOID_DANGER_1",
       "PRIORITIZE_TARGETS",
+      "FILTHY",
       "NO_FUNG_DMG",
       "BIOPROOF"
     ]
@@ -742,7 +754,7 @@
     "death_function": [ "NORMAL" ],
     "burn_into": "mon_zombie_scorched",
     "upgrades": { "half_life": 20, "into": "mon_zombie_hunter" },
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON", "FILTHY" ]
   },
   {
     "id": "mon_zombie_predator",
@@ -785,7 +797,7 @@
     "death_drops": "default_zombie_death_drops",
     "death_function": [ "NORMAL" ],
     "burn_into": "mon_zombie_scorched",
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON", "FILTHY" ]
   },
   {
     "id": "mon_zombie_screecher",
@@ -817,7 +829,7 @@
     "death_drops": "default_zombie_death_drops",
     "death_function": [ "NORMAL" ],
     "burn_into": "mon_zombie_scorched",
-    "flags": [ "SEES", "KEENNOSE", "STUMBLES", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES" ]
+    "flags": [ "SEES", "KEENNOSE", "STUMBLES", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]
   },
   {
     "id": "mon_zombie_shady",
@@ -861,7 +873,8 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
-      "NIGHT_INVISIBILITY"
+      "NIGHT_INVISIBILITY",
+      "FILTHY"
     ]
   },
   {
@@ -894,7 +907,18 @@
     "fear_triggers": [ "FIRE" ],
     "death_drops": { "groups": [ [ "shia_stuff", 1 ] ] },
     "death_function": [ "NORMAL" ],
-    "flags": [ "SEES", "HEARS", "WARM", "BASHES", "POISON", "BLEED", "NO_BREATHE", "PATH_AVOID_DANGER_2", "PRIORITIZE_TARGETS" ]
+    "flags": [
+      "SEES",
+      "HEARS",
+      "WARM",
+      "BASHES",
+      "POISON",
+      "BLEED",
+      "NO_BREATHE",
+      "PATH_AVOID_DANGER_2",
+      "PRIORITIZE_TARGETS",
+      "FILTHY"
+    ]
   },
   {
     "id": "mon_zombie_shrieker",
@@ -928,7 +952,20 @@
     "burn_into": "mon_zombie_scorched",
     "fungalize_into": "mon_zombie_fungus",
     "upgrades": { "half_life": 10, "into": "mon_zombie_screecher" },
-    "flags": [ "SEES", "HEARS", "SMELLS", "STUMBLES", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "PUSH_MON" ]
+    "flags": [
+      "SEES",
+      "HEARS",
+      "SMELLS",
+      "STUMBLES",
+      "WARM",
+      "BASHES",
+      "GROUP_BASH",
+      "POISON",
+      "NO_BREATHE",
+      "REVIVES",
+      "PUSH_MON",
+      "FILTHY"
+    ]
   },
   {
     "id": "mon_zombie_skull",
@@ -975,7 +1012,8 @@
       "NOHEAD",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -1019,7 +1057,8 @@
       "HARDTOSHOOT",
       "NO_BREATHE",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -1065,7 +1104,8 @@
       "BLEED",
       "SWIMS",
       "REVIVES",
-      "PUSH_MON"
+      "PUSH_MON",
+      "FILTHY"
     ]
   },
   {
@@ -1101,7 +1141,7 @@
     "death_drops": "mon_zombie_technician_death_drops",
     "death_function": [ "NORMAL" ],
     "fungalize_into": "mon_zombie_fungus",
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]
   },
   {
     "id": "mon_zombie_miner",
@@ -1135,7 +1175,7 @@
     "harvest": "zombie_maybe_tech_bionics",
     "special_attacks": [ { "type": "bite", "cooldown": 20 } ],
     "death_drops": "mon_zombie_miner_death_drops",
-    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES" ]
+    "flags": [ "SEES", "HEARS", "SMELLS", "WARM", "BASHES", "GROUP_BASH", "POISON", "NO_BREATHE", "REVIVES", "FILTHY" ]
   },
   {
     "id": "mon_zombie_thorny",
@@ -1180,6 +1220,7 @@
       "NO_BREATHE",
       "REVIVES",
       "PUSH_MON",
+      "FILTHY",
       "PARALYZEVENOM"
     ]
   }

@@ -189,7 +189,8 @@
     "price": "0 cent",
     "material": "cotton",
     "symbol": ",",
-    "color": "white"
+    "color": "white",
+    "use_action": "WASH_HARD_ITEMS"
   },
   {
     "id": "fault_gun_clogged",
