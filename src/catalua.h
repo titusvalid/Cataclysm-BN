@@ -1,11 +1,10 @@
 #pragma once
-#ifndef CATA_SRC_CATALUA_H
-#define CATA_SRC_CATALUA_H
 
 #include "type_id.h"
 #include "mattack_common.h"
 #include "catalua_sol.h"
 #include <memory>
+#include <filesystem>
 
 class Item_factory;
 class map;
@@ -25,7 +24,7 @@ bool has_lua();
 int get_lua_api_version();
 std::string get_lapi_version_string();
 void startup_lua_test();
-bool generate_lua_docs();
+bool generate_lua_docs( const std::filesystem::path &path );
 void show_lua_console();
 void reload_lua_code();
 void debug_write_lua_backtrace( std::ostream &out );
@@ -63,4 +62,5 @@ public:
     void load_internal(const JsonObject& jo, const std::string& src) override;
 };
 } // namespace cata
-#endif // CATA_SRC_CATALUA_H
+
+

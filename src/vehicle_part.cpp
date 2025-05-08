@@ -470,6 +470,14 @@ void vehicle_part::process_contents( const tripoint &pos, const bool e_heater )
         if( e_heater ) {
             flag = temperature_flag::TEMP_HEATER;
         }
+
+        const vpart_info vpinfo = info();
+        if( enabled && vpinfo.has_flag( VPFLAG_FRIDGE ) ) {
+            flag = temperature_flag::TEMP_FRIDGE;
+        } else if( enabled && vpinfo.has_flag( VPFLAG_FREEZER ) ) {
+            flag = temperature_flag::TEMP_FREEZER;
+        }
+
         base = item::process( base.release(), nullptr, pos, false, flag );
     }
 }
@@ -642,7 +650,7 @@ bool vehicle::mod_hp( vehicle_part &pt, int qty, damage_type dt )
 
 bool vehicle::can_enable( const vehicle_part &pt, bool alert ) const
 {
-    if( std::none_of( parts.begin(), parts.end(), [&pt]( const vehicle_part & e ) {
+    if( std::ranges::none_of( parts, [&pt]( const vehicle_part & e ) {
     return &e == &pt;
 } ) || pt.removed ) {
         debugmsg( "Cannot enable removed or non-existent part" );

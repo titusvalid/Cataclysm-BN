@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CATA_SRC_CHARACTER_H
-#define CATA_SRC_CHARACTER_H
 
 #include <array>
 #include <bitset>
@@ -224,6 +222,17 @@ struct char_trait_data {
 };
 
 struct mutation_collection : std::unordered_map<trait_id, char_trait_data> {};
+
+struct mountable_status {
+    bool mountable;
+    bool skills;
+    bool size;
+    bool carry_weight;
+
+    inline bool can_mount() const {
+        return mountable && skills && size && carry_weight;
+    };
+};
 
 class Character : public Creature, public location_visitable<Character>
 {
@@ -724,6 +733,11 @@ class Character : public Creature, public location_visitable<Character>
         std::map<bodypart_id, int> get_armor_fire( const std::map<bodypart_id, std::vector<const item *>>
                 &clothing_map ) const;
         // --------------- Mutation Stuff ---------------
+        /** Returns the id of a random trait matching the given predicate */
+        trait_id get_random_trait( const std::function<bool( const mutation_branch & )> &func );
+        void randomize_cosmetic_trait( std::string mutation_type );
+        /** Returns true if character has a conflicting trait to the entered trait. */
+        void clear_cosmetic_traits( std::string mutation_type, trait_id trait );
 
         // In mutation.cpp
         /** Returns true if the player has the entered trait */
@@ -754,6 +768,7 @@ class Character : public Creature, public location_visitable<Character>
         static bodypart_str_id bp_to_hp( const bodypart_str_id &bp );
 
         bool can_mount( const monster &critter ) const;
+        mountable_status get_mountable_status( const monster &critter ) const;
         void mount_creature( monster &z );
         bool is_mounted() const;
         bool check_mount_will_move( const tripoint &dest_loc );
@@ -1496,6 +1511,12 @@ class Character : public Creature, public location_visitable<Character>
         /** Returns the first worn item with a given flag. */
         const item *item_worn_with_flag( const flag_id &flag,
                                          const bodypart_id &bp = bodypart_str_id::NULL_ID() ) const;
+        /** Returns true if the player is wearing an item with the given id. */
+        bool worn_with_id( const itype_id &item_id,
+                           const bodypart_id &bp = bodypart_str_id::NULL_ID() ) const;
+        /** Returns the first worn item with a given id. */
+        const item *item_worn_with_id( const itype_id &item_id,
+                                       const bodypart_id &bp = bodypart_str_id::NULL_ID() ) const;
 
         // drawing related stuff
         /**
@@ -1643,6 +1664,7 @@ class Character : public Creature, public location_visitable<Character>
         std::list<activity_ptr> backlog;
         std::optional<tripoint> destination_point;
         itype_id last_item;
+        efftype_id last_emote;
     public:
 
         int scent = 0;
@@ -1688,12 +1710,30 @@ class Character : public Creature, public location_visitable<Character>
         void stop_hauling();
         bool is_hauling() const;
 
+        // Gets item in inventory with id
+        const item *get_item_with_id( const itype_id &item_id, bool need_charges = false ) const;
+
+        // Adds item(s) to inventory
+        void add_item_with_id( const itype_id &itype, int count = 1 );
+
+        // Has a weapon, inventory item or worn item with id
+        bool has_item_with_id( const itype_id &item_id, bool need_charges = false ) const;
+
         // Has a weapon, inventory item or worn item with flag
         bool has_item_with_flag( const flag_id &flag, bool need_charges = false ) const;
         /**
          * All items that have the given flag (@ref item::has_flag).
          */
-        std::vector<item *> all_items_with_flag( const flag_id &flag ) const;
+        std::vector<item *> all_items_with_flag( const flag_id &flag, bool need_charges = false ) const;
+
+        // All items that have the given id
+        std::vector<item *> all_items_with_id( const itype_id &item_id, bool need_charges = false ) const;
+
+        /**
+         * All items in the character's inventory.
+         */
+        std::vector<item *> all_items( bool need_charges = false ) const;
+
 
         bool has_charges( const itype_id &it, int quantity,
                           const std::function<bool( const item & )> &filter = return_true<item> ) const;
@@ -1820,8 +1860,6 @@ class Character : public Creature, public location_visitable<Character>
         void on_item_wear( const item &it );
         /** Called when an item is taken off */
         void on_item_takeoff( const item &it );
-        /** Called when an item is washed */
-        void on_worn_item_washed( const item &it );
         /** Called when effect intensity has been changed */
         void on_effect_int_change( const efftype_id &effect_type, int intensity,
                                    const bodypart_str_id &bp ) override;
@@ -2399,4 +2437,4 @@ bool has_psy_protection( const Character &c, int partial_chance );
 /** Returns value of speedydex bonus if enabled */
 int get_speedydex_bonus( const int dex );
 
-#endif // CATA_SRC_CHARACTER_H
+

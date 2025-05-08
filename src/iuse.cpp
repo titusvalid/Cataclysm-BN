@@ -237,7 +237,6 @@ static const itype_id itype_cig( "cig" );
 static const itype_id itype_cigar( "cigar" );
 static const itype_id itype_cow_bell( "cow_bell" );
 static const itype_id itype_data_card( "data_card" );
-static const itype_id itype_detergent( "detergent" );
 static const itype_id itype_e_handcuffs( "e_handcuffs" );
 static const itype_id itype_ecig( "ecig" );
 static const itype_id itype_fire( "fire" );
@@ -270,7 +269,6 @@ static const itype_id itype_rebreather_xl_on( "rebreather_xl_on" );
 static const itype_id itype_rmi2_corpse( "rmi2_corpse" );
 static const itype_id itype_smart_phone( "smart_phone" );
 static const itype_id itype_smartphone_music( "smartphone_music" );
-static const itype_id itype_soap( "soap" );
 static const itype_id itype_soldering_iron( "soldering_iron" );
 static const itype_id itype_spiral_stone( "spiral_stone" );
 static const itype_id itype_thermometer( "thermometer" );
@@ -454,19 +452,6 @@ void remove_radio_mod( item &it, player &p )
     it.unset_flag( flag_RADIOCARITEM );
 }
 
-// Checks that the player does not have an active item with LITCIG flag.
-static bool check_litcig( player &u )
-{
-    auto cigs = u.items_with( []( const item & it ) {
-        return it.is_active() && it.has_flag( flag_LITCIG );
-    } );
-    if( cigs.empty() ) {
-        return true;
-    }
-    u.add_msg_if_player( m_info, _( "You're already smoking a %s!" ), cigs[0]->tname() );
-    return false;
-}
-
 /* iuse methods return the number of charges expended, which is usually it->charges_to_use().
  * Some items that don't normally use charges return 1 to indicate they're used up.
  * Regardless, returning 0 indicates the item has not been used up,
@@ -541,108 +526,6 @@ int iuse::alcohol_medium( player *p, item *it, bool, const tripoint & )
 int iuse::alcohol_strong( player *p, item *it, bool, const tripoint & )
 {
     return alcohol( *p, *it, 2 );
-}
-
-/**
- * Entry point for intentional bodily intake of smoke via paper wrapped one
- * time use items: cigars, cigarettes, etc.
- *
- * @param p Player doing the smoking
- * @param it the item to be smoked.
- * @return Charges used in item smoked
- */
-int iuse::smoking( player *p, item *it, bool, const tripoint & )
-{
-    bool hasFire = ( p->has_charges( itype_fire, 1 ) );
-
-    // make sure we're not already smoking something
-    if( !check_litcig( *p ) ) {
-        return 0;
-    }
-
-    if( !hasFire ) {
-        p->add_msg_if_player( m_info, _( "You don't have anything to light it with!" ) );
-        return 0;
-    }
-
-    detached_ptr<item> cig;
-    if( it->typeId() == itype_cig ) {
-        cig = item::spawn( "cig_lit", calendar::turn );
-        cig->item_counter = to_turns<int>( 4_minutes );
-        p->mod_stored_kcal( 30 );
-        p->mod_thirst( 2 );
-    } else if( it->typeId() == itype_handrolled_cig ) {
-        // This transforms the hand-rolled into a normal cig, which isn't exactly
-        // what I want, but leaving it for now.
-        cig = item::spawn( "cig_lit", calendar::turn );
-        cig->item_counter = to_turns<int>( 4_minutes );
-        p->mod_thirst( 2 );
-        p->mod_stored_kcal( 30 );
-    } else if( it->typeId() == itype_cigar ) {
-        cig = item::spawn( "cigar_lit", calendar::turn );
-        cig->item_counter = to_turns<int>( 12_minutes );
-        p->mod_thirst( 3 );
-        p->mod_stored_kcal( 40 );
-    } else if( it->typeId() == itype_joint ) {
-        cig = item::spawn( "joint_lit", calendar::turn );
-        cig->item_counter = to_turns<int>( 4_minutes );
-        p->mod_stored_kcal( -40 );
-        p->mod_thirst( 6 );
-        if( p->get_painkiller() < 5 ) {
-            p->set_painkiller( ( p->get_painkiller() + 3 ) * 2 );
-        }
-    } else {
-        p->add_msg_if_player( m_bad,
-                              _( "Please let the devs know you should be able to smoke a %s but the smoking code does not know how." ),
-                              it->tname() );
-        return 0;
-    }
-    // If we're here, we better have a cig to light.
-    p->use_charges_if_avail( itype_fire, 1 );
-    cig->activate();
-    p->add_msg_if_player( m_neutral, _( "You light a %s." ), cig->tname() );
-
-    p->i_add( std::move( cig ) );
-    // Parting messages
-    if( it->typeId() == itype_joint ) {
-        // Would group with the joint, but awkward to mutter before lighting up.
-        if( one_in( 5 ) ) {
-            weed_msg( *p );
-        }
-    }
-    if( p->get_effect_dur( effect_cig ) > 10_minutes * ( p->addiction_level(
-                add_type::CIG ) + 1 ) ) {
-        p->add_msg_if_player( m_bad, _( "Ugh, too much smoke… you feel nasty." ) );
-    }
-
-    return it->type->charges_to_use();
-}
-
-int iuse::ecig( player *p, item *it, bool, const tripoint & )
-{
-    if( it->typeId() == itype_ecig ) {
-        p->add_msg_if_player( m_neutral, _( "You take a puff from your electronic cigarette." ) );
-    } else if( it->typeId() == itype_advanced_ecig ) {
-        if( p->has_charges( itype_nicotine_liquid, 1 ) ) {
-            p->add_msg_if_player( m_neutral,
-                                  _( "You inhale some vapor from your advanced electronic cigarette." ) );
-            p->use_charges( itype_nicotine_liquid, 1 );
-            item *dummy_ecig = item::spawn_temporary( "ecig", calendar::turn );
-            p->consume_effects( *dummy_ecig );
-        } else {
-            p->add_msg_if_player( m_info, _( "You don't have any nicotine liquid!" ) );
-            return 0;
-        }
-    }
-
-    p->mod_thirst( 1 );
-    p->mod_stored_kcal( 10 );
-    p->add_effect( effect_cig, 10_minutes );
-    if( p->get_effect_dur( effect_cig ) > 10_minutes * ( p->addiction_level(
-                add_type::CIG ) + 1 ) ) {
-        p->add_msg_if_player( m_bad, _( "Ugh, too much nicotine… you feel nasty." ) );
-    }
-    return it->type->charges_to_use();
 }
 
 int iuse::antibiotic( player *p, item *it, bool, const tripoint & )
@@ -812,30 +695,6 @@ int iuse::anticonvulsant( player *p, item *it, bool, const tripoint & )
     if( p->has_effect( effect_shakes ) ) {
         p->remove_effect( effect_shakes );
         p->add_msg_if_player( m_good, _( "You stop shaking." ) );
-    }
-    return it->type->charges_to_use();
-}
-
-int iuse::weed_cake( player *p, item *it, bool, const tripoint & )
-{
-    p->add_msg_if_player(
-        _( "You start scarfing down the delicious cake.  It tastes a little funny though…" ) );
-    time_duration duration = 12_minutes;
-    if( p->has_trait( trait_TOLERANCE ) ) {
-        duration = 9_minutes;
-    }
-    if( p->has_trait( trait_LIGHTWEIGHT ) ) {
-        duration = 15_minutes;
-    }
-    p->mod_stored_kcal( -20 );
-    p->mod_thirst( 6 );
-    if( p->get_painkiller() < 5 ) {
-        p->set_painkiller( ( p->get_painkiller() + 3 ) * 2 );
-    }
-    p->add_effect( effect_weed_high, duration );
-    p->moves -= 100;
-    if( one_in( 5 ) ) {
-        weed_msg( *p );
     }
     return it->type->charges_to_use();
 }
@@ -1113,13 +972,6 @@ int iuse::plantblech( player *p, item *it, bool, const tripoint &pos )
     } else {
         return blech( p, it, true, pos );
     }
-}
-
-int iuse::chew( player *p, item *it, bool, const tripoint & )
-{
-    // TODO: Add more effects?
-    p->add_msg_if_player( _( "You chew your %s." ), it->tname() );
-    return it->type->charges_to_use();
 }
 
 // Helper to handle the logic of removing some random mutations.
@@ -2354,28 +2206,14 @@ int iuse::hammer( player *p, item *it, bool, const tripoint & )
         p->add_msg_if_player( m_info, _( "You cannot do that while mounted." ) );
         return 0;
     }
-    const std::set<ter_id> allowed_ter_id {
-        t_fence,
-        t_window_reinforced,
-        t_window_reinforced_noglass,
-        t_window_boarded,
-        t_window_boarded_noglass,
-        t_door_boarded,
-        t_door_boarded_damaged,
-        t_door_boarded_peep,
-        t_door_boarded_damaged_peep,
-        t_rdoor_boarded,
-        t_rdoor_boarded_damaged
-    };
 
-    const std::function<bool( const tripoint & )> f = [&allowed_ter_id]( const tripoint & pnt ) {
+    const std::function<bool( const tripoint & )> f = []( const tripoint & pnt ) {
         if( pnt == g->u.pos() ) {
             return false;
         }
         const ter_id ter = g->m.ter( pnt );
 
-        const bool is_allowed = allowed_ter_id.find( ter ) != allowed_ter_id.end();
-        return is_allowed;
+        return ( ter->nail_pull_result != ter_str_id::NULL_ID() );
     };
 
     const std::optional<tripoint> pnt_ = choose_adjacent_highlight(
@@ -2384,7 +2222,6 @@ int iuse::hammer( player *p, item *it, bool, const tripoint & )
         return 0;
     }
     const tripoint &pnt = *pnt_;
-    const ter_id type = g->m.ter( pnt );
     if( !f( pnt ) ) {
         if( pnt == p->pos() ) {
             p->add_msg_if_player( _( "You try to hit yourself with the hammer." ) );
@@ -2393,13 +2230,7 @@ int iuse::hammer( player *p, item *it, bool, const tripoint & )
             p->add_msg_if_player( m_info, _( "You can't pry that." ) );
         }
         return 0;
-    }
-
-    if( type == t_fence || type == t_window_boarded || type == t_window_boarded_noglass ||
-        type == t_window_reinforced || type == t_window_reinforced_noglass ||
-        type == t_door_boarded || type == t_door_boarded_damaged ||
-        type == t_rdoor_boarded || type == t_rdoor_boarded_damaged ||
-        type == t_door_boarded_peep || type == t_door_boarded_damaged_peep ) {
+    } else {
         // pry action
         std::unique_ptr<player_activity> act = std::make_unique<player_activity>( ACT_PRY_NAILS,
                                                to_moves<int>( 30_seconds ),
@@ -2407,8 +2238,6 @@ int iuse::hammer( player *p, item *it, bool, const tripoint & )
         act->placement = pnt;
         p->assign_activity( std::move( act ) );
         return it->type->charges_to_use();
-    } else {
-        return 0;
     }
 }
 
@@ -4835,7 +4664,7 @@ auto iuse::mop( player *p, item *it, bool, const tripoint & ) -> int
         p->add_msg_if_player( m_info, _( "You mop up the spill." ) );
     }
 
-    p->moves -= 15 * mopped_tiles;
+    p->moves -= 150 * mopped_tiles;
     return it->type->charges_to_use();
 }
 
@@ -6028,8 +5857,7 @@ static bool einkpc_download_memory_card( player &p, item &eink, item &mc )
                     const int old_quality = atoi( chq );
 
                     if( quality > old_quality ) {
-                        chq = string_format( "%d", quality ).data();
-                        photos[strqpos] = *chq;
+                        photos[strqpos] = string_format( "%d", quality )[0];
                     }
                 }
 
@@ -7297,7 +7125,7 @@ int iuse::camera( player *p, item *it, bool, const tripoint & )
                               e.c_str() );
                 }
 
-                const bool selfie = std::find( player_vec.begin(), player_vec.end(), p ) != player_vec.end();
+                const bool selfie = std::ranges::find( player_vec, p ) != player_vec.end();
 
                 if( selfie ) {
                     p->add_msg_if_player( _( "You took a selfie." ) );
@@ -8425,7 +8253,7 @@ static tripoint_abs_ms process_map_connection( const Character *who, cable_state
 static cable_state cable_menu( Character *who, cable_state &state, cable_state &state_other )
 {
     const bool has_bio_cable = !who->get_remote_fueled_bionic().is_empty();
-    const bool has_solar_pack = who->worn_with_flag( flag_SOLARPACK );
+    // const bool has_solar_pack = who->worn_with_flag( flag_SOLARPACK );
     const bool has_solar_pack_on = who->worn_with_flag( flag_SOLARPACK_ON );
     //const bool wearing_solar_pack = has_solar_pack || has_solar_pack_on;
     const bool has_ups = who->has_charges( itype_UPS_off, 1 ) ||
@@ -9102,141 +8930,6 @@ int iuse::ladder( player *p, item *, bool, const tripoint & )
     return 1;
 }
 
-washing_requirements washing_requirements_for_volume( const units::volume &vol )
-{
-    int water = divide_round_up( vol, 125_ml );
-    int cleanser = divide_round_up( vol, 1_liter );
-    int time = to_moves<int>( 10_seconds * ( vol / 250_ml ) );
-    return { water, cleanser, time };
-}
-
-static int wash_items( player *p, bool soft_items, bool hard_items );
-
-int iuse::wash_soft_items( player *p, item *, bool, const tripoint & )
-{
-    if( !character_funcs::can_see_fine_details( *p ) ) {
-        p->add_msg_if_player( _( "You can't see to do that!" ) );
-        return 0;
-    }
-    if( p->is_mounted() ) {
-        p->add_msg_if_player( m_info, _( "You cannot do that while mounted." ) );
-        return 0;
-    }
-    // Check that player isn't over volume limit as this might cause it to break... this is a hack.
-    // TODO: find a better solution.
-    if( p->volume_capacity() < p->volume_carried() ) {
-        p->add_msg_if_player( _( "You're carrying too much to clean anything." ) );
-        return 0;
-    }
-
-    wash_items( p, true, false );
-    return 0;
-}
-
-int iuse::wash_hard_items( player *p, item *, bool, const tripoint & )
-{
-    if( !character_funcs::can_see_fine_details( *p ) ) {
-        p->add_msg_if_player( _( "You can't see to do that!" ) );
-        return 0;
-    }
-    if( p->is_mounted() ) {
-        p->add_msg_if_player( m_info, _( "You cannot do that while mounted." ) );
-        return 0;
-    }
-    // Check that player isn't over volume limit as this might cause it to break... this is a hack.
-    // TODO: find a better solution.
-    if( p->volume_capacity() < p->volume_carried() ) {
-        p->add_msg_if_player( _( "You're carrying too much to clean anything." ) );
-        return 0;
-    }
-
-    wash_items( p, false, true );
-    return 0;
-}
-
-int iuse::wash_all_items( player *p, item *, bool, const tripoint & )
-{
-    if( !character_funcs::can_see_fine_details( *p ) ) {
-        p->add_msg_if_player( _( "You can't see to do that!" ) );
-        return 0;
-    }
-
-    // Check that player isn't over volume limit as this might cause it to break... this is a hack.
-    // TODO: find a better solution.
-    if( p->volume_capacity() < p->volume_carried() ) {
-        p->add_msg_if_player( _( "You're carrying too much to clean anything." ) );
-        return 0;
-    }
-
-    wash_items( p, true, true );
-    return 0;
-}
-
-int wash_items( player *p, bool soft_items, bool hard_items )
-{
-    if( p->is_mounted() ) {
-        p->add_msg_if_player( m_info, _( "You cannot do that while mounted." ) );
-        return 0;
-    }
-    p->inv_restack( );
-    const inventory &crafting_inv = p->crafting_inventory();
-
-    auto is_liquid = []( const item & it ) {
-        return it.made_of( LIQUID ) || it.contents_made_of( LIQUID );
-    };
-    int available_water = std::max(
-                              crafting_inv.charges_of( itype_water, INT_MAX, is_liquid ),
-                              crafting_inv.charges_of( itype_water_clean, INT_MAX, is_liquid )
-                          );
-    int available_cleanser = std::max( crafting_inv.charges_of( itype_soap ),
-                                       crafting_inv.charges_of( itype_detergent ) );
-
-    iuse_locations to_clean = game_menus::inv::multiwash( *p, available_water, available_cleanser,
-                              soft_items,
-                              hard_items );
-
-    if( to_clean.empty() ) {
-        return 0;
-    }
-
-    // Determine if we have enough water and cleanser for all the items.
-    units::volume total_volume = 0_ml;
-    for( const iuse_location &iloc : to_clean ) {
-        if( !iloc.loc ) {
-            p->add_msg_if_player( m_info, _( "Never mind." ) );
-            return 0;
-        }
-        item &i = *iloc.loc;
-        total_volume += i.volume() * iloc.count / i.count();
-    }
-
-    washing_requirements required = washing_requirements_for_volume( total_volume );
-
-    if( !crafting_inv.has_charges( itype_water, required.water, is_liquid ) &&
-        !crafting_inv.has_charges( itype_water_clean, required.water, is_liquid ) ) {
-        p->add_msg_if_player( _( "You need %1$i charges of water or clean water to wash these items." ),
-                              required.water );
-        return 0;
-    } else if( !crafting_inv.has_charges( itype_soap, required.cleanser ) &&
-               !crafting_inv.has_charges( itype_detergent, required.cleanser ) ) {
-        p->add_msg_if_player( _( "You need %1$i charges of cleansing agent to wash these items." ),
-                              required.cleanser );
-        return 0;
-    }
-
-    const std::vector<npc *> helpers = character_funcs::get_crafting_helpers( *p, 3 );
-    for( const npc *np : helpers ) {
-        add_msg( m_info, _( "%s helps with this task…" ), np->name );
-    }
-    required.time = required.time * ( 10 - helpers.size() ) / 10;
-
-    // Assign the activity values.
-    p->assign_activity( std::make_unique<player_activity>( std::make_unique<wash_activity_actor>
-                        ( to_clean,
-                          required.time ) ) );
-
-    return 0;
-}
 
 int iuse::weak_antibiotic( player *p, item *it, bool, const tripoint & )
 {

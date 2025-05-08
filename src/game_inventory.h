@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CATA_SRC_GAME_INVENTORY_H
-#define CATA_SRC_GAME_INVENTORY_H
 
 #include <functional>
 #include <list>
@@ -59,15 +57,6 @@ void swap_letters( player &p );
  */
 drop_locations multidrop( player &p );
 
-/**
- * Select items to wash.
- * @param water Available water
- * @param cleanser Available cleanser
- * @param do_soft Whether to allow soft items
- * @param do_hard Whether to allow hard items
- * @return A list of selected item_locations with quantities.
- */
-iuse_locations multiwash( Character &ch, int water, int cleanser, bool do_soft, bool do_hard );
 
 /** Consuming an item. */
 item *consume( player &p );
@@ -117,4 +106,4 @@ item *sterilize_cbm( player &p );
 
 } // namespace game_menus
 
-#endif // CATA_SRC_GAME_INVENTORY_H
+

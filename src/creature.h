@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CATA_SRC_CREATURE_H
-#define CATA_SRC_CREATURE_H
 
 #include <climits>
 #include <map>
@@ -1038,4 +1036,4 @@ class Creature
         bool underwater = false;
 };
 
-#endif // CATA_SRC_CREATURE_H
+

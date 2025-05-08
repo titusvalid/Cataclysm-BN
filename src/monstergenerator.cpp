@@ -2,6 +2,7 @@
 #include "monstergenerator.h" // IWYU pragma: associated
 
 #include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <optional>
 #include <set>
@@ -28,7 +29,7 @@
 #include "monster.h"
 #include "mtype.h"
 #include "options.h"
-#include "pathfinding.h"
+#include "legacy_pathfinding.h"
 #include "rng.h"
 #include "string_id.h"
 #include "translations.h"
@@ -95,6 +96,7 @@ std::string enum_to_string<m_flag>( m_flag data )
         case MF_FLIES: return "FLIES";
         case MF_AQUATIC: return "AQUATIC";
         case MF_SWIMS: return "SWIMS";
+        case MF_UNUSED_76: return "UNUSED_76";
         case MF_FISHABLE: return "FISHABLE";
         case MF_ATTACKMON: return "ATTACKMON";
         case MF_ANIMAL: return "ANIMAL";
@@ -148,7 +150,6 @@ std::string enum_to_string<m_flag>( m_flag data )
         case MF_CBM_OP: return "CBM_OP";
         case MF_CBM_TECH: return "CBM_TECH";
         case MF_CBM_SUBS: return "CBM_SUBS";
-        case MF_FILTHY: return "FILTHY";
         case MF_SWARMS: return "SWARMS";
         case MF_CLIMBS: return "CLIMBS";
         case MF_GROUP_MORALE: return "GROUP_MORALE";
@@ -1134,10 +1135,11 @@ void mtype::setup_pathfinding_deferred()
                 // multiplied by 0.5 because legacy pathfinding's max_length is scaled by 2.
                 this->route_settings.max_f_coeff = 0.5 *
                                                    static_cast<float>( max_length ) /
-                                                   static_cast<float>( this->route_settings.max_dist );
+                                                   this->route_settings.max_dist;
             }
         }
     }
+    this->path_settings.move_cost_coeff = this->speed != 0 ? 1.0 / this->speed : INFINITY;
 
     // Entirely new settings that are not present in legacy pathfinding
     {
@@ -1360,8 +1362,8 @@ void mtype::add_special_attack( const JsonObject &obj, const std::string &src )
 
     if( special_attacks.contains( new_attack->id ) ) {
         special_attacks.erase( new_attack->id );
-        const auto iter = std::find( special_attacks_names.begin(), special_attacks_names.end(),
-                                     new_attack->id );
+        const auto iter = std::ranges::find( special_attacks_names,
+                                             new_attack->id );
         if( iter != special_attacks_names.end() ) {
             special_attacks_names.erase( iter );
         }
@@ -1386,7 +1388,7 @@ void mtype::add_special_attack( JsonArray inner, const std::string & )
 
     if( special_attacks.contains( name ) ) {
         special_attacks.erase( name );
-        const auto iter = std::find( special_attacks_names.begin(), special_attacks_names.end(), name );
+        const auto iter = std::ranges::find( special_attacks_names, name );
         if( iter != special_attacks_names.end() ) {
             special_attacks_names.erase( iter );
         }
@@ -1425,7 +1427,7 @@ void mtype::remove_special_attacks( const JsonObject &jo, const std::string &mem
 {
     for( const std::string &name : jo.get_tags( member_name ) ) {
         special_attacks.erase( name );
-        const auto iter = std::find( special_attacks_names.begin(), special_attacks_names.end(), name );
+        const auto iter = std::ranges::find( special_attacks_names, name );
         if( iter != special_attacks_names.end() ) {
             special_attacks_names.erase( iter );
         }

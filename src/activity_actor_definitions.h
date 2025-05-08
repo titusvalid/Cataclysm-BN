@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CATA_SRC_ACTIVITY_ACTOR_DEFINITIONS_H
-#define CATA_SRC_ACTIVITY_ACTOR_DEFINITIONS_H
 
 #include "activity_actor.h"
 
@@ -13,8 +11,6 @@
 #include "locations.h"
 #include "memory_fast.h"
 #include "pickup_token.h"
-#include "location_ptr.h"
-#include "locations.h"
 #include "construction_partial.h"
 #include "point.h"
 #include "type_id.h"
@@ -241,13 +237,12 @@ class disassemble_activity_actor : public activity_actor
         activity_id get_type() const override {
             return activity_id( "ACT_DISASSEMBLE" );
         }
-        void recalc_all_moves( player_activity &act, Character &who ) override;
+        void calc_all_moves( player_activity &act, Character &who ) override;
         void start( player_activity &act, Character &who ) override;
         void do_turn( player_activity &, Character & ) override;
         void finish( player_activity &act, Character &who ) override;
 
-        float calc_bench_factor( const Character &who,
-                                 const std::optional<bench_loc> &bench ) const override;
+        void adjust_bench_multiplier( bench_loc &bench, const metric &metrics ) const override;
 
         void serialize( JsonOut &jsout ) const override;
         static std::unique_ptr<activity_actor> deserialize( JsonIn &jsin );
@@ -577,28 +572,6 @@ class throw_activity_actor : public activity_actor
         static std::unique_ptr<activity_actor> deserialize( JsonIn &jsin );
 };
 
-class wash_activity_actor : public activity_actor
-{
-    private:
-        iuse_locations targets;
-        int moves_total = 0;
-
-    public:
-        wash_activity_actor() = default;
-        wash_activity_actor( const iuse_locations &targets, int moves_total ) :
-            targets( targets ), moves_total( moves_total ) {};
-
-        activity_id get_type() const override {
-            return activity_id( "ACT_WASH" );
-        }
-
-        void start( player_activity &act, Character & ) override;
-        void do_turn( player_activity &, Character & ) override;
-        void finish( player_activity &act, Character &who ) override;
-
-        void serialize( JsonOut &jsout ) const override;
-        static std::unique_ptr<activity_actor> deserialize( JsonIn &jsin );
-};
 
 class oxytorch_activity_actor : public activity_actor
 {
@@ -644,7 +617,7 @@ class construction_activity_actor : public activity_actor
             return activity_id( "ACT_BUILD" );
         }
 
-        void recalc_all_moves( player_activity &act, Character &who ) override;
+        void calc_all_moves( player_activity &act, Character &who ) override;
 
         void start( player_activity &act, Character &who ) override;
         void do_turn( player_activity &act, Character &who ) override;
@@ -664,7 +637,7 @@ class assist_activity_actor : public activity_actor
             return activity_id( "ACT_ASSIST" );
         }
 
-        void recalc_all_moves( player_activity & /*act*/, Character &/*who*/ ) override {};
+        void calc_all_moves( player_activity & /*act*/, Character &/*who*/ ) override {};
 
         void start( player_activity &act, Character &who ) override;
         void do_turn( player_activity &/*act*/, Character &/*who*/ ) override {};
@@ -675,4 +648,3 @@ class assist_activity_actor : public activity_actor
 
 };
 
-#endif // CATA_SRC_ACTIVITY_ACTOR_DEFINITIONS_H

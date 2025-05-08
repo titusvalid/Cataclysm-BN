@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CATA_SRC_ITEM_H
-#define CATA_SRC_ITEM_H
 
 #include <climits>
 #include <cstdint>
@@ -575,6 +573,9 @@ class item : public location_visitable<item>, public game_object<item>
         /** Burns the item. Returns true if the item was destroyed. */
         bool burn( fire_data &frd );
 
+        // Returns the category id of this item as a string.
+        const std::string &get_category_id() const;
+
         // Returns the category of this item.
         const item_category &get_category() const;
 
@@ -769,7 +770,7 @@ class item : public location_visitable<item>, public game_object<item>
                                               std::vector<detached_ptr<item>> &used,
                                               const std::function<bool( const item & )> &filter = return_true<item> );
 
-        /** Permits filthy components, should only be used as a helper in creating filters */
+        /** should only be used as a helper in creating filters */
         bool allow_crafting_component() const;
 
         /**
@@ -815,6 +816,10 @@ class item : public location_visitable<item>, public game_object<item>
                                                std::string *err = nullptr ) const;
         int get_remaining_capacity_for_liquid( const item &liquid, const Character &p,
                                                std::string *err = nullptr ) const;
+        /**
+         * How many charges of a given item id this container can hold.
+         */
+        int get_remaining_capacity_for_id( const itype_id &liquid, bool allow_bucket ) const;
         /**
          * It returns the total capacity (volume) of the container for liquids.
          */
@@ -1193,9 +1198,6 @@ class item : public location_visitable<item>, public game_object<item>
          * for other players. The player is identified by its id.
          */
         void mark_as_used_by_player( const player &p );
-        /** Marks the item as filthy, so characters with squeamish trait can't wear it.
-        */
-        bool is_filthy() const;
         /**
          * This is called once each turn. It's usually only useful for active items,
          * but can be called for inactive items without problems.
@@ -1509,6 +1511,10 @@ class item : public location_visitable<item>, public game_object<item>
         void erase_var( const std::string &name );
         /** Removes all item variables. */
         void clear_vars();
+        /** Adds child items to the contents of this one. */
+        void add_item_with_id( const itype_id &itype, int count = 1 );
+        /** Checks if this item contains an item with itype. */
+        bool has_item_with_id( const itype_id &itype ) const;
         /*@}*/
 
         /**
@@ -2472,18 +2478,9 @@ bool item_ptr_compare_by_charges( const item *left, const item *right );
  */
 inline bool is_crafting_component( const item &component )
 {
-    return ( component.allow_crafting_component() || component.count_by_charges() ) &&
-           !component.is_filthy();
-}
-
-/**
- * This is used in recipes, all other cases use is_crafting_component instead. This allows
- * filthy components to be filtered out in a different manner that allows exceptions.
- */
-inline bool is_crafting_component_allow_filthy( const item &component )
-{
     return ( component.allow_crafting_component() || component.count_by_charges() );
 }
+
 
 namespace charge_removal_blacklist
 {
@@ -2645,4 +2642,4 @@ struct cable_connection_data {
     }
 };
 
-#endif // CATA_SRC_ITEM_H
+
