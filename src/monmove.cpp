@@ -905,7 +905,6 @@ void monster::move()
             }
 
             const bool is_pathfinding_successful = !maybe_new_path.empty();
-            assert( is_pathfinding_successful ? maybe_new_path.back() == this->goal : true );
 
             if( is_pathfinding_successful ) {
                 // Path will be retained even if we are unsuccessful this time

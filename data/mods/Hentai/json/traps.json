@@ -1,0 +1,53 @@
+[
+	{
+		"type" : "trap",
+		"id": "tr_magic_circle_none",
+		"name" : "magic circle",
+		"color" : "light_gray",
+		"symbol" : "O",
+		"visibility" : 2,
+		"avoidance" : 10,
+		"difficulty" : 99,
+		"action" : "none",
+		"benign" : true
+	},
+	{
+		"type" : "trap",
+		"//" : "魔法陣（召喚）",
+		"id": "tr_magic_circle_summon",
+		"name" : "magic circle (magenta)",
+		"color" : "magenta",
+		"symbol" : "O",
+		"visibility" : 200,
+		"avoidance" : 10,
+		"difficulty" : 99,
+		"action" : "none",
+		"benign" : true
+	},
+	{
+		"type" : "trap",
+		"//" : "魔法陣（火炎）",
+		"id": "tr_magic_circle_fire",
+		"name" : "magic circle (red)",
+		"color" : "red",
+		"symbol" : "O",
+		"visibility" : 2,
+		"avoidance" : 10,
+		"difficulty" : 99,
+		"action" : "none",
+		"benign" : true
+	},
+	{
+		"type" : "trap",
+
+		"id": "tr_magic_circle_drain",
+		"name" : "magic circle (green)",
+		"color" : "light_green",
+		"symbol" : "O",
+		"visibility" : 8,
+		"avoidance" : 10,
+		"difficulty" : 99,
+		"//" : "trapfunc.cppに用意されてるけど使われてない（と思われる）処理。なんか面白そうなので、本体側で完全に没になるまでは使ってみる。",
+		"action" : "drain"
+	}
+]

@@ -1,0 +1,43 @@
+[
+	{
+		"id": "used_condom",
+		"type": "COMESTIBLE",
+		"category": "other",
+		"name": "used condom",
+		"tool": "null",
+		"ammo": "null",
+		"description": "Used contraceptive device, with some liquid still inside. It's just a rubbish now.",
+		"weight": 1,
+		"volume": 0,
+		"bashing": 1,
+		"cutting": 0,
+		"to_hit": -3,
+		"price": 100,
+		"rigid": false,
+		"material": [ "plastic" ],
+		"symbol": ",",
+		"color": "pink",
+		"contains": 1,
+		"seals": true,
+		"watertight": true
+	},
+	{
+		"id": "medieval_bottle",
+		"type": "CONTAINER",
+		"category": "other",
+		"name": "vial (250ml)",
+		"description": "An old-fashioned vial tightly sealed with a cork.  Can hold 250ml.",
+		"weight": 48,
+		"volume": 1,
+		"price": 400,
+		"to_hit": 1,
+		"bashing": 3,
+		"material": "glass",
+		"symbol": ")",
+		"color": "light_cyan",
+		"contains": 1,
+		"seals": true,
+		"watertight": true,
+		"qualities": [ [ "BOIL", 1 ] ]
+	}
+]

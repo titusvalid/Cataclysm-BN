@@ -1,0 +1,152 @@
+[
+	{
+		"type" : "recipe",
+		"result": "mutagen_human",
+		"category": "CC_CHEM",
+		"subcategory": "CSC_CHEM_MUTAGEN",
+		"skill_used": "cooking",
+		"skills_required": [ "firstaid", 1 ],
+		"difficulty": 9,
+		"time": 10000,
+		"book_learn": [ [ "recipe_hentai", 8 ] ],
+		"qualities":[
+			{ "id": "CHEM", "level": 3 }
+		], "tools": [
+			[ [ "surface_heat", 25, "LIST" ] ]
+		],
+		"components": [
+			[
+				[ "mutagen", 1 ]
+			],
+			[
+				[ "human_flesh", 3 ],
+				[ "blood", 5 ],
+				[ "h_semen", 5 ]
+			],
+			[
+				[ "ammonia", 1 ],
+				[ "lye_powder", 100 ]
+			]
+		]
+	},
+	{
+		"type" : "recipe",
+		"result": "iv_mutagen_human",
+		"category": "CC_CHEM",
+		"subcategory": "CSC_CHEM_MUTAGEN",
+		"skill_used": "cooking",
+		"skills_required": [ "firstaid", 3 ],
+		"difficulty": 10,
+		"time": 15000,
+		"book_learn": [ [ "recipe_hentai", 8 ] ],
+		"qualities":[
+			{ "id": "CHEM", "level": 3 }
+		], "tools": [
+			[ [ "surface_heat", 37, "LIST" ] ]
+		],
+		"components": [
+			[
+				[ "mutagen_human", 2 ]
+			]
+		]
+	},
+	{
+		"type" : "recipe",
+		"result": "mutagen_fiend",
+		"category": "CC_CHEM",
+		"subcategory": "CSC_CHEM_MUTAGEN",
+		"skill_used": "cooking",
+		"skills_required": [ "firstaid", 1 ],
+		"difficulty": 9,
+		"time": 10000,
+		"book_learn": [ [ "recipe_hentai", 8 ], [ "dictionnaire_finfernal", 8] ],
+		"qualities":[
+			{ "id": "CHEM", "level": 3 }
+		], "tools": [
+			[ [ "surface_heat", 25, "LIST" ] ]
+		],
+		"components": [
+			[
+				[ "mutagen", 1 ]
+			],
+			[
+				[ "human_flesh", 3 ],
+				[ "blood", 5 ],
+				[ "d_cum", 5 ]
+			],
+			[
+				[ "ammonia", 1 ],
+				[ "lye_powder", 100 ]
+			]
+		]
+	},
+	{
+		"type" : "recipe",
+		"result": "iv_mutagen_fiend",
+		"category": "CC_CHEM",
+		"subcategory": "CSC_CHEM_MUTAGEN",
+		"skill_used": "cooking",
+		"skills_required": [ "firstaid", 3 ],
+		"difficulty": 10,
+		"time": 15000,
+		"book_learn": [ [ "recipe_hentai", 8 ] ],
+		"qualities":[
+			{ "id": "CHEM", "level": 3 }
+		], "tools": [
+			[ [ "surface_heat", 37, "LIST" ] ]
+		],
+		"components": [
+			[
+				[ "mutagen_fiend", 2 ]
+			]
+		]
+	},
+	{
+		"result": "holy_choker",
+		"type": "recipe",
+		"category": "CC_ARMOR",
+		"subcategory": "CSC_ARMOR_OTHER",
+		"skill_used": "fabrication",
+		"skills_required": [ ["fabrication", 5], ["tailor", 3] ],
+		"difficulty": 6,
+		"time": 120000,
+		"book_learn": [ [ "dictionnaire_finfernal", 3 ] ],
+		"using": [ [ "sewing_standard", 5 ] ],
+		"qualities": [
+			{ "id": "ANVIL", "level": 3 },
+			{ "id": "HAMMER", "level": 3 },
+			{ "id": "CHISEL", "level": 3 }
+		],
+		"tools": [
+			[ [ "tongs", -1 ] ],
+			[ [ "swage", -1 ] ],
+			[ [ "forge", 50 ], [ "oxy_torch", 10 ] ]
+		],
+		"components": [
+			[ [ "leather", 2 ] ],
+			[ [ "silver_small", 15 ] ]
+		]
+	},
+
+	{
+		"type" : "recipe",
+		"result": "bio_onahole",
+		"category": "CC_OTHER",
+		"subcategory": "CSC_OTHER_TOOLS",
+		"skill_used": "cooking",
+		"difficulty": 6,
+		"time": 20000,
+		"book_learn": [ [ "recipe_hentai", 6 ] ],
+		"qualities" : [
+			{ "id": "CHEM", "level": 3 }
+		], "components": [
+			[
+				[ "h_semen", 20 ]
+			],
+			[
+				[ "slime_scrap", 10 ]
+			]
+		]
+	}
+
+]

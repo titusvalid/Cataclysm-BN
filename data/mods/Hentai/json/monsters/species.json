@@ -1,0 +1,31 @@
+[
+	{
+	  "type": "SPECIES",
+	  "id": "FIEND",
+	  "name": "fiend"
+	},
+	{
+	  "type": "SPECIES",
+	  "id": "CUBI",
+	  "name": "cubi", 
+	  "anger_triggers": ["FIRE", "FRIEND_ATTACKED"],
+	  "fear_triggers": ["HURT", "FRIEND_DIED"],
+	  "placate_triggers": ["PLAYER_CLOSE", "PLAYER_WEAK", "STALK"]
+	},
+	{
+	  "//": "These species are used to set monster gender",
+	  "type": "SPECIES",
+	  "id": "MALE",
+	  "name": "male"
+	},
+	{
+	  "type": "SPECIES",
+	  "id": "FEMALE",
+	  "name": "female"
+	},
+	{
+	  "type": "SPECIES",
+	  "id": "HERM",
+	  "name": "hermaphrodite"
+	}
+  ]

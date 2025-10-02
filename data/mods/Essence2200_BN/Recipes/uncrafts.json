@@ -1,0 +1,338 @@
+[
+  {
+    "result": "Foxmagicsoldering",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 1000 ] ] ]
+  },
+  {
+    "result": "Foxmagicwelder",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 1000 ] ] ]
+  },
+  {
+    "result": "Foxmagiclighter",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 500 ] ] ]
+  },
+  {
+    "result": "Foxnoviceartificing",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 1000 ] ] ]
+  },
+  {
+    "result": "Foxintermediateartificing",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 2500 ] ] ]
+  },
+  {
+    "result": "Foxadvancedartificing",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 5000 ] ] ]
+  },
+  {
+    "result": "Foxfleshmanipulation",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 1000 ] ] ]
+  },
+  {
+    "result": "Foxjackingtool",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 1000 ] ] ]
+  },
+  {
+    "result": "Foxlightorboff",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 4000 ] ] ]
+  },
+  {
+    "result": "Foxlightorbbigoff",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxEssencenormal", 20000 ] ] ]
+  },
+  {
+    "result": "FoxBallisticWeaveSheet",
+    "type": "uncraft",
+    "time": "5 m",
+    "components": [ [ [ "FoxBWthread", 100 ] ] ]
+  },
+  {
+    "result": "FoxBallisticWeavescrap",
+    "type": "uncraft",
+    "time": "1 m",
+    "components": [ [ [ "FoxBWthread", 10 ] ] ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foximpgogglesdetection",
+    "skill_used": "electronics",
+    "difficulty": 3,
+    "time": "30 m",
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 2 ] ],
+      [ [ "Foximpmechparts", 1 ] ],
+      [ [ "Foximpmicroelectronics", 1 ] ],
+      [ [ "Foximpelectronics", 3 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foximpgasmask",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "40 m",
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 2 ] ],
+      [ [ "Foximpmechparts", 1 ] ],
+      [ [ "Foximperialsteelchunk", 1 ] ],
+      [ [ "Foximpmicroelectronics", 2 ] ],
+      [ [ "Foximpelectronics", 6 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foximpetool",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "15 m",
+    "qualities": [ { "id": "SAW_M_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 7 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foximpcombatknife",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "10 m",
+    "qualities": [ { "id": "SAW_M_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 5 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxsmalltentkit",
+    "skill_used": "tailor",
+    "difficulty": 1,
+    "time": "20 m",
+    "qualities": [ { "id": "CUT", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 20 ] ],
+      [ [ "FoxAdamantinechunk", 6 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foximpwastelandsmock",
+    "skill_used": "tailor",
+    "difficulty": 1,
+    "time": "10 m",
+    "qualities": [ { "id": "CUT", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 18 ] ],
+      [ [ "Foximperialsteelchunk", 5 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foximpwastelandpack",
+    "skill_used": "tailor",
+    "difficulty": 1,
+    "time": "10 m",
+    "qualities": [ { "id": "CUT", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 20 ] ],
+      [ [ "Foximperialsteelchunk", 5 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxglovestactical",
+    "skill_used": "tailor",
+    "difficulty": 1,
+    "time": "2 m",
+    "qualities": [ { "id": "CUT", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 2 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxglovestacticalfingerless",
+    "skill_used": "tailor",
+    "difficulty": 1,
+    "time": "2 m",
+    "qualities": [ { "id": "CUT", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 2 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxbootscombat",
+    "skill_used": "tailor",
+    "difficulty": 1,
+    "time": "5 m",
+    "qualities": [ { "id": "CUT", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 10 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpKW21404U",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "20 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 5 ] ],
+      [ [ "Foximpelectronics", 8 ] ],
+      [ [ "Foximplaserparts", 15 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpKW21352U",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "25 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 5 ] ],
+      [ [ "Foximpelectronics", 12 ] ],
+      [ [ "Foximplaserparts", 18 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpKW21373U",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "50 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 20 ] ],
+      [ [ "Foximpelectronics", 80 ] ],
+      [ [ "Foximplaserparts", 80 ] ],
+      [ [ "Foximperialsteelchunk", 20 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpKW21402U",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "20 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 5 ] ],
+      [ [ "Foximpelectronics", 11 ] ],
+      [ [ "Foximplaserparts", 12 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpKW21381U",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "20 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 8 ] ],
+      [ [ "Foximpelectronics", 18 ] ],
+      [ [ "Foximplaserparts", 30 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpED12UGallows",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "20 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 5 ] ],
+      [ [ "Foximpelectronics", 11 ] ],
+      [ [ "Foximplaserparts", 12 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "FoximpED31U",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "20 m",
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 },{ "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximpmechparts", 5 ] ],
+      [ [ "Foximpelectronics", 11 ] ],
+      [ [ "Foximplaserparts", 12 ] ]
+    ]
+  },
+  {
+    "result": "Foximpchip",
+    "type": "uncraft",
+    "time": "1 m",
+    "components": [ [ [ "Foximpmicroelectronics", 1 ] ] ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxadamantineframe",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "10 m",
+    "qualities": [ { "id": "SAW_M_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxAdamantinechunk", 40 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxadamantineplate",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "5 m",
+    "qualities": [ { "id": "SAW_M_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxAdamantinechunk", 12 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxisteelframe",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "10 m",
+    "qualities": [ { "id": "SAW_M_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 40 ] ]
+    ]
+  },
+  {
+    "type": "uncraft",
+    "result": "Foxisteelplate",
+    "skill_used": "fabrication",
+    "difficulty": 1,
+    "time": "5 m",
+    "qualities": [ { "id": "SAW_M_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 12 ] ]
+    ]
+  }
+]

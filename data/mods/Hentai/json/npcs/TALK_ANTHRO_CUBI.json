@@ -1,0 +1,1103 @@
+[
+	{
+		"id": "TALK_ANTHRO_CUBI",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN",
+			"yes": {
+				"u_has_effect": "lust",
+				"yes": "<succubus_horny>",
+				"no": "Oh my... what's happening to me? This new form is so... different. My powers feel changed, but I can still sense your desires, mortal."
+			},
+			"no": { "npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN", "yes": "<succubus_lesshuman_intro>", "no": "Wha-- What just happened?! What the hell did you do?!" }
+		},
+		"responses": [
+			{
+				"text": "I used human serum.",
+				"topic": "TALK_ANTHRO_CUBI_ITS_MY_TREAT"
+			},
+			{
+				"text": "Hold on, I need to think...",
+				"topic": "TALK_DONE"
+			},
+			{
+				"condition": {
+					"and": [
+						{
+							"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"
+						},
+						{
+							"or": [
+								{"npc_has_trait": "WINGS_BAT"},
+								{"npc_has_trait": "TAIL_FIEND"},
+								{"npc_has_trait": "HORNS_POINTED"},
+								{"npc_has_trait": "FANGS"},
+								{"npc_has_trait": "SCALES"},
+								{"npc_has_trait": "PALE"}
+							]
+						}
+					]
+				},
+				"text": "Your new form suits you perfectly.",
+				"topic": "TALK_ANTHRO_CUBI_MUTATIONS"
+			},
+			{
+				"condition": {
+					"and": [
+						{
+							"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"
+						},
+						{
+							"or": [
+								{"npc_has_trait": "WINGS_BAT"},
+								{"npc_has_trait": "TAIL_FIEND"},
+								{"npc_has_trait": "HORNS_POINTED"},
+								{"npc_has_trait": "FANGS"},
+								{"npc_has_trait": "SCALES"},
+								{"npc_has_trait": "PALE"}
+							]
+						}
+					]
+				},
+				"text": "These demonic features... they remain.",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_MUTATIONS"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"
+				},
+				"text": "You're even more beautiful in this form.",
+				"topic": "TALK_ANTHRO_CUBI_FLIRT"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"
+				},
+				"text": "This form holds a certain... harsh appeal.",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_FLIRT"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_LESSHUMAN_MUTATIONS",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_lesshuman_mutations>",
+		"responses": [
+			{
+				"text": "Let's test the limits of this form... together.",
+				"trial": {
+					"type": "PERSUADE",
+					"difficulty": 15,
+					"mod": [["TRUST", 1], ["VALUE", 2], ["FEAR", 1]]
+				},
+				"success": {
+					"topic": "TALK_SEX_WILLING",
+					"opinion": {"trust": 1, "value": 2, "fear": 1},
+					"effect": [
+						{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+						{"npc_add_effect": "lust", "duration": 9999999}
+					]
+				},
+				"failure": {
+					"topic": "TALK_FRIEND",
+					"opinion": {"trust": -1, "value": 0}
+				}
+			},
+			{
+				"text": "Let's focus on other matters for now.",
+				"topic": "TALK_FRIEND"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_LESSHUMAN_FLIRT",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_lesshuman_flirt>",
+		"responses": [
+			{
+				"text": "Let's continue our conversation about the serum.",
+				"topic": "TALK_ANTHRO_CUBI_ITS_MY_TREAT"
+			},
+			{
+				"text": "I wish to understand what this new form means for us.",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_MUTATIONS",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_mutations>",
+		"responses": [
+			{
+				"text": "Let's explore what your new form can do.",
+				"trial": {
+					"type": "PERSUADE",
+					"difficulty": 10,
+					"mod": [["TRUST", 2], ["VALUE", 3]]
+				},
+				"success": {
+					"topic": "TALK_SEX_WILLING",
+					"opinion": {"trust": 2, "value": 3},
+					"effect": [
+						{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+						{"npc_add_effect": "lust", "duration": 9999999}
+					]
+				},
+				"failure": {
+					"topic": "TALK_FRIEND",
+					"opinion": {"trust": -1, "value": 0},
+					"effect": []
+				}
+			},
+			{
+				"text": "Let's focus on other matters for now.",
+				"topic": "TALK_FRIEND"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_ITS_MY_TREAT",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN",
+			"yes": {
+				"u_has_effect": "lust",
+				"yes": "<succubus_horny>",
+				"no": "Human serum? How fascinating. I'm more human now, but I still carry the essence of a succubus. I can feel both the hunger for souls and... more earthly desires. This could be quite entertaining."
+			},
+			"no": { "npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN", "yes": "<succubus_lesshuman_treat>", "no": "I don't quite get it, but I guess that means I'm a human now, huh. It kinda sucks that I can't use my old powers though... But I wonder if that's better than going crazy worrying whether you can find increasingly rare prey just like my brethren." }
+		},
+		"responses": [
+			{
+				"text": "I'm glad we were able to talk like this. Come. Let's move on together.",
+				"success": {
+					"effect": "follow",
+					"opinion": {
+						"trust": 5,
+						"value": 5
+					},
+					"topic": "TALK_ANTHRO_CUBI_BE_FELLOW"
+				}
+			},
+			{
+				"text": "You're still my pet, don't forget that. Come now, don't keep me waiting... pet.",
+				"success": {
+					"effect": "follow",
+					"opinion": {
+						"anger": 5,
+						"fear": 5,
+						"trust": -5,
+						"value": 5
+					},
+					"topic": "TALK_ANTHRO_CUBI_BADBOY"
+				}
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"
+				},
+				"text": "Perhaps you could teach me about pleasure in your new form.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"
+				},
+				"text": "What are the... needs... of this form?",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_BE_FELLOW",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN",
+			"yes": {
+				"u_has_effect": "lust",
+				"yes": "<succubus_horny>",
+				"no": "Of course, darling~ A succubus never forgets who helped her... especially one who's given me such an interesting new existence. I'll follow you, my master, and perhaps we can explore what else we might share~"
+			},
+			"no": { "npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN", "yes": "<succubus_lesshuman_fellow>", "no": "Yup, suuure～ It's you who made me like this after all, so you better take the responsibility, my dear mas-ter♪" }
+		},
+		"responses": [
+			{
+				"text": "(End Talking)",
+				"topic": "TALK_DONE"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"
+				},
+				"text": "I'm curious what a succubus can offer me.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"
+				},
+				"text": "Show me the power that remains within this form.",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_BADBOY",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN",
+			"yes": "<succubus_rude>",
+			"no": { "npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN", "yes": "<succubus_lesshuman_badboy>", "no": "<succubus_rude>" }
+		},
+		"responses": [
+			{
+				"text": "(End Talking)",
+				"topic": "TALK_DONE"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"
+				},
+				"text": "Show me what you can do then.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"
+				},
+				"text": "Prove your worth, demon.",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_FLIRT",
+		"type": "talk_topic",
+		"dynamic_line": "Beautiful? Oh please~ I've been tempting mortals since before your great-grandparents were born! But I guess in this form it's kinda nice to hear... Don't get too full of yourself though, I still have standards!",
+		"responses": [
+			{
+				"text": "Let's continue our conversation about the serum.",
+				"topic": "TALK_ANTHRO_CUBI_ITS_MY_TREAT"
+			},
+			{
+				"text": "I'd like to discover what this new form means for both of us.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_TEMPTATION",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"u_has_var": "cubi_relationship",
+			"type": "general",
+			"context": "relationship",
+			"value": "yes",
+			"yes": "<succubus_temptation_experienced>",
+			"no": "<succubus_temptation>"
+		},
+		"responses": [
+			{
+				"text": "Perhaps we should focus on survival for now.",
+				"topic": "TALK_FRIEND"
+			},
+			{
+				"text": "Show me what a succubus knows about pleasure.",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 3, "value": 3},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"npc_add_effect": "lust", "duration": 9999999}
+				]
+			},
+			{
+				"text": "I'm feeling aroused... would you like to feed on my sexual energy?",
+				"condition": {
+					"u_has_effect": "corrupt"
+				},
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 3, "value": 4},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"u_add_effect": "corrupt", "duration": "2 h"}
+				]
+			},
+			{
+				"condition": {
+					"u_has_var": "cubi_relationship",
+					"type": "general",
+					"context": "relationship",
+					"value": "yes"
+				},
+				"text": "I can't stop thinking about our last encounter.",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 1, "value": 2},
+				"effect": [
+					{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"}
+				]
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"u_has_var": "cubi_relationship",
+			"type": "general",
+			"context": "relationship",
+			"value": "yes",
+			"yes": "<succubus_lesshuman_temptation_experienced>",
+			"no": "<succubus_lesshuman_temptation>"
+		},
+		"responses": [
+			{
+				"text": "Perhaps we should focus on survival for now.",
+				"topic": "TALK_FRIEND"
+			},
+			{
+				"text": "Show me the pleasure only a demon can provide.",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 1, "value": 2, "fear": 2},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"npc_add_effect": "lust", "duration": 9999999}
+				]
+			},
+			{
+				"text": "I offer my corrupted essence to you. Feed.",
+				"condition": {
+					"u_has_effect": "corrupt"
+				},
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 2, "value": 3, "fear": 1},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"u_add_effect": "corrupt", "duration": "2 h"}
+				]
+			},
+			{
+				"condition": {
+					"u_has_var": "cubi_relationship",
+					"type": "general",
+					"context": "relationship",
+					"value": "yes"
+				},
+				"text": "I crave the danger of our last encounter.",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 0, "value": 1, "fear": 1},
+				"effect": [
+					{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "no"}
+				]
+			}
+		]
+	},
+	{
+		"id": "TALK_FRIEND_CUBI",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN",
+			"yes": {
+				"npc_has_trait": "DEMON_HUNGER",
+				"yes": {
+					"npc_need": "hunger",
+					"amount": 140,
+					"yes": "<succubus_hungry>",
+					"no": {
+						"u_has_effect": "lust",
+						"yes": "<succubus_horny>",
+						"no": {
+							"u_has_trait": "TERRIFYING",
+							"yes": "<succubus_terrifying>",
+							"no": {
+								"u_has_trait": "PSYCHOPATH",
+								"yes": "<succubus_psycho>",
+								"no": {
+									"u_has_trait": "LIAR",
+									"yes": "<succubus_liar>",
+									"no": {
+										"u_has_trait": "CANNIBAL",
+										"yes": "<succubus_cannibal>",
+										"no": {
+											"u_has_trait": "PYROMANIA",
+											"yes": "<succubus_pyro>",
+											"no": {
+												"u_has_trait": "PRETTY",
+												"yes": "<succubus_master>",
+												"no": {
+													"u_has_trait": "THRESH_FIEND",
+													"yes": "<succubus_master>",
+													"no": "<succubus_default>"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"no": {
+					"u_has_effect": "lust",
+					"yes": "<succubus_horny>",
+					"no": {
+						"u_has_trait": "TERRIFYING",
+						"yes": "<succubus_terrifying>",
+						"no": {
+							"u_has_trait": "PSYCHOPATH",
+							"yes": "<succubus_psycho>",
+							"no": {
+								"u_has_trait": "LIAR",
+								"yes": "<succubus_liar>",
+								"no": {
+									"u_has_trait": "CANNIBAL",
+									"yes": "<succubus_cannibal>",
+									"no": {
+										"u_has_trait": "PYROMANIA",
+										"yes": "<succubus_pyro>",
+										"no": {
+											"u_has_trait": "PRETTY",
+											"yes": "<succubus_master>",
+											"no": {
+												"u_has_trait": "THRESH_FIEND",
+												"yes": "<succubus_master>",
+												"no": "<succubus_default>"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"no": {
+				"npc_has_trait": "DEMON_HUNGER",
+				"yes": {
+					"npc_need": "hunger",
+					"amount": 140,
+					"yes": "<succubus_fiend_hungry>",
+					"no": {
+						"u_has_effect": "lust",
+						"yes": "<succubus_lesshuman_horny>",
+						"no": {
+							"u_has_trait": "TERRIFYING",
+							"yes": "<succubus_terrifying>",
+							"no": {
+								"u_has_trait": "PSYCHOPATH",
+								"yes": "<succubus_psycho>",
+								"no": {
+									"u_has_trait": "LIAR",
+									"yes": "<succubus_liar>",
+									"no": {
+										"u_has_trait": "CANNIBAL",
+										"yes": "<succubus_cannibal>",
+										"no": {
+											"u_has_trait": "PYROMANIA",
+											"yes": "<succubus_pyro>",
+											"no": {
+												"u_has_trait": "PRETTY",
+												"yes": "<succubus_master>",
+												"no": {
+													"u_has_trait": "THRESH_FIEND",
+													"yes": "<succubus_master>",
+													"no": "<succubus_lesshuman_default>"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"no": {
+					"u_has_effect": "lust",
+					"yes": "<succubus_lesshuman_horny>",
+					"no": {
+						"u_has_trait": "TERRIFYING",
+						"yes": "<succubus_terrifying>",
+						"no": {
+							"u_has_trait": "PSYCHOPATH",
+							"yes": "<succubus_psycho>",
+							"no": {
+								"u_has_trait": "LIAR",
+								"yes": "<succubus_liar>",
+								"no": {
+									"u_has_trait": "CANNIBAL",
+									"yes": "<succubus_cannibal>",
+									"no": {
+										"u_has_trait": "PYROMANIA",
+										"yes": "<succubus_pyro>",
+										"no": {
+											"u_has_trait": "PRETTY",
+											"yes": "<succubus_master>",
+											"no": {
+												"u_has_trait": "THRESH_FIEND",
+												"yes": "<succubus_master>",
+												"no": "<succubus_lesshuman_default>"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"responses": [
+			{
+				"condition": {
+					"and": [
+						{"npc_need": "hunger", "amount": 140}
+					]
+				},
+				"text": "You look hungry. Let me help satisfy your needs...",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 3, "value": 3},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"npc_add_effect": "demon_fed", "duration": "12 h"},
+					{"u_add_effect": "corrupt", "duration": "2 h"}
+				]
+			},
+			{
+				"condition": {
+					"npc_need": "hunger",
+					"amount": 140
+				},
+				"text": "Would you like to feed on me?",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 2, "value": 3},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"npc_add_effect": "demon_fed", "duration": "12 h"},
+					{"u_add_effect": "corrupt", "duration": "2 h"}
+				]
+			},
+			{
+				"condition": {
+					"npc_need": "hunger",
+					"amount": 140
+				},
+				"text": "I'd rather not let you feed on me right now.",
+				"trial": {
+					"type": "INTIMIDATE", 
+					"difficulty": 40,
+					"mod": [["INT", 2], ["TRUST", -3]]
+				},
+				"success": {
+					"topic": "TALK_FRIEND_CUBI",
+					"opinion": {"trust": -1, "value": -1},
+					"effect": {"npc_add_effect": "disappointed", "duration": "1 h"}
+				},
+				"failure": {
+					"topic": "TALK_SEX_WILLING",
+					"opinion": {"trust": 0, "value": 1},
+					"effect": [
+						{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+						{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "no"},
+						{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "no"},
+						{"npc_add_effect": "demon_fed", "duration": "12 h"},
+						{"u_add_effect": "corrupt", "duration": "2 h"}
+					]
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{"or": [
+							{"npc_has_trait": "WINGS_BAT"},
+							{"npc_has_trait": "TAIL_FIEND"},
+							{"npc_has_trait": "HORNS_POINTED"}
+						]},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "Your demonic features are quite alluring.",
+				"topic": "TALK_ANTHRO_CUBI_MUTATIONS"
+			},
+			{
+				"condition": {
+					"and": [
+						{"or": [
+							{"npc_has_trait": "WINGS_BAT"},
+							{"npc_has_trait": "TAIL_FIEND"},
+							{"npc_has_trait": "HORNS_POINTED"}
+						]},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "These remnants of your true form...",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_MUTATIONS"
+			},
+			{
+				"condition": {
+					"and": [
+						{"u_has_effect": "corrupt"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "The corruption seems to be affecting you strongly.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"and": [
+						{"u_has_effect": "corrupt"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "This corruption I feel...",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			},
+			{
+				"condition": {
+					"and": [
+						{"u_has_effect": "lust"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "Your eyes are glowing with desire...",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"and": [
+						{"u_has_effect": "lust"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "My desires are... difficult to control around you.",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "That sounds... interesting.",
+				"success": {
+					"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+					"effect": {"npc_add_trait": "DEMON_HUNGER"},
+					"opinion": {"trust": 1, "value": 2}
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "Explain these 'needs'.",
+				"success": {
+					"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION",
+					"effect": {"npc_add_trait": "DEMON_HUNGER"},
+					"opinion": {"trust": 0, "value": 1, "fear": 1}
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_trait": "DEMON_HUNGER"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "You must be getting hungry...",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_trait": "DEMON_HUNGER"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "The hunger must be building...",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			},
+			{
+				"condition": {
+					"not": {"npc_need": "hunger", "amount": 140}
+				},
+				"text": "Nevermind",
+				"topic": "TALK_NONE"
+			}
+		]
+	},
+	{
+		"type": "talk_topic",
+		"id": ["TALK_FRIEND", "TALK_STRANGER_FRIENDLY", "TALK_FRIEND_GUARD"],
+		"responses": [
+			{
+				"condition": {
+					"and": [
+						{"or": [
+							{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+							{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"}
+						]},
+						{"npc_need": "hunger", "amount": 140}
+					]
+				},
+				"text": "[Hungry Succubus intro] You seem unusually... famished.",
+				"topic": "TALK_ANTHRO_CUBI_FEEDING"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"
+				},
+				"text": "[Succubus intro] You seem different in this part-human form...",
+				"topic": "TALK_FRIEND_CUBI"
+			},
+			{
+				"condition": {
+					"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"
+				},
+				"text": "[Succubus Less Human intro] You seem more... demonic than before.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_PRETTY",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_pretty>",
+		"responses": [
+			{
+				"text": "Very much so.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"effect": {"npc_add_effect": "lust", "duration": 9999999}
+			},
+			{
+				"text": "Just an observation.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_BIGBREAST",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_bigbreast>",
+		"responses": [
+			{
+				"text": "They're quite distracting...",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"effect": {"npc_add_effect": "lust", "duration": 9999999}
+			},
+			{
+				"text": "Sorry, I didn't mean to stare.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_SMALLBREAST",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_smallbreast>",
+		"responses": [
+			{
+				"text": "I find your form perfect.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 1, "value": 1}
+			},
+			{
+				"text": "I didn't mean anything by it.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_VIRGIN",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_virgin>",
+		"responses": [
+			{
+				"text": "I find it endearing.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 2, "value": 1}
+			},
+			{
+				"text": "Sorry, I didn't mean to pry.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_PRETTY_PLAYER",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_master>",
+		"responses": [
+			{
+				"text": "Just wanted your professional opinion.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"text": "Just curious what you thought.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_FIEND_PLAYER",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_master>",
+		"responses": [
+			{
+				"text": "I could use some guidance from someone experienced.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 1, "value": 2}
+			},
+			{
+				"text": "I'm still figuring these changes out.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_TERRIFYING",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_terrifying>",
+		"responses": [
+			{
+				"text": "You have no idea what I'm capable of.",
+				"trial": {
+					"type": "INTIMIDATE",
+					"difficulty": 20
+				},
+				"success": {
+					"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+					"opinion": {"fear": 1, "value": 2},
+					"effect": {"npc_add_effect": "lust", "duration": 9999999}
+				},
+				"failure": {
+					"topic": "TALK_FRIEND_CUBI",
+					"opinion": {"trust": -1}
+				}
+			},
+			{
+				"text": "I'm just trying to survive, like everyone else.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_PSYCHO",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_psycho>",
+		"responses": [
+			{
+				"text": "We make a good team then.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 2, "value": 2}
+			},
+			{
+				"text": "Just don't get in my way.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_LIAR",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_liar>",
+		"responses": [
+			{
+				"text": "Maybe we should play a game of truth or dare.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 0, "value": 3}
+			},
+			{
+				"text": "I never lie to allies. Just enemies.",
+				"trial": {
+					"type": "LIE",
+					"difficulty": 40
+				},
+				"success": {
+					"topic": "TALK_FRIEND_CUBI",
+					"opinion": {"trust": 2}
+				},
+				"failure": {
+					"topic": "TALK_FRIEND_CUBI",
+					"opinion": {"trust": -2},
+					"effect": {"npc_add_effect": "lust", "duration": 9999999}
+				}
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_CANNIBAL",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_cannibal>",
+		"responses": [
+			{
+				"text": "We both know how to enjoy life's... unique pleasures.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 3, "value": 2}
+			},
+			{
+				"text": "It's just survival, nothing more.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_PYRO",
+		"type": "talk_topic",
+		"dynamic_line": "<succubus_pyro>",
+		"responses": [
+			{
+				"text": "We should watch something burn together sometime.",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+				"opinion": {"trust": 2, "value": 3}
+			},
+			{
+				"text": "I just find it comforting in this cold world.",
+				"topic": "TALK_FRIEND_CUBI"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_CUBI_FEEDING",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN",
+			"yes": {
+				"npc_need": "hunger",
+				"amount": 140,
+				"yes": "<succubus_hungry_intro>",
+				"no": {
+					"u_has_effect": "corrupt",
+					"yes": "<succubus_feeding_corrupt>",
+					"no": "<succubus_feeding_normal>"
+				}
+			},
+			"no": {
+				"npc_need": "hunger",
+				"amount": 140,
+				"yes": "<succubus_fiend_hungry_intro>",
+				"no": "<succubus_feeding_fiend>"
+			}
+		},
+		"responses": [
+			{
+				"condition": {
+					"npc_need": "hunger",
+					"amount": 140
+				},
+				"text": "Would you like to feed on me?",
+				"topic": "TALK_SEX_WILLING",
+				"opinion": {"trust": 2, "value": 3},
+				"effect": [
+					{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+					{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+					{"npc_add_effect": "demon_fed", "duration": "12 h"},
+					{"u_add_effect": "corrupt", "duration": "2 h"}
+				]
+			},
+			{
+				"condition": {
+					"npc_need": "hunger",
+					"amount": 140
+				},
+				"text": "I'd rather not let you feed on me right now.",
+				"trial": {
+					"type": "INTIMIDATE", 
+					"difficulty": 40,
+					"mod": [["INT", 2], ["TRUST", -3]]
+				},
+				"success": {
+					"topic": "TALK_FRIEND_CUBI",
+					"opinion": {"trust": -1, "value": -1},
+					"effect": {"npc_add_effect": "disappointed", "duration": "1 h"}
+				},
+				"failure": {
+					"topic": "TALK_SEX_WILLING",
+					"opinion": {"trust": 0, "value": 1},
+					"effect": [
+						{"u_add_var": "cubi_relationship", "type": "general", "context": "relationship", "value": "yes"},
+						{"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "no"},
+						{"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "no"},
+						{"npc_add_effect": "demon_fed", "duration": "12 h"},
+						{"u_add_effect": "corrupt", "duration": "2 h"}
+					]
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "That sounds... interesting.",
+				"success": {
+					"topic": "TALK_ANTHRO_CUBI_TEMPTATION",
+					"effect": {"npc_add_trait": "DEMON_HUNGER"},
+					"opinion": {"trust": 1, "value": 2}
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "Explain these 'needs'.",
+				"success": {
+					"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION",
+					"effect": {"npc_add_trait": "DEMON_HUNGER"},
+					"opinion": {"trust": 0, "value": 1, "fear": 1}
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_trait": "DEMON_HUNGER"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "You must be getting hungry...",
+				"topic": "TALK_ANTHRO_CUBI_TEMPTATION"
+			},
+			{
+				"condition": {
+					"and": [
+						{"npc_has_trait": "DEMON_HUNGER"},
+						{"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"},
+						{"not": {"npc_need": "hunger", "amount": 140}}
+					]
+				},
+				"text": "The hunger must be building...",
+				"topic": "TALK_ANTHRO_CUBI_LESSHUMAN_TEMPTATION"
+			},
+			{
+				"condition": {
+					"not": {"npc_need": "hunger", "amount": 140}
+				},
+				"text": "Nevermind",
+				"topic": "TALK_NONE"
+			}
+		]
+	}
+]

@@ -1,0 +1,110 @@
+[
+	{
+		"id": "MISSION_ANTHRO_CANINE_1",
+		"type": "mission_definition",
+		"name": "Find Dog Food",
+		"goal": "MGOAL_FIND_ITEM",
+		"difficulty": 1,
+		"value": 10000,
+		"item": "dogfood",
+		"origins": [ "ORIGIN_OPENER_NPC" ],
+		"followup": "MISSION_ANTHRO_SHELTER",
+		"dialogue": {
+			"describe": "I just want to ask you something. Care to listen?",
+			"offer": "Do you have any spare dog food?  Sure I can eat human food just fine ever since I've become like this, but I really miss that taste.",
+			"accepted": "Thank you very much, Master!",
+			"rejected": "You'll leave it for later? Aww...",
+			"advice": "I think handmade must be the quickest way. Any ingredient should do.",
+			"inquire": "Did you find dog food yet?  It's okay, take your time.",
+			"success": "Yaay!  Oh yes, this taste, this aroma... Uuuuh!  ...There's no need for me to eat it ever again in this form though...  But that aside, thank you very much for the job well done, Master!",
+			"success_lie": "...Master, I don't think you can lie about this one...",
+			"failure": "You couldn't do it? Aww..."
+		}
+	},
+	{
+		"id": "MISSION_ANTHRO_FELINE_1",
+		"type": "mission_definition",
+		"name": "Find Cat Food",
+		"goal": "MGOAL_FIND_ITEM",
+		"difficulty": 1,
+		"value": 10000,
+		"item": "catfood",
+		"origins": [ "ORIGIN_OPENER_NPC" ],
+		"followup": "MISSION_ANTHRO_SHELTER",
+		"dialogue": {
+			"describe": "I just want to ask you something. Care to listen?",
+			"offer": "Do you have any spare cat food?  Sure I can eat human food just fine ever since I've become like this, but I really miss that taste.",
+			"accepted": "Thank you very much, Master!",
+			"rejected": "You'll leave it for later? Aww...",
+			"advice": "I think handmade must be the quickest way. Any ingredient should do.",
+			"inquire": "Did you find cat food yet?  It's okay, take your time.",
+			"success": "Yaay!  Oh yes, this taste, this aroma... Uuuuh!  ...There's no need for me to eat it ever again in this form though...  But that aside, thank you very much for the job well done, Master!",
+			"success_lie": "...Master, I don't think you can lie about this one...",
+			"failure": "You couldn't do it? Aww..."
+		}
+	},
+	{
+		"id": "MISSION_ANTHRO_SHELTER",
+		"type": "mission_definition",
+		"name": "Head To Animal Shelter",
+		"goal": "MGOAL_GO_TO_TYPE",
+		"difficulty": 2,
+		"value": 150000,
+		"origins": [ "ORIGIN_SECONDARY" ],
+		"destination": "animalshelter",
+		"dialogue": {
+			"describe": "I just want to ask you something. Care to listen?",
+			"offer": "Hey, can we drop by an animal shelter?  I was just wondering, maybe I can find my old buddies there... well, before I've become like this.",
+			"accepted": "Thank you very much, Master!",
+			"rejected": "You'll leave it for later? Aww...",
+			"advice": "Since the building is in the town, we should prepare ourselves as much as possible before heading there.",
+			"inquire": "Are we there yet?",
+			"success": "Thank you for bringing me here.  It's not what I'd hoped for, but that aside, I feel much better now thanks to you.",
+			"success_lie": "...Well, you tried your best, right Master? Right...?",
+			"failure": "You couldn't do it? Aww..."
+		}
+	},
+	{
+		"id": "MISSION_ANTHRO_URSINE_1",
+		"type": "mission_definition",
+		"name": "Find A Beehive",
+		"goal": "MGOAL_GO_TO_TYPE",
+		"difficulty": 2,
+		"value": 80000,
+		"origins": [ "ORIGIN_OPENER_NPC" ],
+		"followup": "MISSION_ANTHRO_URSINE_2",
+		"destination": "hive",
+		"dialogue": {
+			"describe": "I just want to ask you something. Care to listen?",
+			"offer": "If all those insects got so big, that means their nests should be humongous, too... It's decided then, Master, let's raid the beehive!",
+			"accepted": "Thank you very much, Master!",
+			"rejected": "We can't? Aww...",
+			"advice": "We should probably get ready beforehand as we might get attacked by a swarm of pissed off giant bees.",
+			"inquire": "Are we there yet?",
+			"success": "Thank you very much for taking your time bringing me here, Master! Do I even need to eat anything else with this much honey... Uehehe!",
+			"success_lie": "...Well, you tried your best, right Master?",
+			"failure": "You couldn't do it? Aww..."
+		}
+	},
+	{
+		"id": "MISSION_ANTHRO_URSINE_2",
+		"type": "mission_definition",
+		"name": "Obtain Royal Beef",
+		"goal": "MGOAL_FIND_ITEM",
+		"difficulty": 3,
+		"value": 80000,
+		"item": "royal_beef",
+		"origins": [ "ORIGIN_SECONDARY" ],
+		"dialogue": {
+			"describe": "I just want to ask you something. Care to listen?",
+			"offer": "Do you know what royal beef is?  It's a chunk of meat with a coat of royal jelly over it.  I know it must sound quite precious, but I really want to taste it just once.",
+			"accepted": "Thank you very much, Master!",
+			"rejected": "You won't do it? Well, figures, it's pretty valuable after all...",
+			"advice": "If you're looking for royal jelly, it's most likely in a beehive.",
+			"inquire": "Mmmm, royal beef...",
+			"success": "Ooohh, so this is royal beef!  ...Well, it certainly is delicious, but...  It doesn't seem all that different if I just eat the royal jelly alone by itself...  But that aside, thank you very much for the job well done, Master!",
+			"success_lie": "...Master, I don't think you can lie about this one...",
+			"failure": "You couldn't do it? Aww..."
+		}
+	}
+]

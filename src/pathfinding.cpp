@@ -17,6 +17,11 @@
 #include "vehicle_part.h"
 #include "vpart_position.h"
 
+
+#include "debug.h"
+#define dbg(x) DebugLogFL((x),DC::Game)
+
+
 static constexpr std::array<point, 8> DIRS_2D = {
     point_north_east,
     point_north_west,
@@ -168,7 +173,7 @@ float &Pathfinding::g_at( const point &p )
 };
 float Pathfinding::get_f_unbiased( const point &p )
 {
-    return this->p_at( p ) + this->g_at( p );
+    return this->g_at( p );
 }
 float Pathfinding::get_f_biased( const point &p, const point &start,
                                  float h_coeff )
@@ -257,6 +262,7 @@ std::vector<Pathfinding::ZLevelChange> &Pathfinding::get_z_cache( const int z )
 }
 void Pathfinding::update_z_caches( bool update_open_air )
 {
+    // dbg( DL::Info ) << string_format("Pathfinding_UPDATE_Z_CACHES_CALLED. update_open_air: %d", static_cast<int>(update_open_air));
     const map &here = get_map();
 
     point cur_z_area = here.get_abs_sub().xy();
@@ -357,19 +363,77 @@ void Pathfinding::update_z_caches( bool update_open_air )
                     continue;
                 }
 
-                // 10 to maintain parity with legacy A*
-                // closest_points_first will ensure stairs above us directly will be hit first
+                //dbg( DL::Info ) << string_format( "Pathfinding: Found GOES_UP terrain '%s' at (%d,%d,%d), looking for GOES_DOWN above",
+                 //                              cur_ter.name().c_str(), cur.x, cur.y, cur.z );
+
+                // Try exact match first (10 tile radius for legacy compatibility)
+                bool found_matching_stairs = false;
                 for( const tripoint &maybe_stairs_p : closest_points_first( above_us, 10 ) ) {
                     const maptile &maybe_stairs_tile = here.maptile_at( maybe_stairs_p );
                     const auto &maybe_stair_ter = maybe_stairs_tile.get_ter_t();
+
+                    dbg( DL::Info ) << string_format( "Pathfinding: Checking exact stair match at (%d,%d,%d): terrain '%s', has_GOES_DOWN=%d",
+                                                   maybe_stairs_p.x, maybe_stairs_p.y, maybe_stairs_p.z,
+                                                   maybe_stair_ter.name().c_str(),
+                                                   static_cast<int>(maybe_stair_ter.has_flag( TFLAG_GOES_DOWN )) );
 
                     if( maybe_stair_ter.has_flag( TFLAG_GOES_DOWN ) ) {
                         const ZLevelChange stairs_up = ZLevelChange{ .from = cur, .to = maybe_stairs_p, .type = Pathfinding::ZLevelChange::Type::STAIRS };
                         const ZLevelChange stairs_down = ZLevelChange{ .from = maybe_stairs_p, .to = cur, .type = Pathfinding::ZLevelChange::Type::STAIRS };
                         Pathfinding::get_z_cache( z ).push_back( stairs_down );
                         Pathfinding::get_z_cache( z + 1 ).push_back( stairs_up );
+                        
+                        // dbg( DL::Info ) << string_format( "Pathfinding: Added exact STAIRS Z-changes: UP from (%d,%d,%d) to (%d,%d,%d)",
+                        //                               cur.x, cur.y, cur.z, maybe_stairs_p.x, maybe_stairs_p.y, maybe_stairs_p.z );
+                        found_matching_stairs = true;
                         break;
                     }
+                }
+
+                // If exact match failed, try fuzzy matching within 50 tiles
+                if( !found_matching_stairs ) {
+                    // dbg( DL::Info ) << string_format( "Pathfinding: Exact match failed, trying fuzzy matching for GOES_UP at (%d,%d,%d)",
+                     //                              cur.x, cur.y, cur.z );
+                    
+                    tripoint best_match;
+                    float best_distance = INFINITY;
+                    
+                    for( const tripoint &maybe_stairs_p : closest_points_first( tripoint( cur.x, cur.y, above_us.z ), 50 ) ) {
+                        if( !here.inbounds( maybe_stairs_p ) ) {
+                            continue;
+                        }
+                        
+                        const maptile &maybe_stairs_tile = here.maptile_at( maybe_stairs_p );
+                        const auto &maybe_stair_ter = maybe_stairs_tile.get_ter_t();
+
+                        if( maybe_stair_ter.has_flag( TFLAG_GOES_DOWN ) ) {
+                            const float dist = rl_dist_exact( cur, maybe_stairs_p );
+                            // dbg( DL::Info ) << string_format( "Pathfinding: Found fuzzy stair match at (%d,%d,%d): terrain '%s', distance=%.2f",
+                            //                               maybe_stairs_p.x, maybe_stairs_p.y, maybe_stairs_p.z,
+                              //                             maybe_stair_ter.name().c_str(), dist );
+                            
+                            if( dist < best_distance ) {
+                                best_match = maybe_stairs_p;
+                                best_distance = dist;
+                            }
+                        }
+                    }
+                    
+                    if( best_distance < INFINITY ) {
+                        const ZLevelChange stairs_up = ZLevelChange{ .from = cur, .to = best_match, .type = Pathfinding::ZLevelChange::Type::STAIRS };
+                        const ZLevelChange stairs_down = ZLevelChange{ .from = best_match, .to = cur, .type = Pathfinding::ZLevelChange::Type::STAIRS };
+                        Pathfinding::get_z_cache( z ).push_back( stairs_down );
+                        Pathfinding::get_z_cache( z + 1 ).push_back( stairs_up );
+                        
+                        // dbg( DL::Info ) << string_format( "Pathfinding: Added fuzzy STAIRS Z-changes: UP from (%d,%d,%d) to (%d,%d,%d), distance=%.2f",
+                        //                               cur.x, cur.y, cur.z, best_match.x, best_match.y, best_match.z, best_distance );
+                        found_matching_stairs = true;
+                    }
+                }
+                
+                if( !found_matching_stairs ) {
+                    // dbg( DL::Info ) << string_format( "Pathfinding: No matching GOES_DOWN terrain found for GOES_UP at (%d,%d,%d) within 50 tiles",
+                    //                               cur.x, cur.y, cur.z );
                 }
             } else if( cur_ter.has_flag( TFLAG_GOES_DOWN ) ) {
                 // Ditto
@@ -379,19 +443,77 @@ void Pathfinding::update_z_caches( bool update_open_air )
                     continue;
                 }
 
-                // 10 to maintain parity with legacy A*
-                // closest_points_first will ensure stairs below us directly will be hit first
+                //dbg( DL::Info ) << string_format( "Pathfinding: Found GOES_DOWN terrain '%s' at (%d,%d,%d), looking for GOES_UP below",
+                //                               cur_ter.name().c_str(), cur.x, cur.y, cur.z );
+
+                // Try exact match first (10 tile radius for legacy compatibility)
+                bool found_matching_stairs = false;
                 for( const tripoint &maybe_stairs_p : closest_points_first( below_us, 10 ) ) {
                     const maptile &maybe_stairs_tile = here.maptile_at( maybe_stairs_p );
                     const auto &maybe_stairs_ter = maybe_stairs_tile.get_ter_t();
+
+                    // dbg( DL::Info ) << string_format( "Pathfinding: Checking exact stair match at (%d,%d,%d): terrain '%s', has_GOES_UP=%d",
+                     //                              maybe_stairs_p.x, maybe_stairs_p.y, maybe_stairs_p.z,
+                    //                               maybe_stairs_ter.name().c_str(),
+                      //                             static_cast<int>(maybe_stairs_ter.has_flag( TFLAG_GOES_UP )) );
 
                     if( maybe_stairs_ter.has_flag( TFLAG_GOES_UP ) ) {
                         const ZLevelChange stairs_down = ZLevelChange{ .from = cur, .to = maybe_stairs_p, .type = Pathfinding::ZLevelChange::Type::STAIRS };
                         const ZLevelChange stairs_up = ZLevelChange{ .from = maybe_stairs_p, .to = cur, .type = Pathfinding::ZLevelChange::Type::STAIRS };
                         Pathfinding::get_z_cache( z ).push_back( stairs_up );
                         Pathfinding::get_z_cache( z - 1 ).push_back( stairs_down );
+                        
+                        // dbg( DL::Info ) << string_format( "Pathfinding: Added exact STAIRS Z-changes: DOWN from (%d,%d,%d) to (%d,%d,%d)",
+                        //                               cur.x, cur.y, cur.z, maybe_stairs_p.x, maybe_stairs_p.y, maybe_stairs_p.z );
+                        found_matching_stairs = true;
                         break;
                     }
+                }
+
+                // If exact match failed, try fuzzy matching within 50 tiles
+                if( !found_matching_stairs ) {
+                    // dbg( DL::Info ) << string_format( "Pathfinding: Exact match failed, trying fuzzy matching for GOES_DOWN at (%d,%d,%d)",
+                   //                                cur.x, cur.y, cur.z );
+                    
+                    tripoint best_match;
+                    float best_distance = INFINITY;
+                    
+                    for( const tripoint &maybe_stairs_p : closest_points_first( tripoint( cur.x, cur.y, below_us.z ), 50 ) ) {
+                        if( !here.inbounds( maybe_stairs_p ) ) {
+                            continue;
+                        }
+                        
+                        const maptile &maybe_stairs_tile = here.maptile_at( maybe_stairs_p );
+                        const auto &maybe_stairs_ter = maybe_stairs_tile.get_ter_t();
+
+                        if( maybe_stairs_ter.has_flag( TFLAG_GOES_UP ) ) {
+                            const float dist = rl_dist_exact( cur, maybe_stairs_p );
+                            // dbg( DL::Info ) << string_format( "Pathfinding: Found fuzzy stair match at (%d,%d,%d): terrain '%s', distance=%.2f",
+                           //                                maybe_stairs_p.x, maybe_stairs_p.y, maybe_stairs_p.z,
+                           //                                maybe_stairs_ter.name().c_str(), dist );
+                            
+                            if( dist < best_distance ) {
+                                best_match = maybe_stairs_p;
+                                best_distance = dist;
+                            }
+                        }
+                    }
+                    
+                    if( best_distance < INFINITY ) {
+                        const ZLevelChange stairs_down = ZLevelChange{ .from = cur, .to = best_match, .type = Pathfinding::ZLevelChange::Type::STAIRS };
+                        const ZLevelChange stairs_up = ZLevelChange{ .from = best_match, .to = cur, .type = Pathfinding::ZLevelChange::Type::STAIRS };
+                        Pathfinding::get_z_cache( z ).push_back( stairs_up );
+                        Pathfinding::get_z_cache( z - 1 ).push_back( stairs_down );
+                        
+                        // dbg( DL::Info ) << string_format( "Pathfinding: Added fuzzy STAIRS Z-changes: DOWN from (%d,%d,%d) to (%d,%d,%d), distance=%.2f",
+                        //                               cur.x, cur.y, cur.z, best_match.x, best_match.y, best_match.z, best_distance );
+                        found_matching_stairs = true;
+                    }
+                }
+                
+                if( !found_matching_stairs ) {
+                    // dbg( DL::Info ) << string_format( "Pathfinding: No matching GOES_UP terrain found for GOES_DOWN at (%d,%d,%d) within 50 tiles",
+                 //                                  cur.x, cur.y, cur.z );
                 }
             } else if( cur_ter.has_flag( TFLAG_RAMP_UP ) ) {
                 const tripoint above_us = cur + tripoint_above;
@@ -411,6 +533,58 @@ void Pathfinding::update_z_caches( bool update_open_air )
 
                 const ZLevelChange ramp_down = ZLevelChange{ .from = cur, .to = below_us, .type = Pathfinding::ZLevelChange::Type::RAMP };
                 Pathfinding::get_z_cache( z - 1 ).push_back( ramp_down );
+            } else if( cur_ter.has_flag( TFLAG_CLIMBABLE ) ) {
+                // dbg(DL::Info) << string_format("Pathfinding: Evaluating CLIMBABLE terrain '%s' at (%d,%d,%d) for Z-level %d", cur_ter.name().c_str(), cur.x, cur.y, cur.z, z);
+
+                const std::array<point, 4> cardinal_dirs = {{point_north, point_east, point_south, point_west}};
+                bool found_climb_path_for_this_tile = false;
+                for( const point &dir : cardinal_dirs ) {
+                    const tripoint landing_spot_above = cur + dir + tripoint_above;
+                    std::string dir_name = "unknown";
+                    if( dir == point_north ) { dir_name = "NORTH"; }
+                    else if( dir == point_east ) { dir_name = "EAST"; }
+                    else if( dir == point_south ) { dir_name = "SOUTH"; }
+                    else if( dir == point_west ) { dir_name = "WEST"; }
+
+                    if( !here.inbounds( landing_spot_above ) ) {
+                        // dbg( DL::Info ) << string_format("Pathfinding: CLIMBABLE '%s' at (%d,%d,%d). Adjacent spot (%d,%d,%d) to %s is out of bounds.",
+                        //                                 cur_ter.name().c_str(), cur.x, cur.y, cur.z,
+                        //                                 landing_spot_above.x, landing_spot_above.y, landing_spot_above.z, dir_name.c_str());
+                        continue;
+                    }
+
+                    const maptile &tile_on_landing_spot = here.maptile_at( landing_spot_above );
+                    const auto &landing_ter = tile_on_landing_spot.get_ter_t();
+
+                    if( !here.impassable_ter_furn( landing_spot_above ) && !landing_ter.has_flag( TFLAG_NO_FLOOR ) ) {
+                        // dbg( DL::Info ) << string_format(
+                        //                               "Pathfinding: Found CLIMBABLE '%s' at (%d,%d,%d). Potential CLIMB UP via ADJACENT landing spot to %s at (%d,%d,%d) which is '%s'.",
+                        //                               cur_ter.name().c_str(), cur.x, cur.y, cur.z, dir_name.c_str(),
+                        //                               landing_spot_above.x, landing_spot_above.y, landing_spot_above.z, landing_ter.name().c_str() );
+
+                        const ZLevelChange climb_up = { cur, landing_spot_above, Pathfinding::ZLevelChange::Type::CLIMB };
+                        Pathfinding::get_z_cache( landing_spot_above.z ).push_back( climb_up );
+
+                        const ZLevelChange climb_down_to_cur = { landing_spot_above, cur, Pathfinding::ZLevelChange::Type::CLIMB };
+                        Pathfinding::get_z_cache( cur.z ).push_back( climb_down_to_cur );
+
+                        // dbg( DL::Info ) << string_format(
+                        //                               "Pathfinding: Added CLIMB ZChanges for ADJACENT landing to %s: UP from (%d,%d,%d) to (%d,%d,%d) and corresponding DOWN from (%d,%d,%d) to (%d,%d,%d)",
+                        //                               dir_name.c_str(), cur.x, cur.y, cur.z, landing_spot_above.x, landing_spot_above.y, landing_spot_above.z,
+                        //                               landing_spot_above.x, landing_spot_above.y, landing_spot_above.z, cur.x, cur.y, cur.z );
+                        found_climb_path_for_this_tile = true;
+                        break; // Found a valid landing spot, assume one is enough for this climbable tile.
+                    } else {
+                        // dbg( DL::Info ) << string_format(
+                        //                               "Pathfinding: CLIMBABLE '%s' at (%d,%d,%d). Adjacent spot (%d,%d,%d) to %s ('%s') unsuitable (impassable or no_floor).",
+                        //                               cur_ter.name().c_str(), cur.x, cur.y, cur.z,
+                        //                               landing_spot_above.x, landing_spot_above.y, landing_spot_above.z, dir_name.c_str(), landing_ter.name().c_str() );
+                    }
+                }
+                if (!found_climb_path_for_this_tile) {
+                     // dbg( DL::Info ) << string_format("Pathfinding: CLIMBABLE '%s' at (%d,%d,%d). No suitable ADJACENT landing spots found after checking all cardinal directions.",
+                    //                                 cur_ter.name().c_str(), cur.x, cur.y, cur.z);
+                }
             }
         }
     }
@@ -466,6 +640,8 @@ Pathfinding::ExpansionOutcome Pathfinding::expand_2d_up_to(
     const point &start,
     const RouteSettings &route_settings )
 {
+    // dbg( DL::Info ) << string_format( "Pathfinding for %s: ENTERING expand_2d_up_to for z=%d, from (%d,%d) to (%d,%d)",
+    //                                  this->settings.name.c_str(), this->z, start.x, start.y, this->dest.x, this->dest.y );
     using Frontier = std::priority_queue<val_pair, std::vector<val_pair>, pair_greater_cmp_first>;
 
     if( start == this->dest ) {
@@ -636,15 +812,22 @@ Pathfinding::ExpansionOutcome Pathfinding::expand_2d_up_to(
                 if( care_about_traps && !std::isinf( cur_g ) ) {
                     const trap &maybe_ter_trap = terrain.trap.obj();
                     const trap &maybe_trap = maybe_ter_trap.is_benign() ? new_tile.get_trap_t() : maybe_ter_trap;
-                    const bool is_trap = !maybe_trap.is_benign();
+                    bool is_actual_trap = !maybe_trap.is_benign();
 
-                    cur_g += is_trap ? this->settings.trap_cost : 0.0;
+                    if( is_actual_trap && maybe_trap.id == trap_str_id( "tr_ledge" ) && cur_vehicle != nullptr ) {
+
+                        is_actual_trap = false;
+                    }
+                    if( is_actual_trap ) {
+                        cur_g += this->settings.trap_cost;
+                    }
                 }
 
                 const bool is_ledge = here.has_zlevels() && terrain.has_flag( TFLAG_NO_FLOOR );
                 if( is_ledge && !this->settings.can_fly ) {
-                    // Close ledges outright for non-fliers
-                    cur_g += INFINITY;
+                    if( cur_vehicle == nullptr ) {
+                        cur_g += INFINITY;
+                    }
                 }
 
                 // And finally, add a potential field extra
@@ -663,19 +846,19 @@ Pathfinding::ExpansionOutcome Pathfinding::expand_2d_up_to(
                         // Do processing for possible vehicle first
                         const auto vpobst = vpart_position( const_cast<vehicle &>( *cur_vehicle ),
                                                             cur_vehicle_part ).obstacle_at_part();
-                        const int obstacle_part = vpobst ? vpobst->part_index() : -1;
+                        const int obstacle_part_idx = vpobst ? vpobst->part_index() : -1;
 
-                        if( obstacle_part >= 0 ) {
+                        if( obstacle_part_idx >= 0 ) {
                             int _;
-                            const bool part_is_door = cur_vehicle->part_flag( obstacle_part, VPFLAG_OPENABLE );
-                            const bool part_opens_from_inside = cur_vehicle->part_flag( obstacle_part, "OPENCLOSE_INSIDE" );
+                            const bool part_is_door = cur_vehicle->part_flag( obstacle_part_idx, VPFLAG_OPENABLE );
+                            const bool part_opens_from_inside = cur_vehicle->part_flag( obstacle_part_idx, "OPENCLOSE_INSIDE" );
                             const bool is_cur_point_inside = here.veh_at_internal( cur_point_with_z, _ ) == next_vehicle;
                             const bool valid_to_open = part_is_door && ( part_opens_from_inside ? is_cur_point_inside : true );
 
                             if( can_open_doors && valid_to_open ) {
                                 obstacle_g = this->settings.door_open_cost;
                             } else if( can_bash ) {
-                                const int htd = cur_vehicle->hits_to_destroy( obstacle_part,
+                                const int htd = cur_vehicle->hits_to_destroy( obstacle_part_idx,
                                                 this->settings.bash_strength_val * this->settings.bash_strength_quanta,
                                                 DT_BASH );
                                 if( htd == 0 ) {
@@ -695,6 +878,9 @@ Pathfinding::ExpansionOutcome Pathfinding::expand_2d_up_to(
                     }
 
                     if( is_climbable && can_climb ) {
+                        // dbg( DL::Info ) << string_format( "Pathfinding for %s: Considering CLIMBABLE at (%d,%d,%d), setting obstacle_g = %.2f",
+                        //                                  this->settings.name.c_str(),
+                        //                                  cur_point.x, cur_point.y, this->z, this->settings.climb_cost );
                         obstacle_g = this->settings.climb_cost;
                         break;
                     }
@@ -732,30 +918,35 @@ Pathfinding::ExpansionOutcome Pathfinding::expand_2d_up_to(
                 }
 
                 cur_g += obstacle_g;
+                // dbg( DL::Info ) << string_format( "Pathfinding for %s: at (%d,%d) after obstacle (%.2f), final cur_g is %.2f",
+                //                                  this->settings.name.c_str(), cur_point.x, cur_point.y, obstacle_g, cur_g );
 
-                this->g_at( cur_point ) = cur_g;
-            }
+                this->g_at( cur_point ) = this->g_at( next_point ) + cur_g;
+                this->p_at( cur_point ) = this->get_f_unbiased( next_point );
 
-            this->p_at( cur_point ) = this->get_f_unbiased( next_point );
-
-            // Reintroduce this point into frontier unless the tile is closed
-            if( is_inf( cur_g ) ) {
-                this->tile_state_at( cur_point ) = Pathfinding::State::IMPASSABLE;
-            } else {
-                this->tile_state_at( cur_point ) = Pathfinding::State::ACCESSIBLE;
-                biased_frontier.push( {this->get_f_biased( cur_point, start, route_settings.h_coeff ), cur_point} );
-            }
-
-            this->map_modify_set.push_back( cur_point );
-            this->tile_state_modify_set.push_back( cur_point );
-
-            if( cur_point == start ) {
-                // We have reached the target
-                if( this->tile_state_at( cur_point ) == Pathfinding::State::ACCESSIBLE ) {
-                    result = ExpansionOutcome::PATH_FOUND;
+                // Reintroduce this point into frontier unless the tile is closed
+                if( is_inf( cur_g ) ) {
+                    this->tile_state_at( cur_point ) = Pathfinding::State::IMPASSABLE;
                 } else {
-                    result = ExpansionOutcome::TARGET_INACCESSIBLE;
+                    this->tile_state_at( cur_point ) = Pathfinding::State::ACCESSIBLE;
+                    biased_frontier.push( {this->get_f_biased( cur_point, start, route_settings.h_coeff ), cur_point} );
                 }
+
+                this->map_modify_set.push_back( cur_point );
+                this->tile_state_modify_set.push_back( cur_point );
+
+                if( cur_point == start ) {
+                    // We have reached the target
+                    if( this->tile_state_at( cur_point ) == Pathfinding::State::ACCESSIBLE ) {
+                        result = ExpansionOutcome::PATH_FOUND;
+                    } else {
+                        result = ExpansionOutcome::TARGET_INACCESSIBLE;
+                    }
+                    break;
+                }
+            }
+
+            if( result != ExpansionOutcome::UNSET ) {
                 break;
             }
         }
@@ -788,6 +979,8 @@ Pathfinding::ExpansionOutcome Pathfinding::expand_2d_up_to(
         return ExpansionOutcome::PATH_NOT_FOUND;
     }
 
+//    dbg( DL::Info ) << string_format( "Pathfinding for %s: LEAVING expand_2d_up_to, result %d",
+//                                     this->settings.name.c_str(), static_cast<int>(result) );
     return result;
 }
 
@@ -797,6 +990,8 @@ std::vector<tripoint> Pathfinding::get_route_2d(
     const PathfindingSettings path_settings,
     const RouteSettings route_settings )
 {
+    // dbg( DL::Info ) << string_format( "Pathfinding for %s: ENTERING get_route_2d for z=%d, from (%d,%d) to (%d,%d)",
+    //                                  path_settings.name.c_str(), z, from.x, from.y, to.x, to.y );
     if( from == to ) {
         return std::vector<tripoint> { tripoint( from, z ), tripoint( to, z ) };
     }
@@ -837,6 +1032,8 @@ std::vector<tripoint> Pathfinding::get_route_2d(
 
     while( cur_point != d_map->dest ) {
         std::vector<std::pair<float, point>> candidates;
+  //      dbg( DL::Info ) << string_format( "Pathfinding for %s: Reconstructing path at (%d,%d). Current cost: %.2f. Looking for neighbors with lower cost.",
+  //                                       path_settings.name.c_str(), cur_point.x, cur_point.y, cur_cost );
 
         for( const point &dir : DIRS_2D ) {
             const point next_point = cur_point + dir;
@@ -846,17 +1043,23 @@ std::vector<tripoint> Pathfinding::get_route_2d(
             }
 
             const float cost = d_map->get_f_unbiased( next_point );
+            const auto state = d_map->tile_state_at( next_point );
 
-            const bool is_accessible = d_map->tile_state_at( next_point ) ==
-                                       Pathfinding::State::ACCESSIBLE;
-            const bool is_not_forbidden = !d_map->forbidden_moves.contains( {cur_point, next_point} );
+            const bool is_accessible = state == Pathfinding::State::ACCESSIBLE;
+            const bool is_not_forbidden_move = !d_map->forbidden_moves.contains( {cur_point, next_point} );
 
-            const bool is_valid = is_accessible && is_not_forbidden;
+            const bool is_valid = is_accessible && is_not_forbidden_move;
             if( !is_valid ) {
                 continue;
             };
 
-            if( cost < cur_cost ) {
+            const bool already_visited = std::any_of( result.cbegin(), result.cend(),
+            [&]( const tripoint & p ) {
+                return p.xy() == next_point;
+            } );
+
+            if( cost <= cur_cost && !already_visited ) {
+             //   dbg( DL::Info ) << string_format( "    -> Is a valid candidate." );
                 candidates.emplace_back( cost, next_point );
             }
         }
@@ -879,6 +1082,9 @@ std::vector<tripoint> Pathfinding::get_route_2d(
         cur_point = selected_pair->second;
         cur_cost = selected_pair->first;
 
+  //      dbg( DL::Info ) << string_format( "Pathfinding for %s: pathing 2d, added (%d,%d,%d), cost %.2f",
+  //                                       path_settings.name.c_str(), cur_point.x, cur_point.y, d_map->z, cur_cost );
+
         candidates.clear();
 
         // Path is too long in terms of steps taken
@@ -888,6 +1094,8 @@ std::vector<tripoint> Pathfinding::get_route_2d(
         }
     }
 
+    // dbg( DL::Info ) << string_format( "Pathfinding for %s: LEAVING get_route_2d, path size %d",
+    //                                  path_settings.name.c_str(), result.size() );
     return result;
 }
 
@@ -896,6 +1104,9 @@ std::vector<tripoint> Pathfinding::get_route_3d(
     const PathfindingSettings path_settings,
     const RouteSettings route_settings )
 {
+    // dbg( DL::Info ) << string_format( "Pathfinding for %s: ENTERING get_route_3d from (%d,%d,%d) to (%d,%d,%d)",
+    //                                  path_settings.name.c_str(), from.x, from.y, from.z, to.x, to.y, to.z );
+    // dbg( DL::Info ) << string_format("Pathfinding_GET_ROUTE_3D_CALLED_INTERNALLY from (%d,%d,%d) to (%d,%d,%d)", from.x, from.y, from.z, to.x, to.y, to.z);
     // We won't bother with complicated Z-level paths because that vastly, vastly increases the pathfinding cost
     // Instead, we will **only** consider taking z_changes that bring us closer to target's Z level.
     const bool we_go_up = to.z > from.z;
@@ -919,15 +1130,23 @@ std::vector<tripoint> Pathfinding::get_route_3d(
 
                 for( const Pathfinding::ZLevelChange &z_change : Pathfinding::get_z_cache( cur_origin.z ) ) {
                     bool can_be_taken = true;
+                    const char* type_name = "UNKNOWN";
                     switch( z_change.type ) {
                         case Pathfinding::ZLevelChange::Type::STAIRS:
+                            type_name = "STAIRS";
                             can_be_taken &= path_settings.can_climb_stairs || path_settings.can_fly;
                             break;
                         case Pathfinding::ZLevelChange::Type::OPEN_AIR:
+                            type_name = "OPEN_AIR";
                             // Open air is processed separately
                             continue;
                         case Pathfinding::ZLevelChange::Type::RAMP:
+                            type_name = "RAMP";
                             // Ramps can be taken by all creatures currently
+                            break;
+                        case Pathfinding::ZLevelChange::Type::CLIMB:
+                            type_name = "CLIMB";
+                            can_be_taken &= ( !is_inf( path_settings.climb_cost ) || path_settings.can_fly );
                             break;
                     }
 
@@ -937,9 +1156,39 @@ std::vector<tripoint> Pathfinding::get_route_3d(
                     const bool leads_closer_to_from = we_go_up ?
                                                       z_change.from.z < cur_origin.z :
                                                       z_change.from.z > cur_origin.z;
+
+                    // dbg( DL::Info ) << string_format( "Pathfinding: Evaluating Z-change (%d,%d,%d)->(%d,%d,%d) type=%s, can_be_taken=%d, overshoot=%d, closer=%d",
+                     //                              z_change.from.x, z_change.from.y, z_change.from.z,
+                     //                              z_change.to.x, z_change.to.y, z_change.to.z,
+                     //                              type_name, static_cast<int>(can_be_taken),
+                     //                              static_cast<int>(does_not_overshoot), static_cast<int>(leads_closer_to_from) );
+
                     if( can_be_taken && does_not_overshoot && leads_closer_to_from ) {
                         candidates.push_back( z_change );
+                        // dbg( DL::Info ) << string_format( "Pathfinding: Added Z-change candidate (%d,%d,%d)->(%d,%d,%d) type=%s",
+                       //                                z_change.from.x, z_change.from.y, z_change.from.z,
+                         //                              z_change.to.x, z_change.to.y, z_change.to.z, type_name );
                     }
+                }
+
+                // Prioritize stairs over climbing for normal movement
+                std::vector<Pathfinding::ZLevelChange> stair_candidates;
+                std::vector<Pathfinding::ZLevelChange> other_candidates;
+                for( const auto &cand : candidates ) {
+                    if( cand.type == Pathfinding::ZLevelChange::Type::STAIRS ) {
+                        stair_candidates.push_back( cand );
+                    } else {
+                        other_candidates.push_back( cand );
+                    }
+                }
+                
+                // Use stairs if available, otherwise fall back to other methods
+                if( !stair_candidates.empty() ) {
+                    candidates = stair_candidates;
+                    // dbg( DL::Info ) << string_format( "Pathfinding: Prioritizing %d sta candidates over %d other candidates",
+                    //                               stair_candidates.size(), other_candidates.size() );
+                } else {
+                    // dbg( DL::Info ) << string_format( "Pathfinding: No stair candidates found, using %d other candidates", other_candidates.size() );
                 }
 
                 // Now, find the best next Z level
@@ -963,6 +1212,28 @@ std::vector<tripoint> Pathfinding::get_route_3d(
                         best_distance = dist;
                     }
                 }
+
+                const char* selected_type_name = "UNKNOWN";
+                switch( best_z_change.type ) {
+                    case Pathfinding::ZLevelChange::Type::STAIRS: selected_type_name = "STAIRS"; break;
+                    case Pathfinding::ZLevelChange::Type::OPEN_AIR: selected_type_name = "OPEN_AIR"; break;
+                    case Pathfinding::ZLevelChange::Type::RAMP: selected_type_name = "RAMP"; break;
+                    case Pathfinding::ZLevelChange::Type::CLIMB: selected_type_name = "CLIMB"; break;
+                }
+
+                // dbg( DL::Info ) << string_format( "Pathfinding: Selected Z-change (%d,%d,%d)->(%d,%d,%d) type=%s",
+                //                               best_z_change.from.x, best_z_change.from.y, best_z_change.from.z,
+                //                               best_z_change.to.x, best_z_change.to.y, best_z_change.to.z,
+                //                               selected_type_name );
+
+                const map &here = get_map();
+                const maptile &from_tile = here.maptile_at( best_z_change.from );
+                const maptile &to_tile = here.maptile_at( best_z_change.to );
+                
+                // dbg( DL::Info ) << string_format( "Pathfinding: Z-change details - Origin: (%d,%d,%d), From tile: '%s', To tile: '%s'",
+                 //                              cur_origin.x, cur_origin.y, cur_origin.z,
+                 //                              from_tile.get_ter_t().name().c_str(),
+                //                               to_tile.get_ter_t().name().c_str() );
 
                 // Open air processing
                 if( path_settings.can_fly ) {
@@ -1010,6 +1281,7 @@ std::vector<tripoint> Pathfinding::get_route_3d(
                 }
 
                 if( is_inf( best_distance ) ) {
+                    // dbg( DL::Info ) << "Pathfinding: No viable Z-change found. Aborting route.";
                     // No trivial Z path exists, give up
                     return std::vector<tripoint>();
                 }
@@ -1034,6 +1306,8 @@ std::vector<tripoint> Pathfinding::get_route_3d(
                         cur_pos, next.from.xy(), next.from.z,
                         path_settings, route_settings );
             if( path_segment.empty() ) {
+                // dbg( DL::Info ) << string_format( "Pathfinding: Failed to path to Z-change at (%d,%d,%d). Aborting.",
+                //                                  next.from.x, next.from.y, next.from.z );
                 // Give up early based on our inability to path to that z-change
                 result.clear();
                 return result;
@@ -1065,6 +1339,8 @@ std::vector<tripoint> Pathfinding::get_route_3d(
             return ramp_excluded.contains( p );
         } );
     }
+    // dbg( DL::Info ) << string_format( "Pathfinding for %s: LEAVING get_route_3d, path size %d",
+    //                                  path_settings.name.c_str(), result.size() );
     return result;
 }
 
@@ -1073,23 +1349,36 @@ std::vector<tripoint> Pathfinding::route(
     const std::optional<PathfindingSettings> maybe_path_settings,
     const std::optional<RouteSettings> maybe_route_settings )
 {
+    // dbg( DL::Info ) << "Pathfinding_ROUTE_ENTERED. FromX: " << from.x << " FromY: " << from.y << " FromZ: " << from.z << " ToX: " << to.x << " ToY: " << to.y << " ToZ: " << to.z;
     const map &here = get_map();
 
     here.clip_to_bounds( from );
     here.clip_to_bounds( to );
 
-    PathfindingSettings path_settings = maybe_path_settings.has_value() ? *maybe_path_settings :
-                                        PathfindingSettings();
-    RouteSettings route_settings = maybe_route_settings.has_value() ? *maybe_route_settings :
-                                   RouteSettings();
+    // dbg( DL::Info ) << string_format("Pathfinding_ROUTE: After clip, from.z=%d, to.z=%d", from.z, to.z);
+
+    PathfindingSettings path_settings = maybe_path_settings.has_value() ? *maybe_path_settings : PathfindingSettings();
+    RouteSettings route_settings = maybe_route_settings.has_value() ? *maybe_route_settings : RouteSettings();
 
     if( rl_dist_exact( from, to ) > route_settings.max_dist ) {
+        // dbg( DL::Info ) << string_format("Pathfinding_ROUTE: Exiting due to max_dist. from=(%d,%d,%d), to=(%d,%d,%d), max_dist=%.2f", from.x, from.y, from.z, to.x, to.y, to.z, route_settings.max_dist);
         return std::vector<tripoint>();
     }
 
+    // dbg( DL::Info ) << string_format("Pathfinding_ROUTE: Evaluating from.z (%d) == to.z (%d)", from.z, to.z);
     if( from.z == to.z ) {
+        // dbg( DL::Info ) << string_format("Pathfinding_ROUTE: Calling get_route_2d for z=%d", from.z);
         return Pathfinding::get_route_2d( from.xy(), to.xy(), from.z,
                                           path_settings, route_settings );
     }
+    // dbg( DL::Info ) << string_format("Pathfinding_ROUTE: Calling get_route_3d for from.z=%d to to.z=%d", from.z, to.z);
     return Pathfinding::get_route_3d( from, to, path_settings, route_settings );
 };
+
+void Pathfinding::mark_dirty_z_cache()
+{
+    // dbg( DL::Info ) << "Pathfinding: Marking Z-caches as dirty.";
+    Pathfinding::cached_closest_z_changes.clear();
+
+    Pathfinding::z_area = point( -9999, -9999 );
+}

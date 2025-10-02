@@ -1,0 +1,605 @@
+[
+    {
+      "result": "FoxClimateControlaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 500 ] ],
+        [ [ "FoxFirerune", 25 ] ],
+        [ [ "FoxTelekineticrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "FoxGasaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 500 ] ],
+        [ [ "FoxAirrune", 25 ] ],
+        [ [ "FoxTelekineticrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "FoxGlareaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 500 ] ],
+        [ [ "FoxFirerune", 25 ] ],
+        [ [ "FoxAirrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "FoxSoundaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 500 ] ],
+        [ [ "FoxFirerune", 25 ] ],
+        [ [ "FoxTelekineticrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "FoxRadiochemicalaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 500 ] ],
+        [ [ "FoxDeathrune", 25 ] ],
+        [ [ "FoxAirrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "FoxOxygenaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 500 ] ],
+        [ [ "FoxTransmutationrune", 25 ] ],
+        [ [ "FoxAirrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "FoxEnvironmentalaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "id_suffix": "FoxCOMBINE",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "15 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 250 ] ],
+        [ [ "FoxClimateControlaura", 1 ] ],
+        [ [ "FoxGasaura", 1 ] ],
+        [ [ "FoxGlareaura", 1 ] ],
+        [ [ "FoxSoundaura", 1 ] ],
+        [ [ "FoxRadiochemicalaura", 1 ] ],
+        [ [ "FoxOxygenaura", 1 ] ]
+      ]
+    },
+    {
+      "result": "FoxEnvironmentalaura",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "id_suffix": "FoxFromScratch",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "3 h",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 3000 ] ],
+        [ [ "FoxFirerune", 75 ] ],
+        [ [ "FoxTransmutationrune", 25 ] ],
+        [ [ "FoxTelekineticrune", 75 ] ],
+        [ [ "FoxDeathrune", 25 ] ],
+        [ [ "FoxAirrune", 100 ] ]
+      ]
+    },
+    {
+      "result": "FoxSleepnecklace",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "Foxhumansoul", 10 ] ],
+        [ [ "FoxTransmutationrune", 2 ] ],
+        [ [ "steel_chunk", 1 ] ]
+      ]
+    },
+    {
+      "result": "Foxbowstabilizer",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 1000 ] ],
+        [ [ "FoxTelekineticrune", 100 ] ]
+      ]
+    },
+    {
+      "result": "Foxbowdampener",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 1000 ] ],
+        [ [ "FoxTelekineticrune", 25 ] ],
+        [ [ "FoxAirrune", 25 ] ]
+      ]
+    },
+    {
+      "result": "Foxbowkillmod",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 6,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 2000 ] ],
+        [ [ "FoxDeathrune", 100 ] ]
+      ]
+    },
+    {
+      "result": "Foxbowrangemod",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 1000 ] ],
+        [ [ "FoxTelekineticrune", 25 ] ],
+        [ [ "FoxAirrune", 50 ] ]
+      ]
+    },
+    {
+      "result": "Foxbowstrengthmod",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 5,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 1000 ] ],
+        [ [ "FoxLiferune", 100 ] ]
+      ]
+    },
+    {
+      "result": "Foxbowscopemod",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 6,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 2000 ] ],
+        [ [ "FoxQuantumrune", 100 ] ]
+      ]
+    },
+    {
+      "result": "Foxcrossbowlever",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 5,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "FoxEssencenormal", 2000 ] ],
+        [ [ "FoxTelekineticrune", 100 ] ],
+        [ [ "FoxAirrune", 20 ] ]
+      ]
+    },
+    {
+      "result": "Foxhoodie",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "40 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 16 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 8 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxpantscargo",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "40 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 16 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 8 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxtanktop",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 4 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxpanties",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 4 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxboxershorts",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 4 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxboyshorts",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 4 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxsportsbra",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "35 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 2 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxglovesenchanted",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "40 m",
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 2 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxsocks",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "10 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 4 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxstockings",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 2 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxhatcotton",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 2 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxbalaclava",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 2 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxknitscarf",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "45 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 3 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxglovestacticalfingerless",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "30 m",
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 2 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxbscabbard",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "40 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 14 ] ],
+      "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 7 ] ], [ [ "FoxAdamantinechunk", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxholster",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "40 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 6 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 3 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "FoxSGAtrenchcoat",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 8 ] ],
+      "difficulty": 6,
+      "time": "2 h",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 50 ] ],
+      "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 25 ] ], [ [ "FoxAdamantinechunk", 8 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "Foxbootsenchanted",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 4,
+      "time": "55 m",
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 20 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 10 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "FoxSGAashigarusuit",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssTech",
+      "difficulty": 2,
+      "skills_required": [ [ "tailor", 8 ], [ "FoxEssSpellcasting", 6 ] ],
+      "time": "4 h 30 m",
+      "reversible": true,
+      "book_learn": [ [ "FoxmanualSGAgear", 2 ], [ "FoxDeSGAseburo", 2 ] ],
+      "using": [ [ "Foxsewing_Mage", 60 ] ],
+      "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+      "components": [ 
+       [ [ "FoxBallisticWeaveSheet", 30 ] ],
+       [ [ "FoxTransmutationrune", 1 ] ],
+       [ [ "FoxAdamantinechunk", 5 ] ],
+       [ [ "FoxSGAelectronics", 4 ] ],
+       [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ] 
+      ]
+    },
+    {
+      "result": "FoxSGAmaiddress",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 8 ] ],
+      "difficulty": 6,
+      "time": "4 h 30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 12 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 6 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "result": "FoxSGAmaidhat",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "skills_required": [ [ "tailor", 6 ] ],
+      "difficulty": 6,
+      "time": "30 m",
+      "reversible": true,
+      "autolearn": true,
+      "using": [ [ "Foxsewing_Mage", 4 ] ],
+      "components": [ [ [ "FoxBallisticWeaveSheet", 1 ] ], [ [ "FoxTransmutationrune", 1 ] ] ]
+    },
+    {
+      "type": "recipe",
+      "result": "Foxseatsuper",
+      "category": "CC_ESSTECH",
+      "subcategory": "CSC_ESSTECH_ESSTECH",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 6,
+      "id_suffix": "Foxmachined",
+      "time": "10 m",
+      "autolearn": true,
+      "components": [ [ [ "Foxseat", 1 ] ], [ [ "FoxVicPocketDimensionitem", 1 ] ] ]
+    },
+    {
+      "result": "FoxHellcatarrow",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "Foxadamantinearrow", 10 ] ],
+        [ [ "FoxFirerune", 40 ] ],
+        [ [ "FoxEarthrune", 40 ] ],
+        [ [ "FoxTelekineticrune", 20 ] ]
+      ]
+    },
+    {
+      "result": "FoxHellfirearrow",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "Foxadamantinearrow", 10 ] ],
+        [ [ "FoxFirerune", 80 ] ],
+        [ [ "FoxTelekineticrune", 20 ] ]
+      ]
+    },
+    {
+      "result": "FoxDeatharrow",
+      "type": "recipe",
+      "category": "CC_ESSMAGIC",
+      "subcategory": "CSC_ESSMAGIC_ENHANCEMENT",
+      "skill_used": "FoxEssSpellcasting",
+      "difficulty": 4,
+      "time": "45 m",
+      "autolearn": true,
+      "components": [
+        [ [ "Foxshadowsteelarrow", 10 ] ],
+        [ [ "FoxDeathrune", 80 ] ],
+        [ [ "FoxTelekineticrune", 20 ] ]
+      ]
+    }
+]

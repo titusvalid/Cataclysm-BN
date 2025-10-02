@@ -1,0 +1,646 @@
+[
+  {
+    "type": "profession",
+    "id": "FoxNightwalker",
+    "name": "Nightwalker",
+    "description": "Savant created you as the ultimate soldier to kill every last Imperial so she could reclaim Earth. But the plan to hide this soldier in Imperial society failed. Nobody knows how you got to this dimension, and the apocalypse came before those powers could be fully manifested. You always felt somehow you were different, but it really sunk in after you accidentally murdered someone and had to go into hiding. Living in abandoned buildings and the sewers wasn't fun but for someone immortal and immune to disease it was easy. Now all that angst and paranoia paid off, you're not trapped out here with them, they're trapped out here with YOU!",
+    "points": 444,
+    "traits": [ "FoxNightwalker", "FoxNightwalkerBody", "FoxNightwalkerPsionics", "FoxNightwalkerUpbringing", "FoxNightwalkerRestrictions", "FoxNightwalkerExtremeFatigue", "FoxApostleApprentice", "FoxSchoolsElemental", "FoxSchoolsSpirit", "FoxSchoolsTransmutation", "FoxSchoolsPale", "LOVES_BOOKS", "PROJUNK", "GOURMAND", "NONADDICTIVE", "FACIAL_HAIR_NONE", "eye_red", "MASOCHIST", "INFRESIST", "PARAIMMUNE", "PSYCHOPATH", "STYLISH", "hair_black_long", "SKIN_LIGHT" ],
+    "items": {
+        "male": [
+          "FoxSGAgrenadeactiveremover"
+        ],
+        "female": [
+          "panties",
+          "chestwrap",
+          "footrags",
+          "FoxKawakamiravensclaw",
+          "jeans",
+          "hoodie",
+          "lowtops",
+          "gloves_wraps",
+          "patchwork_scarf",
+          "hat_cotton",
+          "bindle"
+        ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxAbberration",
+    "name": "Abberration",
+    "description": "You have no idea what you are, who you are, or how you got here, all you know is you are hungry and must eat. You look like an undead horror, zombies ignore you, people fear you.",
+    "points": 444,
+    "traits": [ "FoxAbberration", "CANNIBAL", "PSYCHOPATH" ],
+    "items": {
+      "both": [
+        "footrags",
+        "gloves_wraps",
+        "tunic_rag"
+      ],
+        "male": [
+          "briefs"
+        ],
+        "female": [
+          "panties",
+          "chestwrap"
+        ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxNightwalker2",
+    "name": "Shi Director",
+    "//": "A professional ex special forces and mage with no background in hard labor, has significant training with most weapons and is a survival expert. Any non-combat skills from lore are negated here, after a long coma. All combat skills adjusted downward for said coma.",
+    "description": "After growing up an orphan in Imperial society and being used as a child soldier, you eventually ditched the Imperial Army and became a rogue agent. You founded a conglomerate of clans comprised of likeminded warriors and later ignored the goals of your creator and her rebel followers when she stepped out of hiding. Traversing dimensions flung your clans and Savant's followers forward nearly a thousand years, landing you in a Milky Way you chose to abandon. You got very curious as to why this Dimension also parallels Old Earth, and why the Imperials invaded here. The clans will follow you in later, you went in alone to investigate quietly.",
+    "points": 444,
+    "traits": [ "FoxNightwalker", "FoxNightwalkerBody", "FoxNightwalkerPsionics", "FoxNightwalkerUpbringing", "FoxNightwalkerRestrictions", "FoxNightwalkerExtremeFatigue", "FoxApostleExpert", "FoxSchoolsElemental", "FoxSchoolsSpirit", "FoxSchoolsTransmutation", "FoxSchoolsPale", "FoxClanKawakami", "LOVES_BOOKS", "PROJUNK", "GOURMAND", "NONADDICTIVE", "FACIAL_HAIR_NONE", "eye_red", "MASOCHIST", "INFRESIST", "PARAIMMUNE", "PSYCHOPATH", "STYLISH", "hair_black_long", "SKIN_LIGHT" ],
+    "skills": [
+      { "level": 8, "name": "melee" },
+      { "level": 8, "name": "cutting" },
+      { "level": 7, "name": "stabbing" },
+      { "level": 4, "name": "bashing" },
+      { "level": 6, "name": "dodge" },
+      { "level": 6, "name": "unarmed" },
+      { "level": 4, "name": "throw" },
+      { "level": 6, "name": "gun" },
+      { "level": 6, "name": "rifle" },
+      { "level": 2, "name": "smg" },
+      { "level": 3, "name": "pistol" },
+      { "level": 4, "name": "shotgun" },
+      { "level": 2, "name": "launcher" },
+      { "level": 2, "name": "firstaid" },
+      { "level": 6, "name": "swimming" },
+      { "level": 5, "name": "survival" },
+      { "level": 4, "name": "driving" },
+      { "level": 2, "name": "traps" },
+      { "level": 10, "name": "FoxCryptology" },
+      { "level": 8, "name": "FoxEssSpellcasting" }
+    ],
+    "items": {
+      "male": [
+        "FoxSGAgrenadeactiveremover"
+      ],
+      "female": {
+        "items": [
+        "Foxboyshorts",
+        "Foxsportsbra",
+        "Foxtanktop",
+        "Foxpantscargo",
+        "Foxhoodie",
+        "Foxsocks",
+        "Foxbootscombat",
+        "FoxKawakamiravensclaw",
+        "Foxglovestacticalfingerless",
+        "FoxSGAdatauplink",
+        "FoxSGAportaluplink",
+        "FoxSGAlocktopus",
+        "Foxknitscarf",
+        "Foxhatcotton",
+        "Foxsmalltentkit",
+        "brazier",
+        "rollmat",
+        "sleeping_bag_roll",
+        "mess_tin",
+        "canteen",
+        "FoxmanualSGAgear",
+        "FoxSeburoAD1",
+        "Foximpcombatknife",
+        "Foximpetool",
+        "FoxDeSGAesstheory",
+        "FoxDeSGAkawakamicookbook",
+        "FoxDeSGAkawakami",
+        "FoxArakawanote"
+      ],
+      "entries": [
+        { "item": "FoxArakawaR7", "ammo-item": "Fox44magnumKK", "charges": 6, "container-item": "FoxSGAtrenchcoat" },
+        { "item": "FoxShadowsteelLongsword", "container-item": "FoxSwordsmanPocketDimension" },
+        { "item": "FoxKolibriautorail", "ammo-item": "FoxSGAshadowsteelrail", "charges": 20 },
+        { "item": "FoxKawakamisawnoff", "ammo-item": "FoxSGA00shot", "charges": 2 },
+        { "item": "FoxSeburoC37", "ammo-item": "Fox9mmSGA", "charges": 50 },
+        { "item": "FoxSeburoC37mag", "ammo-item": "Fox9mmSGA", "charges": 50 },
+        { "item": "FoxSeburoS12", "ammo-item": "Fox9mmSGA", "charges": 20 },
+        { "item": "FoxSGA9mmmag", "ammo-item": "Fox9mmSGA", "charges": 20 },
+        { "item": "FoxSGA9mmmag", "ammo-item": "Fox9mmSGA", "charges": 20 },
+        { "item": "FoxSGAshadowsteelrail", "charges": 20 },
+        { "item": "Fox44magnumKK", "charges": 12 },
+        { "item": "Fox44magnumArakawa", "charges": 30 },
+        { "item": "FoxSGA00shot", "charges": 18 },
+        { "item": "Fox9mmSGA", "charges": 50 },
+        { "item": "FoxNanoForge", "charges": 0 }
+      ]
+    }
+  }
+  },
+  {
+    "type": "profession",
+    "id": "FoxCarmen",
+    "name": "Director's Sister",
+    "//": "A woman who has never held a tool in her life but is a medical doctor with a strong foundation in chemistry, various other sciences, and psychology, would have several doctorates at this point if centralized education existed. Only has pistol skill because of her sister forcing her to learn.",
+    "description": "You always wanted to help people. Your sister made that difficult by being a homicidal supersoldier maniac with an army of zealot followers and your mother by being labeled a terrorist for creating said maniac. The calamity in this dimension gave you a chance to help those in need, but your sister wouldn't let you go alone and assigned an agent to guard you.",
+    "points": 444,
+    "skills": [
+      { "level": 1, "name": "gun" },
+      { "level": 1, "name": "pistol" },
+      { "level": 8, "name": "speech" },
+      { "level": 10, "name": "cooking" },
+      { "level": 10, "name": "firstaid" },
+      { "level": 6, "name": "barter" },
+      { "level": 6, "name": "computer" },
+      { "level": 5, "name": "FoxEssTheory" },
+      { "level": 2, "name": "electronics" }
+    ],
+    "traits": [ "PACIFIST", "hair_brown_long", "SKIN_LIGHT", "FLIMSY2", "FoxSchoolsSpirit", "OPTIMISTIC", "SQUEAMISH", "BADCARDIO", "LOVES_BOOKS", "PRETTY", "MORE_PAIN", "FoxThresh_Nightstalker", "FoxNightstalkerPhysiology", "FoxNightstalkerResistance", "FoxNightstalkerMind", "FoxNightstalkerPsionics", "FoxNightstalkerMagic" ],
+    "items": {
+      "male": [
+        "FoxSGAgrenadeactiveremover"
+      ],
+      "female": {
+        "items": [
+        "panties",
+        "bra",
+        "stockings",
+        "skirt",
+        "dress_shirt",
+        "coat_lab",
+        "dress_shoes",
+        "gloves_light",
+        "knit_scarf",
+        "hat_knit",
+        "stethoscope",
+        "purse",
+        "FoxSmallPocketDimension",
+        "FoxTinyCanteenDimension",
+        "FoxSGAdatauplink",
+        "FoxSGAportaluplink",
+        "FoxSGAlocktopus"
+      ],
+      "entries": [
+        { "item": "medical_gauze", "charges": 20 },
+        { "item": "bandages", "charges": 20 },
+        { "item": "medical_tape", "charges": 20 },
+        { "item": "tramadol", "charges": 10 },
+        { "item": "strong_antibiotic", "charges": 20 }
+      ]
+    }
+  }
+  },
+  {
+    "type": "profession",
+    "id": "FoxArakawaWarrior",
+    "name": "Arakawa Warrior",
+    "description": "As a warrior of Clan Arakawa, you're familiar with the effects of essence and it's uncontrolled mutations on the living. You're sent in to purge every last mutant that may threaten the locals before it evolves into something worse. Report back if you find survivors.",
+    "points": 444,
+    "traits": [ "FoxClanArakawa", "FoxThresh_Nightstalker", "FoxNightstalkerPhysiology", "FoxNightstalkerResistance", "FoxNightstalkerMind", "FoxNightstalkerPsionics", "FoxNightstalkerMagic", "FoxApostleSkilled", "FoxSchoolsElemental" ],
+    "skills": [
+      { "level": 8, "name": "melee" },
+      { "level": 6, "name": "cutting" },
+      { "level": 6, "name": "stabbing" },
+      { "level": 4, "name": "bashing" },
+      { "level": 6, "name": "dodge" },
+      { "level": 6, "name": "unarmed" },
+      { "level": 4, "name": "throw" },
+      { "level": 6, "name": "gun" },
+      { "level": 4, "name": "rifle" },
+      { "level": 2, "name": "smg" },
+      { "level": 4, "name": "pistol" },
+      { "level": 4, "name": "shotgun" },
+      { "level": 2, "name": "launcher" },
+      { "level": 2, "name": "firstaid" },
+      { "level": 4, "name": "swimming" },
+      { "level": 2, "name": "cooking" },
+      { "level": 4, "name": "survival" },
+      { "level": 4, "name": "driving" },
+      { "level": 2, "name": "traps" },
+      { "level": 10, "name": "FoxCryptology" },
+      { "level": 6, "name": "FoxEssSpellcasting" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "FoxSGAagentsuit",
+          "FoxSGAagenthelmet",
+          "Foximpetool",
+          "Foximpcombatknife",
+          "wristwatch",
+          "FoxTinyCanteenDimension",
+          "Foximpgogglesdetection",
+          "FoxSGAclearanceagent",
+          "FoxSGAdatauplink",
+          "FoxSGAmesskit",
+          "rollmat",
+          "sleeping_bag_roll",
+          "canteen",
+          "Foxsmalltentkit",
+          "FoxmanualSGAgear",
+          "FoxSGAportaluplink"
+        ],
+        "entries": [
+          { "item": "FoxShadowsteelLongsword", "container-item": "FoxSwordsmanPocketDimension" },
+          { "item": "FoxArakawaR7", "ammo-item": "Fox44magnumArakawa", "charges": 6 },
+          { "item": "FoxArakawaSG3", "ammo-item": "FoxSGA00shot", "charges": 9 },
+          { "item": "FoxSeburoC37", "ammo-item": "Fox9mmSGA", "charges": 50 },
+          { "item": "Fox44magnumArakawa", "charges": 30 },
+          { "item": "FoxSGA00shot", "charges": 90 },
+          { "item": "Fox9mmSGA", "charges": 300 }
+        ]
+      },
+      "male": [ "Foxboxershorts", "Foxtanktop" ],
+      "female": [ "Foxboyshorts", "Foxsportsbra", "Foxtanktop" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxSeburoEngineer",
+    "name": "Seburo Technician",
+    "description": "You're a field technician of Clan Seburo, bored with a life of fixing things and making more things to break you volunteered to go in and search for technology and information. Though your combat skills are limited, you'll at least have that chance to improve them if you die.",
+    "points": 444,
+    "traits": [ "FoxClanSeburo", "FoxThresh_Nightstalker", "FoxNightstalkerPhysiology", "FoxNightstalkerResistance", "FoxNightstalkerMind", "FoxNightstalkerPsionics", "FoxNightstalkerMagic", "FoxApostleSkilled", "FoxSchoolsTransmutation" ],
+    "skills": [
+      { "level": 4, "name": "melee" },
+      { "level": 1, "name": "cutting" },
+      { "level": 2, "name": "stabbing" },
+      { "level": 1, "name": "bashing" },
+      { "level": 4, "name": "dodge" },
+      { "level": 4, "name": "unarmed" },
+      { "level": 1, "name": "throw" },
+      { "level": 3, "name": "gun" },
+      { "level": 2, "name": "rifle" },
+      { "level": 1, "name": "smg" },
+      { "level": 2, "name": "pistol" },
+      { "level": 2, "name": "shotgun" },
+      { "level": 1, "name": "launcher" },
+      { "level": 2, "name": "firstaid" },
+      { "level": 4, "name": "swimming" },
+      { "level": 4, "name": "survival" },
+      { "level": 4, "name": "driving" },
+      { "level": 2, "name": "traps" },
+      { "level": 10, "name": "FoxCryptology" },
+      { "level": 3, "name": "cooking" },
+      { "level": 8, "name": "fabrication" },
+      { "level": 4, "name": "electronics" },
+      { "level": 3, "name": "FoxEssTech" },
+      { "level": 3, "name": "FoxEssTheory" },
+      { "level": 4, "name": "mechanics" },
+      { "level": 6, "name": "FoxEssSpellcasting" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "FoxSGAagentsuit",
+          "FoxSGAagenthelmet",
+          "Foximpetool",
+          "Foximpcombatknife",
+          "wristwatch",
+          "FoxSGAmultihammer",
+          "FoxSGAmesskit",
+          "press",
+          "FoxLesserPocketDimension",
+          "FoxTinyCanteenDimension",
+          "FoxSGAclearanceagent",
+          "FoxSGAdatauplink",
+          "rollmat",
+          "sleeping_bag_roll",
+          "canteen",
+          "Foxsmalltentkit",
+          "FoxDeSGAesstheory",
+          "FoxmanualSGAgear",
+          "FoxDeSGAseburo",
+          "FoxSGAportaluplink"
+        ],
+        "entries": [
+          { "item": "FoxSeburoR5", "ammo-item": "Fox8mmSGAcaseless", "charges": 21 },
+          { "item": "FoxSeburoS10", "ammo-item": "Fox5mmSGAcaseless", "charges": 20 },
+          { "item": "Fox8mmSGAcaseless", "charges": 120 },
+          { "item": "Fox5mmSGAcaseless", "charges": 60 }
+        ]
+      },
+      "male": [ "Foxboxershorts", "Foxtanktop" ],
+      "female": [ "Foxboyshorts", "Foxsportsbra", "Foxtanktop" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxXedraApostle",
+    "name": "Apostle experiment",
+    "description": "In an effort to create the next generation of soldier, XEDRA conducted horrible experiments on your body and tortured you to break you. Your body changed and you gained magical power, at some point you escaped and hid from the world for a long time, but you were never the same mentally. Your powers helped you remain undetected and now they will keep you alive in a new world.",
+    "points": 8,
+    "traits": [  "FoxApostleSkilled", "FoxSchoolsElemental", "FoxSchoolsSpirit", "FoxSchoolsTransmutation", "INFRESIST", "PARAIMMUNE", "PSYCHOPATH", "ROT1", "SNARL", "UGLY" ],
+    "spells": [ 
+      { "id": "Fox_Transmutation_Essence_skilled", "level": 5 },
+      { "id": "Fox_Transmutation_EssenceTokenSkilled", "level": 5 },
+      { "id": "Fox_Transmutation_Weaving2", "level": 1 },
+      { "id": "Fox_Elemental_Rockbolt", "level": 5 },
+      { "id": "Fox_Spirit_Onrush", "level": 5 }
+    ],
+    "skills": [
+      { "level": 2, "name": "melee" },
+      { "level": 1, "name": "cutting" },
+      { "level": 1, "name": "stabbing" },
+      { "level": 1, "name": "bashing" },
+      { "level": 1, "name": "dodge" },
+      { "level": 1, "name": "unarmed" },
+      { "level": 1, "name": "throw" },
+      { "level": 1, "name": "firstaid" },
+      { "level": 2, "name": "swimming" },
+      { "level": 3, "name": "tailor" },
+      { "level": 3, "name": "fabrication" },
+      { "level": 3, "name": "survival" },
+      { "level": 6, "name": "FoxEssSpellcasting" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "FoxLesserPocketDimension",
+          "FoxTinyCanteenDimension",
+          "FoxTinyCanteenDimension",
+          "Foxnoviceartificing",
+          "Foxlightorboff",
+          "Foxmagiclighter",
+          "needle_wood",
+          "mortar_pestle",
+          "cloak_fur",
+          "scarf_fur",
+          "gloves_fur",
+          "mocassins",
+          "socks_wool",
+          "spear_stone",
+          "fur_blanket",
+          "fur_rollmat"
+        ]
+      },
+      "male": [ "boxer_shorts" ],
+      "female": [ "camisole", "panties" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxRichApostle",
+    "name": "Rich Apostle",
+    "description": "You were born into a wealthy family of the old world, and your family had enough money and power to be involved in XEDRA's experiments. As they experimented on humans to give them magical power, you used your family's influence to safely become an apostle. Then the world ended, that's rough. At least you have transmutation and elemental spells.",
+    "points": 12,
+    "traits": [ "FoxApostleSkilled", "FoxSchoolsElemental", "FoxSchoolsTransmutation", "BADCARDIO", "BADTEMPER", "DISORGANIZED" ],
+    "skills": [
+      { "level": 4, "name": "FoxEssSpellcasting" }
+    ],
+    "spells": [ 
+      { "id": "Fox_Transmutation_Essence_skilled", "level": 5 },
+      { "id": "Fox_Transmutation_EssenceTokenSkilled", "level": 5 },
+      { "id": "Fox_Transmutation_Weaving2", "level": 1 },
+      { "id": "Fox_Elemental_Firebolt", "level": 5 },
+      { "id": "Fox_Elemental_Icebolt", "level": 5 },
+      { "id": "Fox_Elemental_Climatecontrol", "level": 2 }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "FoxLesserPocketDimension",
+          "Foxintermediateartificing",
+          "FoxGreaterCanteenDimension",
+          "FoxDeSGAesstechbasic",
+          "FoxDeSGAesstheorybasic",
+          "FoxDeSGAesstechadvanced",
+          "gasdiscount_platinum",
+          "gold_necklace",
+          "gold_watch"
+        ],
+        "entries": [
+          { "item": "FoxSeburoS12", "ammo-item": "Fox9mmSGA", "charges": 20 },
+          { "item": "FoxSGA9mmmag", "ammo-item": "Fox9mmSGA", "charges": 20 },
+          { "item": "FoxSGA9mmmag", "ammo-item": "Fox9mmSGA", "charges": 20 },
+          { "item": "Fox9mmSGA", "charges": 100 },
+          { "item": "Foxhumansoul", "charges": 20 },
+          { "item": "cash_card", "charges": 5000000 }
+        ]
+      },
+      "male": [ "boxer_shorts", "tux", "dress_shoes", "socks" ],
+      "female": [ "bra", "panties", "stockings", "gown", "heels" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxReaper",
+    "name": "Reaper Deserter",
+    "description": "You were a poorly trained clone soldier that was sent to this dimension as part of a large invasion. That went awry when most of your platoon died on arrival, your neural chip fried and you ran for the hills. You won't be going home but you have a chance at freedom.",
+    "points": 4,
+    "traits": [ "FoxImperialTraitor" ],
+    "skills": [
+      { "level": 2, "name": "gun" },
+      { "level": 1, "name": "rifle" },
+      { "level": 1, "name": "dodge" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "Foximpwastelandsuit",
+          "Foximpetool",
+          "wristwatch",
+          "balclava",
+          "socks",
+          "Foximpwastelandpack"
+        ],
+        "entries": [
+          { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
+          { "item": "Foximpcombatknife" }
+        ]
+      },
+      "male": [ "boxer_shorts" ],
+      "female": [ "sports_bra", "boy_shorts" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxReaperTech",
+    "name": "Reaper Technician",
+    "description": "Holy shit, you're not trained for this! You were sent in with a toolbox and trained to fix guns, make bullets. Hell broke loose and you just ran.",
+    "points": 4,
+    "traits": [ "FoxImperialTraitor" ],
+    "skills": [
+      { "level": 6, "name": "fabrication" },
+      { "level": 3, "name": "FoxEssTheory" },
+      { "level": 3, "name": "FoxEssTech" },
+      { "level": 2, "name": "mechanics" },
+      { "level": 4, "name": "electronics" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "Foximpwastelandsuit",
+          "Foximpwastelandpack",
+          "Foxtoolboxmachining",
+          "Foximpsteeldrillbits",
+          "balclava",
+          "socks",
+          "press"
+        ]
+      },
+      "male": [ "boxer_shorts" ],
+      "female": [ "sports_bra", "boy_shorts" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxReaperArmed",
+    "name": "Reaper Deserter (armed)",
+    "description": "You managed to hold onto your rifle while you were fleeing and can still fire it. Sadly you lost your shovel and knife, and your batteries are dead.",
+    "points": 6,
+    "traits": [ "FoxImperialTraitor" ],
+    "skills": [
+      { "level": 2, "name": "gun" },
+      { "level": 1, "name": "rifle" },
+      { "level": 1, "name": "dodge" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "Foximpwastelandsuit",
+          "wristwatch",
+          "Foximpwastelandpack",
+          "adv_UPS_off",
+          "balclava",
+          "socks",
+          "FoximpKW21402U"
+        ],
+        "entries": [
+          { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
+          { "item": "Foximpbatterypack", "ammo-item": "battery", "charges": 0 }
+        ]
+      },
+      "male": [ "boxer_shorts" ],
+      "female": [ "sports_bra", "boy_shorts" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxReaperOfficer",
+    "name": "Reaper Officer",
+    "description": "You were always looking for a chance to desert, so this dimensional invasion proved a good opportunity when most of your platoon died on arrival and you ran for the hills. You have some documents and a datapad, along with your knife and shovel.",
+    "points": 8,
+    "traits": [ "FoxImperialTraitor" ],
+    "skills": [
+      { "level": 2, "name": "gun" },
+      { "level": 2, "name": "rifle" },
+      { "level": 1, "name": "dodge" },
+      { "level": 1, "name": "computer" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "Foximpwastelandsuit",
+          "Foximpetool",
+          "wristwatch",
+          "Foxofficerdatapad",
+          "balclava",
+          "FoxDeIed",
+          "FoxDeIkw",
+          "socks",
+          "Foximpwastelandpack"
+        ],
+        "entries": [
+          { "item": "ear_plugs", "custom-flags": [ "no_auto_equip" ] },
+          { "item": "Foximpcombatknife" }
+        ]
+      },
+      "male": [ "boxer_shorts" ],
+      "female": [ "sports_bra", "boy_shorts" ]
+    }
+  },
+  {
+    "type": "profession",
+    "id": "FoxRogueAgent",
+    "name": "Imperial Rogue Agent",
+    "description": "Trained for subterfuge and given a level of autonomy, you managed to escape Imperial control after you opened a portal to an unexplored dimension. Unfortunately they're here too. That portal ate most of your gear, but you kept a stolen multi-hammer.",
+    "points": 8,
+    "traits": [ "FoxImperialTraitor" ],
+    "skills": [
+      { "level": 2, "name": "gun" },
+      { "level": 2, "name": "rifle" },
+      { "level": 1, "name": "pistol" },
+      { "level": 2, "name": "computer" },
+      { "level": 2, "name": "survival" },
+      { "level": 2, "name": "cooking" },
+      { "level": 1, "name": "fabrication" }
+    ],
+    "items": {
+      "both": {
+        "items": [
+          "Foximpintelligencesuit",
+          "Foximpgogglesdetection",
+          "Foxholstershoulderimperial",
+          "wristwatch",
+          "Foxofficerdatapad",
+          "FoxSGAmultihammer",
+          "electrohack",
+          "rollmat",
+          "sleeping_bag_roll",
+          "canteen",
+          "balclava",
+          "socks"
+        ],
+        "entries": [
+          { "item": "Foximpcombatknife", "container-item": "sheath" },
+          { "item": "FoximpKW21382U", "contents-item": [ "FoxSaboteurEmitter" ] },
+          { "item": "Foximpbatterydevice", "ammo-item": "battery", "charges": 450 }
+        ]
+      },
+      "male": [ "boxer_shorts" ],
+      "female": [ "sports_bra", "boy_shorts" ]
+    }
+  },
+  {
+    "type": "scenario",
+    "id": "FoxCave",
+    "name": "Cave",
+    "points": 0,
+    "description": "You find yourself in a cave.  The screaming and the moaning is fainter this far from civilization, but you'd better know what you're doing out here.",
+    "allowed_locs": [
+      "Foxsloc_cave"
+    ],
+    "start_name": "Cave",
+    "flags": [ "LONE_START" ]
+  },
+  {
+    "type": "start_location",
+    "id": "Foxsloc_cave",
+    "name": "Cave",
+    "terrain": [
+      { "om_terrain": "cave_underground", "om_terrain_match_type": "PREFIX" }
+    ]
+  },
+  {
+    "type": "start_location",
+    "id": "Foxsloc_warehouse",
+    "name": "Warehouse",
+    "terrain": [
+      { "om_terrain": "warehouse", "om_terrain_match_type": "TYPE" }
+    ]
+  },
+  {
+    "type": "scenario",
+    "id": "FoxDeserter",
+    "name": "Imperial Deserter",
+    "points": 0,
+    "description": "Upon arrival your group was partly torn to shreds from the interdimensional travel, many of the survivors took fire from unknown assailants and you fled. You realized your chip had fried and your thoughts are free once again. You can't go home, they'll shoot you. You're injured and in a strange place, but you have a chance at freedom.",
+    "allowed_locs": [
+      "sloc_field",
+      "sloc_forest",
+      "sloc_campsite", 
+      "sloc_campground",
+      "sloc_deserted_island",
+      "sloc_shelter", 
+      "Foxsloc_warehouse",
+      "sloc_shelter_vandalized",
+      "sloc_lmoe_empty"
+    ],
+    "professions": [
+      "FoxReaper",
+      "FoxReaperOfficer",
+      "FoxReaperTech",
+      "FoxRogueAgent",
+      "FoxReaperArmed"
+    ],
+    "forced_traits": [ "FoxImperialTraitor" ],
+    "start_name": "Imperial Deserter",
+    "flags": [ "LONE_START", "HELI_CRASH" ]
+  }
+]

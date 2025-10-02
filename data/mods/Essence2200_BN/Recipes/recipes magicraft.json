@@ -1,0 +1,512 @@
+[
+  {
+    "result": "FoxTinyPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 1,
+    "time": "15 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 4000 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxTinyCanteenDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 1,
+    "time": "15 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 4000 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxSmallCanteenDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 2,
+    "time": "15 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 16000 ] ], [ [ "FoxEssencenormal", 4000 ], [ "FoxTinyCanteenDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxSmallPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 2,
+    "time": "15 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 16000 ] ], [ [ "FoxEssencenormal", 4000 ], [ "FoxTinyPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxLesserPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 4,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 20000 ] ], [ [ "FoxEssencenormal", 20000 ], [ "FoxSmallPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxGreaterPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxSwordsmanPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxRiflemanPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxGunDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxKnifeDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxToolDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxMagazineDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 5 ] ], [ [ "FoxLesserPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxGreaterCanteenDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 20000 ] ], [ [ "FoxEssencenormal", 20000 ], [ "FoxSmallCanteenDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxHugePocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 6,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 10 ] ], [ [ "FoxGreaterPocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxGiantPocketDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 6,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 20 ] ], [ [ "FoxHugePocketDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxOceanDimension",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 6,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 10 ] ], [ [ "FoxEssencenormal", 12500 ], [ "FoxGreaterCanteenDimension", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxVicPocketDimensionitem",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "45 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 40000 ] ],
+      [ [ "Foxhumansoul", 10 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foxcrystallizedessence",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "id_suffix": "FoxEssMagicShaping",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 2,
+    "result_mult": 40,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxTransmutationrune", 1 ] ], [ [ "FoxEssencenormal", 20000 ] ] 
+  ]
+  },
+  {
+    "result": "FoxMagicCapacitor",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 4,
+    "time": "15 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 5000 ] ],
+      [ [ "Foxhumansoul", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxmagicsoldering",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 4,
+    "time": "15 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 5000 ] ],
+      [ [ "Foxhumansoul", 2 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxmagicwelder",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 4,
+    "time": "10 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 5000 ] ],
+      [ [ "Foxhumansoul", 2 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "FoxEternalFlame",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 3,
+    "time": "10 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 5000 ] ],
+      [ [ "Foxhumansoul", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxportablealtar",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 2,
+    "time": "1 h",
+    "autolearn": true,
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foxcrystallizedessence", 8 ] ]
+    ]
+  },
+  {
+    "result": "Foxmagiclighter",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 0,
+    "time": "30 m",
+    "tools": [ [ [ "Fox_spellbooks_First", -1 ] ] ],
+    "book_learn": [ [ "Fox_spellbooks_First", 0 ] ],
+    "components": [
+      [ [ "FoxEssencenormal", 500 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxnoviceartificing",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 1,
+    "time": "30 m",
+    "book_learn": [ [ "Fox_spellbooks_First", 0 ] ],
+    "components": [
+      [ [ "FoxEssencenormal", 1000 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxintermediateartificing",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 3,
+    "time": "45 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 1 ] ], [ [ "FoxEssencenormal", 1000 ], [ "Foxnoviceartificing", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxadvancedartificing",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 5,
+    "time": "55 m",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 2 ] ], [ [ "Foxintermediateartificing", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxfleshmanipulation",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 1,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 1000 ] ],
+      [ [ "Foxhumansoul", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxjackingtool",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 1,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 1000 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxultimatetelekinetics",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 6,
+    "time": "50 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 10000 ] ],
+      [ [ "Foxadvancedartificing", 1 ] ],
+      [ [ "Foxfleshmanipulation", 1 ] ],
+      [ [ "Foxmagicsoldering", 1 ] ],
+      [ [ "Foxmagicwelder", 1 ] ],
+      [ [ "FoxEssencenormal", 1000 ], [ "Foxjackingtool", 1 ] ],
+      [ [ "FoxEssencenormal", 500 ],  [ "Foxmagiclighter", 1 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxlightorboff",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 2,
+    "time": "30 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 4000 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxlightorbbigoff",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 3,
+    "time": "45 m",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxEssencenormal", 20000 ] ]
+    ],
+    "flags": [ "BLIND_EASY" ]
+  },
+  {
+    "result": "Foxsoulbench",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 7,
+    "time": "45 m",
+    "autolearn": true,
+    "components": [
+      [ [ "workbench", 1 ] ],
+      [ [ "Foxhumansoul", 10 ] ],
+      [ [ "FoxLesserPocketDimension", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxResurrectedHuman",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "difficulty": 8,
+    "time": "2 h",
+    "autolearn": true,
+    "qualities": [ { "id": "FoxCorpsepit", "level": 1 } ],
+    "components": [
+      [ [ "FoxEssencenormal", 20000 ] ],
+      [ [ "Foxhumansoul", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxNanoForge",
+    "type": "recipe",
+    "category": "CC_ESSMAGIC",
+    "subcategory": "CSC_ESSMAGIC_MAGICRAFT",
+    "skill_used": "FoxEssSpellcasting",
+    "id_suffix": "FoxMagicNanoForge",
+    "skills_required": [ [ "FoxEssTheory", 10 ], [ "FoxEssTech", 10 ], [ "fabrication", 10 ], [ "mechanics", 10 ], [ "computer", 10 ], [ "electronics", 10 ] ],
+    "difficulty": 10,
+    "time": "30 h",
+    "autolearn": true,
+    "components": [
+      [ [ "Foxhumansoul", 200 ] ],
+      [ [ "FoxSGAmechparts", 5 ] ],
+      [ [ "FoxSGAlaserparts", 25 ] ],
+      [ [ "FoxSGAelectronics", 20 ] ],
+      [ [ "FoxSGAessreactortiny", 20 ], [ "FoxMagicCapacitor", 20 ] ]
+    ]
+  }
+]

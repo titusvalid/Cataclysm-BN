@@ -1,0 +1,15 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "Heavy miners",
+    "name": "Roadheader and other mining vehicles",
+    "authors": [ "Ckpyt" ],
+    "maintainers": [ "Ckpyt in the forest" ],
+    "description": "Adds a roadheader mining vehicle and its parts. Requires Tankmod: Revived.",
+    "category": "vehicles",
+    "dependencies": [ "bn", "Tankmod_Revived" ],
+    "obsolete": false
+  }
+
+
+]

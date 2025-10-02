@@ -1,0 +1,115 @@
+[
+  {
+    "id": "sphagnum_mushroom",
+    "type": "COMESTIBLE",
+    "comestible_type": "MED",
+    "name": { "str": "minamata" },
+    "description": "It is the wisdom of the old-fashioned life that uses Minamata as a remedy. The microbes in the blisters promote treatment.",
+    "weight": "70 g",
+    "volume": "250 ml",
+    "price": "6 USD",
+    "material": "veggy",
+    "symbol": "!",
+    "color": "white",
+    "charges": 3,
+    "stack_size": 9,
+    "use_action": {
+      "type": "heal",
+      "limb_power": 3,
+      "head_power": 1,
+      "torso_power": 3,
+      "bleed": 0.95,
+      "bite": 0.4,
+      "infect": 0.35,
+      "move_cost": 300
+    }
+  },
+  {
+    "id": "mycena_chlorophos_lamp",
+    "type": "GENERIC",
+    "category": "tools",
+    "name": { "str": "mycena chlorophos lamp (on)" },
+    "description": "Among the light-emitting mushrooms, the brightness of Yakutake is particularly great. Furthermore, this Yakutake is mutated, and illuminates a very wide area.",
+    "weight": "5438 g",
+    "volume": "1 L",
+    "price": "50 USD",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [ "veggy" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "target": "mycena_chlorophos_lamp_off",
+      "msg": "I concealed the light emission part and made it not light.",
+      "menu_text": "Close cover",
+      "type": "transform"
+    },
+    "flags": [ "LIGHT_9", "DURABLE_MELEE" ]
+  },
+  {
+    "id": "mycena_chlorophos_lamp_off",
+    "type": "GENERIC",
+    "category": "tools",
+    "name": { "str": "mycena chlorophos lamp (off)" },
+    "description": "A cover is put on this Yakutake, and it is made not to shine. Remove to brighten.",
+    "weight": "5438 g",
+    "volume": "1 L",
+    "price": "50 USD",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [ "veggy" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "target": "mycena_chlorophos_lamp",
+      "msg": "I removed the cover and let the surrounding lights shine.",
+      "menu_text": "Open cover",
+      "type": "transform"
+    },
+    "flags": [ "DURABLE_MELEE" ]
+  },
+  {
+    "id": "tukiyotake_lamp",
+    "type": "GENERIC",
+    "category": "tools",
+    "name": { "str": "tukiyotake lamp (on)" },
+    "description": "Tukiyotake is widely distributed in Far East Russia and northeastern China, centering on Japan. It is a kind of mushroom that belongs to the genus Tsukiyotake of the genus Haratake eyes. It is light-emitting though weak.",
+    "weight": "5438 g",
+    "volume": "1 L",
+    "price": "50 USD",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [ "veggy" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "target": "tukiyotake_lamp_off",
+      "msg": "I concealed the light emission part and made it not light.",
+      "menu_text": "Close cover",
+      "type": "transform"
+    },
+    "flags": [ "LIGHT_4", "DURABLE_MELEE" ]
+  },
+  {
+    "id": "tukiyotake_lamp_off",
+    "type": "GENERIC",
+    "category": "tools",
+    "name": { "str": "tukiyotake lamp (off)" },
+    "description": "This Tsukiyotake is covered and covered so it does not glow. Remove to brighten.",
+    "weight": "5438 g",
+    "volume": "1 L",
+    "price": "50 USD",
+    "to_hit": -2,
+    "bashing": 2,
+    "material": [ "veggy" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "target": "tukiyotake_lamp",
+      "msg": "I removed the cover and let the surrounding lights shine.",
+      "menu_text": "Open cover",
+      "type": "transform"
+    },
+    "flags": [ "DURABLE_MELEE" ]
+  }
+]

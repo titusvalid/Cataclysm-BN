@@ -1,0 +1,9 @@
+[
+	{
+		"id": "ACT_SEX",
+		"type": "activity_type",
+		"verb" : "having fun",
+		"rooted": true,
+		"suspendable": false
+	}
+]

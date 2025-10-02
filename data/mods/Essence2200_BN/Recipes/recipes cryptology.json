@@ -1,0 +1,235 @@
+[
+  {
+    "result": "FoxDeSGAesstheory",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 8 ] ],
+    "difficulty": 5,
+    "time": "3 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAesstheory", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAesstech",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 8 ] ],
+    "difficulty": 5,
+    "time": "3 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAesstech", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAarakawa",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 8 ] ],
+    "difficulty": 6,
+    "time": "3 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAarakawa", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAseburo",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 8 ] ],
+    "difficulty": 6,
+    "time": "3 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAseburo", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAishikawa",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 8 ] ],
+    "difficulty": 7,
+    "time": "3 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAishikawa", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAfujiwara",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 8 ] ],
+    "difficulty": 8,
+    "time": "3 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAfujiwara", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAkawakami",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 10 ] ],
+    "difficulty": 9,
+    "time": "7 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAkawakami", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeSGAkawakamicookbook",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "FoxCryptology",
+    "skills_required": [ [ "computer", 4 ] ],
+    "difficulty": 3,
+    "time": "20 m",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ], [ "laptop", 100 ], [ "FoxSGAdatathief", 100 ] ], [ [ "sa_cryptology_key", -1 ] ] ],
+    "components": [
+      [ [ "FoxESGAkawakamicookbook", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxofficerdatapad",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "id_suffix": "Foxdoityourself",
+    "skill_used": "computer",
+    "difficulty": 6,
+    "time": "2 h",
+    "autolearn": true,
+    "tools": [ [ [ "FoxSGAdatathief", 100 ] ] ],
+    "components": [
+      [ [ "Foxofficerdatapadlocked", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxofficerdatapad",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "id_suffix": "Foxhackers",
+    "skill_used": "computer",
+    "difficulty": 1,
+    "time": "10 m",
+    "autolearn": true,
+    "tools": [ [ [ "FoxSGAdatauplink", 100 ] ] ],
+    "components": [
+      [ [ "Foxofficerdatapadlocked", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxofficerdatapad",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "id_suffix": "Foxthebackdoor",
+    "skill_used": "computer",
+    "difficulty": 9,
+    "time": "6 h",
+    "autolearn": true,
+    "tools": [ [ [ "control_laptop", -1 ] ] ],
+    "components": [
+      [ [ "Foxofficerdatapadlocked", 1 ] ],
+      [ [ "Foximpchipofficer", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeIed",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "computer",
+    "difficulty": 2,
+    "time": "1 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ] ] ],
+    "components": [
+      [ [ "FoxEIed", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeIga",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "computer",
+    "difficulty": 2,
+    "time": "1 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ] ] ],
+    "components": [
+      [ [ "FoxEIga", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeIkw",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "computer",
+    "difficulty": 2,
+    "time": "1 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ] ] ],
+    "components": [
+      [ [ "FoxEIkw", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxDeIcwc",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "skill_used": "computer",
+    "difficulty": 2,
+    "time": "1 h",
+    "autolearn": true,
+    "tools": [ [ [ "Foxofficerdatapad", 100 ] ] ],
+    "components": [
+      [ [ "FoxEIcwc", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxKolibriProject",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_CRYPTOLOGY",
+    "time": "1 h",
+    "autolearn": true,
+    "components": [
+      [ [ "FoxKolibriPapers", 100 ] ]
+    ]
+  }
+]

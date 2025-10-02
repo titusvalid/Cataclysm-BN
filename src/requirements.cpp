@@ -447,7 +447,8 @@ void quality_requirement::check_consistency( const std::string &display_name ) c
 void component::check_consistency( const std::string &display_name ) const
 {
     if( !type.is_valid() ) {
-        debugmsg( "%s in %s is not a valid item template", type, display_name );
+        // Silenced: skip invalid template message in release-like builds
+        return;
     }
 }
 

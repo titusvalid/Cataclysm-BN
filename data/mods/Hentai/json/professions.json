@@ -1,0 +1,14 @@
+[
+	{
+		"type": "profession",
+		"ident": "man_with_a_pet",
+		"name": { "male": "Man and his pet", "female": "Woman and her pet" },
+		"description": "The day the Cataclysm hit, you managed to make it out alive and survive with your pet.  Now, the only thing you have besides your beloved pet is a strange medicine handed to you by an unfamiliar scientist during your journey.",
+		"points": 1,
+		"items": {
+			"both": [ "jeans", "longshirt", "socks", "sneakers", "purse", "fake_prof_pet", "iv_mutagen_human", "syringe", "rope_6" ],
+			"male": [ "boxer_shorts" ],
+			"female": [ "bra", "panties" ]
+		}
+	}
+]

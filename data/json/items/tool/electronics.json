@@ -516,7 +516,7 @@
     "price_postapoc": "15 USD",
     "to_hit": -1,
     "bashing": 8,
-    "material": [ "aluminum", "plastic" ],
+    "material": [ "aluminum", "cotton" ],
     "symbol": ";",
     "color": "light_gray",
     "ammo": "battery",

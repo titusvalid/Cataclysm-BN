@@ -1,0 +1,175 @@
+[
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_SUCCUBI_UPGRADE",
+		"default" : "mon_null",
+		"monsters" : [
+			{ "monster" : "mon_succubi_sadist", "freq" : 60, "cost_multiplier" : 10 },
+			{ "monster" : "mon_succubi_somnophilia", "freq" : 60, "cost_multiplier" : 10 },
+			{ "monster" : "mon_succubi_exhibitionism", "freq" : 60, "cost_multiplier" : 10 },
+			{ "monster" : "mon_succubi_lactophilia", "freq" : 20, "cost_multiplier" : 10 }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_INCUBI_UPGRADE",
+		"default" : "mon_null",
+		"monsters" : [
+			{ "monster" : "mon_incubi_sthenolagnia", "freq" : 80, "cost_multiplier" : 0 },
+			{ "monster" : "mon_incubi_phalloplas", "freq" : 80, "cost_multiplier" : 0 },
+			{ "monster" : "mon_incubi_hoplophilia", "freq" : 40, "cost_multiplier" : 0 }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_FOREST",
+		"default" : "mon_null",
+		"monsters" : [
+			{ "monster" : "mon_lessor_succubi", "freq" : 20, "cost_multiplier" : 10, "pack_size" : [1,3] },
+			{ "monster" : "mon_lessor_succubi", "freq" : 60, "cost_multiplier" : 30, "pack_size" : [3,10], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_succubi", "freq" : 20, "cost_multiplier" : 5, "pack_size" : [1,2] },
+			{ "monster" : "mon_succubi", "freq" : 60, "cost_multiplier" : 15, "pack_size" : [2,10], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_succubi_sadist", "freq" : 10, "cost_multiplier" : 5 },
+			{ "monster" : "mon_succubi_sadist", "freq" : 50, "cost_multiplier" : 20, "pack_size" : [1,3], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_succubi_somnophilia", "freq" : 100, "cost_multiplier" : 50, "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_succubi_exhibitionism", "freq" : 10, "cost_multiplier" : 5 },
+			{ "monster" : "mon_succubi_exhibitionism", "freq" : 50, "cost_multiplier" : 20, "pack_size" : [1,3], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_succubi_lactophilia", "freq" : 6, "cost_multiplier" : 5 },
+			{ "monster" : "mon_succubi_lactophilia", "freq" : 20, "cost_multiplier" : 20, "pack_size" : [1,3], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_greater_succubi", "freq" : 2, "cost_multiplier" : 50 },
+			{ "monster" : "mon_greater_succubi", "freq" : 6, "cost_multiplier" : 50, "conditions" : ["DUSK", "NIGHT"] },
+
+			{ "monster" : "mon_lessor_incubi", "freq" : 20, "cost_multiplier" : 10, "pack_size" : [1,3] },
+			{ "monster" : "mon_lessor_incubi", "freq" : 60, "cost_multiplier" : 30, "pack_size" : [3,10], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_incubi", "freq" : 20, "cost_multiplier" : 5, "pack_size" : [1,2] },
+			{ "monster" : "mon_incubi", "freq" : 60, "cost_multiplier" : 15, "pack_size" : [2,10], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_incubi_sthenolagnia", "freq" : 10, "cost_multiplier" : 5 },
+			{ "monster" : "mon_incubi_sthenolagnia", "freq" : 50, "cost_multiplier" : 20, "pack_size" : [1,3], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_incubi_phalloplas", "freq" : 10, "cost_multiplier" : 5 },
+			{ "monster" : "mon_incubi_phalloplas", "freq" : 50, "cost_multiplier" : 20, "pack_size" : [1,3], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_incubi_hoplophilia", "freq" : 10, "cost_multiplier" : 5 },
+			{ "monster" : "mon_incubi_hoplophilia", "freq" : 50, "cost_multiplier" : 20, "pack_size" : [1,3], "conditions" : ["DUSK", "NIGHT"] },
+			{ "monster" : "mon_greater_incubi", "freq" : 2, "cost_multiplier" : 50 },
+			{ "monster" : "mon_greater_incubi", "freq" : 6, "cost_multiplier" : 50, "conditions" : ["DUSK", "NIGHT"] },
+
+			{ "monster" : "mon_cambion_male", "freq" : 40, "cost_multiplier": 3, "pack_size": [2,3] },
+			{ "monster" : "mon_cambion_male", "freq" : 10, "cost_multiplier": 7, "pack_size": [3,5] },
+			{ "monster" : "mon_cambion_male", "freq" : 6, "cost_multiplier": 13, "pack_size": [5,10] },
+			{ "monster" : "mon_cambion_male", "freq" : 2, "cost_multiplier": 20, "pack_size": [10,15] },
+			{ "monster" : "mon_cambion_female", "freq" : 40, "cost_multiplier": 3, "pack_size": [2,3] },
+			{ "monster" : "mon_cambion_female", "freq" : 10, "cost_multiplier": 7, "pack_size": [3,5] },
+			{ "monster" : "mon_cambion_female", "freq" : 6, "cost_multiplier": 13, "pack_size": [5,10] },
+			{ "monster" : "mon_cambion_female", "freq" : 2, "cost_multiplier": 20, "pack_size": [10,15] },
+
+			{ "monster" : "mon_hentai_vinebeast", "freq" : 10, "cost_multiplier": 1 }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_CAVE",
+		"default" : "mon_null",
+		"monsters" : [
+			{ "monster" : "mon_lessor_succubi", "freq" : 200, "cost_multiplier" : 20, "pack_size" : [5,10] },
+			{ "monster" : "mon_succubi", "freq" : 200, "cost_multiplier" : 10, "pack_size" : [5,10] },
+			{ "monster" : "mon_lessor_incubi", "freq" : 200, "cost_multiplier" : 20, "pack_size" : [5,10] },
+			{ "monster" : "mon_incubi", "freq" : 200, "cost_multiplier" : 10, "pack_size" : [5,10] }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_TRIFFID",
+		"default" : "mon_triffid",
+		"monsters" : [
+			{ "monster" : "mon_hentai_vinebeast", "freq" : 200, "cost_multiplier" : 10 }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_LAB",
+		"default" : "mon_zombie_scientist",
+		"monsters" : [
+			{ "monster" : "mon_lessor_succubi", "freq" : 10, "cost_multiplier" : 10, "pack_size" : [1,5] },
+			{ "monster" : "mon_succubi", "freq" : 10, "cost_multiplier" : 5, "pack_size" : [1,3] },
+			{ "monster" : "mon_lessor_incubi", "freq" : 10, "cost_multiplier" : 10, "pack_size" : [1,5] },
+			{ "monster" : "mon_incubi", "freq" : 10, "cost_multiplier" : 5, "pack_size" : [1,3] }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_HOUSE",
+		"default" : "mon_zombie",
+		"monsters" : [
+			{ "monster" : "mon_lessor_succubi", "freq" : 60, "cost_multiplier" : 5 },
+			{ "monster" : "mon_succubi", "freq" : 40, "cost_multiplier" : 3 },
+			{ "monster" : "mon_lessor_incubi", "freq" : 60, "cost_multiplier" : 5 },
+			{ "monster" : "mon_incubi", "freq" : 40, "cost_multiplier" : 3 },
+
+			{ "monster" : "mon_cambion_male", "freq" : 40, "cost_multiplier": 3, "pack_size": [3,5] },
+			{ "monster" : "mon_cambion_male", "freq" : 10, "cost_multiplier": 3, "pack_size": [5,10] },
+			{ "monster" : "mon_cambion_female", "freq" : 40, "cost_multiplier": 3, "pack_size": [3,5] },
+			{ "monster" : "mon_cambion_female", "freq" : 10, "cost_multiplier": 3, "pack_size": [5,10] }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_MANSION",
+		"default" : "mon_zombie",
+		"monsters" : [
+			{ "monster" : "mon_lessor_succubi", "freq" : 60, "cost_multiplier" : 5 },
+			{ "monster" : "mon_succubi", "freq" : 60, "cost_multiplier" : 3 },
+			{ "monster" : "mon_lessor_incubi", "freq" : 60, "cost_multiplier" : 5 },
+			{ "monster" : "mon_incubi", "freq" : 60, "cost_multiplier" : 3 }
+		]
+	},
+	{
+		"type":"monstergroup",
+		"name" : "GROUP_SEWER",
+		"default" : "mon_sewer_rat",
+		"monsters" : [
+			{ "monster" : "mon_cambion_male", "freq" : 100, "cost_multiplier": 7, "pack_size": [3,5] },
+			{ "monster" : "mon_cambion_male", "freq" : 50, "cost_multiplier": 13, "pack_size": [5,10] },
+			{ "monster" : "mon_cambion_male", "freq" : 20, "cost_multiplier": 20, "pack_size": [10,15] },
+			{ "monster" : "mon_cambion_female", "freq" : 100, "cost_multiplier": 7, "pack_size": [3,5] },
+			{ "monster" : "mon_cambion_female", "freq" : 50, "cost_multiplier": 13, "pack_size": [5,10] },
+			{ "monster" : "mon_cambion_female", "freq" : 20, "cost_multiplier": 20, "pack_size": [10,15] }
+		]
+	},
+
+
+	{
+		"type":"monstergroup",
+		"name": "GROUP_CORRUPTED_SCHOOL",
+		"default": "mon_null",
+		"monsters": [
+			{ "monster": "mon_corrupted_schoolgirl", "freq": 200, "cost_multiplier": 1 },
+			{ "monster": "mon_corrupted_schoolteacher_female", "freq": 40, "cost_multiplier": 1 },
+			{ "monster": "mon_corrupted_schoolboy", "freq": 150, "cost_multiplier": 1 },
+			{ "monster": "mon_corrupted_schoolteacher_male", "freq": 30, "cost_multiplier": 1 },
+			{ "monster": "mon_succubi", "freq": 300, "cost_multiplier": 1 },
+			{ "monster": "mon_succubi_sadist", "freq": 20, "cost_multiplier": 5 },
+			{ "monster": "mon_succubi_somnophilia", "freq": 20, "cost_multiplier": 5 },
+			{ "monster": "mon_succubi_exhibitionism", "freq": 20, "cost_multiplier": 5 },
+			{ "monster": "mon_succubi_lactophilia", "freq": 10, "cost_multiplier": 5 },
+			{ "monster": "mon_incubi", "freq": 300, "cost_multiplier": 1 },
+			{ "monster": "mon_incubi_sthenolagnia", "freq": 20, "cost_multiplier": 5 },
+			{ "monster": "mon_incubi_phalloplas", "freq": 20, "cost_multiplier": 5 },
+			{ "monster": "mon_incubi_hoplophilia", "freq": 20, "cost_multiplier": 5 }
+		]
+	},
+
+	{
+		"type":"monstergroup",
+		"name": "GROUP_CORRUPTED_SCHOOL_BLEEDINGQUEUE",
+		"default": "mon_null",
+		"monsters": [
+			{ "monster": "mon_corrupted_schoolgirl", "freq": 400, "cost_multiplier": 1 },
+			{ "monster": "mon_corrupted_schoolteacher_female", "freq": 100, "cost_multiplier": 1 },
+			{ "monster": "mon_succubi_lactophilia", "freq": 20, "cost_multiplier": 5 },
+			{ "monster": "mon_incubi_sthenolagnia", "freq": 10, "cost_multiplier": 5 },
+			{ "monster": "mon_incubi_phalloplas", "freq": 10, "cost_multiplier": 5 },
+			{ "monster": "mon_incubi_hoplophilia", "freq": 10, "cost_multiplier": 5 },
+			{ "monster": "mon_cambion_male", "freq": 150, "cost_multiplier": 1 },
+			{ "monster": "mon_cambion_female", "freq": 150, "cost_multiplier": 1 }
+		]
+	}
+]

@@ -1,0 +1,154 @@
+[
+  {
+    "type" : "item_group",
+    "id" : "Merc_Ammo_pants_male",
+    "items":[
+      ["pants_leather", 50],
+      ["pants_cargo", 50]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_pants_female",
+    "items":[
+      ["pants_leather", 50],
+      ["pants_cargo", 50]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_shirt_male",
+    "items":[
+      ["tshirt", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_shirt_female",
+    "items":[
+      ["tshirt", 50],
+      ["tank_top", 50]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_gloves",
+    "items":[
+      ["null", 60],
+      ["gloves_leather", 20],
+      ["gloves_fingerless", 20]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_coat",
+    "items":[
+      ["null", 20],
+      ["hoodie", 20],
+      ["jacket_light", 20],
+      ["jacket_leather", 20],
+      ["trenchcoat", 20],
+      ["jacket_jean", 20],
+      ["jacket_flannel", 20],
+      ["jacket_windbreaker", 10]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_shoes",
+    "items":[
+      ["boots", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_masks",
+    "items":[
+      ["null", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_hat",
+    "items":[
+      ["hat_ball", 20],
+      ["beret", 20],
+      ["cowboy_hat", 20],
+      ["hat_fur", 20],
+      ["hat_knit", 20]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_extra",
+    "items":[
+      ["Merchantbag", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_cutting",
+    "items":[
+      ["knife_combat", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_stabbing",
+    "items":[
+      ["knife_combat", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_pistols",
+    "items":[
+      ["m9", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_smg",
+    "items":[
+      ["hk_mp5", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_archery",
+    "items":[
+      ["hk_mp5", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_rifle",
+    "items":[
+      ["m4a1", 90],
+      ["m1a", 10]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_weapon_random",
+    "items":[
+      ["m4a1", 100]
+    ]
+  },{
+    "type" : "item_group",
+    "id" : "Merc_Ammo_misc",
+    "items":[
+      [ "10mm", 10 ],
+      [ "32_acp", 44 ],
+      [ "40fmj", 20 ],
+      [ "44fmj", 30 ],
+      [ "45_jhp", 77 ],
+      [ "45_super", 40 ],
+      [ "46mm", 20 ],
+      [ "454_Casull", 5 ],
+      [ "500_Magnum", 5 ],
+      [ "9mm", 88 ],
+      [ "9mmfmj", 44 ],
+      [ "300_winmag", 15 ],
+      [ "762_51", 10 ],
+      [ "shot_00", 100 ],
+      [ "223", 65 ],
+      [ "3006", 60 ],
+      [ "40sw", 65 ],
+      [ "45_acp", 50 ],
+      [ "556", 35 ],
+      [ "shot_slug", 20 ],
+      [ "270", 30 ],
+      [ "308", 35 ],
+      [ "762_54R", 25 ],
+      [ "762_m43", 10 ],
+      [ "44magnum", 60 ],
+      [ "57mm", 75 ],
+      [ "38_special", 25 ]
+    ]
+  }
+]

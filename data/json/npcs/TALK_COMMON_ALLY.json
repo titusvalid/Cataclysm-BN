@@ -425,6 +425,42 @@
         "condition": { "not": { "npc_engagement_rule": "ENGAGE_ALL" } },
         "effect": { "set_npc_engagement_rule": "ENGAGE_ALL" }
       },
+      {
+        "text": "Guard me (Attack close enemies/no vehicle logic).",
+        "topic": "TALK_NONE",
+        "condition": { "not": { "npc_engagement_rule": "ENGAGE_GUARD_ME" } },
+        "effect": { "set_npc_engagement_rule": "ENGAGE_GUARD_ME" }
+      },
+      {
+        "text": "Stop guarding me so closely (revert to general engagement).",
+        "topic": "TALK_NONE",
+        "condition": { "npc_engagement_rule": "ENGAGE_GUARD_ME" },
+        "effect": { "set_npc_engagement_rule": "ENGAGE_ALL" }
+      },
+      {
+        "text": "Engage targets at a distance (up to 6 tiles).",
+        "topic": "TALK_NONE",
+        "condition": { "not": { "npc_engagement_rule": "ENGAGE_EXTENDED_MELEE" } },
+        "effect": { "set_npc_engagement_rule": "ENGAGE_EXTENDED_MELEE" }
+      },
+      {
+        "text": "Stop engaging at extended range (revert to general engagement).",
+        "topic": "TALK_NONE",
+        "condition": { "npc_engagement_rule": "ENGAGE_EXTENDED_MELEE" },
+        "effect": { "set_npc_engagement_rule": "ENGAGE_ALL" }
+      },
+      {
+        "text": "Skirmish (flee if enemy <= 2 tiles, else engage up to 10 tiles).",
+        "topic": "TALK_NONE",
+        "condition": { "not": { "npc_engagement_rule": "ENGAGE_SKIRMISH" } },
+        "effect": { "set_npc_engagement_rule": "ENGAGE_SKIRMISH" }
+      },
+      {
+        "text": "Stop skirmishing (revert to general engagement).",
+        "topic": "TALK_NONE",
+        "condition": { "npc_engagement_rule": "ENGAGE_SKIRMISH" },
+        "effect": { "set_npc_engagement_rule": "ENGAGE_ALL" }
+      },
       { "text": "Never mind.", "topic": "TALK_NONE" }
     ]
   },

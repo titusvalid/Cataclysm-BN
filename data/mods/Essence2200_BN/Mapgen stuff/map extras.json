@@ -1,0 +1,304 @@
+[
+  {
+    "id": "Foxmximperialreapers",
+    "type": "map_extra",
+    "name": { "str": "Reaper camp" },
+    "description": "A group of reapers have setup a fortified camp here.",
+    "generator": { "generator_method": "update_mapgen", "generator_id": "Foxmximperialreapers" },
+    "sym": "R",
+    "color": "light_red",
+    "autonote": true
+  },
+  {
+    "method": "json",
+    "type": "mapgen",
+    "update_mapgen_id": "Foxmximperialreapers", 
+    "object": {
+      "rows": [
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "abbbbbbbbbbbbbbbbbbbbbba",
+        "abccccccccccccccccccccba",
+        "abciiicicccddddddcdddcba",
+        "abcijkcirccfeddefcfgdcba",
+        "abciiicirccddddddcdddcba",
+        "abciiicirccddddddcdddcba",
+        "abcioccicccfeddefcfhdcba",
+        "abciiicicccddddddcdddcba",
+        "abccccccccccccpcpcccccba",
+        "abcmmcccccccccccpcdddcba",
+        "abcdddcdddpcccqcccfldcba",
+        "abcdefcfedccccccpcdddcba",
+        "abcdddcdddpcccpcpcccccba",
+        "abccccccccccccccccccccba",
+        "abcdddcdddpccpdddcdddcba",
+        "abcdefcfedccccdefcfedcba",
+        "abcdddcdddccccdddcdddcba",
+        "abcdddcdddccccdddcdddcba",
+        "abcdefcfedccccdefcfedcba",
+        "abcdddcdddpccpdddcdddcba",
+        "abccccccccccccccccccccba",
+        "abbbbbbbbbbccbbbbbbbbbba",
+        "aaaaaaaaaaaccaaaaaaaaaaa"
+      ],
+      "terrain": { 
+        "a": [ "t_pit" ], 
+        "b": [ "t_dirt" ], 
+        "c": [ "t_dirt" ],
+        "d": [ "t_dirt" ],
+        "e": [ "t_dirt" ],
+        "f": [ "t_dirt" ],
+        "g": [ "t_dirt" ],
+        "h": [ "t_dirt" ],
+        "i": [ "t_dirt" ],
+        "j": [ "t_plut_generator" ],
+        "k": [ "t_dirt" ],
+        "l": [ "t_dirt" ],
+        "m": [ "t_dirt" ],
+        "o": [ "Foxt_sludgepit" ],
+        "p": [ "t_dirt" ],
+        "q": [ "t_dirt" ],
+        "r": [ "t_dirt" ]
+      },
+      "furniture": {
+        "b": "f_earthbag_wall",
+        "d": "Foxf_canvas_wall",
+        "e": "Foxf_groundsheet",
+        "f": "Foxf_canvas_door",
+        "g": "Foxf_groundsheet",
+        "h": "Foxf_groundsheet",
+        "i": "f_sandbag_wall",
+        "k": "f_charger",
+        "l": "Foxf_groundsheet",
+        "m": "f_fvat_empty",
+        "o": "Foxfgridsludgepump",
+        "p": "f_logstool",
+        "q": "f_firering"
+      },
+      "place_monster": [
+        { "monster": "FoxmonImperialReaper", "x": [ 3, 22 ], "y": [ 3, 22 ], "repeat": [ 3, 4 ] },
+        { "monster": "FoxmonImperialReaper", "x": [ 3, 22 ], "y": [ 3, 22 ], "repeat": [ 1, 2 ] },
+        { "monster": "FoxmonImperialReaperRadio", "x": [ 3, 22 ], "y": [ 3, 22 ] },
+        { "monster": "FoxmonImperialReaperSergeant", "x": [ 3, 22 ], "y": [ 3, 22 ] },
+        { "monster": "FoxmonImperialReaper", "x": [ 3, 22 ], "y": [ 3, 22 ], "repeat": [ 1, 3 ] }
+      ],"items": {
+        "e": [
+          { "item": "Foxreapercamppersonal", "chance": 100 }
+        ],
+        "g": [
+          { "item": "Foxreapercampfood", "chance": 100 }
+        ],
+        "h": [
+          { "item": "Foxreapercampmeds", "chance": 100 }
+        ],
+        "k": [
+          { "item": "Foxreapercampelectronics", "chance": 100 }
+        ],
+        "l": [
+          { "item": "Foxreapercamptools", "chance": 100 }
+        ]
+      }
+    }
+  },
+  {
+    "id": "Foxmximperialreaperslost",
+    "type": "map_extra",
+    "name": { "str": "Lost reapers" },
+    "description": "A group of confused and lost reapers are loitering.",
+    "generator": { "generator_method": "update_mapgen", "generator_id": "Foxmximperialreaperslost" },
+    "sym": "R",
+    "color": "light_red",
+    "autonote": true
+  },
+  {
+    "method": "json",
+    "type": "mapgen",
+    "update_mapgen_id": "Foxmximperialreaperslost",
+    "object": {
+      "place_monster": [
+        { "monster": "FoxmonImperialReaperlost", "x": [ 6, 17 ], "y": [ 6, 17 ], "repeat": [ 1, 2 ] },
+        { "monster": "FoxmonImperialReaperlost", "x": [ 6, 17 ], "y": [ 6, 17 ], "repeat": [ 0, 1 ] }
+      ],
+      "place_item": [
+        { "item": "sleeping_bag_roll", "x": [ 9, 14 ], "y": [ 9, 14 ], "repeat": [ 1, 2 ] }
+      ]
+    }
+  },
+  {
+    "id": "Foxmximperialinvasionfailed",
+    "type": "map_extra",
+    "name": { "str": "Failed invasion site" },
+    "description": "A failed destination site full of monsters.  Interdimensional travel is more of an art than a science.",
+    "generator": { "generator_method": "update_mapgen", "generator_id": "Foxmximperialinvasionfailed" },
+    "sym": "F",
+    "color": "light_red",
+    "autonote": true
+  },
+  {
+    "method": "json",
+    "type": "mapgen",
+    "update_mapgen_id": "Foxmximperialinvasionfailed",
+    "object": {
+      "place_monster": [
+        { "monster": "FoxmonZombifiedReaper", "x": [ 2, 22 ], "y": [ 2, 22 ], "repeat": [ 21, 37 ] },
+        { "monster": "FoxmonZombifiedReaperCO", "x": [ 6, 17 ], "y": [ 6, 17 ], "repeat": [ 2, 3 ] },
+        { "monster": "FoxmonLVAbberration", "x": [ 6, 17 ], "y": [ 6, 17 ], "repeat": [ 1, 2 ] }
+      ],
+      "place_item": [
+	  { "item": "sleeping_bag_roll", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 20, 25 ] }, 
+	  { "item": "Foximpmechparts", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 30, 50 ] },
+	  { "item": "Foximpelectronics", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 20, 30 ] },
+	  { "item": "Foximpmicroelectronics", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 5, 10 ] },
+	  { "item": "Foximplaserparts", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 20, 60 ] },
+	  { "item": "Foximpballisticparts", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 20, 30 ] },
+	  { "item": "Foximperialrationbad", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 80, 120 ] }
+	  ],
+    "place_fields": [
+      { "field": "fd_blood", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 300, 450 ] },
+      { "field": "fd_gibs_flesh", "x": [ 0, 23 ], "y": [ 0, 23 ], "repeat": [ 100, 150 ] }
+    ]
+    }
+  },
+  {
+    "id": "Foxmxsludgepit",
+    "type": "map_extra",
+    "name": { "str": "Sludge pit" },
+    "description": "A pit of sludge, excellent source of motordew.",
+    "generator": { "generator_method": "update_mapgen", "generator_id": "Foxmxsludgepit" },
+    "sym": "S",
+    "color": "brown",
+    "autonote": true
+  },
+  {
+    "method": "json",
+    "type": "mapgen",
+    "update_mapgen_id": "Foxmxsludgepit", 
+    "object": {
+      "rows": [
+        "aaaaaaaaaaaaaaaaaaaaaaaa",
+        "aaaaaaabbbbbbbbbbaaaaaaa",
+        "aaaaabbbbbbbbbbbbbbaaaaa",
+        "aaaabbbbbbbbbbbbbbbbaaaa",
+        "aaabbbbbbbbbbbbbbbbbbaaa",
+        "aaabbbbbbbbbbbbbbbbbbaaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aabbbbbbbbbbbbbbbbbbbbaa",
+        "aaabbbbbbbbbbbbbbbbbbaaa",
+        "aaabbbbbbbbbbbbbbbbbbaaa",
+        "aaaabbbbbbbbbbbbbbbbaaaa",
+        "aaaaabbbbbbbbbbbbbbaaaaa",
+        "aaaaaaabbbbbbbbbbaaaaaaa",
+        "aaaaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "terrain": { 
+        "a": [ "t_dirt" ], 
+        "b": [ "Foxt_sludgepit" ]
+      }
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "nested_mapgen_id": "lab_finale_loot",
+    "weight": 100,
+    "object": {
+      "mapgensize": [ 3, 3 ],
+      "rows": [
+        "r  ",
+        "r  ",
+        "R  "
+      ],
+      "palettes": [ "lab_palette" ],
+      "mapping": {
+        "r": { "item": [ { "item": "FoxKolibriPapers", "chance": 100, "repeat": [ 15, 25 ] } ] },
+        "R": { "item": [
+           { "item": "FoxSGAlocktopus", "chance": 100 },
+           { "item": "Foxnanoaugcanistergeneric", "chance": 100, "repeat": [ 1, 3 ] }
+        ] }
+      }
+    }
+  },
+  {
+    "id": "Foxmxunstableground",
+    "type": "map_extra",
+    "name": { "str": "Unstable ground" },
+    "description": "An artifact rift is here, which can grant artifacts and summon monsters when stepped on.",
+    "generator": { "generator_method": "update_mapgen", "generator_id": "Foxmxunstableground" },
+    "sym": "R",
+    "color": "magenta",
+    "autonote": true
+  },
+  {
+    "method": "json",
+    "type": "mapgen",
+    "update_mapgen_id": "Foxmxunstableground", 
+    "object": {
+      "place_traps": 
+      [ 
+        { "trap": "Foxtr_rift", "x": [ 6, 16 ], "y": [ 6, 16 ] }
+      ]
+    }
+  },
+  {
+    "id": "Foxmximperialwreck",
+    "type": "map_extra",
+    "name": { "str": "Imperial wreck" },
+    "description": "An Imperial vehicle was destroyed here.",
+    "generator": { "generator_method": "update_mapgen", "generator_id": "Foxmximperialwreck" },
+    "sym": "W",
+    "color": "red",
+    "autonote": true
+  },
+  {
+    "method": "json",
+    "type": "mapgen",
+    "update_mapgen_id": "Foxmximperialwreck", 
+    "object": {
+      "rows": [
+        "........................",
+        "........................",
+        "........................",
+        "...........bbb..........",
+        ".........bbbbbbb........",
+        ".........bbbbbbb........",
+        ".........bbbbbbb........",
+        ".........bbbbbbb........",
+        ".........bbbbbbb........",
+        ".........bbbbbbb........",
+        ".........bbbbbbb........",
+        ".........bcbbbcb........",
+        ".........bbbbbbb........",
+        "..........bbbbb.........",
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "........................",
+        "........................"
+      ],
+      "terrain": { 
+        ".": [ "t_region_groundcover" ], 
+        "b": [ "t_region_groundcover" ], 
+        "c": [ "t_region_groundcover" ]
+      },
+      "furniture": {
+        ".": [ [ "f_null", 11 ], "Fox_wreck" ], 
+        "b": [ "Fox_wreckdense" ], 
+        "c": [ "Fox_wreckturbine" ]
+      }
+    }
+  }
+]

@@ -58,6 +58,7 @@
 #include "units.h"
 #include "units_utility.h"
 #include "value_ptr.h"
+#include "line.h"
 
 static const activity_id ACT_EAT_MENU( "ACT_EAT_MENU" );
 static const activity_id ACT_CONSUME_FOOD_MENU( "ACT_CONSUME_FOOD_MENU" );
@@ -528,16 +529,18 @@ class comestible_inventory_preset : public inventory_selector_preset
                 return string_format( _( "%.2f%s" ), converted_volume, volume_units_abbr() );
             }, _( "VOLUME" ) );
 
+            // Replace FRESHNESS with HEALTHINESS (shows healthy stat)
             append_cell( [this]( const item * loc ) {
-                if( g->u.can_estimate_rot() ) {
-                    const islot_comestible item = get_edible_comestible( loc );
-                    if( item.spoils > 0_turns ) {
-                        return get_freshness( loc );
-                    }
-                    return std::string( "---" );
+                const islot_comestible &com = get_edible_comestible( loc );
+                int healthy = com.healthy;
+                if( healthy > 0 ) {
+                    return string_format( "<good>+%d</good>", healthy );
+                } else if( healthy < 0 ) {
+                    return string_format( "<bad>%d</bad>", healthy );
+                } else {
+                    return std::string();
                 }
-                return std::string();
-            }, _( "FRESHNESS" ) );
+            }, _( "HEALTHINESS" ) );
 
             append_cell( [ this ]( const item * loc ) {
                 if( g->u.can_estimate_rot() ) {
@@ -1456,10 +1459,44 @@ class repair_inventory_preset: public inventory_selector_preset
 item *game_menus::inv::repair( player &p, const repair_item_actor *actor,
                                const item *main_tool )
 {
-    return inv_internal( p, repair_inventory_preset( actor, main_tool ),
-                         _( "Repair what?" ), 1,
-                         string_format( _( "You have no items that could be repaired with a %s." ),
-                                        main_tool->type_name( 1 ) ) );
+    // Allow repairing items worn/carried by NPCs standing next to the player.
+    const int radius = 1; // same range that nearby map items are pulled from
+
+    repair_inventory_preset preset( actor, main_tool );
+    inventory_pick_selector inv_s( p, preset );
+
+    inv_s.set_title( _( "Repair what?" ) );
+    inv_s.set_display_stats( false );
+
+    while( true ) {
+        p.inv_restack();
+
+        inv_s.clear_items();
+        inv_s.add_character_items( p );
+        inv_s.add_nearby_items( radius );
+
+        // Add gear from NPCs in adjacent tiles
+        for( npc &guy : g->all_npcs() ) {
+            if( rl_dist( p.pos(), guy.pos() ) <= radius ) {
+                inv_s.add_character_items( guy );
+            }
+        }
+
+        if( inv_s.empty() ) {
+            popup( string_format( _( "You and nearby allies have no items that could be repaired with a %s." ),
+                                   main_tool->type_name( 1 ) ), PF_GET_KEY );
+            return nullptr;
+        }
+
+        item *location = inv_s.execute();
+
+        if( inv_s.keep_open ) {
+            inv_s.keep_open = false;
+            continue;
+        }
+
+        return location;
+    }
 }
 
 item *game_menus::inv::saw_barrel( player &p, item &tool )

@@ -62,6 +62,9 @@ struct PathfindingSettings {
     // A map of tiles that have an extra G-cost assigned to them. Used for potential fields, preclosed tiles, etc.
     std::unordered_map<point, float> extra_g_costs;
 
+    // Name of the creature pathing
+    std::string name;
+
     bool operator==( const PathfindingSettings &rhs ) const = default;
     int z_move_type() const;
 };
@@ -200,7 +203,8 @@ class Pathfinding
             enum class Type {
                 STAIRS,
                 RAMP,
-                OPEN_AIR
+                OPEN_AIR,
+                CLIMB 
             };
 
             tripoint from;

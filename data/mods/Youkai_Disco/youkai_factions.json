@@ -1,0 +1,53 @@
+[
+  {
+    "type": "SPECIES",
+    "id": "YOUKAI",
+    "name": { "str": "youkai" },
+    "description": "Youkai",
+    "fear_triggers": [ "HURT", "FRIEND_DIED" ]
+  },
+  {
+    "type": "SPECIES",
+    "id": "ORDER_SIDE",
+    "name": { "str": "Order side youkai" },
+    "description": "Order side"
+  },
+  {
+    "type": "SPECIES",
+    "id": "CHAOS_SIDE",
+    "name": { "str": "Chaos side youkai" },
+    "description": "Chaos side"
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "youkai",
+    "friendly": [ "small_animal", "animal", "insect" ],
+    "neutral": [ "slim" ]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "tengu",
+    "base_faction": "youkai"
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "nekomata",
+    "base_faction": "youkai",
+    "neutral": [ "human" ]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "kappa",
+    "base_faction": "youkai"
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "oni",
+    "base_faction": "youkai"
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "okka",
+    "base_faction": "youkai"
+  }
+]

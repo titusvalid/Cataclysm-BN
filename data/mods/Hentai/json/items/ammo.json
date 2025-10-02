@@ -1,0 +1,23 @@
+[
+	{
+		"id": "flintlock_ammo_magic",
+		"type": "AMMO",
+		"name": "paper cartridge (magic bullet)",
+		"description": "A paper cartridge containing black powder and a metallic projectile.  The projectile itself is covered with magic pattern.  It is said that every shot will always hit what you desire, however the last one will hit what you don't want the most.  After hitting its first target, the projectile will then ricochet at the next target.",
+		"weight": 40,
+		"volume": 1,
+		"price": 1100,
+		"material": [ "lead", "powder" ],
+		"symbol": "=",
+		"color": "white",
+		"count": 7,
+		"stack_size": 7,
+		"ammo_type": "flintlock",
+		"range": 6,
+		"damage": 50,
+		"dispersion": 90,
+		"recoil": 1500,
+		"loudness": 70,
+		"effects": [ "COOKOFF", "MUZZLE_SMOKE", "SHOT", "BOUNCE", "NEVER_MISFIRES" ]
+	}
+]

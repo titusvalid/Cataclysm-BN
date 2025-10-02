@@ -1,0 +1,22 @@
+[
+	{
+		"id": "morale_sex_good",
+		"type": "morale_type",
+		"text": "Greatly enjoyed *Having Fun*"
+	},
+	{
+		"id": "morale_deflower_good",
+		"type": "morale_type",
+		"text": "Lost Virginity willingly"
+	},
+	{
+		"id": "morale_deflower_bad",
+		"type": "morale_type",
+		"text": "Painful memories of losing Virginity by force"
+	},
+	{
+		"id": "morale_orgasm",
+		"type": "morale_type",
+		"text": "Reached climax"
+	}
+]

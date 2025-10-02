@@ -321,6 +321,16 @@ bool avatar_action::move( avatar &you, map &m, const tripoint &d )
         }
 
         if( !np.is_enemy() ) {
+            const bool obeys = debug_mode || ( np.is_player_ally() && !np.in_sleep_state() );
+            if( obeys && !np.is_mounted() && !you.is_mounted() ) {
+                if( !g->prompt_dangerous_tile( np.pos() ) ) {
+                } else {
+                    add_msg( _( "You swap places with %s." ), np.name );
+                    g->swap_critters( you, np );
+                    you.mod_moves( -200 );
+                    return false;
+                }
+            }
             g->npc_menu( np );
             return false;
         }

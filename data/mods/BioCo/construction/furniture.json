@@ -1,0 +1,30 @@
+[
+  {
+    "id": "f_BioCo_Assembly_Machine",
+    "group": "build_bioco_assembly_machine",
+    "type": "construction",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 6 ], [ "electronics", 7 ], [ "computer", 5 ] ],
+    "time": "5 s",
+    "using": [ [ "soldering_standard", 24 ] ],
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "components": [ [ [ "BioCo_Assembly_Machine", 1 ] ] ],
+    "pre_note": "A assembly machine capable of producing BioCo Tech given the correct software.",
+    "pre_special": "check_empty",
+    "post_furniture": "f_BioCo_Assembly_Machine"
+  },
+  {
+    "id": "f_BioCo_Chemical_Engine",
+    "group": "build_bioco_chemical_engine",
+    "type": "construction",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 6 ], [ "electronics", 7 ], [ "computer", 5 ] ],
+    "time": "5 s",
+    "using": [ [ "soldering_standard", 24 ] ],
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "components": [ [ [ "BioCo_Chemical_Engine", 1 ] ] ],
+    "pre_note": "A BioCo manufacturing device for various chemical components and medicines.",
+    "pre_special": "check_empty",
+    "post_furniture": "f_BioCo_Chemical_Engine"
+  }
+]

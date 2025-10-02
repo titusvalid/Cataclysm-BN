@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "add_mutant",
+    "name": "THRESHOLD",
+    "authors": [ "Unknown" ],
+    "maintainers": [ "TheGoatGod" ],
+    "description": "Adds mutant professions and scenarios",
+    "category": "misc_additions",
+    "dependencies": [ "bn" ]
+  }
+]

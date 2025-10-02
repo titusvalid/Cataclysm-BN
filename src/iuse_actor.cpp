@@ -292,7 +292,11 @@ int iuse_transform::use( player &p, item &it, bool t, const tripoint &pos ) cons
         p.on_item_takeoff( it );
     }
     if( container.is_empty() ) {
+        // Preserve remaining charges unless the JSON explicitly specifies target charges.
+        int remaining_charges = it.count_by_charges() ? it.charges : it.ammo_remaining();
+
         it.convert( target );
+
         if( ammo_qty >= 0 || !random_ammo_qty.empty() ) {
             int qty;
             if( !random_ammo_qty.empty() ) {
@@ -307,6 +311,14 @@ int iuse_transform::use( player &p, item &it, bool t, const tripoint &pos ) cons
                 it.ammo_set( it.ammo_current(), qty );
             } else {
                 it.set_countdown( qty );
+            }
+        } else if( remaining_charges > transform_charges ) {
+            // Default behaviour: keep leftover charges so gear remains powered.
+            int leftover = remaining_charges - transform_charges;
+            if( it.count_by_charges() ) {
+                it.charges = leftover;
+            } else if( !it.ammo_current().is_null() ) {
+                it.ammo_set( it.ammo_current(), leftover );
             }
         }
     } else {

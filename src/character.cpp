@@ -18,6 +18,7 @@
 #include "activity_actor_definitions.h"
 #include "anatomy.h"
 #include "avatar.h"
+#include "mutation.h"
 #include "avatar_action.h"
 #include "bionics.h"
 #include "bodypart.h"
@@ -102,6 +103,13 @@
 #include "units_temperature.h"
 #include "units_utility.h"
 #include "value_ptr.h"
+namespace
+{
+int calculate_scaled_health_change( const int difference )
+{
+    return sgn( difference ) * std::max( 1, std::abs( difference ) / 2 );
+}
+} // namespace
 #include "veh_interact.h"
 #include "veh_type.h"
 #include "vehicle.h"
@@ -2188,39 +2196,938 @@ void Character::conduct_blood_analysis() const
     std::vector<nc_color> colors;
 
     for( auto &elem : *effects ) {
-        if( elem.first->get_blood_analysis_description().empty() ) {
+        const std::string desc = elem.first->get_blood_analysis_description();
+        if( desc.empty() || std::find( effect_descriptions.begin(), effect_descriptions.end(), desc ) != effect_descriptions.end() ) {
             continue;
         }
-        effect_descriptions.emplace_back( elem.first->get_blood_analysis_description() );
+        effect_descriptions.emplace_back( desc );
         colors.emplace_back( elem.first->get_rating() == e_good ? c_green : c_red );
     }
 
-    const int win_w = 46;
+
+    // Add health info
+    int health_val = get_healthy();
+    int health_mod = get_healthy_mod();
+    int max_health = 200;
+    int external_modifiers = 0;
+    if( has_artifact_with( AEP_SICK ) ) {
+        external_modifiers -= 50;
+    }
+    int effective_healthy_mod = health_mod;
+    if( has_active_bionic( bio_leukocyte ) ) {
+        effective_healthy_mod = 100;
+    }
+    const int diff = effective_healthy_mod - health_val + external_modifiers;
+    const int daily_health_change = calculate_scaled_health_change( diff );
+    effect_descriptions.emplace_back( string_format( "Current Health: %d (max %d)", health_val, max_health ) );
+    colors.emplace_back( c_white );
+    effect_descriptions.emplace_back( string_format( "Daily Change: %+d", daily_health_change ) );
+    if( daily_health_change >= 0 ) {
+        colors.emplace_back( c_light_green );
+    } else {
+        colors.emplace_back( c_light_red );
+    }
+    effect_descriptions.emplace_back( string_format( "Health Baseline: %d", health_mod ) );
+    colors.emplace_back( c_light_blue );
+
+    effect_descriptions.emplace_back( "" );
+    colors.emplace_back( c_white );
+    effect_descriptions.emplace_back( string_format( "Genetic score: %d", genetic_score( *this ) ) );
+    colors.emplace_back( c_light_blue );
+
+    // Mutation odds: use the actual direction number from mutation_chances()
+    extern int last_mutation_direction;
+    std::map<trait_id, float> chances = mutation_chances();
+    int gui_mutation_direction = last_mutation_direction;
+    DebugLogFL(DL::Info, DC::Main) << string_format("GUI mutation direction: %d", gui_mutation_direction);
+    effect_descriptions.emplace_back( string_format( "Mutation direction: %d", gui_mutation_direction ) );
+    colors.emplace_back( c_white );
+
+    // Add nutrients and vitamins (ported from second popup)
+    effect_descriptions.emplace_back( string_format( "Hunger (kcal): %d", get_stored_kcal() ) );
+    colors.emplace_back( c_yellow );
+    effect_descriptions.emplace_back( string_format( "Thirst: %d", get_thirst() ) );
+    colors.emplace_back( c_light_blue );
+    effect_descriptions.emplace_back( string_format( "Fatigue: %d", get_fatigue() ) );
+    colors.emplace_back( c_light_gray );
+    effect_descriptions.emplace_back( string_format( "Sleep Deprivation: %d", get_sleep_deprivation() ) );
+    colors.emplace_back( c_magenta );
+
+    // Vitamins
+    for( const auto &v : vitamin::all() ) {
+        effect_descriptions.emplace_back( string_format( "%s: %d", v.second.name(), vitamin_get( v.first ) ) );
+        colors.emplace_back( c_white );
+    }
+    
+    // Calculate mutation outcome percentages for the first screen
+    // Use the health-adjusted chances that match what mutation_chances() returns
+    float positive_chance = 0.0f;
+    float negative_chance = 0.0f;
+    float neutral_chance = 0.0f;
+    
+    if( !chances.empty() ) {
+        // The chances are already normalized, so we can use them directly for percentages
+        for( const auto &p : chances ) {
+            float percentage = p.second * 100.0f;
+            const trait_id &tid = p.first;
+            bool currently_have = has_trait( tid );
+            
+            if( currently_have ) {
+                // If we have the trait, appearing in chances means we might lose it
+                // Losing a positive trait is negative, losing a negative trait is positive
+                if( tid->points > 0 ) {
+                    negative_chance += percentage;
+                } else if( tid->points < 0 ) {
+                    positive_chance += percentage;
+                } else {
+                    neutral_chance += percentage;
+                }
+            } else {
+                // If we don't have the trait, appearing in chances means we might gain it
+                if( tid->points > 0 ) {
+                    positive_chance += percentage;
+                } else if( tid->points < 0 ) {
+                    negative_chance += percentage;
+                } else {
+                    neutral_chance += percentage;
+                }
+            }
+        }
+        
+        // For actual mutation selection, still use the weighted picker for simulation
+        weighted_float_list<trait_id> mutation_picker;
+        for( const auto &p : chances ) {
+            mutation_picker.add( p.first, p.second );
+        }
+        
+        std::map<trait_id, int> actual_outcomes;
+        const int simulations = 1000; // Run 1000 simulations to get percentages
+        
+        // Helper function to simulate mutate_towards without actually changing the character
+        auto simulate_mutate_towards = [this]( const trait_id &mut ) -> trait_id {
+            if( has_child_flag( mut ) ) {
+                return mut; // Would remove child flag and succeed
+            }
+            
+            const mutation_branch &mdata = mut.obj();
+
+            // Check for threshold requirements
+            bool threshold = mdata.threshold;
+            bool profession = mdata.profession;
+            bool has_threshreq = false;
+            std::vector<trait_id> threshreq = mdata.threshreq;
+
+            // Threshold mutations shouldn't be picked, and will fail silently.
+            if( threshold || profession ) {
+                return trait_id::NULL_ID();
+            }
+
+            // Check if we have any required thresholds
+            for( size_t i = 0; !has_threshreq && i < threshreq.size(); i++ ) {
+                if( has_trait( threshreq[i] ) ) {
+                    has_threshreq = true;
+                }
+            }
+
+            // If we don't have required thresholds, this mutation would fail
+            if( !has_threshreq && !threshreq.empty() ) {
+                return trait_id::NULL_ID();
+            }
+
+            std::vector<trait_id> prereq = mdata.prereqs;
+            std::vector<trait_id> prereqs2 = mdata.prereqs2;
+            
+            bool prereq1 = prereq.empty(); // If no prereqs, consider satisfied
+            bool prereq2 = prereqs2.empty(); // If no prereqs2, consider satisfied
+            
+            // Check if we have any of the prereqs
+            for( const trait_id &p : prereq ) {
+                if( has_trait( p ) ) {
+                    prereq1 = true;
+                    break;
+                }
+            }
+            
+            // Check if we have any of the prereqs2
+            for( const trait_id &p : prereqs2 ) {
+                if( has_trait( p ) ) {
+                    prereq2 = true;
+                    break;
+                }
+            }
+            
+            // If we don't have prerequisites, the game would try to mutate towards a prerequisite first
+            if( !prereq1 && !prereq.empty() ) {
+                // Would recursively call mutate_towards on a prerequisite
+                // For simulation, just return the first prerequisite
+                return prereq[0];
+            }
+            if( !prereq2 && !prereqs2.empty() ) {
+                // Would recursively call mutate_towards on a prerequisite from prereqs2
+                return prereqs2[0];
+            }
+            
+            // If all prerequisites are met, would actually get this mutation
+            return mut;
+        };
+        
+        for( int sim = 0; sim < simulations; ++sim ) {
+            // This mimics the exact logic from Character::mutate()
+            for( int tries = 0; tries < 3; tries++ ) {
+                const trait_id *selected = mutation_picker.pick();
+                if( selected == nullptr ) {
+                    continue;
+                }
+                
+                // Simulate what mutate_towards would actually do
+                trait_id final_mutation = simulate_mutate_towards( *selected );
+                if( final_mutation != trait_id::NULL_ID() ) {
+                    actual_outcomes[final_mutation]++;
+                    break;
+                }
+            }
+        }
+    }
+    
+    // Debug output for health and percentages
+    dbg(DL::Info) << string_format("DEBUG health values: current=%d, mod=%d, daily_change=%d", 
+        health_val, health_mod, daily_health_change);
+    dbg(DL::Info) << string_format("DEBUG mutation percentages: positive=%.1f%%, negative=%.1f%%, neutral=%.1f%%", 
+        positive_chance, negative_chance, neutral_chance);
+    
+    // Add mutation outcome percentages to the first screen
+    effect_descriptions.emplace_back( "" );
+    colors.emplace_back( c_white );
+    effect_descriptions.emplace_back( string_format( "Positive outcomes: %.1f%%", positive_chance ) );
+    colors.emplace_back( c_green );
+    effect_descriptions.emplace_back( string_format( "Negative outcomes: %.1f%%", negative_chance ) );
+    colors.emplace_back( c_red );
+    effect_descriptions.emplace_back( string_format( "Neutral outcomes: %.1f%%", neutral_chance ) );
+    colors.emplace_back( c_white );
+
+    // Threshold overview: what thresholds you have and how close you are to others
+    effect_descriptions.emplace_back( "" );
+    colors.emplace_back( c_white );
+    effect_descriptions.emplace_back( "Threshold Status:" );
+    colors.emplace_back( c_yellow );
+
+    // Collect category levels and compute totals for chance estimates
+    int total_cat = 0;
+    for( const auto &mc : mutation_category_trait::get_all() ) {
+        const auto it_lvl = mutation_category_level.find( mc.first );
+        total_cat += it_lvl != mutation_category_level.end() ? it_lvl->second : 0;
+    }
+
+    // List thresholds currently possessed
+    bool any_thresh = false;
+    std::string have_line = "Have: ";
+    for( const auto &mc : mutation_category_trait::get_all() ) {
+        const mutation_category_trait &cat = mc.second;
+        if( !cat.threshold_mut.is_empty() && has_trait( cat.threshold_mut ) ) {
+            if( any_thresh ) have_line += ", ";
+            have_line += cat.threshold_mut->name();
+            any_thresh = true;
+        }
+    }
+    if( any_thresh ) {
+        effect_descriptions.emplace_back( have_line );
+        colors.emplace_back( c_green );
+    } else {
+        effect_descriptions.emplace_back( "Have: none" );
+        colors.emplace_back( c_light_gray );
+    }
+
+    // Show primary category and level
+    const mutation_category_id primary_cat = get_highest_category();
+    const auto it_primary = mutation_category_level.find( primary_cat );
+    const int primary_lvl = it_primary != mutation_category_level.end() ? it_primary->second : 0;
+    effect_descriptions.emplace_back( string_format( "Primary: %s (%d)", primary_cat.c_str(), primary_lvl ) );
+    colors.emplace_back( c_light_cyan );
+
+    // Build vector of categories sorted by level desc
+    std::vector<std::pair<mutation_category_id,int>> cat_sorted;
+    cat_sorted.reserve( mutation_category_trait::get_all().size() );
+    for( const auto &mc : mutation_category_trait::get_all() ) {
+        const auto it_lvl = mutation_category_level.find( mc.first );
+        const int lvl = it_lvl != mutation_category_level.end() ? it_lvl->second : 0;
+        if( lvl > 0 ) {
+            cat_sorted.emplace_back( mc.first, lvl );
+        }
+    }
+    std::sort( cat_sorted.begin(), cat_sorted.end(), []( const auto &a, const auto &b ) {
+        return a.second > b.second;
+    } );
+
+    // Top 5 categories: progress and crossing odds if using matching serum now
+    int show_count = std::min<int>( 5, static_cast<int>( cat_sorted.size() ) );
+    for( int i = 0; i < show_count; ++i ) {
+        const mutation_category_id &cid = cat_sorted[i].first;
+        const int lvl = cat_sorted[i].second;
+        const mutation_category_trait &cat = mutation_category_trait::get_category( cid );
+        const bool have_cat_thresh = !cat.threshold_mut.is_empty() && has_trait( cat.threshold_mut );
+        // Progress to the 50-point precondition (not the RNG breach itself)
+        const int progress_pct = std::clamp( lvl * 100 / 50, 0, 100 );
+        int booster = 0;
+        if( cid == mutation_category_id( "URSINE" ) || cid == mutation_category_id( "ALPHA" ) ) {
+            booster = 50;
+        }
+        float breach_chance = 0.0f;
+        if( total_cat > 0 && lvl > 50 ) {
+            breach_chance = 100.0f * static_cast<float>( lvl + booster ) / static_cast<float>( total_cat );
+        }
+        std::string line = string_format( "%s: level %d, progress %d%%", cid.c_str(), lvl, progress_pct );
+        if( lvl > 50 ) {
+            line += string_format( ", serum-cross chance now ~%.1f%%", breach_chance );
+        }
+        if( have_cat_thresh ) {
+            line += " (threshold crossed)";
+        }
+        effect_descriptions.emplace_back( line );
+        colors.emplace_back( have_cat_thresh ? c_green : ( lvl >= 50 ? c_light_green : c_white ) );
+    }
+
+    // Prepare mutation odds for second page - use the EXACT same logic as actual mutation
+    std::vector<std::string> mutation_descriptions;
+    std::vector<nc_color> mutation_colors;
+    
+    mutation_descriptions.emplace_back( "Possible Mutations and Odds:" );
+    mutation_colors.emplace_back( c_yellow );
+    mutation_descriptions.emplace_back( "" );
+    mutation_colors.emplace_back( c_white );
+    
+    // Use the same mutation chances as above for simulation
+    std::map<trait_id, float> mut_chances = chances;
+    
+    // Build a single scrollable category/threshold page
+    std::vector<std::string> category_page_desc;
+    std::vector<nc_color> category_page_colors;
+
+    // Collect and sort categories by display name
+    std::vector<mutation_category_id> all_categories;
+    for( const auto &mc : mutation_category_trait::get_all() ) {
+        all_categories.push_back( mc.first );
+    }
+    std::sort( all_categories.begin(), all_categories.end(), []( const mutation_category_id &a, const mutation_category_id &b ) {
+        return mutation_category_trait::get_category( a ).name() < mutation_category_trait::get_category( b ).name();
+    } );
+
+    // Build content for each category
+    for( const mutation_category_id &cid : all_categories ) {
+        const mutation_category_trait &cat = mutation_category_trait::get_category( cid );
+
+        // Gather mutations belonging to this category
+        std::vector<trait_id> cat_mutations;
+        for( const mutation_branch &mb : mutation_branch::get_all() ) {
+            if( std::find( mb.category.begin(), mb.category.end(), cid ) != mb.category.end() ) {
+                cat_mutations.emplace_back( mb.id );
+            }
+        }
+        if( cat_mutations.empty() ) {
+            continue;
+        }
+
+        // Sort by name
+        std::sort( cat_mutations.begin(), cat_mutations.end(), []( const trait_id &a, const trait_id &b ) {
+            return a->name() < b->name();
+        } );
+
+        // Page buffers
+        std::vector<std::string> page_lines;
+        std::vector<nc_color> page_colors;
+
+        // Helper function to create wrapped lines from a list of items
+        auto create_wrapped_lines = []( const std::string &prefix, const std::vector<std::string> &items, 
+                                      int max_width ) -> std::vector<std::string> {
+            std::vector<std::string> result;
+            if( items.empty() ) {
+                return result;
+            }
+            
+            std::string current_line = prefix;
+            const int prefix_len = utf8_width( prefix );
+            const std::string indent( prefix_len, ' ' ); // Indent continuation lines
+            
+            for( size_t i = 0; i < items.size(); ++i ) {
+                const std::string &item = items[i];
+                const std::string separator = ( i == 0 ) ? "" : ", ";
+                const std::string full_item = separator + item;
+                
+                // Check if adding this item would exceed the width
+                if( utf8_width( current_line + full_item ) > max_width && current_line != prefix ) {
+                    // Start a new line
+                    result.emplace_back( current_line );
+                    current_line = indent + item;
+                } else {
+                    current_line += full_item;
+                }
+            }
+            
+            if( current_line != prefix && current_line != indent ) {
+                result.emplace_back( current_line );
+            }
+            
+            return result;
+        };
+
+        // Header with level and threshold
+        const auto it_lvl = mutation_category_level.find( cid );
+        const int lvl = it_lvl != mutation_category_level.end() ? it_lvl->second : 0;
+        page_lines.emplace_back( string_format( "%s (level %d)", cat.name(), lvl ) );
+        page_colors.emplace_back( c_yellow );
+
+        if( !cat.threshold_mut.is_empty() ) {
+            const bool have_thresh = has_trait( cat.threshold_mut );
+            page_lines.emplace_back( string_format( "Threshold: %s (%s)", cat.threshold_mut->name(), have_thresh ? "HAVE" : "MISSING" ) );
+            page_colors.emplace_back( have_thresh ? c_green : c_red );
+            
+            // Show mutations that would be unlocked by crossing this threshold
+            if( !have_thresh ) {
+                std::vector<std::string> unlocked_mutations;
+                for( const mutation_branch &mb : mutation_branch::get_all() ) {
+                    // Check if this mutation requires our threshold
+                    bool requires_this_threshold = false;
+                    for( const trait_id &req : mb.threshreq ) {
+                        if( req == cat.threshold_mut ) {
+                            requires_this_threshold = true;
+                            break;
+                        }
+                    }
+                    
+                    if( requires_this_threshold && !mutation_branch::trait_is_blacklisted( mb.id ) ) {
+                        unlocked_mutations.emplace_back( mb.name() );
+                    }
+                }
+                
+                if( !unlocked_mutations.empty() ) {
+                    // Sort the unlocked mutations alphabetically
+                    std::sort( unlocked_mutations.begin(), unlocked_mutations.end() );
+                    
+                    const int available_width = 76;
+                    auto unlock_lines = create_wrapped_lines( "Would unlock: ", unlocked_mutations, available_width );
+                    for( const std::string &line : unlock_lines ) {
+                        page_lines.emplace_back( line );
+                        page_colors.emplace_back( c_cyan );
+                    }
+                }
+            }
+        }
+
+        // Collect present and missing mutations
+        std::vector<std::string> present_mutations;
+        std::vector<std::string> missing_mutations;
+
+        for( const trait_id &tid : cat_mutations ) {
+            if( mutation_branch::trait_is_blacklisted( tid ) ) {
+                continue;
+            }
+            const bool have = has_trait( tid );
+            if( have ) {
+                present_mutations.emplace_back( tid->name() );
+            } else {
+                missing_mutations.emplace_back( tid->name() );
+            }
+        }
+
+        // Create wrapped lines for present mutations
+        if( !present_mutations.empty() ) {
+            const int available_width = 76; // Reasonable width for blood test display
+            auto present_lines = create_wrapped_lines( "Present: ", present_mutations, available_width );
+            for( const std::string &line : present_lines ) {
+                page_lines.emplace_back( line );
+                page_colors.emplace_back( c_green );
+            }
+        }
+        
+        // Create wrapped lines for missing mutations
+        if( !missing_mutations.empty() ) {
+            const int available_width = 76; // Reasonable width for blood test display
+            auto missing_lines = create_wrapped_lines( "Missing: ", missing_mutations, available_width );
+            for( const std::string &line : missing_lines ) {
+                page_lines.emplace_back( line );
+                page_colors.emplace_back( c_light_gray );
+            }
+        }
+
+        // Only add the page if the category has a threshold or if the player has mutations from it.
+        if( !cat.threshold_mut.is_empty() || !present_mutations.empty() ) {
+            if( !category_page_desc.empty() ) {
+                category_page_desc.emplace_back( "" );
+                category_page_colors.emplace_back( c_white );
+            }
+            category_page_desc.insert( category_page_desc.end(), page_lines.begin(), page_lines.end() );
+            category_page_colors.insert( category_page_colors.end(), page_colors.begin(), page_colors.end() );
+        }
+    }
+
+    if( mut_chances.empty() ) {
+        mutation_descriptions.emplace_back( "No mutations possible." );
+        mutation_colors.emplace_back( c_light_gray );
+    } else {
+        // Simulate the exact weighted selection process that the game uses
+        weighted_float_list<trait_id> mutation_picker;
+        for( const auto &p : mut_chances ) {
+            mutation_picker.add( p.first, p.second );
+        }
+        
+        // Simulate what would actually happen - run the selection multiple times to get statistics
+        std::map<trait_id, int> actual_outcomes;
+        const int simulations = 1000; // Run 1000 simulations to get percentages
+        
+        // Helper function to simulate mutate_towards without actually changing the character
+        auto simulate_mutate_towards = [this]( const trait_id &mut ) -> trait_id {
+            if( has_child_flag( mut ) ) {
+                return mut; // Would remove child flag and succeed
+            }
+            
+            const mutation_branch &mdata = mut.obj();
+
+            // Check for threshold requirements
+            bool threshold = mdata.threshold;
+            bool profession = mdata.profession;
+            bool has_threshreq = false;
+            std::vector<trait_id> threshreq = mdata.threshreq;
+
+            // Threshold mutations shouldn't be picked, and will fail silently.
+            if( threshold || profession ) {
+                return trait_id::NULL_ID();
+            }
+
+            // Check if we have any required thresholds
+            for( size_t i = 0; !has_threshreq && i < threshreq.size(); i++ ) {
+                if( has_trait( threshreq[i] ) ) {
+                    has_threshreq = true;
+                }
+            }
+
+            // If we don't have required thresholds, this mutation would fail
+            if( !has_threshreq && !threshreq.empty() ) {
+                return trait_id::NULL_ID();
+            }
+
+            std::vector<trait_id> prereq = mdata.prereqs;
+            std::vector<trait_id> prereqs2 = mdata.prereqs2;
+            
+            bool prereq1 = prereq.empty(); // If no prereqs, consider satisfied
+            bool prereq2 = prereqs2.empty(); // If no prereqs2, consider satisfied
+            
+            // Check if we have any of the prereqs
+            for( const trait_id &p : prereq ) {
+                if( has_trait( p ) ) {
+                    prereq1 = true;
+                    break;
+                }
+            }
+            
+            // Check if we have any of the prereqs2
+            for( const trait_id &p : prereqs2 ) {
+                if( has_trait( p ) ) {
+                    prereq2 = true;
+                    break;
+                }
+            }
+            
+            // If we don't have prerequisites, the game would try to mutate towards a prerequisite first
+            if( !prereq1 && !prereq.empty() ) {
+                // Would recursively call mutate_towards on a prerequisite
+                // For simulation, just return the first prerequisite
+                return prereq[0];
+            }
+            if( !prereq2 && !prereqs2.empty() ) {
+                // Would recursively call mutate_towards on a prerequisite from prereqs2
+                return prereqs2[0];
+            }
+            
+            // If all prerequisites are met, would actually get this mutation
+            return mut;
+        };
+
+        // Helper function to get what mutations would be cancelled by gaining a specific mutation
+        auto get_mutations_cancelled_by = [this]( const trait_id &mut ) -> std::vector<trait_id> {
+            std::vector<trait_id> cancelled;
+            
+            const mutation_branch &mdata = mut.obj();
+            std::vector<trait_id> cancel = mdata.cancels;
+            std::vector<trait_id> same_type = get_mutations_in_types( mdata.types );
+            std::vector<trait_id> all_prereqs = ::get_all_mutation_prereqs( mut );
+
+            // Add explicit cancellations
+            for( const trait_id &c : cancel ) {
+                if( has_trait( c ) && !has_base_trait( c ) ) {
+                    cancelled.push_back( c );
+                }
+            }
+            
+            // Check mutations of the same type - except for the ones we might need for pre-reqs
+            for( const auto &consider : same_type ) {
+                if( has_trait( consider ) && !has_base_trait( consider ) &&
+                    std::ranges::find( all_prereqs, consider ) == all_prereqs.end() ) {
+                    cancelled.push_back( consider );
+                }
+            }
+            
+            return cancelled;
+        };
+        
+        for( int sim = 0; sim < simulations; ++sim ) {
+            // This mimics the exact logic from Character::mutate()
+            for( int tries = 0; tries < 3; tries++ ) {
+                const trait_id *selected = mutation_picker.pick();
+                if( selected == nullptr ) {
+                    continue;
+                }
+                
+                // Simulate what mutate_towards would actually do
+                trait_id final_mutation = simulate_mutate_towards( *selected );
+                if( final_mutation != trait_id::NULL_ID() ) {
+                    actual_outcomes[final_mutation]++;
+                    break;
+                }
+            }
+        }
+        
+        // Convert to percentages and sort by frequency
+        std::vector<std::pair<trait_id, float>> sorted_outcomes;
+        for( const auto &outcome : actual_outcomes ) {
+            float percentage = (outcome.second * 100.0f) / simulations;
+            sorted_outcomes.emplace_back( outcome.first, percentage );
+        }
+        
+        // Also include mutations with very low probabilities that didn't get picked in simulation
+        // This ensures we show both gains and losses even if they have low probability
+        for( const auto &p : mut_chances ) {
+            float raw_percentage = p.second * 100.0f;
+            // If this mutation wasn't picked in simulation but has a chance, add it
+            bool found = false;
+            for( const auto &outcome : sorted_outcomes ) {
+                if( outcome.first == p.first ) {
+                    found = true;
+                    break;
+                }
+            }
+            if( !found && raw_percentage > 0.0001f ) { // Include anything above 0.0001% (much lower threshold)
+                // Filter out entries that cannot be acquired due to threshold/profession requirements
+                const mutation_branch &mdata = p.first.obj();
+                bool meets_thresholds = true;
+                if( !mdata.threshreq.empty() ) {
+                    meets_thresholds = false;
+                    for( const trait_id &req : mdata.threshreq ) {
+                        if( has_trait( req ) ) {
+                            meets_thresholds = true;
+                            break;
+                        }
+                    }
+                }
+                if( !mdata.profession && !mdata.threshold && meets_thresholds ) {
+                    sorted_outcomes.emplace_back( p.first, raw_percentage );
+                } else {
+                    dbg( DL::Info ) << string_format( "Filtered fallback mutation: %s (%.4f%%) [profession=%s, threshold=%s, meets_thresholds=%s]",
+                        p.first->name(), raw_percentage,
+                        mdata.profession ? "true" : "false",
+                        mdata.threshold ? "true" : "false",
+                        meets_thresholds ? "true" : "false" );
+                }
+            }
+        }
+        
+        std::sort( sorted_outcomes.begin(), sorted_outcomes.end(), 
+            []( const auto &a, const auto &b ) { return a.second > b.second; } );
+        
+        // Debug output: Show top 5 mutations and their threshold requirements
+        dbg(DL::Info) << "=== BLOOD TEST DEBUG: Top 5 mutations and threshold requirements ===";
+        for( size_t i = 0; i < std::min( sorted_outcomes.size(), static_cast<size_t>( 5 ) ); ++i ) {
+            const trait_id &tid = sorted_outcomes[i].first;
+            float chance = sorted_outcomes[i].second;
+            const mutation_branch &mdata = tid.obj();
+            
+            std::string thresh_info = "None";
+            if( !mdata.threshreq.empty() ) {
+                thresh_info = "Requires: ";
+                for( size_t j = 0; j < mdata.threshreq.size(); ++j ) {
+                    if( j > 0 ) thresh_info += ", ";
+                    thresh_info += mdata.threshreq[j].str();
+                    if( has_trait( mdata.threshreq[j] ) ) {
+                        thresh_info += " (HAVE)";
+                    } else {
+                        thresh_info += " (MISSING)";
+                    }
+                }
+            }
+            
+            dbg(DL::Info) << string_format( "#%d: %s (%.2f%%) - Thresholds: %s", 
+                static_cast<int>( i + 1 ), tid->name(), chance, thresh_info );
+        }
+        dbg(DL::Info) << "=== END BLOOD TEST DEBUG ===";
+        
+        // Calculate cancellation risks first
+        std::map<trait_id, float> cancellation_chances;
+        for( const auto &entry : sorted_outcomes ) {
+            const trait_id &tid = entry.first;
+            float chance = entry.second;
+            bool is_removal = has_trait( tid );
+            
+            if( !is_removal ) {
+                // For each gain, calculate what would be cancelled
+                std::vector<trait_id> cancelled = get_mutations_cancelled_by( tid );
+                for( const trait_id &cancelled_trait : cancelled ) {
+                    cancellation_chances[cancelled_trait] += chance;
+                }
+            }
+        }
+
+        // Create a combined list with all outcomes and cancellation risks
+        std::vector<std::pair<trait_id, float>> all_entries = sorted_outcomes;
+        
+        // Add cancellation risks as separate entries
+        for( const auto &p : cancellation_chances ) {
+            all_entries.emplace_back( p.first, p.second );
+        }
+        
+        // Sort the combined list by probability
+        std::sort( all_entries.begin(), all_entries.end(),
+            []( const auto &a, const auto &b ) { return a.second > b.second; } );
+
+        // Display all entries together
+        for( const auto &entry : all_entries ) {
+            const trait_id &tid = entry.first;
+            float chance = entry.second;
+            bool is_removal = has_trait( tid );
+            bool is_cancellation_risk = cancellation_chances.count( tid ) > 0;
+            std::string action;
+            nc_color mut_color;
+            std::string chance_str = string_format( "%.1f%%", chance );
+            std::string evolution_info = "";
+
+            if( is_cancellation_risk && !is_removal ) {
+                continue;
+            } else if( is_cancellation_risk ) {
+                // Skip separate cancellation risk entries, only show inline for gains
+                continue;
+            } else {
+                action = is_removal ? "Remove" : "Gain";
+                mut_color = tid->points > 0 ? c_green : (tid->points < 0 ? c_red : c_white);
+            }
+
+            if( !is_removal ) {
+                // For gaining mutations, show what they can evolve into
+                if( !tid->replacements.empty() ) {
+                    evolution_info = string_format( " → %s", tid->replacements[0]->name() );
+                } else if( !tid->additions.empty() ) {
+                    evolution_info = string_format( " → %s", tid->additions[0]->name() );
+                }
+            } else {
+                // For removing mutations, show what they came from
+                if( !tid->prereqs.empty() ) {
+                    evolution_info = string_format( " (from %s)", tid->prereqs[0]->name() );
+                } else if( !tid->prereqs2.empty() ) {
+                    evolution_info = string_format( " (from %s)", tid->prereqs2[0]->name() );
+                }
+            }
+
+            // Build the line with color tags for inline overwrite info
+            std::string line = string_format( "%s %s: %s%s", action.c_str(), tid->name(), chance_str.c_str(), evolution_info.c_str() );
+            
+            // Add inline overwrite info with individual colors for each trait
+            if( !is_removal ) {
+                std::vector<trait_id> cancelled = get_mutations_cancelled_by( tid );
+                if( !cancelled.empty() ) {
+                    line += " *overwrites ";
+                    for( size_t i = 0; i < cancelled.size(); ++i ) {
+                        if( i > 0 ) line += ", ";
+                        // Use the mutation's color property
+                        std::string color_name = get_all_colors().get_name( cancelled[i]->get_display_color() );
+                        line += string_format( "<color_%s>%s</color>", color_name.c_str(), cancelled[i]->name() );
+                    }
+                    line += "*";
+                }
+            }
+            
+            mutation_descriptions.emplace_back( line );
+            mutation_colors.emplace_back( mut_color );
+        }
+
+        // Add summary overwrite line after mutation odds
+        if( !cancellation_chances.empty() ) {
+            mutation_descriptions.emplace_back( "" );
+            mutation_colors.emplace_back( c_white );
+            mutation_descriptions.emplace_back( "Traits at risk of being overwritten:" );
+            mutation_colors.emplace_back( c_yellow );
+            for( const auto &p : cancellation_chances ) {
+                const trait_id &tid = p.first;
+                float chance = p.second;
+                std::string color_name = get_all_colors().get_name( tid->get_display_color() );
+                std::string line = string_format( "  <color_%s>%s</color>: %.1f%%", color_name.c_str(), tid->name(), chance );
+                mutation_descriptions.emplace_back( line );
+                mutation_colors.emplace_back( tid->get_display_color() );
+            }
+        }
+    }
+
+    // Multi-page UI with dynamic sizing
+    int current_page = 0;
+    int scroll_offset = 0;
+    
+    // Calculate total pages needed
+    // Page 0: Blood test results (health, vitamins, etc.)
+    // Page 1+: Mutation odds (paginated if needed)
+    int mutation_lines = mutation_descriptions.size();
+    
+    size_t win_w = 0;
     size_t win_h = 0;
     catacurses::window w;
     ui_adaptor ui;
     ui.on_screen_resize( [&]( ui_adaptor & ui ) {
-        win_h = std::min( static_cast<size_t>( TERMY ),
-                          std::max<size_t>( 1, effect_descriptions.size() ) + 2 );
+        if( current_page == 0 ) {
+            // Page 0: Blood test results - size dynamically based on content
+            win_w = 0;
+            for( const std::string &desc : effect_descriptions ) {
+                win_w = std::max( win_w, static_cast<size_t>( desc.length() ) );
+            }
+            win_w = std::min( win_w + 4, static_cast<size_t>( TERMX - 4 ) ); // Add padding, cap at screen width
+            win_w = std::max( win_w, static_cast<size_t>( 40 ) ); // Minimum width
+            
+            win_h = std::min( static_cast<size_t>( effect_descriptions.size() + 4 ), static_cast<size_t>( TERMY - 2 ) );
+        } else if( current_page == 1 ) {
+            // Page 1: Category page - size dynamically based on content
+            win_w = 0;
+            for( const std::string &desc : category_page_desc ) {
+                win_w = std::max( win_w, static_cast<size_t>( desc.length() ) );
+            }
+            win_w = std::min( win_w + 4, static_cast<size_t>( TERMX - 4 ) ); // Add padding, cap at screen width
+            win_w = std::max( win_w, static_cast<size_t>( 40 ) ); // Minimum width
+
+            win_h = std::min( static_cast<size_t>( category_page_desc.size() + 4 ), static_cast<size_t>( TERMY - 2 ) );
+        } else {
+            // Page 1+: Mutation odds - size for mutation content
+            win_w = 0;
+            for( const std::string &desc : mutation_descriptions ) {
+                // Remove color tags for width calculation
+                std::string visible = remove_color_tags( desc );
+                win_w = std::max( win_w, static_cast<size_t>( visible.length() ) );
+            }
+            win_w = std::min( win_w + 4, static_cast<size_t>( TERMX - 4 ) ); // Add padding, cap at screen width
+            win_w = std::max( win_w, static_cast<size_t>( 40 ) ); // Minimum width
+            
+            // For mutations, use most of the screen height
+            win_h = std::min( static_cast<size_t>( mutation_descriptions.size() + 4 ), static_cast<size_t>( TERMY - 2 ) );
+        }
+        
         w = catacurses::newwin( win_h, win_w,
                                 point( ( TERMX - win_w ) / 2, ( TERMY - win_h ) / 2 ) );
         ui.position_from_window( w );
     } );
+    
+    // 1 for blood test, 1 for categories (if any), 1 for mutations (if any), 1 for health info
+    int total_pages = 1 + ( !category_page_desc.empty() ? 1 : 0 ) + ( mutation_lines > 0 ? 1 : 0 ) + 1;
     ui.mark_resize();
+    // Third page: health explanation
+    std::vector<std::string> health_explanation = {
+        "Health & Nutrition System:",
+        "",
+        "HEALTH vs HEALTH_MOD:",
+        "Current health (-200 to +200): Affects healing speed and mutation quality",
+        "Health drifts toward health_mod (the resting point) at ~50% of the difference daily",
+        "Health_mod is now stable and does not decay over time. It only changes from direct effects.",
+        "Food's healthy value directly boosts health_mod (the resting point)",
+        "",
+        "MUTATION DIRECTION EXPLAINED:",
+        "This value guides whether mutations are good or bad. Higher is better.",
+        "Formula: (46 - Genetic Score + Trait Modifiers + (Health / 2))",
+        "  - Genetic Score: Based on your stats and current mutation points.",
+        "  - Health: Your current health, clamped to +/-200, then halved.",
+        "  - Traits: Robust adds +10 then a 20% bonus. Chaotic adds -30.",
+        "",
+        "LEUKOCYTE BREEDER CBM:",
+        "Forces effective health = 100 while active (overrides food effects)",
+        "Side effect: trend to -50 health_mod (natural resting point) when active",
+        "Net result: maintains current health near +100 for optimal mutation odds",
+        "",
+        "DIGESTIVE SYSTEM CBM (bio_digestion):",
+        "Doubles ALL positive health_mod gains from food and medicine",
+        "Completely blocks ALL negative health_mod losses from any source",
+        "Also gives +50% nutrition from food and blocks food poisoning",
+        "Essential for maximizing health gains from healthy foods",
+        "",
+        "VITAMINS & DEFICIENCIES:",
+        "Vitamins: VitA, VitB, VitC, Iron, Calcium consume over time (15min/unit)",
+        "Deficiency diseases: Scurvy (-VitC), Anemia (-Iron), etc. at -200+ deficit",
+        "Each deficiency stage increases in severity and health penalties",
+        "Vitamin-rich foods prevent deficiencies, excess vitamins are capped",
+        "",
+        "MEDICINES & HEALTH EFFECTS:",
+        "Most medicines HARM health_mod: antibiotics (-2), morphine (-3), meth (-7)",
+        "Few medicines help health_mod: royal jelly (+25), gamma globulin shot (+200)",
+        "All health_mod changes from consumables decay at 5% per day",
+        "",
+        "BEST HEALTHY FOODS (easy to find/craft):",
+        "Fruits: pears (+3), bananas (+4), apple cider (+3) - common, no cooking",
+        "Nuts: pistachios (+2), almonds (+1) - found or foraged easily",
+        "Dairy: milk (+1), yogurt (+2) - common loot or craftable",
+        "Cooked dishes: oatmeal (+1), onigiri (+3), royal beef (+10) with honey",
+        "Eggs: any eggs (+1) - forageable or from livestock"
+    };
+    std::vector<nc_color> health_explanation_colors( health_explanation.size(), c_white );
+    health_explanation_colors[0] = c_yellow;
+    health_explanation_colors[2] = c_light_cyan;
+    health_explanation_colors[12] = c_light_cyan;
+
     ui.on_redraw( [&]( const ui_adaptor & ) {
-        draw_border( w, c_red, string_format( " %s ", _( "Blood Test Results" ) ) );
-        if( effect_descriptions.empty() ) {
-            trim_and_print( w, point( 2, 1 ), win_w - 3, c_white, _( "No effects." ) );
+        werase( w ); // Clear window to prevent overlap
+
+        std::string title;
+        const std::vector<std::string> *descriptions;
+        const std::vector<nc_color> *desc_colors;
+
+        if( current_page == 0 ) {
+            title = "Blood Test Results";
+            descriptions = &effect_descriptions;
+            desc_colors = &colors;
+        } else if( current_page == 1 ) {
+            title = "Mutation Categories & Thresholds";
+            descriptions = &category_page_desc;
+            desc_colors = &category_page_colors;
+        } else if( current_page == 2 ) {
+            title = "Possible Mutations";
+            descriptions = &mutation_descriptions;
+            desc_colors = &mutation_colors;
         } else {
-            for( size_t line = 1; line < ( win_h - 1 ) && line <= effect_descriptions.size(); ++line ) {
-                trim_and_print( w, point( 2, line ), win_w - 3, colors[line - 1], effect_descriptions[line - 1] );
+            title = "Health & Mutation Info";
+            descriptions = &health_explanation;
+            desc_colors = &health_explanation_colors;
+        }
+
+        draw_border( w, c_red, string_format( " %s (Page %d/%d) ", title.c_str(), current_page + 1, total_pages ) );
+
+        const int max_display_lines = win_h - 2; // -2 for border
+        const int max_scroll = std::max( 0, static_cast<int>( descriptions->size() ) - max_display_lines );
+        scroll_offset = std::clamp( scroll_offset, 0, max_scroll );
+
+        if( max_scroll > 0 ) {
+            draw_scrollbar( w, scroll_offset, max_display_lines, descriptions->size(), point( 0, 1 ) );
+        }
+
+        if( descriptions->empty() ) {
+            trim_and_print( w, point( 2, 1 ), win_w - 4, c_white, _( "No data." ) );
+        } else {
+            for( int i = 0; i < max_display_lines; ++i ) {
+                const int line_index = scroll_offset + i;
+                if( line_index < static_cast<int>( descriptions->size() ) ) {
+                    trim_and_print( w, point( 2, 1 + i ), win_w - 4, ( *desc_colors )[line_index], ( *descriptions )[line_index] );
+                }
             }
         }
+
+        // Show navigation hint
+        trim_and_print( w, point( 2, win_h - 1 ), win_w - 4, c_light_gray, "Left/Right: Page, Up/Down: Scroll, Enter/Esc: Exit" );
         wnoutrefresh( w );
     } );
+    
     input_context ctxt( "BLOOD_TEST_RESULTS" );
     ctxt.register_action( "CONFIRM" );
     ctxt.register_action( "QUIT" );
+    ctxt.register_action( "RIGHT" );
+    ctxt.register_action( "LEFT" );
+    ctxt.register_action( "UP" );
+    ctxt.register_action( "DOWN" );
     ctxt.register_action( "HELP_KEYBINDINGS" );
     bool stop = false;
     // Display new messages
@@ -2230,6 +3137,18 @@ void Character::conduct_blood_analysis() const
         const std::string action = ctxt.handle_input();
         if( action == "CONFIRM" || action == "QUIT" ) {
             stop = true;
+        } else if( action == "RIGHT" ) {
+            current_page = ( current_page + 1 ) % total_pages;
+            scroll_offset = 0;
+            ui.mark_resize();
+        } else if( action == "LEFT" ) {
+            current_page = ( current_page - 1 + total_pages ) % total_pages;
+            scroll_offset = 0;
+            ui.mark_resize();
+        } else if( action == "UP" ) {
+            scroll_offset--;
+        } else if( action == "DOWN" ) {
+            scroll_offset++;
         }
     }
 }
@@ -4679,6 +5598,15 @@ void Character::mod_healthy( int nhealthy )
     for( const trait_id &mut : get_mutations() ) {
         mut_rate *= mut.obj().healthy_rate;
     }
+    // Digestive CBM effect: double health gains, nullify health loss
+    static const bionic_id bio_digestion( "bio_digestion" );
+    if( has_bionic( bio_digestion ) ) {
+        if( nhealthy > 0 ) {
+            nhealthy *= 2;
+        } else if( nhealthy < 0 ) {
+            nhealthy = 0;
+        }
+    }
     healthy += nhealthy * mut_rate;
 }
 void Character::set_healthy_mod( int nhealthy_mod )
@@ -4694,6 +5622,15 @@ void Character::mod_healthy_mod( int nhealthy_mod, int cap )
     // Cap indicates how far the mod is allowed to shift in this direction.
     // It can have a different sign to the mod, e.g. for items that treat
     // extremely low health, but can't make you healthy.
+    // Digestive CBM effect: double health gains, nullify health loss
+    static const bionic_id bio_digestion( "bio_digestion" );
+    if( has_bionic( bio_digestion ) ) {
+        if( nhealthy_mod > 0 ) {
+            nhealthy_mod *= 2;
+        } else if( nhealthy_mod < 0 ) {
+            nhealthy_mod = 0;
+        }
+    }
     if( nhealthy_mod == 0 || cap == 0 ) {
         return;
     }
@@ -5082,12 +6019,12 @@ void Character::update_health( int external_modifiers )
     // Health tends toward healthy_mod.
     // For small differences, it changes 4 points per day
     // For large ones, up to ~40% of the difference per day
-    int health_change = effective_healthy_mod - get_healthy() + external_modifiers;
-    mod_healthy( sgn( health_change ) * std::max( 1, std::abs( health_change ) / 10 ) );
+    const int health_change = effective_healthy_mod - get_healthy() + external_modifiers;
+    mod_healthy( calculate_scaled_health_change( health_change ) );
 
     // And healthy_mod decays over time.
     // Slowly near 0, but it's hard to overpower it near +/-100
-    set_healthy_mod( std::round( get_healthy_mod() * 0.95f ) );
+    //set_healthy_mod( std::round( get_healthy_mod() * 0.95f ) );
 
     add_msg( m_debug, "Health: %d, Health mod: %d", get_healthy(), get_healthy_mod() );
 }

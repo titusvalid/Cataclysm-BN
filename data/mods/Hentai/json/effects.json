@@ -1,0 +1,318 @@
+[
+	{
+		"type": "effect_type",
+		"id": "lust",
+		"name" : ["Horny"],
+		"desc": ["You are currently feeling the most base and primal desire as a living being.  In short, you want to cum."],
+		"rating": "neutral",
+		"show_in_info": true,
+		"//" : "intensityが100に達した時点で達する、という仕様にしよう",
+		"max_intensity" : 100,
+		"int_dur_factor": 1,
+		"max_duration": 100,
+		"miss_messages": [["You really want to rub one out...", 5],["You are desperately enduring the urge to climax...", 5]],
+		"base_mods": {
+			"stamina_min": [-0.1]
+		},
+		"scaling_mods": {
+			"stamina_min": [-0.1]
+		}
+	},
+	{
+		"type": "effect_type",
+		"id": "demon_fed",
+		"name": ["Fed on essence"],
+		"desc": ["You've recently fed on sexual energy and fluids. Your demonic hunger is temporarily satisfied."],
+		"rating": "good",
+		"show_in_info": true,
+		"max_duration": "24 h",
+		"base_mods": {
+			"hunger_amount": [ -10000 ],
+			"thirst_amount": [ -5000 ],
+			"hunger_chance": [1500],
+			"hunger_min": [-10000],
+			"thirst_min": [-5000]
+		}
+	},
+	{
+		"type": "effect_type",
+		"id": "corrupt",
+		"name" : [
+			"Blushing",
+			"Excited",
+			"Passionate",
+			"Ecstatic",
+			"Euphoric",
+			"Depraved"
+		],
+		"desc": [
+			"You are being swayed by your sensual desires.  Your arousal is making you a little stronger and your senses sharper, but it's sure making you lose your mind bit by bit.",
+			"You are being influenced by your strong carnal desires.  Everything except your senses has become duller.",
+			"Your intense passion is taking over your thoughts.  Everything except your senses has become duller.",
+			"Your mind is being dominated by your lust.  Everything except your senses has become significantly duller.",
+			"Your mind is being dominated by your lust.  ...But is it that big of a deal?",
+			"Your mind has utterly surrendered to the desire.  But that doesn't sound all that bad, does it?"
+		],
+		"show_in_info": true,
+		"max_intensity" : 6,
+		"apply_message": "You're starting to feel aroused.",
+		"remove_message": "Your carnal desires are gone.",
+		"miss_messages": [["Your lust overwhelms your senses...", 10]],
+		"rating": "bad",
+		"int_dur_factor": 600,
+		"max_duration": 7200,
+		"base_mods": {
+			"str_mod": [1],
+			"per_mod": [1],
+			"int_mod": [-1],
+			"speed_mod": [5],
+			"stamina_min": [2]
+		},
+		"scaling_mods": {
+			"str_mod": [-1.67],
+			"dex_mod": [-0.84],
+			"per_mod": [0.84],
+			"int_mod": [-2],
+			"speed_mod": [-0.4],
+			"stamina_min": [-3]
+		}
+	},
+	{
+		"type": "effect_type",
+		"id": "magic_sleepy",
+		"name" : [
+			"Unbearable Sleepiness",
+			"Common Drowsiness",
+			"About To Fall Asleep"
+		],
+		"desc": ["You are being assailed by a mysterious drowsiness.\nIt won't be a surprise if you lose your consciousness at some point."],
+		"show_in_info": true,
+		"max_intensity" : 3,
+		"apply_message": "You get assailed by a sudden drowsiness...",
+		"remove_message": "The mysterious drowsiness is gone.",
+		"rating": "bad",
+		"int_dur_factor": 300,
+		"max_duration": 900,
+		"base_mods": {
+			"speed_mod": [-5],
+			"str_mod": [-1],
+			"dex_mod": [-1],
+			"int_mod": [-2],
+			"per_mod": [-2],
+			"sleep_min": [10],
+			"sleep_max": [20],
+			"sleep_chance": [75],
+			"sleep_chance_bot": [100]
+		},
+		"scaling_mods": {
+			"sleep_min": [10],
+			"sleep_max": [20],
+			"sleep_chance": [-36]
+		}
+	},
+	{
+		"type": "effect_type",
+		"id": "estrus",
+		"name": ["In Heat"],
+		"desc": ["It's your breeding season.  Your chance of getting pregnant is increased by 500%."],
+		"show_in_info": true,
+		"max_intensity" : 1,
+		"rating": "neutral",
+		"int_dur_factor": 14400
+	},
+	{
+		"type": "effect_type",
+		"id": "contraception",
+		"name": ["Contraception"],
+		"desc": ["Your contraception is currently active.  It should be safe now no matter how much you enjoy yourself.  Hopefully."],
+		"show_in_info": true,
+		"max_intensity" : 1,
+		"rating": "good",
+		"int_dur_factor": 14400
+	},
+	{
+		"type": "effect_type",
+		"id": "anthcream",
+		"show_in_info": true,
+		"removes_effects": ["creampie"]
+	},
+	{
+		"type": "effect_type",
+		"id": "creampie",
+		"show_in_info": true,
+		"//": "最大効果は現実時間でだいたい5日。意味は各自でググってください。人目の無い所で。",
+		"max_intensity" : 5,
+		"int_dur_factor": 14400
+	},
+	{
+		"type": "effect_type",
+		"id": "impregnated",
+		"show_in_info": true,
+		"//": "現実時間でだいたい10週=70日。1ヶ月=だいたい30日ごとでintensityを分ける。",
+		"max_intensity" : 3,
+		"rating": "neutral",
+		"max_duration": 70,
+		"int_dur_factor": 30,
+		"int_decay_step": 0,
+		"base_mods": {
+			"hunger_chance": [1440],
+			"hunger_min": [1],
+			"thirst_chance": [1440],
+			"thirst_min": [1]
+		},
+		"scaling_mods": {
+			"hunger_chance": [-360],
+			"thirst_chance": [-360]
+			
+		},
+		"removes_effects": ["creampie"]
+	},
+	{
+		"type": "effect_type",
+		"id": "pregnantcy",
+		"apply_memorial_log": "Became pregnant.",
+		"remove_memorial_log": "Gave birth to a baby.", 
+		"name": [
+			"Pregnancy (9th month)",
+			"Pregnancy (8th month)",
+			"Pregnancy (7th month)",
+			"Pregnancy (6th month)",
+			"Pregnancy (5th month)",
+			"Pregnancy (4th month)",
+			"Pregnancy (3rd month)",
+			"Pregnancy (2th month)",
+			"Pregnancy (1th month)"
+		],
+		"desc": ["You are currently pregnant."],
+		"show_in_info": true,
+		"max_intensity" : 9,
+		"apply_message": "You've become pregnant.",
+		"rating": "mixed",
+		
+		"max_duration": "90 d",
+		"int_dur_factor": "10 d",
+		"int_decay_step": 1,
+		"base_mods": {
+			"speed_mod": [-40],
+			"hunger_chance": [720],
+			"hunger_min": [3],
+			"thirst_chance": [720],
+			"thirst_min": [3]
+		},
+		"scaling_mods": {
+			"speed_mod": [5],
+			"hunger_chance": [-60],
+			"hunger_min": [-0.25],
+			"thirst_chance": [-60],
+			"thirst_min": [-0.25]
+		},
+		"removes_effects": ["estrus", "creampie", "impregnated", "incubation"]
+	},
+	{
+		"type": "effect_type",
+		"id": "incubation",
+		"name": ["Incubation"],
+		"desc": ["Your belly is full of eggs."],
+		"show_in_info": true,
+		"max_intensity" : 7,
+		"apply_message": "You've become pregnant.",
+		"rating": "mixed",
+		"//": "現実時間でだいたい30週=210日。1ヶ月=だいたい30日ごとでintensityを分ける。",
+		"max_duration": 210,
+		"int_dur_factor": 30,
+		"int_decay_step": 0,
+		"base_mods": {
+			"fatigue_min": [1],
+			"fatigue_max": [2],
+			"fatigue_chance": [1],
+			"fatigue_chance_bot": [100]
+		},
+		"removes_effects": ["creampie", "impregnated", "pregnantcy"]
+	},
+
+	{
+		"//": "↓*気持ちいいこと*中のエフェクトタイル用のためだけのeffect。↓",
+		"type": "effect_type",
+		"id": "movingdoing",
+		"name" : ["[Fun Intensifies]"],
+		"desc": ["You are currently *having fun*."],
+		"show_in_info": true,
+		"max_intensity" : 1,
+		"rating": "good"
+	},
+
+	{
+		"//": "↓何人相手にしてるかカウント。",
+		"type": "effect_type",
+		"id": "gotwifed",
+		"show_in_info": true,
+		"rating": "bad",
+		"max_intensity" : 3,
+		"int_dur_factor": 1,
+		"max_duration": 3
+	},
+
+	{
+		"type": "effect_type",
+		"id": "sex_dialogue_trigger",
+		"name": ["Sex activity trigger"],
+		"desc": ["Invisible effect to trigger sex activity"],
+		"apply_message": "",
+		"remove_message": "",
+		"max_duration": 1,
+		"rating": "neutral"
+	},
+
+	{
+		"//": "↓ここから下はモンスター専用effect。もし見えたら、それはきっとバグ。↓",
+		"type": "effect_type",
+		"id": "dominate",
+		"name" : ["Initiative"],
+		"desc": ["Shows the initiative.  If you're seeing this on yourself, it's a bug."],
+		"show_in_info": true,
+		"max_intensity" : 1,
+		"rating": "neutral",
+		"max_duration": 1,
+		"base_mods": {
+			"speed_mod": [-50],
+			"dex_mod": [-100]
+		}
+	},
+	{
+		"type": "effect_type",
+		"id": "spell_charge",
+		"name" : ["Chanting"],
+		"desc": ["Chanting a spell.  If you're seeing this on yourself, it's a bug."],
+		"show_in_info": true,
+		"max_intensity" : 10,	
+		"int_dur_factor": 30,	
+		"rating": "neutral",
+		"max_duration": 300,
+		"base_mods": {
+			"int_mod": [1],
+			"speed_mod": [-10]
+		}
+	},
+	{
+		"type": "effect_type",
+		"id": "target_acquired",
+		"name" : ["Lock-on"],
+		"desc": ["Target is acquired.  If you're seeing this on yourself, it's a bug."],
+		"show_in_info": true,
+		"max_intensity" : 1,
+		"rating": "neutral",
+		"max_duration": 1
+	},
+	{
+		"type": "effect_type",
+		"id": "recently_asked_for_sex",
+		"name": ["Recently proposition'd"],
+		"desc": ["This person was recently asked for intimacy and doesn't want to be asked again so soon."],
+		"apply_message": "",
+		"remove_message": "",
+		"rating": "neutral",
+		"show_in_info": false,
+		"max_intensity": 1,
+		"max_duration": 3600
+	}
+]

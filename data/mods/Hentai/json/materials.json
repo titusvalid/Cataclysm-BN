@@ -1,0 +1,18 @@
+[
+	{
+		"type": "material",
+		"ident": "magic",
+		"name": "Magic",
+		"density": 0,
+		"bash_resist": 999,
+		"bullet_resist": 999,
+		"cut_resist": 999,
+		"acid_resist": 10,
+		"fire_resist": 0,
+		"elec_resist": 0,
+		"chip_resist": 999,
+		"dmg_adj": [ "fading", "glittering", "dim", "dissipating" ],
+		"bash_dmg_verb": "fading",
+		"cut_dmg_verb": "fading"
+	}
+]

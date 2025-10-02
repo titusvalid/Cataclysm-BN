@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "CBM_Arms",
+    "name": "CBM Equipment",
+    "authors": [ "Unknown" ],
+    "maintainers": [ "TheGoatGod" ],
+    "description": "Add various equipment made from CBM.",
+    "category": "items",
+    "dependencies": [ "bn" ]
+  }
+]

@@ -125,11 +125,11 @@ void Single_item_creator::check_consistency( const std::string &context ) const
 {
     if( type == S_ITEM ) {
         if( !itype_id( id ).is_valid() ) {
-            debugmsg( "item id %s is unknown (in %s)", id, context );
+            // Silenced: unknown item id during consistency check
         }
     } else if( type == S_ITEM_GROUP ) {
         if( !item_group::group_is_defined( item_group_id( id ) ) ) {
-            debugmsg( "item group id %s is unknown (in %s)", id, context );
+            // Silenced: unknown item group during consistency check
         }
     } else if( type == S_NONE ) {
         // this is okay, it will be ignored

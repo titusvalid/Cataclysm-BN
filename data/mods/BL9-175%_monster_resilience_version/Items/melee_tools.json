@@ -1,0 +1,3595 @@
+[
+  {
+    "id": "BL9_tendril_sword",
+    "looks_like": "machete",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-tendril sword" },
+    "description": "A handy sword made out of remains of BL9 tendril's blades",
+    "weight": "1500 g",
+    "volume": "1115 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 22,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_1",
+      "BRUTAL",
+      "WIDE",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_tonfa",
+    "looks_like": "tonfa",
+    "type": "TOOL",
+    "weapon_category": [ "BATONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 tonfa" },
+    "description": "A handy tonfa made out of remains of BL9 incredible high quality of which puzzles ones who know nothing about origin of BL9 which is not only a material used for weapons",
+    "weight": "942 g",
+    "volume": "635 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 28,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "NEVER_JAMS", "NON_FOULING", "NEEDS_NO_LUBE", "WATERPROOF_GUN" ]
+  },
+  {
+    "id": "BL9_worm_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-worm whip" },
+    "description": "A whip made out of a BL9 worm-like parasite that is capable of stretching and swinging itself",
+    "weight": "945 g",
+    "volume": "635 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 21,
+    "cutting": 11,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_precise" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_claws_melee",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-infused claws" },
+    "description": "Sturdy razor-sharp claws made out of remains of the Blind Clawer's claws infused with BL9",
+    "weight": "745 g",
+    "volume": "400 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 32,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_repto_glaive",
+    "looks_like": "glaive",
+    "type": "TOOL",
+    "weapon_category": [ "GLAIVES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 Repto glaive" },
+    "description": "A very strong and a durable glaive made out of remains of Repto's claws",
+    "weight": "1965 g",
+    "volume": "1475 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 7,
+    "cutting": 28,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_feint", "tec_medievalpole_highround" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_spiky_sword",
+    "looks_like": "jian",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-spike sword" },
+    "description": "A very sharp sword with multiple protrusions on it made out of BL9 spike samples",
+    "weight": "2475 g",
+    "volume": "1975 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 31,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_tail_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 tail whip" },
+    "description": "A razor sharp, very well cutting whip made out of BL9 Assassin's tail samples",
+    "weight": "1015 g",
+    "volume": "465 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 15,
+    "cutting": 26,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_tentacle_axe",
+    "looks_like": "battleaxe",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9-tentacle axe" },
+    "description": "A huge axe that somehow this strange tentacle sample manages to take the form of, forming both the long handle and a huge blade",
+    "weight": "3775 g",
+    "volume": "2440 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 8,
+    "cutting": 37,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_stun_quarterstaff",
+    "looks_like": "i_staff",
+    "type": "GUN",
+    "copy-from": "rifle_auto",
+    "extend": { "weapon_category": [ "QUARTERSTAVES" ] },
+    "symbol": ";",
+    "color": "light_gray",
+    "name": { "str": "BL9 experimental stun quarterstaff" },
+    "description": "A highly experimental futuristic quarterstaff with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "ammo": [ "stunammoBL9_type" ],
+    "material": [ "BL9", "steel" ],
+    "ammo_effects": [ "NEVER_MISFIRES", "TANGLE" ],
+    "flags": [
+      "DURABLE_MELEE",
+      "NONCONDUCTIVE",
+      "NEVER_JAMS",
+      "POLEARM",
+      "NON_FOULING",
+      "NEEDS_NO_LUBE",
+      "WATERPROOF_GUN",
+      "ALWAYS_TWOHAND"
+    ],
+    "techniques": [
+      "WBLOCK_2",
+      "RAPID",
+      "SWEEP",
+      "tec_brawl_feint_melee",
+      "tec_silat_hamstring",
+      "tec_silat_brutal",
+      "tec_medievalpole_hook",
+      "tec_medievalpole_highround"
+    ],
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "bashing": 51,
+    "to_hit": 1,
+    "ranged_damage": { "damage_type": "stab", "amount": 1, "armor_penetration": 1 },
+    "range": 69,
+    "dispersion": 45,
+    "durability": 9,
+    "modes": [ [ "DEFAULT", "semi", 1 ], [ "AUTO", "auto", 3 ] ],
+    "valid_mod_locations": [  ],
+    "clip_size": 36
+  },
+  {
+    "id": "BL9_stun_blade",
+    "looks_like": "jian",
+    "type": "GUN",
+    "copy-from": "rifle_auto",
+    "extend": { "weapon_category": [ "1H_SWORDS" ] },
+    "symbol": ";",
+    "color": "light_gray",
+    "name": { "str": "BL9 experimental stun blade" },
+    "description": "A highly experimental futuristic blade with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "ammo": [ "stunammoBL9_type" ],
+    "material": [ "BL9", "steel" ],
+    "ammo_effects": [ "NEVER_MISFIRES", "TANGLE" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD", "NEVER_JAMS", "NON_FOULING", "NEEDS_NO_LUBE", "WATERPROOF_GUN" ],
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "bashing": 10,
+    "cutting": 41,
+    "to_hit": 1,
+    "ranged_damage": { "damage_type": "stab", "amount": 1, "armor_penetration": 1 },
+    "range": 69,
+    "dispersion": 45,
+    "durability": 9,
+    "modes": [ [ "DEFAULT", "semi", 1 ], [ "AUTO", "auto", 3 ] ],
+    "valid_mod_locations": [  ],
+    "clip_size": 36
+  },
+  {
+    "id": "BL9_stun_halberd",
+    "looks_like": "halberd",
+    "copy-from": "rifle_auto",
+    "extend": { "weapon_category": [ "2H_AXES" ] },
+    "type": "GUN",
+    "symbol": ";",
+    "color": "light_gray",
+    "name": { "str": "BL9 experimental stun halberd" },
+    "description": "A highly experimental futuristic halberd with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "ammo": [ "stunammoBL9_type" ],
+    "material": [ "BL9", "steel" ],
+    "ammo_effects": [ "NEVER_MISFIRES", "TANGLE" ],
+    "flags": [
+      "DURABLE_MELEE",
+      "NONCONDUCTIVE",
+      "POLEARM",
+      "REACH_ATTACK",
+      "NEVER_JAMS",
+      "NON_FOULING",
+      "NEEDS_NO_LUBE",
+      "WATERPROOF_GUN",
+      "ALWAYS_TWOHAND"
+    ],
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_feint", "tec_medievalpole_highround" ],
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "bashing": 5,
+    "cutting": 46,
+    "to_hit": 1,
+    "ranged_damage": { "damage_type": "stab", "amount": 1, "armor_penetration": 1 },
+    "range": 69,
+    "dispersion": 45,
+    "durability": 9,
+    "modes": [ [ "DEFAULT", "semi", 1 ], [ "AUTO", "auto", 3 ] ],
+    "valid_mod_locations": [  ],
+    "clip_size": 36
+  },
+  {
+    "id": "BL9_stun_hammer",
+    "looks_like": "hammer_sledge",
+    "type": "GUN",
+    "copy-from": "rifle_auto",
+    "extend": { "weapon_category": [ "2H_HAMMERS" ] },
+    "symbol": ";",
+    "color": "light_gray",
+    "name": { "str": "BL9 experimental stun hammer" },
+    "description": "A highly experimental futuristic hammer with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "ammo": [ "stunammoBL9_type" ],
+    "material": [ "BL9", "steel" ],
+    "ammo_effects": [ "NEVER_MISFIRES", "TANGLE" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "NEVER_JAMS", "NON_FOULING", "NEEDS_NO_LUBE", "WATERPROOF_GUN", "ALWAYS_TWOHAND" ],
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "bashing": 46,
+    "cutting": 5,
+    "to_hit": 1,
+    "ranged_damage": { "damage_type": "stab", "amount": 1, "armor_penetration": 1 },
+    "range": 69,
+    "dispersion": 45,
+    "durability": 9,
+    "modes": [ [ "DEFAULT", "semi", 1 ], [ "AUTO", "auto", 3 ] ],
+    "valid_mod_locations": [  ],
+    "clip_size": 36
+  },
+  {
+    "id": "BL9_stun_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "GUN",
+    "copy-from": "rifle_auto",
+    "extend": { "weapon_category": [ "WHIPS" ] },
+    "symbol": ";",
+    "color": "light_gray",
+    "name": { "str": "BL9 experimental stun whip" },
+    "description": "A highly experimental futuristic whip with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "ammo": [ "stunammoBL9_type" ],
+    "material": [ "BL9", "steel" ],
+    "ammo_effects": [ "NEVER_MISFIRES", "TANGLE" ],
+    "flags": [
+      "DURABLE_MELEE",
+      "REACH_ATTACK",
+      "WHIP",
+      "NONCONDUCTIVE",
+      "NEVER_JAMS",
+      "NON_FOULING",
+      "NEEDS_NO_LUBE",
+      "WATERPROOF_GUN"
+    ],
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "bashing": 14,
+    "cutting": 37,
+    "to_hit": 1,
+    "ranged_damage": { "damage_type": "stab", "amount": 1, "armor_penetration": 1 },
+    "range": 69,
+    "dispersion": 45,
+    "durability": 9,
+    "modes": [ [ "DEFAULT", "semi", 1 ], [ "AUTO", "auto", 3 ] ],
+    "valid_mod_locations": [  ],
+    "clip_size": 36
+  },
+  {
+    "id": "BL9_stun_claws",
+    "looks_like": "bio_claws_weapon",
+    "type": "GUN",
+    "copy-from": "rifle_auto",
+    "extend": { "weapon_category": [ "FIST_WEAPONS" ] },
+    "symbol": ";",
+    "color": "light_gray",
+    "name": { "str": "BL9 experimental stun claws" },
+    "description": "Highly experimental futuristic claws with a unique design upon pressing handle of which use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "ammo": [ "stunammoBL9_type" ],
+    "material": [ "BL9", "steel" ],
+    "ammo_effects": [ "NEVER_MISFIRES", "TANGLE" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "NEVER_JAMS", "NON_FOULING", "NEEDS_NO_LUBE", "WATERPROOF_GUN", "ALWAYS_TWOHAND" ],
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "bashing": 3,
+    "cutting": 48,
+    "to_hit": 1,
+    "ranged_damage": { "damage_type": "stab", "amount": 1, "armor_penetration": 1 },
+    "range": 69,
+    "dispersion": 45,
+    "durability": 9,
+    "modes": [ [ "DEFAULT", "semi", 1 ], [ "AUTO", "auto", 3 ] ],
+    "valid_mod_locations": [  ],
+    "clip_size": 36
+  },
+  {
+    "id": "BL9_laser_blade",
+    "looks_like": "jian",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser blade" },
+    "description": "A highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 4,
+    "cutting": 20,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_effect",
+              "message": "As you strike with the blade it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_laser_halberd",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser halberd" },
+    "description": "A highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 22,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_effect",
+              "message": "As you slash with the halberd it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_feint", "tec_medievalpole_highround" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_laser_hammer",
+    "looks_like": "hammer_sledge",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser hammer" },
+    "description": "A highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 22,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_effect",
+              "message": "As you smash with the hammer it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_laser_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser whip" },
+    "description": "A highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 18,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_effect",
+              "message": "As you strike with the whip it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_laser_claws",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser claws" },
+    "description": "Highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 23,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_effect",
+              "message": "As you slash with the claws they emit concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_blade",
+    "looks_like": "jian",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma blade" },
+    "description": "A highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 4,
+    "cutting": 20,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_effect",
+              "message": "As you strike with the blade it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_plasma_halberd",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma halberd" },
+    "description": "A highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 22,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_effect",
+              "message": "As you slash with the halberd it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_feint", "tec_medievalpole_highround" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_hammer",
+    "looks_like": "hammer_sledge",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma hammer" },
+    "description": "A highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 22,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_effect",
+              "message": "As you smash with the hammer it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma whip" },
+    "description": "A highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 18,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_effect",
+              "message": "As you strike with the whip it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_plasma_claws",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma claws" },
+    "description": "Highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 23,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_effect",
+              "message": "As you slash with the claws they emit extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_blade",
+    "looks_like": "jian",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric blade" },
+    "description": "A highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 4,
+    "cutting": 20,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_effect",
+              "message": "As you strike with the blade it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_electric_halberd",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric halberd" },
+    "description": "A highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 22,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_effect",
+              "message": "As you slash with the halberd it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_feint", "tec_medievalpole_highround" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_hammer",
+    "looks_like": "hammer_sledge",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric hammer" },
+    "description": "A highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 22,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_effect",
+              "message": "As you smash with the hammer it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric whip" },
+    "description": "A highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 18,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_effect",
+              "message": "As you strike with the whip it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_electric_claws",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric claws" },
+    "description": "Highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 23,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_effect",
+              "message": "As you slash with the claws they emit electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_blade",
+    "looks_like": "jian",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid blade" },
+    "description": "A highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 4,
+    "cutting": 20,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_effect",
+              "message": "As you strike with the blade it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_acid_halberd",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid halberd" },
+    "description": "A highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 22,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_effect",
+              "message": "As you slash with the halberd it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_feint", "tec_medievalpole_highround" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_hammer",
+    "looks_like": "hammer_sledge",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid hammer" },
+    "description": "A highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 22,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_effect",
+              "message": "As you smash with the hammer it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_whip",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid whip" },
+    "description": "A highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 18,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_effect",
+              "message": "As you strike with the whip it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_acid_claws",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid claws" },
+    "description": "Highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 23,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_effect",
+              "message": "As you slash with the claws they emit extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_bladed_tentacle_claws",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 bladed tentacle claws" },
+    "description": "A pair of bladed claws which are used to deal significant amount of damage by applying very little force to the tentacles attached to them",
+    "weight": "975 g",
+    "volume": "715 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 3,
+    "cutting": 48,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_spiked_worm_polearm",
+    "looks_like": "glaive",
+    "type": "TOOL",
+    "weapon_category": [ "GLAIVES" ],
+    "category": "weapons",
+    "name": { "str": "BL9-worm spiked polearm" },
+    "description": "A polearm made of BL9 taking the form of a worm-like parasite with multiple protrusions all over it that is able to stretch and swing itself",
+    "weight": "1900 g",
+    "volume": "1780 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 16,
+    "cutting": 37,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_tentacle_spike_flail",
+    "looks_like": "2h_flail_steel",
+    "type": "TOOL",
+    "weapon_category": [ "FLAILS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-tentacle spiked flail" },
+    "description": "A flail with a tentacle as it's chain end of which is a spiky ball made of some strange and very hard tissue",
+    "weight": "2100 g",
+    "volume": "1645 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 30,
+    "cutting": 24,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "SWEEP", "BRUTAL", "tec_silat_dirty", "tec_silat_brutal", "tec_silat_hamstring" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_repto_evo_glaive",
+    "looks_like": "naginata",
+    "type": "TOOL",
+    "weapon_category": [ "GLAIVES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 evolved Repto glaive" },
+    "description": "An even more intimidating and vicious looking, incredibly strong glaive made out of evolved Repto's claws",
+    "weight": "2300 g",
+    "volume": "1700 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 3,
+    "cutting": 54,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_pincer_sword",
+    "looks_like": "zweihander",
+    "type": "TOOL",
+    "weapon_category": [ "2H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-pincer sword" },
+    "description": "A giant sleek looking sword made out of remains of BL9-infused Chimera's pincers",
+    "weight": "3390 g",
+    "volume": "2900 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 5,
+    "cutting": 57,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_claws_evo",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 evolved claws" },
+    "description": "Modified, hardened and strengthened BL9-infused claws that have a greatly increased size, has a much more intimidating look and an absurdingly bizarre resemblance to Eastern fans",
+    "weight": "1200 g",
+    "volume": "790 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 65,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_spiked_sledgehammer",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 spiked sledgehammer" },
+    "description": "A giant sledgehammer with multiple spiky protrusions made from a leg of a horribly mutated carapaceon BL9-infused creature",
+    "weight": "4500 g",
+    "volume": "3500 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 57,
+    "cutting": 14,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_stun_quarterstaff_mk2",
+    "type": "GUN",
+    "copy-from": "BL9_stun_quarterstaff",
+    "name": { "str": "BL9 experimental stun quarterstaff MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic quarterstaff with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "tec_silat_hamstring",
+      "tec_silat_brutal",
+      "tec_medievalpole_hook",
+      "tec_medievalpole_highround"
+    ],
+    "bashing": 75,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_blade_mk2",
+    "looks_like": "katana",
+    "type": "GUN",
+    "copy-from": "BL9_stun_blade",
+    "name": { "str": "BL9 experimental stun blade MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic blade with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "bashing": 12,
+    "cutting": 61,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_halberd_mk2",
+    "looks_like": "halberd",
+    "type": "GUN",
+    "copy-from": "BL9_stun_halberd",
+    "name": { "str": "BL9 experimental stun halberd MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "bashing": 6,
+    "cutting": 67,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_hammer_mk2",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "GUN",
+    "copy-from": "BL9_stun_hammer",
+    "name": { "str": "BL9 experimental stun hammer MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "bashing": 67,
+    "cutting": 6,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_whip_mk2",
+    "looks_like": "bullwhip_razor",
+    "type": "GUN",
+    "copy-from": "BL9_stun_whip",
+    "name": { "str": "BL9 experimental stun whip MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic whip with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "bashing": 19,
+    "cutting": 54,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_claws_mk2",
+    "looks_like": "bio_claws_weapon",
+    "type": "GUN",
+    "copy-from": "BL9_stun_claws",
+    "name": { "str": "BL9 experimental stun claws MK ii" },
+    "description": "Refined and upgraded highly experimental futuristic claws with a unique design upon pressing handle of which use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "cutting": 72,
+    "durability": 10
+  },
+  {
+    "id": "BL9_laser_blade_mk2",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser blade MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 30,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk2_effect",
+              "message": "As you strike with the blade it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_laser_halberd_mk2",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser halberd MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 34,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk2_effect",
+              "message": "As you slash with the halberd it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_laser_hammer_mk2",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser hammer MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 34,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk2_effect",
+              "message": "As you smash with the hammer it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_laser_whip_mk2",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser whip MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 9,
+    "cutting": 27,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk2_effect",
+              "message": "As you strike with the whip it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_laser_claws_mk2",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser claws MK ii" },
+    "description": "Refined and upgraded highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 35,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk2_effect",
+              "message": "As you slash with the claws they emit concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_blade_mk2",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma blade MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 30,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk2_effect",
+              "message": "As you strike with the blade it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_plasma_halberd_mk2",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma halberd MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 34,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk2_effect",
+              "message": "As you slash with the halberd it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_hammer_mk2",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma hammer MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 34,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk2_effect",
+              "message": "As you smash with the hammer it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_whip_mk2",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma whip MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 9,
+    "cutting": 27,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk2_effect",
+              "message": "As you strike with the whip it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_plasma_claws_mk2",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma claws MK ii" },
+    "description": "Refined and upgraded highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 35,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk2_effect",
+              "message": "As you slash with the claws they emit extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_blade_mk2",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric blade MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 30,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk2_effect",
+              "message": "As you strike with the blade it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_electric_halberd_mk2",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric halberd MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 34,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk2_effect",
+              "message": "As you slash with the halberd it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_hammer_mk2",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric hammer MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 34,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk2_effect",
+              "message": "As you smash with the hammer it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_whip_mk2",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric whip MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 9,
+    "cutting": 27,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk2_effect",
+              "message": "As you strike with the whip it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_electric_claws_mk2",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric claws" },
+    "description": "Refined and upgraded highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 35,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk2_effect",
+              "message": "As you slash with the claws they emit electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_blade_mk2",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid blade MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic blade with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 6,
+    "cutting": 30,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk2_effect",
+              "message": "As you strike with the blade it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_acid_halberd_mk2",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid halberd MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 34,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk2_effect",
+              "message": "As you slash with the halberd it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_hammer_mk2",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid hammer MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 34,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk2_effect",
+              "message": "As you smash with the hammer it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_whip_mk2",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid whip MK ii" },
+    "description": "A refined and upgraded highly experimental futuristic whip with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 9,
+    "cutting": 27,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk2_effect",
+              "message": "As you strike with the whip it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_acid_claws_mk2",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid claws MK ii" },
+    "description": "Refined and upgraded highly experimental futuristic claws with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 35,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk2_effect",
+              "message": "As you slash with the claws they emit extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_tail_whip_enhanced",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 enhanced tail whip" },
+    "description": "Greatly enhanced, even more vicious looking and more fear instilling razor sharp, very well cutting whip made out of BL9 Assassin's tail samples",
+    "weight": "1015 g",
+    "volume": "465 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 20,
+    "cutting": 70,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_tentacle_axe_enhanced",
+    "looks_like": "battleaxe",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9-tentacle enhanced axe" },
+    "description": "A greatly enhanced, even more vicious looking and more fear instilling huge axe that somehow this strange tentacle sample manages to take the form of, forming both the long handle and a huge blade",
+    "weight": "3775 g",
+    "volume": "2440 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 10,
+    "cutting": 80,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_tentacle_spike_flail_enhanced",
+    "looks_like": "2h_flail_steel",
+    "type": "TOOL",
+    "weapon_category": [ "FLAILS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-tentacle enhanced spiked flail" },
+    "description": "A greatly enhanced, even more vicious looking and more fear instilling flail with a tentacle as it's chain end of which is a spiky ball made of some strange and very hard tissue",
+    "weight": "2100 g",
+    "volume": "1645 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 60,
+    "cutting": 30,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_1", "SWEEP", "BRUTAL", "tec_silat_dirty", "tec_silat_brutal", "tec_silat_hamstring" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_repto_evo_glaive_enhanced",
+    "looks_like": "glaive",
+    "type": "TOOL",
+    "weapon_category": [ "GLAIVES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 evolved Repto enhanced glaive" },
+    "description": "A greatly enhanced, even more vicious looking, more intimidating and more fear instilling greatly cutting glaive made out of evolved Repto's claws",
+    "weight": "2300 g",
+    "volume": "1700 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 89,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_pincer_sword_enhanced",
+    "looks_like": "zweihander",
+    "type": "TOOL",
+    "weapon_category": [ "2H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9-pincer enhanced sword" },
+    "description": "A greatly enhanced, even more vicious lookign and more fear instilling giant sleek looking sword made out of remains of BL9-infused Chimera's pincers",
+    "weight": "3390 g",
+    "volume": "2900 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 8,
+    "cutting": 82,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_claws_evo_enhanced",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 enhanced evolved claws" },
+    "description": "Greatly enhanced, even more vicious looking and more fear instilling modified, hardened and strengthened BL9-infused claws that have a greatly increased size, has a much more intimidating look and an absurdingly bizarre resemblance to Eastern fans",
+    "weight": "1200 g",
+    "volume": "790 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 1,
+    "cutting": 89,
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_stun_quarterstaff_mk3",
+    "type": "GUN",
+    "copy-from": "BL9_stun_quarterstaff",
+    "name": { "str": "BL9 stun quarterstaff MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic quarterstaff enhanced with the technology beyond human possibilities with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "tec_silat_hamstring",
+      "tec_silat_brutal",
+      "tec_medievalpole_hook",
+      "tec_medievalpole_highround"
+    ],
+    "bashing": 90,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_blade_mk3",
+    "looks_like": "katana",
+    "type": "GUN",
+    "copy-from": "BL9_stun_blade",
+    "name": { "str": "BL9 experimental stun blade MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic blade enhanced with the technology beyond human possibilities with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "bashing": 15,
+    "cutting": 75,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_halberd_mk3",
+    "looks_like": "halberd",
+    "type": "GUN",
+    "copy-from": "BL9_stun_halberd",
+    "name": { "str": "BL9 experimental stun halberd MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd enhanced with the technology beyond human possibilities with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "bashing": 9,
+    "cutting": 81,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_hammer_mk3",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "GUN",
+    "copy-from": "BL9_stun_hammer",
+    "name": { "str": "BL9 experimental stun hammer MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer enhanced with the technology beyond human possibilities with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "bashing": 81,
+    "cutting": 9,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_whip_mk3",
+    "looks_like": "bullwhip_razor",
+    "type": "GUN",
+    "copy-from": "BL9_stun_whip",
+    "name": { "str": "BL9 experimental stun whip MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic whip enhanced with the technology beyond human possibilities with a unique design upon pressing handle of which uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "bashing": 20,
+    "cutting": 70,
+    "durability": 10
+  },
+  {
+    "id": "BL9_stun_claws_mk3",
+    "looks_like": "bio_claws_weapon",
+    "type": "GUN",
+    "copy-from": "BL9_stun_claws",
+    "name": { "str": "BL9 experimental stun claws MK iii" },
+    "description": "Refined and upgraded highly experimental futuristic claws enhanced with the technology beyond human possibilities with a unique design upon pressing handle of which use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, stream of stunning BL9",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "cutting": 89,
+    "durability": 10
+  },
+  {
+    "id": "BL9_laser_blade_mk3",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser blade MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic blade enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 10,
+    "cutting": 38,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk3_effect",
+              "message": "As you strike with the blade it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_laser_halberd_mk3",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser halberd MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 46,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk3_effect",
+              "message": "As you slash with the halberd it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_laser_hammer_mk3",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser hammer MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 46,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk3_effect",
+              "message": "As you smash with the hammer it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_laser_whip_mk3",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser whip MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic whip enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 12,
+    "cutting": 36,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk3_effect",
+              "message": "As you strike with the whip it emits concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_laser_claws_mk3",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental laser claws MK iii" },
+    "description": "Refined and upgraded highly experimental futuristic claws enhanced with the technology beyond human possibilities with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, concentrated rays of vaporized BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 3,
+    "cutting": 48,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_laser_melee_mk3_effect",
+              "message": "As you slash with the claws they emit concentrated rays of vaporized BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit concentrated rays of vaporized BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_blade_mk3",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma blade MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic blade enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 10,
+    "cutting": 38,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk3_effect",
+              "message": "As you strike with the blade it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_plasma_halberd_mk3",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma halberd MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 46,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk3_effect",
+              "message": "As you slash with the halberd it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_hammer_mk3",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma hammer MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 46,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk3_effect",
+              "message": "As you smash with the hammer it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_plasma_whip_mk3",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma whip MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic whip enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 12,
+    "cutting": 36,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk3_effect",
+              "message": "As you strike with the whip it emits extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_plasma_claws_mk3",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental plasma claws MK iii" },
+    "description": "Refined and upgraded highly experimental futuristic claws enhanced with the technology beyond human possibilities with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely heated ionized gasified BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 3,
+    "cutting": 48,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_plasma_melee_mk3_effect",
+              "message": "As you slash with the claws they emit extremely heated ionized gasified BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit extremely heated ionized gasified BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_blade_mk3",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric blade MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic blade enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 10,
+    "cutting": 38,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk3_effect",
+              "message": "As you strike with the blade it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_electric_halberd_mk3",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric halberd MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 46,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk3_effect",
+              "message": "As you slash with the halberd it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_hammer_mk3",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric hammer MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 46,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk3_effect",
+              "message": "As you smash with the hammer it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_electric_whip_mk3",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric whip MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic whip enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 12,
+    "cutting": 36,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk3_effect",
+              "message": "As you strike with the whip it emits electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_electric_claws_mk3",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental electric claws MK iii" },
+    "description": "Refined and upgraded highly experimental futuristic claws enhanced with the technology beyond human possibilities with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, electrified arcs of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 3,
+    "cutting": 48,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_electric_melee_mk3_effect",
+              "message": "As you slash with the claws they emit electrified arcs of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit electrified arcs of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_blade_mk3",
+    "looks_like": "katana",
+    "type": "TOOL",
+    "weapon_category": [ "1H_SWORDS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid blade MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic blade enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 10,
+    "cutting": 38,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk3_effect",
+              "message": "As you strike with the blade it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the blade it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "tec_brawl_feint_melee",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_swordsmanship_grab",
+      "tec_swordsmanship_mordhau",
+      "tec_swordsmanship_zornhau"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "SHEATH_SWORD" ]
+  },
+  {
+    "id": "BL9_acid_halberd_mk3",
+    "looks_like": "halberd",
+    "type": "TOOL",
+    "weapon_category": [ "2H_AXES" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid halberd MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic halberd enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 2,
+    "cutting": 46,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk3_effect",
+              "message": "As you slash with the halberd it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the halberd it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "WIDE", "SWEEP", "tec_brawl_trip", "tec_medievalpole_highround", "tec_medievalpole_execute" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "POLEARM", "REACH_ATTACK", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_hammer_mk3",
+    "looks_like": "hammer_sledge_heavy",
+    "type": "TOOL",
+    "weapon_category": [ "2H_HAMMERS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid hammer MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic hammer enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 46,
+    "cutting": 2,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk3_effect",
+              "message": "As you smash with the hammer it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s smashes with the hammer it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [
+      "WBLOCK_2",
+      "SWEEP",
+      "BRUTAL",
+      "niten_stone_cut",
+      "niten_timing_attack",
+      "tec_krav_maga_crit",
+      "tec_krav_maga_counter"
+    ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "BL9_acid_whip_mk3",
+    "looks_like": "bullwhip_razor",
+    "type": "TOOL",
+    "weapon_category": [ "WHIPS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid whip MK iii" },
+    "description": "A refined and upgraded highly experimental futuristic whip enhanced with the technology beyond human possibilities with a unique design that uses BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 12,
+    "cutting": 36,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk3_effect",
+              "message": "As you strike with the whip it emits extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s strikes with the whip it emits extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "SWEEP", "BRUTAL", "tec_brawl_feint_melee", "tec_silat_hamstring", "tec_silat_brutal" ],
+    "flags": [ "DURABLE_MELEE", "REACH_ATTACK", "WHIP", "NONCONDUCTIVE" ]
+  },
+  {
+    "id": "BL9_acid_claws_mk3",
+    "looks_like": "bio_claws_weapon",
+    "type": "TOOL",
+    "weapon_category": [ "FIST_WEAPONS" ],
+    "category": "weapons",
+    "name": { "str": "BL9 experimental acid claws MK iii" },
+    "description": "Refined and upgraded highly experimental futuristic claws enhanced with the technology beyond human possibilities with a unique design that use BL9 capable of changing it's physical and chemical structure to cause various offensive effects, in this case, extremely corrosive stream of BL9",
+    "weight": "1875 g",
+    "volume": "1485 ml",
+    "price": "400 USD",
+    "price_postapoc": "60 USD",
+    "to_hit": 1,
+    "bashing": 3,
+    "cutting": 48,
+    "relic_data": {
+      "passive_effects": [
+        {
+          "has": "WIELD",
+          "condition": "ALWAYS",
+          "hit_you_effect": [
+            {
+              "id": "BL9_acid_melee_mk3_effect",
+              "message": "As you slash with the claws they emit extremely corrosive stream of BL9 at %2$s wildly!",
+              "npc_message": "As %1$s slashes with the claws they emit extremely corrosive stream of BL9 at %2$s wildly!"
+            }
+          ]
+        }
+      ]
+    },
+    "material": [ "BL9", "steel" ],
+    "symbol": ";",
+    "color": "light_gray",
+    "techniques": [ "WBLOCK_2", "RAPID", "tec_precise", "tec_krav_maga_rapid", "tec_krav_maga_crit", "tec_krav_maga_counter" ],
+    "flags": [ "DURABLE_MELEE", "NONCONDUCTIVE", "ALWAYS_TWOHAND" ]
+  },
+  {
+    "id": "buildinggoesboomhahafunny",
+    "type": "TOOL",
+    "name": { "str": "LOL" },
+    "description": "THIS GOES KABOOOOOOOM.",
+    "volume": "0 L",
+    "weight": "0 kg",
+    "price": "0 cent",
+    "to_hit": -2,
+    "bashing": 1,
+    "material": [ "veggy" ],
+    "symbol": "0",
+    "color": "red",
+    "drop_action": { "target": "buildinggoesboomhahafunny_act", "target_charges": 1, "active": true, "type": "transform" },
+    "flags": [ "ZERO_WEIGHT" ]
+  },
+  {
+    "id": "buildinggoesboomhahafunny_act",
+    "type": "TOOL",
+    "name": { "str": "HAHA FUNNY" },
+    "description": "THIS IS KABOOOOOOMMMMIIINNNGGGG",
+    "volume": "0 L",
+    "weight": "0 kg",
+    "price": "0 cent",
+    "to_hit": -2,
+    "bashing": 1,
+    "material": [ "veggy" ],
+    "symbol": "0",
+    "color": "red",
+    "initial_charges": 1,
+    "max_charges": 1,
+    "turns_per_charge": 1,
+    "use_action": { "type": "cast_spell", "spell_id": "buildinggoesboomhahafunny_boom", "no_fail": true, "level": 0 },
+    "flags": [ "ZERO_WEIGHT" ]
+  },
+  {
+    "id": "BL9_trader_transmitter",
+    "type": "TOOL",
+    "name": { "str": "Strange Trader Transmitter" },
+    "description": "Transmitter left by an unknown person, a merchant of some kind, you can see what's written on it 'Got a selection of GOOD things on sale, stranger! If you are looking to trade, have questions, don't hesitate to send a signal, I will come to trade with you, to answer your questions. I accept gold along with platinum coins combinations as currency, I also ask for scrap metal for some of sophisticated things. Now, answers to questions along with directions are free, of course'",
+    "weight": "85 g",
+    "volume": "15 ml",
+    "price": "500 USD",
+    "price_postapoc": "5 USD",
+    "material": [ "plastic", "steel" ],
+    "looks_like": "camera",
+    "symbol": "[",
+    "use_action": {
+      "type": "place_npc",
+      "npc_class_id": "BL9_trader",
+      "summon_msg": "Strange Trader approaches you, saying 'What are you buying? What do you wanna ask?'",
+      "place_randomly": false,
+      "moves": 2100
+    },
+    "color": "blue",
+    "flags": [ "NPC_SAFE", "INEDIBLE" ]
+  },
+  {
+    "id": "bot_manhack_BL9_mk1",
+    "looks_like": "bot_manhack",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 Manhack MK i" },
+    "description": "An inactive BL9 manhack, a fist-sized BL9 controlled robot that increases greatly in size when you launch it in the air. It's fast, it's damaging, but it's not that tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. Each increasing mark of BL9 manhacks becomes stronger, greater at protecting you. You still need to reprogram and activate the manhack, though electronics and computer skill requirements are much lower for these versions than for standard industrial manhacks.",
+    "weight": "2700 g",
+    "volume": "750 ml",
+    "price": "600 USD",
+    "price_postapoc": "5 USD",
+    "to_hit": -3,
+    "bashing": 6,
+    "cutting": 6,
+    "material": [ "aluminum", "plastic" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_manhack_mk1",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_manhack_BL9_mk2",
+    "looks_like": "bot_manhack",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 Manhack MK ii" },
+    "description": "An inactive BL9 manhack, a fist-sized BL9 controlled robot that increases greatly in size when you launch it in the air. It's fast, it's damaging, but it's not that tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. Each increasing mark of BL9 manhacks becomes stronger, greater at protecting you. You still need to reprogram and activate the manhack, though electronics and computer skill requirements are much lower for these versions than for standard industrial manhacks.",
+    "weight": "2700 g",
+    "volume": "750 ml",
+    "price": "600 USD",
+    "price_postapoc": "5 USD",
+    "to_hit": -3,
+    "bashing": 6,
+    "cutting": 6,
+    "material": [ "aluminum", "plastic" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_manhack_mk2",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_manhack_BL9_mk3",
+    "looks_like": "bot_manhack",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 Manhack MK iii" },
+    "description": "An inactive BL9 manhack, a fist-sized BL9 controlled robot that increases greatly in size when you launch it in the air. It's fast, it's damaging, but it's not that tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. Each increasing mark of BL9 manhacks becomes stronger, greater at protecting you. You still need to reprogram and activate the manhack, though electronics and computer skill requirements are much lower for these versions than for standard industrial manhacks.",
+    "weight": "2700 g",
+    "volume": "750 ml",
+    "price": "600 USD",
+    "price_postapoc": "5 USD",
+    "to_hit": -3,
+    "bashing": 6,
+    "cutting": 6,
+    "material": [ "aluminum", "plastic" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_manhack_mk3",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_manhack_BL9_mk4",
+    "looks_like": "bot_manhack",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 Manhack MK iv" },
+    "description": "An inactive BL9 manhack, a fist-sized BL9 controlled robot that increases greatly in size when you launch it in the air. It's fast, it's damaging, but it's not that tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. This is the highest mark of BL9 manhacks, which is the strongest, greatest of them all at protecting you. You still need to reprogram and activate the manhack, though electronics and computer skill requirements are much lower for these versions than for standard industrial manhacks.",
+    "weight": "2700 g",
+    "volume": "750 ml",
+    "price": "600 USD",
+    "price_postapoc": "5 USD",
+    "to_hit": -3,
+    "bashing": 6,
+    "cutting": 6,
+    "material": [ "aluminum", "plastic" ],
+    "symbol": ",",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_manhack_mk4",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_ugv_BL9_mk1",
+    "looks_like": "bot_talon_m202a1",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 UGV MK i" },
+    "description": "An inactive BL9 UGV, tracked BL9 controlled robot that increases greatly in size when you put it on the ground. It's slow, it's damaging, but it's tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. Each increasing mark of BL9 UGVs becomes stronger, greater at protecting you. You still need to reprogram and activate the UGV, though, electronics and computer skill requirements are much lower for these versions than for standard industrial UGVs.",
+    "weight": "40750 g",
+    "volume": "30 L",
+    "price": "7500 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -3,
+    "bashing": 8,
+    "material": [ "steel" ],
+    "symbol": ";",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_ugv_mk1",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_ugv_BL9_mk2",
+    "looks_like": "bot_talon_m202a1",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 UGV MK ii" },
+    "description": "An inactive BL9 UGV, tracked BL9 controlled robot that increases greatly in size when you put it on the ground. It's slow, it's damaging, but it's tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. Each increasing mark of BL9 UGVs becomes stronger, greater at protecting you. You still need to reprogram and activate the UGV, though, electronics and computer skill requirements are much lower for these versions than for standard industrial UGVs.",
+    "weight": "40750 g",
+    "volume": "30 L",
+    "price": "7500 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -3,
+    "bashing": 8,
+    "material": [ "steel" ],
+    "symbol": ";",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_ugv_mk2",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_ugv_BL9_mk3",
+    "looks_like": "bot_talon_m202a1",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 UGV MK iii" },
+    "description": "An inactive BL9 UGV, tracked BL9 controlled robot that increases greatly in size when you put it on the ground. It's slow, it's damaging, but it's tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. Each increasing mark of BL9 UGVs becomes stronger, greater at protecting you. You still need to reprogram and activate the UGV, though, electronics and computer skill requirements are much lower for these versions than for standard industrial UGVs.",
+    "weight": "40750 g",
+    "volume": "30 L",
+    "price": "7500 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -3,
+    "bashing": 8,
+    "material": [ "steel" ],
+    "symbol": ";",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_ugv_mk3",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "bot_ugv_BL9_mk4",
+    "looks_like": "bot_talon_m202a1",
+    "type": "TOOL",
+    "name": { "str": "inactive BL9 UGV MK iv" },
+    "description": "An inactive BL9 UGV, tracked BL9 controlled robot that increases greatly in size when you put it on the ground. It's slow, it's damaging, but it's tanky. It's capable of smashing enemies, doing ranged attacks, shooting it's organic gun that can stun enemies. This is the highest mark of BL9 UGVs, which is the strongest, greatest of them all at protecting you. You still need to reprogram and activate the UGV, though, electronics and computer skill requirements are much lower for these versions than for standard industrial UGVs.",
+    "weight": "40750 g",
+    "volume": "30 L",
+    "price": "7500 USD",
+    "price_postapoc": "30 USD",
+    "to_hit": -3,
+    "bashing": 8,
+    "material": [ "steel" ],
+    "symbol": ";",
+    "color": "light_green",
+    "use_action": {
+      "type": "place_monster",
+      "monster_id": "mon_BL9_ugv_mk4",
+      "difficulty": 1,
+      "moves": 196,
+      "place_randomly": false,
+      "skills": [ "electronics", "computer" ]
+    }
+  },
+  {
+    "id": "BL9_repair_soldering",
+    "looks_like": "soldering_iron",
+    "type": "TOOL",
+    "name": { "str": "BL9-infused soldering iron" },
+    "description": "A soldering iron that has somehow been infused with the entirely sentient BL9 that somehow mentally communicates with you, it is covered and entirely reinforced with it's thick tissue with multiple spiky almost unnoticeabely vibrating protrusions that give it a more intimidating, animate look, ",
+    "weight": "281 g",
+    "volume": "785 ml",
+    "price": "10 USD",
+    "price_postapoc": "1 USD",
+    "bashing": 2,
+    "cutting": 6,
+    "material": [ "iron", "BL9" ],
+    "symbol": "%",
+    "color": "light_gray",
+    "ammo": [ "battery" ],
+    "charges_per_use": 1,
+    "use_action": [
+      {
+        "type": "repair_item",
+        "item_action_type": "repair_metal",
+        "materials": [
+          "BL9",
+          "BL9_mid1",
+          "BL9_mid2",
+          "BL9_hitech",
+          "BL9_hitech_mid1",
+          "BL9_hitech_mid2",
+          "BL9_mk2",
+          "BL9_mk2_mid1",
+          "BL9_mk2_mid2",
+          "BL9_hitech_mk2",
+          "BL9_hitech_mk2_mid1",
+          "BL9_hitech_mk2_mid2",
+          "plastic",
+          "superalloy",
+          "steel"
+        ],
+        "skill": "fabrication",
+        "cost_scaling": 0.15,
+        "move_cost": 845
+      },
+      { "flame": false, "type": "cauterize" }
+    ],
+    "flags": [ "BELT_CLIP", "ALLOWS_REMOTE_USE" ],
+    "magazines": [
+      [
+        "battery",
+        [
+          "light_minus_battery_cell",
+          "light_battery_cell",
+          "light_plus_battery_cell",
+          "light_atomic_battery_cell",
+          "light_minus_atomic_battery_cell",
+          "light_minus_disposable_cell",
+          "light_disposable_cell"
+        ]
+      ]
+    ],
+    "magazine_well": "250 ml"
+  }
+]

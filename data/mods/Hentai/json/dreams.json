@@ -1,0 +1,41 @@
+[
+	{
+		"type" : "dream",
+		"messages" : [
+			"You have a disturbing dream of terrifying Demons.",
+			"You have a dream about playing innocent pranks as a child.",
+			"You have an awfully lewd wet dream for some reason. But you just can't seem to remember what happened there."
+		],
+		"category" : "FIEND",
+		"strength" : 1
+	},
+	{
+		"type" : "dream",
+		"messages" : [
+			"In a dream, you were already dead and you were tortured in hell for eternity.  Suddenly, a terrifying Demon tries to grab you... and then you wake up.",
+			"In your pleasant slumber, you feel like someone presses their soft lips against yours in a kiss.  You're eager to proceed having love with them...  But alas, it was just a dream."
+		],
+		"category" : "FIEND",
+		"strength" : 2
+	},
+	{
+		"type" : "dream",
+		"messages" : [
+			"In a dream, you were gloating and laughing at the pains of the dead burning in hell.  With the Demons standing beside you.",
+			"You see Saint Anthony the Great, meditating.  You wonder how would you corrupt him...  Oh, it's just a dream, huh.",
+			"Lovely younglings, sleeping in their soft comfy beds.  You softly approach their alluring innocent bodies...  No, wait, this is just a dream."
+		],
+		"category" : "FIEND",
+		"strength" : 3
+	},
+	{
+		"type" : "dream",
+		"messages" : [
+			"Green scenery, colorful flowers, animals jumping about.  Aah, you already miss the barren lands of hell you saw in your dreams.",
+			"Don't you think that this world still lacks the excitement?  Let's attack those pesky humans at random for starters...",
+			"Gluttony. Lust. Greed. Wrath. Sloth. Pride. Envy.  Let's enjoy ourselves today as well."
+		],
+		"category" : "FIEND",
+		"strength" : 4
+	}
+]

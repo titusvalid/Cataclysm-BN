@@ -1,0 +1,394 @@
+[
+	{
+		"id": "TALK_ANTHRO_PET",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_var": "gender",
+			"type": "typevar",
+			"context": "contextvar",
+			"value": "female",
+			"yes": {
+				"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+				"yes": "Woof! I mean... this is strange. I can speak now? Master, what did you do to me?",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+					"yes": "Meow... I feel so different. Did you change me, Master?",
+					"no": {
+						"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE",
+						"yes": "This is... unexpected. I can think clearly now. What happened to me?",
+						"no": "This form...! What on earth?!"
+					}
+				}
+			},
+			"no": {
+				"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_MALE",
+				"yes": "Woof! Master? What is this form?",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_MALE",
+					"yes": "Meow? This is... odd, Master.",
+					"no": {
+						"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_MALE",
+						"yes": "Grr... Master? This new body... it feels powerful.",
+						"no": "This form...! What on earth?!"
+					}
+				}
+			}
+		},
+		"responses": [
+			{
+				"text": "I used human serum.",
+				"topic": "TALK_ANTHRO_PET_ITS_MY_TREAT"
+			},
+			{
+				"text": "Hold on, I need to think...",
+				"topic": "TALK_DONE"
+			},
+			{
+				"condition": {
+					"and": [
+						{
+							"npc_has_var": "gender",
+							"type": "typevar",
+							"context": "contextvar",
+							"value": "female"
+						},
+						{
+							"or": [
+								{"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_CANINE_HALF_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_CANINE_LESSHUMAN_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_FELINE_HALF_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_FELINE_LESSHUMAN_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_URSINE_HALF_FEMALE"},
+								{"npc_has_class": "NC_ANTHRO_URSINE_LESSHUMAN_FEMALE"}
+							]
+						}
+					]
+				},
+				"text": "You look beautiful in this form.",
+				"topic": "TALK_ANTHRO_PET_COMPLIMENT"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_PET_ITS_MY_TREAT",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_var": "gender",
+			"type": "typevar",
+			"context": "contextvar",
+			"value": "female",
+			"yes": {
+				"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+				"yes": "Human serum? Is that why I feel so... different? My loyalty to you is unchanged, but I feel so much more now.",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+					"yes": "Interesting. This explains why I suddenly have all these complex thoughts. Don't expect me to be as obedient as before though...",
+					"no": {
+						"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE",
+						"yes": "Human serum? That's quite a powerful concoction. I'm grateful for this newfound awareness, Master.",
+						"no": "I don't really get it, but sure... So, what now?"
+					}
+				}
+			},
+			"no": "I don't really get it, but sure... So, what now?"
+		},
+		"responses": [
+			{
+				"text": "I'm glad we were able to talk like this. Come. Let's move on together.",
+				"success": {
+					"effect": "follow",
+					"opinion": {
+						"trust": 5,
+						"value": 5
+					},
+					"topic": "TALK_ANTHRO_PET_BE_FELLOW"
+				}
+			},
+			{
+				"text": "You're still my pet, don't forget that. Come now, don't keep me waiting... pet.",
+				"success": {
+					"effect": "follow",
+					"opinion": {
+						"fear": 5,
+						"value": 5
+					},
+					"topic": "TALK_ANTHRO_PET_BADBOY"
+				}
+			},
+			{
+				"condition": {
+					"and": [
+						{
+							"npc_has_var": "gender",
+							"type": "typevar",
+							"context": "contextvar",
+							"value": "female"
+						}
+					]
+				},
+				"text": "Perhaps our relationship could be... different now.",
+				"topic": "TALK_ANTHRO_PET_FLIRT"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_PET_BE_FELLOW",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_var": "gender",
+			"type": "typevar",
+			"context": "contextvar",
+			"value": "female",
+			"yes": {
+				"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+				"yes": "You can count on me, Master! My loyalty to you is stronger than ever.",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+					"yes": "I'll follow you... for now. Just don't expect me to fetch things.",
+					"no": {
+						"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE",
+						"yes": "I'll protect you with my strength, Master. You've given me a great gift.",
+						"no": "Yes, Master!"
+					}
+				}
+			},
+			"no": "Yes, Master!"
+		},
+		"responses": [
+			{
+				"text": "(End Talking)",
+				"topic": "TALK_DONE"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_PET_BADBOY",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_var": "gender",
+			"type": "typevar",
+			"context": "contextvar",
+			"value": "female",
+			"yes": {
+				"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+				"yes": "Of course, Master. I know my place, even with this new form.",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+					"yes": "Hmph. Just because I look different doesn't mean I'll be ordered around so easily.",
+					"no": {
+						"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE",
+						"yes": "As you wish... though this new mind gives me thoughts I never had before.",
+						"no": "Yes, Master."
+					}
+				}
+			},
+			"no": "Yes, Master."
+		},
+		"responses": [
+			{
+				"text": "(End Talking)",
+				"topic": "TALK_DONE"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_PET_COMPLIMENT",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+			"yes": "I... thank you, Master! My tail can't stop wagging when you say things like that.",
+			"no": {
+				"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+				"yes": "Oh? Are you trying to flatter me? Well... I suppose I do look rather fetching this way.",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE",
+					"yes": "You find this form beautiful? I'm unused to such compliments but... thank you.",
+					"no": "Thank you. This new form is strange but exciting."
+				}
+			}
+		},
+		"responses": [
+			{
+				"text": "Let's continue our journey together.",
+				"topic": "TALK_ANTHRO_PET_ITS_MY_TREAT"
+			},
+			{
+				"text": "I'd like us to be closer now that you're more... humanlike.",
+				"topic": "TALK_ANTHRO_PET_FLIRT"
+			}
+		]
+	},
+	{
+		"id": "TALK_ANTHRO_PET_FLIRT",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+			"yes": "C-closer? You mean... oh! Master, I've always been loyal to you, but now I feel things I never felt before. I would happily be yours in every way.",
+			"no": {
+				"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+				"yes": "My, aren't you forward? I suppose I might consider it... if you prove yourself worthy of my attention.",
+				"no": {
+					"npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE",
+					"yes": "This is unexpected, but not unwelcome. I find myself drawn to your strength and kindness.",
+					"no": "Closer? That's an interesting proposition..."
+				}
+			}
+		},
+		"responses": [
+			{
+				"text": "Let's just stay together and see what happens.",
+				"success": {
+					"effect": "follow",
+					"opinion": {
+						"trust": 5,
+						"value": 5
+					},
+					"topic": "TALK_FRIEND"
+				}
+			},
+			{
+				"text": "I want to be more than just your master now.",
+				"trial": {
+					"type": "PERSUADE",
+					"difficulty": 25,
+					"mod": [["TRUST", 3], ["VALUE", 2]]
+				},
+				"success": {
+					"effect": [
+						{"u_add_var": "anthro_romance", "type": "general", "context": "relationship", "value": "yes"}
+					],
+					"topic": "TALK_SEX_WILLING",
+					"opinion": {"trust": 3, "value": 3}
+				},
+				"failure": {
+					"topic": "TALK_SEX_REFUSE",
+					"opinion": {"trust": -1}
+				}
+			}
+		]
+	},
+	{
+		"id": "TALK_FRIEND_PET",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE",
+			"yes": {
+				"and": [
+					{ "npc_need": "hunger", "amount": 140, "yes": "<pet_dog_hungry> ", "no": "" },
+					{ "npc_has_trait": "SMELLY1", "yes": "<pet_dog_npc_smelly1> ", "no": "" },
+					{ "npc_has_trait": "SMELLY2", "yes": "<pet_dog_npc_smelly2> ", "no": "" },
+					{ "npc_has_trait": "VIRGIN", "yes": "<pet_dog_virgin> ", "no": "" },
+					{ "npc_has_trait": "SMALL_BREAST", "yes": "<pet_dog_small_breast> ", "no": "" },
+					{ "npc_has_trait": "BIG_BREAST", "yes": "<pet_dog_big_breast> ", "no": "" },
+					{ "u_has_effect": "lust", "yes": "<pet_dog_horny_player_lust> ", "no": "" },
+					{ "u_has_trait": "SMELLY1", "yes": "<pet_dog_player_smelly1> ", "no": "" },
+					{ "u_has_trait": "SMELLY2", "yes": "<pet_dog_player_smelly2> ", "no": "" },
+					{ "u_has_trait": "TERRIFYING", "yes": "<pet_dog_player_terrifying> ", "no": "" },
+					{ "u_has_trait": "PSYCHOPATH", "yes": "<pet_dog_player_psycho> ", "no": "" },
+					{ "u_has_trait": "LIAR", "yes": "<pet_dog_player_liar> ", "no": "" },
+					{ "u_has_trait": "CANNIBAL", "yes": "<pet_dog_player_cannibal> ", "no": "" },
+					{ "u_has_trait": "PYROMANIA", "yes": "<pet_dog_player_pyro> ", "no": "" },
+					{ "u_has_trait": "PRETTY", "yes": "<pet_dog_player_pretty> ", "no": "" },
+					"<pet_dog_default>"
+				]
+			},
+			"no": {
+				"npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE",
+				"yes": {
+					"and": [
+						{ "npc_need": "hunger", "amount": 140, "yes": "<pet_cat_hungry> ", "no": "" },
+						{ "npc_has_trait": "SMELLY1", "yes": "<pet_cat_npc_smelly1> ", "no": "" },
+						{ "npc_has_trait": "SMELLY2", "yes": "<pet_cat_npc_smelly2> ", "no": "" },
+						{ "npc_has_trait": "VIRGIN", "yes": "<pet_cat_virgin> ", "no": "" },
+						{ "npc_has_trait": "SMALL_BREAST", "yes": "<pet_cat_small_breast> ", "no": "" },
+						{ "npc_has_trait": "BIG_BREAST", "yes": "<pet_cat_big_breast> ", "no": "" },
+						{ "u_has_effect": "lust", "yes": "<pet_cat_horny_player_lust> ", "no": "" },
+						{ "u_has_trait": "SMELLY1", "yes": "<pet_cat_player_smelly1> ", "no": "" },
+						{ "u_has_trait": "SMELLY2", "yes": "<pet_cat_player_smelly2> ", "no": "" },
+						{ "u_has_trait": "TERRIFYING", "yes": "<pet_cat_player_terrifying> ", "no": "" },
+						{ "u_has_trait": "PSYCHOPATH", "yes": "<pet_cat_player_psycho> ", "no": "" },
+						{ "u_has_trait": "LIAR", "yes": "<pet_cat_player_liar> ", "no": "" },
+						{ "u_has_trait": "CANNIBAL", "yes": "<pet_cat_player_cannibal> ", "no": "" },
+						{ "u_has_trait": "PYROMANIA", "yes": "<pet_cat_player_pyro> ", "no": "" },
+						{ "u_has_trait": "PRETTY", "yes": "<pet_cat_player_pretty> ", "no": "" },
+						"<pet_cat_default>"
+					]
+				},
+				"no": "What is it, Master?"
+			}
+		},
+		"responses": [
+			{
+				"condition": { "npc_need": "hunger", "amount": 140 },
+				"text": "You seem hungry. Want some food?",
+				"topic": "TALK_GIVE_ITEM"
+			},
+			{
+				"condition": { "npc_has_trait": "SMELLY2" },
+				"text": "About that smell...",
+				"topic": "TALK_ANTHRO_PET_SMELLY2"
+			},
+			{
+				"condition": { "u_has_trait": "SMELLY2" },
+				"text": "Sorry if I smell bad...",
+				"topic": "TALK_ANTHRO_PET_PLAYER_SMELLY2"
+			},
+			{
+				"condition": { "u_has_trait": "PRETTY" },
+				"text": "Do you like my appearance?",
+				"topic": "TALK_ANTHRO_PET_ASK_APPEARANCE"
+			},
+			{
+				"condition": {
+					"or": [
+						{ "u_has_trait": "TERRIFYING" },
+						{ "u_has_trait": "PSYCHOPATH" },
+						{ "u_has_trait": "LIAR" },
+						{ "u_has_trait": "CANNIBAL" },
+						{ "u_has_trait": "PYROMANIA" }
+					]
+				},
+				"text": "Does my nature bother you?",
+				"topic": "TALK_ANTHRO_PET_ASK_NATURE"
+			},
+			{
+				"condition": { "u_has_effect": "lust" },
+				"text": "I'm feeling... something. Maybe we could...",
+				"topic": "TALK_ANTHRO_PET_FLIRT"
+			},
+			{
+				"text": "Nevermind.",
+				"topic": "TALK_NONE"
+			}
+		]
+	},
+	{
+		"type": "talk_topic",
+		"id": ["TALK_FRIEND", "TALK_STRANGER_FRIENDLY", "TALK_FRIEND_GUARD"],
+		"responses": [
+			{
+				"condition": {
+					"or": [
+						{ "npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_MALE" },
+						{ "npc_has_class": "NC_ANTHRO_CANINE_HALF_MALE" },
+						{ "npc_has_class": "NC_ANTHRO_CANINE_LESSHUMAN_MALE" },
+						{ "npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE" },
+						{ "npc_has_class": "NC_ANTHRO_CANINE_HALF_FEMALE" },
+						{ "npc_has_class": "NC_ANTHRO_CANINE_LESSHUMAN_FEMALE" },
+						{ "npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_MALE" },
+						{ "npc_has_class": "NC_ANTHRO_FELINE_HALF_MALE" },
+						{ "npc_has_class": "NC_ANTHRO_FELINE_LESSHUMAN_MALE" },
+						{ "npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE" },
+						{ "npc_has_class": "NC_ANTHRO_FELINE_HALF_FEMALE" },
+						{ "npc_has_class": "NC_ANTHRO_FELINE_LESSHUMAN_FEMALE" }
+					]
+				},
+				"text": "[Anthro Pet intro] What's on your mind?",
+				"topic": "TALK_FRIEND_PET"
+			}
+		]
+	}
+]

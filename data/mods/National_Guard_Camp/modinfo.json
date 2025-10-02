@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "national_guard_camp",
+    "name": "National Guard Camp",
+    "authors": [ "acidia" ],
+    "description": "Gigantic national guard camp filled with military grade enemy robots.  Location is a bit unstable because of it's size so game can heavily lag near it if processing power is relatively low so use it if your computer can process it's size",
+    "category": "buildings",
+    "dependencies": [ "bn" ],
+    "obsolete": true
+  }
+]

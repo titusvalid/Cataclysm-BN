@@ -1,0 +1,13 @@
+[
+    {
+      "type": "MOD_INFO",
+      "id": "kingsman",
+      "name": "Kingsman Umbrella",
+      "authors": [ "Broken \"Spaghetti\" Admin" ],
+      "maintainers": [ "Broken \"Spaghetti\" Admin" ],
+      "description": "Adds the Umbrella gun from Kingsman - The Secret Service.",
+      "category": "items",
+      "dependencies": [ "bn" ]
+    }
+  ]
+  

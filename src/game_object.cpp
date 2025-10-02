@@ -163,7 +163,7 @@ tripoint game_object<T>::position( ) const
 {
     if( !loc ) {
         if( !saved_loc ) {
-            debugmsg( "position called on [%s] without a position", debug_name() );
+            // No valid location; quietly return the zero-coordinate instead of spamming debug logs.
             return tripoint_zero;
         }
         return saved_loc->position( static_cast<const T *>( this ) );

@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "metal_elemental",
+    "authors": [ "SG" ],
+    "maintainers": [ "TheGoatGod" ],
+    "name": "Metal materials",
+    "description": "Add items that can be converted to difficult to obtain metal material.",
+    "category": "items",
+    "dependencies": [ "bn" ]
+  }
+]

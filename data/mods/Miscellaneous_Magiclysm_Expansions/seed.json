@@ -1,0 +1,15 @@
+[
+  {
+    "type": "COMESTIBLE",
+    "id": "seed_mushroom_mana",
+    "copy-from": "mushroom_culture",
+    "name": { "str_sp": "magic mushroom culture" },
+    "description": "Some magic mushroom culture.",
+    "seed_data": {
+      "plant_name": "magic mushroom",
+      "fruit": "mushroom_mana",
+      "required_terrain_flag": "MUSHROOM_PLANTABLE",
+      "grow": "3 days"
+    }
+  }
+]

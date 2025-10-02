@@ -1842,8 +1842,8 @@ int npc::value( const item &it, int market_price ) const
             comestval += ( nutrition_for( it ) +
                            ( max_stored_kcal() - get_stored_kcal() - 500 ) / 10 ) / 6;
         }
-        if( get_thirst() > thirst_levels::thirsty ) {
-            comestval += ( it.get_comestible()->quench + get_thirst() - thirst_levels::thirsty ) / 4;
+        if( get_thirst() > thirst_levels::slaked ) {
+            comestval += ( it.get_comestible()->quench + get_thirst() - thirst_levels::slaked ) / 4;
         }
         if( comestval > 0 && will_eat( it ).success() ) {
             ret += comestval;
@@ -3076,12 +3076,13 @@ std::pair<PathfindingSettings, RouteSettings> npc::get_pathfinding_pair(
     bool no_bashing ) const
 {
     PathfindingSettings path_settings;
+    path_settings.name = disp_name();
 
     path_settings.door_open_cost = rules.has_flag( ally_rule::avoid_doors ) ? INFINITY : 2.0;
     path_settings.mob_presence_penalty = 16.0;
     path_settings.rough_terrain_cost = 0.0;
-    path_settings.sharp_terrain_cost = INFINITY;
-    path_settings.trap_cost = INFINITY;
+    path_settings.sharp_terrain_cost = 40.0;
+    path_settings.trap_cost = 100.0f; 
     path_settings.can_climb_stairs = true;
     path_settings.bash_strength_val = no_bashing ? 0 : smash_ability() /
                                       path_settings.bash_strength_quanta;

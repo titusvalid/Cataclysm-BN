@@ -1,0 +1,11 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "XEAS",
+    "name": "XEAS",
+    "authors": [ "MrJet" ],
+    "description": "Adds new Xeno-Adapted Stuff. Close to hi-tech content. Includes an armor set (slightly better protection than survival armor, less encumbrance), a new knife (better butchering, impression damage) and a vortex bag (120 L, tiny size, no encumbrance). Craft recipes are in vanilla lab journal. High price in terms of money. Late game content!",
+    "category": "items",
+    "dependencies": [ "bn" ]
+  }  
+]

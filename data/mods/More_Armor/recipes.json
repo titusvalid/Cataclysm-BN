@@ -1,0 +1,98 @@
+[
+  {
+    "result": "armor_lightplate_faraday",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_SUIT",
+    "skill_used": "electronics",
+    "difficulty": 3,
+    "time": "2 m",
+    "reversible": true,
+    "autolearn": true,
+    "components": [
+      [ [ "armor_lightplate", 1 ] ],
+      [ [ "helmet_barbute", 1 ] ],
+      [ [ "gloves_plate", 1 ] ],
+      [ [ "boots_plate", 1 ] ],
+      [ [ "cable", 50 ] ]
+    ]
+  },
+  {
+    "result": "chainmail_suit_faraday",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_SUIT",
+    "skill_used": "electronics",
+    "difficulty": 3,
+    "time": "2 m",
+    "reversible": true,
+    "autolearn": true,
+    "components": [ [ [ "chainmail_suit", 1 ] ], [ [ "gloves_plate", 1 ] ], [ [ "boots_plate", 1 ] ], [ [ "cable", 50 ] ] ]
+  },
+  {
+    "result": "jumpsuit_leather",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_SUIT",
+    "skill_used": "tailor",
+    "difficulty": 3,
+    "time": "8 m",
+    "book_learn": [ [ "textbook_tailor", 4 ], [ "manual_tailor", 5 ], [ "tailor_portfolio", 4 ] ],
+    "using": [ [ "sewing_standard", 20 ] ],
+    "components": [ [ [ "leather", 20 ] ] ]
+  },
+  {
+    "result": "jumpsuit_leather_mod",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_SUIT",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "skills_required": [ "tailor", 3 ],
+    "time": "4 m 40 s",
+    "book_learn": [ [ "textbook_tailor", 5 ], [ "manual_tailor", 6 ], [ "tailor_portfolio", 5 ] ],
+    "using": [ [ "sewing_standard", 26 ] ],
+    "components": [ [ [ "steel_chunk", 6 ], [ "scrap", 18 ] ], [ [ "jumpsuit_leather", 1 ] ] ]
+  },
+  {
+    "result": "boots_acidchitin",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_FEET",
+    "skill_used": "tailor",
+    "difficulty": 5,
+    "skills_required": [ [ "survival", 4 ], [ "firstaid", 2 ] ],
+    "time": "25 m",
+    "autolearn": true,
+    "using": [ [ "cordage", 2 ] ],
+    "qualities": [ { "id": "CUT_FINE", "level": 1 }, { "id": "SEW", "level": 1 } ],
+    "components": [ [ [ "acidchitin_piece", 22 ] ], [ [ "leather", 7 ], [ "fur", 7 ], [ "rag", 7 ] ] ]
+  },
+  {
+    "result": "armor_tire",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_TORSO",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "time": "8 m 20 s",
+    "autolearn": true,
+    "book_learn": [ [ "recipe_melee", 1 ] ],
+    "using": [ [ "cordage", 4 ] ],
+    "qualities": [ { "id": "CUT", "level": 1 }, { "id": "SAW_M", "level": 1 } ],
+    "components": [ [ [ "wheel", 2 ] ] ]
+  },
+  {
+    "result": "chestguard_hard",
+    "type": "recipe",
+    "category": "CC_ARMOR",
+    "subcategory": "CSC_ARMOR_TORSO",
+    "skill_used": "tailor",
+    "difficulty": 3,
+    "time": "2 m 30 s",
+    "book_learn": [ [ "textbook_tailor", 3 ], [ "manual_tailor", 4 ], [ "tailor_portfolio", 3 ] ],
+    "using": [ [ "sewing_standard", 25 ] ],
+    "tools": [ [ [ "soldering_iron", 15 ], [ "welder", 15 ], [ "hotplate", 15 ], [ "toolset", 15 ] ] ],
+    "components": [ [ [ "neoprene", 6 ] ], [ [ "plastic_chunk", 8 ] ] ]
+  }
+]

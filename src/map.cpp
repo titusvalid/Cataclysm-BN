@@ -1761,7 +1761,7 @@ const std::set<std::string> &map::get_harvest_names( const tripoint &pos ) const
 }
 
 /*
- * Get the terrain transforms_into id (what will the terrain transforms into)
+ * Get the terrain transforms_into id (what will the terrain transform into)
  */
 ter_id map::get_ter_transforms_into( const tripoint &p ) const
 {
@@ -4801,36 +4801,116 @@ static void process_vehicle_items( vehicle &cur_veh, int part )
                                         null_part;
     if( recharge_part_idx >= 0 && recharge_part.enabled &&
         !recharge_part.removed && !recharge_part.is_broken() ) {
-        for( item *&outer : cur_veh.get_items( part ) ) {
-            bool out_of_battery = false;
-            outer->visit_items( [&cur_veh, &recharge_part, &out_of_battery]( item * it ) {
-                item &n = *it;
-                if( !n.has_flag( flag_RECHARGE ) && !n.has_flag( flag_USE_UPS ) ) {
-                    return VisitResponse::NEXT;
-                }
-                if( n.ammo_capacity() > n.ammo_remaining() ||
-                    ( n.type->battery && n.type->battery->max_capacity > n.energy_remaining() ) ) {
-                    int power = recharge_part.info().bonus;
-                    while( power >= 1000 || x_in_y( power, 1000 ) ) {
-                        const int missing = cur_veh.discharge_battery( 1, false );
-                        if( missing > 0 ) {
-                            out_of_battery = true;
-                            return VisitResponse::ABORT;
-                        }
-                        if( n.is_battery() ) {
-                            n.mod_energy( 1_kJ );
-                        } else {
-                            n.ammo_set( itype_battery, n.ammo_remaining() + 1 );
-                        }
-                        power -= 1000;
-                    }
-                    return VisitResponse::ABORT;
-                }
+        // New universal recharging logic: charge items within a 3×3 square (radius 1) around the
+        // recharger, including ground items and those held or worn by creatures.
+        const tripoint part_global = cur_veh.global_part_pos3( recharge_part_idx );
+        //dbg( DL::Info ) << "[recharger] Active recharger at " << part_global;
 
+        bool out_of_battery = false;
+        // Helper lambda that tries to recharge a single item and consumes vehicle battery power.
+        auto try_recharge = [&cur_veh, &recharge_part, &out_of_battery]( item * it ) -> VisitResponse {
+            item &n = *it;
+            if( !n.has_flag( flag_RECHARGE ) && !n.has_flag( flag_USE_UPS ) ) {
+                return VisitResponse::NEXT;
+            }
+            // Is there room for at least one more unit of charge/energy?
+            if( n.ammo_capacity() > n.ammo_remaining() ||
+                ( n.type->battery && n.type->battery->max_capacity > n.energy_remaining() ) ) {
+                int power = recharge_part.info().bonus;
+                //dbg( DL::Info ) << string_format( "[recharger] Considering %s (ammo %d/%d, energy %d/%d)",
+                //                                  n.typeId().c_str(), n.ammo_remaining(), n.ammo_capacity(),
+                //                                  n.energy_remaining().value(),
+                //                                  n.type->battery ? n.type->battery->max_capacity / 1_kJ : 0);
+                while( power >= 1000 || x_in_y( power, 1000 ) ) {
+                    const int missing = cur_veh.discharge_battery( 1, false );
+                    if( missing > 0 ) {
+                        dbg( DL::Warn ) << "[recharger] Vehicle out of battery during charge attempt";
+                        out_of_battery = true;
+                        return VisitResponse::ABORT;
+                    }
+                    const int before_ammo = n.ammo_remaining();
+                    const int before_energy = n.energy_remaining().value();
+                    if( n.is_battery() ) {
+                        // Dedicated battery item – add energy directly.
+                        n.mod_energy( 1_kJ );
+                    } else if( n.ammo_capacity() > 0 && n.ammo_types().contains( ammotype( "battery" ) ) ) {
+                        // Tool or magazine that explicitly uses battery ammo.
+                        n.ammo_set( itype_battery, n.ammo_remaining() + 1 );
+                    } else {
+                        // Items with internal charge storage (tool/armor etc.).
+                        const int maxc = n.type->maximum_charges();
+                        if( maxc > 0 && n.charges < maxc ) {
+                            ++n.charges;
+                        }
+                    }
+                    //dbg( DL::Info ) << string_format( "[recharger] Charged %s (ammo %d -> %d, energy %d -> %d) remaining vehicle power step %d", n.typeId().c_str(), before_ammo, n.ammo_remaining(), before_energy, n.energy_remaining().value(), power );
+                    power -= 1000;
+                }
+                // After successfully adding at least one charge, skip this item's children but
+                // continue processing other siblings so we can charge multiple items per turn.
                 return VisitResponse::SKIP;
-            } );
+            }
+            return VisitResponse::SKIP;
+        };
+
+        map &here = get_map();
+
+        // 1. Items in the cargo part itself (backwards-compatible original behaviour).
+        for( item * &outer : cur_veh.get_items( part ) ) {
+            // First attempt to recharge the outer item itself
+            try_recharge( outer );
+            // Then recurse into its contents if appropriate
+            outer->visit_items( try_recharge );
             if( out_of_battery ) {
                 break;
+            }
+        }
+
+        // 2. Ground items within radius 2 around the recharger part.
+        if( !out_of_battery ) {
+            for( const tripoint &p : here.points_in_radius( part_global, 2 ) ) {
+               // dbg( DL::Info ) << string_format( "[recharger] Scanning ground items at %s", p.to_string() );
+                for( item * outer : here.i_at( p ) ) {
+                    try_recharge( outer );
+                    outer->visit_items( try_recharge );
+                    if( out_of_battery ) {
+                        break;
+                    }
+                }
+                // Also scan items stored in any vehicle part at this position (e.g. autoclave, racks, etc.)
+                if( !out_of_battery ) {
+                    if( const optional_vpart_position vp_at = here.veh_at( p ) ) {
+                        vehicle &v_other = vp_at->vehicle();
+                        const int part_idx_here = vp_at->part_index();
+                       // dbg( DL::Info ) << string_format( "[recharger] Scanning vehicle part %s at %s",
+                       //                                  v_other.part( part_idx_here ).name(), p.to_string() );
+                        for( item *&v_outer : v_other.get_items( part_idx_here ) ) {
+                            try_recharge( v_outer );
+                            v_outer->visit_items( try_recharge );
+                            if( out_of_battery ) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                if( out_of_battery ) {
+                    break;
+                }
+            }
+        }
+
+        // 3. Items carried or worn by any creature (player or NPC) within radius 2.
+        if( !out_of_battery ) {
+            for( Creature *critter : here.get_creatures_in_radius( part_global, 2 ) ) {
+                Character *ch = dynamic_cast<Character *>( critter );
+                if( !ch ) {
+                    continue;
+                }
+               // dbg( DL::Info ) << string_format( "[recharger] Scanning inventory of %s at %s", ch->disp_name(), ch->pos().to_string() );
+                ch->visit_items( try_recharge );
+                if( out_of_battery ) {
+                    break;
+                }
             }
         }
     }
@@ -4948,6 +5028,7 @@ void map::process_items_in_vehicles( submap &current_submap )
 
 void map::process_items_in_vehicle( vehicle &cur_veh, submap &current_submap )
 {
+
     const bool engine_heater_is_on = cur_veh.has_part( "E_HEATER", true ) && cur_veh.engine_on;
     for( const vpart_reference &vp : cur_veh.get_any_parts( VPFLAG_FLUIDTANK ) ) {
         vp.part().process_contents( vp.pos(), engine_heater_is_on );
@@ -7906,7 +7987,7 @@ void map::copy_grid( const tripoint &to, const tripoint &from )
 void map::spawn_monsters_submap_group( const tripoint &gp, mongroup &group, bool ignore_sight )
 {
     const int s_range = std::min( HALF_MAPSIZE_X,
-                                  g->u.sight_range( g->light_level( g->u.posz() ) ) );
+                                 g->u.sight_range( g->light_level( g->u.posz() ) ) );
     int pop = group.population;
     std::vector<tripoint> locations;
     if( !ignore_sight ) {

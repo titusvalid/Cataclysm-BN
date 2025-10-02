@@ -1,0 +1,55 @@
+[
+  {
+    "type": "recipe_category",
+    "id": "CC_ESSTECH",
+    "recipe_subcategories": [
+      "CSC_ALL",
+      "CSC_ESSTECH_WEAPONS",
+      "CSC_ESSTECH_AMMUNITION",
+      "CSC_ESSTECH_GEAR",
+      "CSC_ESSTECH_COOKING",
+      "CSC_ESSTECH_DRUGS",
+      "CSC_ESSTECH_TOOLS",
+      "CSC_ESSTECH_ESSTECH",
+      "CSC_ESSTECH_ESSTHEORY",
+      "CSC_ESSTECH_FABRICATION",
+      "CSC_ESSTECH_CRYPTOLOGY",
+      "CSC_ESSTECH_TRADING",
+      "CSC_ESSTECH_OTHER"
+    ]
+  },
+  {
+    "type": "recipe_category",
+    "id": "CC_ESSMAGIC",
+    "recipe_subcategories": [
+      "CSC_ALL",
+      "CSC_ESSMAGIC_ENHANCEMENT",
+      "CSC_ESSMAGIC_RUNECRAFTING",
+      "CSC_ESSMAGIC_ALCHEMY",
+      "CSC_ESSMAGIC_TELEKINETICS",
+      "CSC_ESSMAGIC_ARTIFICING",
+      "CSC_ESSMAGIC_MAGICRAFT",
+      "CSC_ESSMAGIC_NECROMANCY",
+      "CSC_ESSMAGIC_CONJURATION",
+      "CSC_ESSMAGIC_TRANSMUTATION",
+      "CSC_ESSMAGIC_ARTIFACTS",
+      "CSC_ESSMAGIC_OTHER"
+    ]
+  },
+  {
+    "type": "recipe_category",
+    "id": "CC_OTHER",
+    "recipe_subcategories": [
+      "CSC_ALL",
+      "CSC_OTHER_TOOLS",
+      "CSC_OTHER_MEDICAL",
+      "CSC_OTHER_CONTAINERS",
+      "CSC_OTHER_MATERIALS",
+      "CSC_OTHER_PARTS",
+      "CSC_OTHER_TRAPS",
+      "CSC_OTHER_VEHICLE",
+      "CSC_OTHER_OTHER",
+      "CSC_OTHER_PRACTICE"
+    ]
+  }
+]

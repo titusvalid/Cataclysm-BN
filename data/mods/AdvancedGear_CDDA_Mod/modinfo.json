@@ -1,0 +1,11 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "adv_gear",
+    "name": "Advanced Gear",
+    "authors": [ "Shard" ],
+    "description": "Extremely high-end items mod based around nanotech crafting and 3D printing, with basic materials that can be found in labs, mutations to be added later.",
+    "category": "items",
+    "dependencies": [ "bn" ]
+  }
+]

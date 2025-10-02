@@ -1,0 +1,50 @@
+[
+  {
+    "type": "clothing_mod",
+    "id": "Foxballisticweavemod",
+    "flag": "Foxballisticweavemodflag",
+    "item": "FoxBallisticWeaveSheet",
+    "implement_prompt": "Line/Replace with ballistic weave",
+    "//": "Mod stats should match material properties of BW and be restricted to non-BW clothes",
+    "//2": "Proportional breaks the game because of bad cases like swat armor having 11 thickness.",
+    "//3": "I don't touch encumbrance here because BW clothes have lower encumbrance, and I can't replace encumbrance nor overwrite protection.",
+    "destroy_prompt": "Remove ballistic weave",
+    "mod_value": [
+      { "type": "bash", "value": 3 },
+      { "type": "cut", "value": 6 },
+      { "type": "bullet", "value": 15 },
+      { "type": "fire", "value": 10 },
+      { "type": "acid", "value": 10 }
+    ]
+  },
+  {
+    "type": "clothing_mod",
+    "id": "Foxadamantinemod",
+    "flag": "Foxadamantinemodflag",
+    "item": "FoxAdamantinechunk",
+    "implement_prompt": "Reinforce with Adamantine",
+    "destroy_prompt": "Remove Adamantine plating",
+    "//": "No shadowsteel mods, too op. Numbers was too high on acid and fire resist, I got rid of its proportion data. A weaker reaper does 30 thermal damage.",
+    "mod_value": [
+      { "type": "bash", "value": 10, "round_up": true },
+      { "type": "cut", "value": 10, "round_up": true },
+      { "type": "bullet", "value": 30, "round_up": true },
+      { "type": "fire", "value": 20, "round_up": true },
+      { "type": "acid", "value": 20, "round_up": true },
+      { "type": "encumbrance", "value": 1, "round_up": true, "proportion": [ "thickness", "coverage" ] }
+    ]
+  },
+  {
+    "id": "Foxballisticweavemodflag",
+    "type": "json_flag",
+    "context": [ "ARMOR", "TOOL_ARMOR" ],
+    "//": "We have to declare the flag here.",
+    "info": "You have replaced the entire clothing's fabric with ballistic weave, giving a big <good>increase in protection</good> with no drawbacks."
+  },
+  {
+    "id": "Foxadamantinemodflag",
+    "type": "json_flag",
+    "context": [ "ARMOR", "TOOL_ARMOR" ],
+    "info": "This gear has certain parts reinforced with sewn-in plates of flexible adamantine for <good>massively increased protection</good> with small <bad>increase to encumbrance</bad>."
+  }
+]

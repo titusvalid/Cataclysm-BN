@@ -1,0 +1,45 @@
+[
+  {
+    "type": "npc",
+    "id": "secronom_scientist",
+    "//": "A secronom scientist. They are responsible for the augmented versions of zeds. Also a semi-mechanic NPC.",
+    "name_suffix": "scientist",
+    "class": "NC_SECRO_SCIENTIST",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_DONE",
+    "faction": "secro_faction"
+  },
+  {
+    "type": "npc",
+    "id": "secronom_researcher",
+    "//": "Unlike scientists, this one's merely for additional info; nerdest of the nerds.",
+    "name_suffix": "researcher",
+    "class": "NC_SECRO_SCIENTIST",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_DONE",
+    "faction": "secro_faction"
+  },
+  {
+    "type": "npc",
+    "id": "secronom_guard",
+    "//": "Lab's strong and tanky melee/range fighter.",
+    "name_suffix": "guard",
+    "class": "NC_SOLDIER",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_DONE",
+    "faction": "secro_faction"
+  },
+  {
+    "type": "npc",
+    "id": "secronom_scientist1",
+    "name_suffix": "scientist",
+    "class": "NC_SECRO_SCIENTIST",
+    "attitude": 0,
+    "mission": 7,
+    "chat": "TALK_SECRO_SCIENTIST1_main",
+    "faction": "secro_faction"
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "DracoDogMod",
+    "name": "Draco's Dog Mod",
+    "authors": [ "DracoGriffin" ],
+    "description": "Adds dog crates with trainable dogs to animal shelters that can be trained into attack dogs (stat boosts). Adds dog pet professions.",
+    "category": "creatures",
+    "dependencies": [ "bn" ],
+    "version": "0.6",
+    "obsolete": false
+  }
+]

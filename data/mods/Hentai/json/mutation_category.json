@@ -1,0 +1,11 @@
+[
+	{
+		"type" : "mutation_category",
+		"id" : "FIEND",
+		"name" : "Demon",
+		"threshold_mut" : "THRESH_FIEND",
+		"mutagen_message" : "You felt like you had a glimpse of the depths of hell for a moment.",
+		"iv_message" : "Walking dead. Hungry pack of beasts. Cataclysm. Grotesque creatures crawling on this earth. It's like this world has turned into... hell, that's right, hell!  Well if it doesn't just sound wonderful!",
+		"memorial_message" : "Joined hell."
+	}
+]

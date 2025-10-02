@@ -1,0 +1,227 @@
+[
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Damn it, this is really fucked up.  What a piece of shit...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "(Spits)",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Alcohol, I'm outta alcohol...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Hey, anyone got some cigs?\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Just one drink, it's all I need to get by through the day...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Just one, it's all I need to get by through the day...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Where are all the humans anyway?  I'm sick and tired killing these fuckin' zombies.\"",
+		"volume" : 20
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"That last raid was quite somethin'.\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"That last raid nearly got me, I tell ya.\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Aaaaahhh, now that's the stuff, oh yeaaaaahhh...\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "(Insane laughter)",
+		"volume" : 30
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"Shit, I got this rash all over my groin... Was that bitch diseased or something?\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_male",
+		"sound" : "\"I heard she got pregnant. Haha, shoulda used condoms.\"",
+		"volume" : 5
+	},
+
+
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Damn it, this is really fucked up.  What a piece of shit...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "(Spits)",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Alcohol, I'm outta alcohol...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Hey, anyone got some cigs?\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Just one drink, it's all I need to get by through the day...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Just one, it's all I need to get by through the day...\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Where are all the humans anyway?  I'm sick and tired killing these fuckin' zombies.\"",
+		"volume" : 20
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"That last raid was quite somethin'.\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"That last raid nearly got me, I tell ya.\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Aaaaahhh, now that's the stuff, oh yeaaaaahhh...\"",
+		"volume" : 10
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "(Insane laughter)",
+		"volume" : 30
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Gah, it stings... Did I catch somethin'?\"",
+		"volume" : 5
+	},
+	{
+		"type" : "speech",
+		"speaker" : "mon_cambion_female",
+		"sound" : "\"Shit, I can't stop pukin'.  I hope I ain't pregnant...\"",
+		"volume" : 5
+	},
+	
+	{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "(Insane laughter)",
+		"volume": 60
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"Die, asshole!\"",
+		"volume": 60
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"Hyahaaa!\"",
+		"volume": 40
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"This ain't my first time killin', ya rookie!\"",
+		"volume": 40
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"Careful, that son of a bitch is still hidin' nearby...\"",
+		"volume": 40
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"I wish we could stay together like this...\"",
+		"volume": 20
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"I love you...\"",
+		"volume": 20
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"I used human serum.\"",
+		"volume": 40
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"Don't blame me if one day you get backstabbed with that attitude.\"",
+		"volume": 40
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"Um... You're not a Demon yet, right? Right?!\"",
+		"volume": 40
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"My patience with you is wearing thin...\"",
+		"volume": 60
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"Death will not be your end, your soul will burn in hell forever!\"",
+		"volume": 60
+	},{
+		"type": "speech",
+		"speaker": "mon_mi_go",
+		"sound": "\"I made it fight with the zombies, now where the fuck did it go?\"",
+		"volume": 30
+	}
+]

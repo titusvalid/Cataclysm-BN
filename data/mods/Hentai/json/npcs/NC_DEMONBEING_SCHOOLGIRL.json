@@ -1,0 +1,18 @@
+[
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id" : "NC_DEMONBEING_SCHOOLGIRL_worn",
+		"entries":
+		[
+			{ "item": "bra" },
+			{ "item": "boy_shorts" },
+			{ "item": "jersey", "damage": [0, 1] },
+			{ "item": "sailor_dress", "damage": [0, 1] },
+			{ "item": "skirt", "damage": [0, 1] },
+			{ "item": "skinny_tie" },
+			{ "item": "socks" },
+			{ "item": "sneakers" }
+		]
+	}
+]

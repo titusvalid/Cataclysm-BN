@@ -224,7 +224,9 @@ enum class combat_engagement : int {
     ALL,
     FREE_FIRE,
     NO_MOVE,
-    GUARD_ME
+    GUARD_ME,
+    ENGAGE_EXTENDED_MELEE,
+    ENGAGE_SKIRMISH
 };
 const std::unordered_map<std::string, combat_engagement> combat_engagement_strs = { {
         { "ENGAGE_NONE", combat_engagement::NONE },
@@ -234,7 +236,9 @@ const std::unordered_map<std::string, combat_engagement> combat_engagement_strs 
         { "ENGAGE_ALL", combat_engagement::ALL },
         { "ENGAGE_FREE_FIRE", combat_engagement::FREE_FIRE },
         { "ENGAGE_NO_MOVE", combat_engagement::NO_MOVE },
-        { "ENGAGE_GUARD_ME", combat_engagement::GUARD_ME }
+        { "ENGAGE_GUARD_ME", combat_engagement::GUARD_ME },
+        { "ENGAGE_EXTENDED_MELEE", combat_engagement::ENGAGE_EXTENDED_MELEE },
+        { "ENGAGE_SKIRMISH", combat_engagement::ENGAGE_SKIRMISH }
     }
 };
 
@@ -1059,6 +1063,7 @@ class npc : public player
         int confident_throw_range( const item &, Creature * ) const;
         void invalidate_range_cache();
         bool wont_hit_friend( const tripoint &tar, const item &it, bool throwing ) const;
+        bool is_clear_shot_from( const tripoint &shooter_pos, const tripoint &target_pos, const item &weapon, bool throwing ) const;
         bool enough_time_to_reload( const item &gun ) const;
         /** Can reload currently wielded gun? */
         bool can_reload_current();
@@ -1400,14 +1405,13 @@ double wielded_value( const Character &who );
 double weapon_value( const Character &who, const item &weap, int ammo );
 /** Evaluates item as a gun */
 double gun_value( const Character &who, const item &weap, int ammo );
-/** Chooses best gun_mode for range */
-std::pair<gun_mode_id, std::optional<gun_mode>> best_mode_for_range(
-            const Character &who, const item &firing, int dist );
 /** Evaluate item as a melee weapon */
 double melee_value( const Character &who, const item &weap );
 /** Evaluate unarmed melee value */
 double unarmed_value( const Character &who );
-
+/** Chooses best gun_mode for range */
+std::pair<gun_mode_id, std::optional<gun_mode>> best_mode_for_range(
+            const Character &who, const item &firing, int dist );
 } // namespace npc_ai
 
 // disable toggled weapon cbms

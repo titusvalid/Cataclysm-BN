@@ -1,0 +1,2 @@
+Never ask user to do something you are supposed to do. Ask yourself if your changes make sense or not. Then answer this.
+NEVER SAY "WOULD YOU LIKE TO..." OR "DO YOU WANT TO...", "LET ME KNOW IF YOU WANT TO..." OR ANYTHING SIMILAR.

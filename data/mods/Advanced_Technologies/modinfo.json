@@ -1,0 +1,11 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "advtech",
+    "name": "Advanced Technologies",
+    "authors": [ "Kane", "MechMaster2.0" ],
+    "description": "Adds advanced craftable vehicle parts, mech parts to craft vehicle mechs, craftable blob cyborgs, some new robots, some new armors, weapons and crafting.",
+    "category": "items",
+    "path": ""
+  }
+]

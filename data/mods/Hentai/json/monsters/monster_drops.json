@@ -1,0 +1,298 @@
+[
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cambion_female_clothes",
+		"entries":
+		[
+			{ "group": "female_underwear_top" },
+			{ "group": "female_underwear_bottom" },
+			{ "group": "dresses", "prob": 90 },
+			{ "group": "pants" }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cambion_male_clothes",
+		"entries":
+		[
+			{ "group": "male_underwear_top" },
+			{ "group": "male_underwear_bottom" },
+			{ "group": "shirts", "prob": 80 },
+			{ "group": "pants" }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cambion_items",
+		"entries":
+		[
+			{ "group": "subway", "prob": 40 },
+			{ "group": "sewer", "prob": 20 },
+			{ "group": "trash", "prob": 5 },
+			{ "group": "bedroom", "prob": 1 },
+			{ "group": "dresser", "prob": 5 },
+			{ "group": "ammo", "prob": 18 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cambion_female_death_drops",
+		"entries":
+		[
+			{ "item": "rifle_22", "prob": 75, "damage": [0, 4] },
+			{ "item": "22_lr", "prob": 25, "charges-min": 3, "charges-max": 50 },
+			{ "item": "22_fmj", "prob": 25, "charges-min": 3, "charges-max": 50 },
+			{ "group": "default_cambion_female_clothes" },
+			{ "group": "default_cambion_items", "prob": 50 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cambion_male_death_drops",
+		"entries":
+		[
+			{ "item": "rifle_22", "prob": 75, "damage": [2, 4] },
+			{ "item": "22_lr", "prob": 25, "charges-min": 3, "charges-max": 50 },
+			{ "item": "22_fmj", "prob": 25, "charges-min": 3, "charges-max": 50 },
+			{ "group": "default_cambion_male_clothes" },
+			{ "group": "default_cambion_items", "prob": 50 }
+		]
+	},
+
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_succubi_clothes",
+		"entries":
+		[
+			{ "group": "female_underwear_top", "prob": 50 },
+			{ "group": "female_underwear_bottom", "prob": 70 },
+			{ "group": "dresses", "prob": 20 },
+			{ "group": "pants", "prob": 30 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_incubi_clothes",
+		"entries":
+		[
+			{ "group": "male_underwear_top", "prob": 30 },
+			{ "group": "male_underwear_bottom", "prob": 50 },
+			{ "group": "shirts", "prob": 10 },
+			{ "group": "pants", "prob": 20 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cubi_items",
+		"entries":
+		[
+			{ "item": "wrapped_condom", "prob": 50 },
+			{ "group": "sex_lair", "prob": 30 },
+			{ "group": "harddrugs", "prob": 10 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_cubi_rare_item",
+		"entries":
+		[
+			{ "item": "ts_elixir" },
+			{ "item": "holy_choker" }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "incubi_hoplo_ammo",
+		"entries":
+		[
+			{ "item": "flintlock_ammo", "prob": 55 },
+			{ "item": "flintlock_shot", "prob": 40 },
+			{ "item": "flintlock_ammo_magic", "prob": 5 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_succubi_death_drops",
+		"entries":
+		[
+			{ "group": "default_succubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "jewelry_front", "prob": 3 },
+			{ "group": "default_cubi_rare_item", "prob": 1 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "succubi_sadist_death_drops",
+		"entries":
+		[
+			{ "item": "bullwhip" },
+			{ "item": "e_handcuffs" },
+			{ "group": "default_succubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "default_cubi_rare_item", "prob": 3 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "arch_succubi_death_drops",
+		"entries":
+		[
+			{ "group": "default_succubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "jewelry_front", "prob": 5 },
+			{ "group": "default_cubi_rare_item", "prob": 3 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "greater_succubi_death_drops",
+		"entries":
+		[
+			{ "group": "default_succubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "jewelry_front", "prob": 10 },
+			{ "group": "default_cubi_rare_item", "prob": 50 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "default_incubi_death_drops",
+		"entries":
+		[
+			{ "group": "default_incubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "incubi_hoplophilia_death_drops",
+		"entries":
+		[
+			{ "item": "rifle_flintlock" },
+			{ "group": "incubi_hoplo_ammo" },
+			{ "group": "default_incubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "default_cubi_rare_item", "prob": 3 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "arch_incubi_death_drops",
+		"entries":
+		[
+			{ "group": "default_incubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "jewelry_front", "prob": 3 },
+			{ "group": "default_cubi_rare_item", "prob": 3 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "greater_incubi_death_drops",
+		"entries":
+		[
+			{ "group": "default_incubi_clothes" },
+			{ "group": "default_cubi_items", "prob": 50 },
+			{ "group": "jewelry_front", "prob": 5 },
+			{ "group": "default_cubi_rare_item", "prob": 50 }
+		]
+	},
+
+
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "corrupted_schoolteacher_clothes",
+		"entries":
+		[
+			{ "item": "dress_shirt", "prob": 75, "damage": [2, 4] },
+			{ "item": "blazer", "damage": [2, 4] },
+			{ "item": "pants", "prob": 75, "damage": [3, 4] },
+			{ "item": "dress_shoes", "prob": 80 },
+			{ "item": "skinny_tie", "prob": 50, "damage": [1, 4] },
+			{ "item": "tieclip", "prob": 10 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "corrupted_schoolgirl_death_drops",
+		"entries":
+		[
+			{ "item": "sailor_dress", "damage": [1, 4] },
+			{ "item": "skirt", "damage": [1, 4] },
+			{ "group": "female_underwear_top", "prob": 50, "damage": [3, 4] },
+			{ "group": "female_underwear_bottom", "prob": 50, "damage": [3, 4] },
+			{ "item": "skinny_tie", "damage": [1, 4] },
+			{ "item": "socks", "prob": 80 },
+			{ "item": "sneakers", "prob": 80 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "corrupted_schoolteacher_female_death_drops",
+		"entries":
+		[
+			{ "group": "corrupted_schoolteacher_clothes" },
+			{ "group": "female_underwear_top", "prob": 50, "damage": [3, 4] },
+			{ "group": "female_underwear_bottom", "prob": 50, "damage": [3, 4] },
+			{ "item": "stockings", "damage": [1, 4] }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "corrupted_schoolboy_death_drops",
+		"entries":
+		[
+			{ "item": "tshirt", "damage": [1, 4] },
+			{ "item": "pants", "prob": 75, "damage": [2, 4] },
+			{ "group": "male_underwear_top", "prob": 50, "damage": [3, 4] },
+			{ "group": "male_underwear_bottom", "prob": 50, "damage": [3, 4] },
+			{ "item": "socks", "prob": 80 },
+			{ "item": "sneakers", "prob": 80 }
+		]
+	},
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "corrupted_schoolteacher_male_death_drops",
+		"entries":
+		[
+			{ "group": "corrupted_schoolteacher_clothes" },
+			{ "group": "male_underwear_top", "prob": 50, "damage": [3, 4] },
+			{ "group": "male_underwear_bottom", "prob": 50, "damage": [3, 4] },
+			{ "item": "socks", "prob": 80 }
+		]
+	},
+
+	{
+		"type" : "item_group",
+		"subtype": "collection",
+		"id": "goathead_demon_death_drops",
+		"entries":
+		[
+			{ "item": "scroll_of_artifact" }
+		]
+	}
+]

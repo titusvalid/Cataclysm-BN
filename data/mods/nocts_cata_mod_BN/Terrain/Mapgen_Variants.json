@@ -1,0 +1,193 @@
+[
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": [ "bunker" ],
+    "weight": 500,
+    "object": {
+      "fill_ter": "t_metal_floor",
+      "rows": [
+        "   /III/++++++++/III/   ",
+        "   /lddI________Iddl/   ",
+        "|||/.h?I________I?h./|||",
+        "|  /*///________///*/  |",
+        "|       ________       |",
+        "| yyyyyy________yyyyyy |",
+        "| ____________________ |",
+        "| ____________________ |",
+        "| ____________________ |",
+        "| ____________________ |",
+        "| ____________________ |",
+        "| ____________________ |",
+        "| yyyyyy________yyyyyy |",
+        "|                      |",
+        "|      MMM6  MMMM      |",
+        "|      MMMMDDMMMM      |",
+        "|      MM,,,,,,MM      |",
+        "|      MMMM,,MMMM      |",
+        "|      MM,,,,,,MM      |",
+        "|      MMMM,,MMMM      |",
+        "|      MM,,,,,,MM      |",
+        "|||||||MMMM>>MMMM|||||||",
+        "       MMMMMMMMMM       ",
+        "       MMMMMMMMMM       "
+      ],
+      "terrain": {
+        " ": "t_region_groundcover_urban",
+        "*": "t_door_metal_pickable",
+        "+": "t_chaingate_o",
+        ".": "t_floor",
+        ",": "t_metal_floor",
+        "_": "t_pavement",
+        "/": "t_concrete_wall",
+        "?": "t_console_broken",
+        "6": "t_card_military",
+        ">": "t_stairs_down",
+        "d": "t_floor",
+        "h": "t_floor",
+        "l": "t_floor",
+        "D": "t_door_metal_locked",
+        "I": "t_ballistic_glass",
+        "M": "t_wall_metal",
+        "y": "t_pavement_y",
+        "|": "t_chainfence"
+      },
+      "furniture": { "d": "f_desk", "h": "f_chair", "l": "f_locker" },
+      "items": {
+        "d": { "item": "office_mess", "chance": 50, "repeat": 2 },
+        "l": { "item": "military_standard_pistols", "chance": 25 }
+      },
+      "place_monster": [
+        { "group": "GROUP_ZOMBIE_SUPER_SOLDIER_RANDOM", "x": [ 1, 14 ], "y": [ 4, 13 ], "repeat": 3 },
+        { "monster": "mon_zombie_failed_weapon", "x": [ 1, 22 ], "y": [ 4, 13 ], "repeat": 2 },
+        { "monster": "mon_turret_medium", "x": 9, "y": 16 },
+        { "monster": "mon_turret_medium", "x": 14, "y": 16 },
+        { "monster": "mon_turret_medium", "x": 9, "y": 18 },
+        { "monster": "mon_turret_medium", "x": 14, "y": 18 },
+        { "monster": "mon_turret_medium", "x": 9, "y": 20 },
+        { "monster": "mon_turret_medium", "x": 14, "y": 20 }
+      ],
+      "place_vehicles": [ { "vehicle": "humvee_tow", "x": 18, "y": 8, "rotation": 30, "chance": 100, "fuel": 10, "status": 1 } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": [ "mil_base_tunnels_j" ],
+    "weight": 250,
+    "object": {
+      "fill_ter": "t_thconc_floor",
+      "rows": [
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@@@@@@@@@@@@@@@@",
+        "@@@@@@@@@///////////////",
+        "@@@@@@@@@/u..u..uuuuu..u",
+        "@@@@@@@@@/u..u.........u",
+        "@@@@@@@@@/u.............",
+        "@@@@@@@@@/u.....uuuuu...",
+        "@@@@@@@@@/]]]]((]]]]]((]",
+        "@@@@@@@@@/..............",
+        "@@@@@@@@@/..............",
+        "@@@@@@@@@/]((]/]]]((]]]/",
+        "@@@@@@@@@/C.../C......C/",
+        "@@@@@@@@@/C.../C......C/",
+        "@@@@@@@@@/C.uu/C.CCCC.C/",
+        "@@@@@@@@@///////////////"
+      ],
+      "palettes": [ "mil_base_palette" ],
+      "place_loot": [
+        { "group": "ammo_rifle_milspec", "x": 10, "y": [ 12, 15 ], "chance": 75, "repeat": 15 },
+        { "group": "ammo_milspec", "x": 10, "y": [ 12, 15 ], "chance": 75, "repeat": 10 },
+        { "group": "mags_milspec", "x": 10, "y": [ 12, 15 ], "chance": 75, "repeat": 5 },
+        { "group": "military_standard_shotguns", "x": 13, "y": [ 12, 13 ], "chance": 75, "repeat": 5 },
+        { "group": "guns_shotgun_milspec", "x": 13, "y": [ 12, 13 ], "chance": 75, "repeat": 5 },
+        { "group": "military_standard_sniper_rifles", "x": [ 16, 20 ], "y": 12, "chance": 75, "repeat": 5 },
+        { "group": "guns_rifle_milspec", "x": [ 16, 20 ], "y": 12, "chance": 75, "repeat": 5 },
+        { "group": "guns_smg_milspec", "x": [ 16, 20 ], "y": 12, "chance": 75, "repeat": 5 },
+        { "group": "military_standard_assault_rifles", "x": [ 16, 20 ], "y": 15, "chance": 75, "repeat": 20 },
+        { "group": "military_standard_lmgs", "x": [ 16, 20 ], "y": 15, "chance": 75, "repeat": 10 },
+        { "group": "mil_base_hmg", "x": [ 16, 20 ], "y": 15, "chance": 75, "repeat": 2 },
+        { "group": "military_standard_pistols", "x": 23, "y": [ 12, 13 ], "chance": 75, "repeat": 10 },
+        { "group": "guns_pistol_milspec", "x": 23, "y": [ 12, 13 ], "chance": 75, "repeat": 5 },
+        { "group": "c_military_spawn_special", "x": 10, "y": [ 20, 21 ], "chance": 75, "repeat": 10 },
+        { "item": "adv_UPS_off", "x": 12, "y": 22, "chance": 75, "repeat": 2 },
+        { "item": "plut_cell", "x": 12, "y": 22, "chance": 75, "repeat": 4 },
+        { "group": "mech_power_cell_spawn", "x": 13, "y": 22 },
+        { "group": "guns_launcher_rocket", "x": 15, "y": [ 20, 22 ], "chance": 75, "repeat": 5 },
+        { "group": "grenades", "x": [ 17, 20 ], "y": 22, "chance": 75, "repeat": 20 },
+        { "group": "guns_launcher_grenade", "x": 22, "y": [ 20, 22 ], "chance": 75, "repeat": 5 },
+        { "group": "ammo_launcher_grenade", "x": 22, "y": [ 20, 22 ], "chance": 75, "repeat": 5 }
+      ],
+      "place_monster": [ { "monster": "mon_zombie_bio_dormant_armed", "x": [ 11, 22 ], "y": [ 13, 21 ], "repeat": 4 } ]
+    }
+  },
+  {
+    "type": "mapgen",
+    "method": "json",
+    "om_terrain": [ "necropolis_c_2" ],
+    "weight": 250,
+    "object": {
+      "fill_ter": "t_metal_floor",
+      "rows": [
+        "|---|...................",
+        "|L L|...................",
+        "|-+-|--|................",
+        "    @@d|................",
+        "    @@ |................",
+        " h     |................",
+        "kkk   o|................",
+        "-------|.|--------------",
+        ".........|rrrrrrrrrrrrrr",
+        "|-|-|....|r             ",
+        "|L|L|--|.|r  ccc        ",
+        "|+|+|@@|-|r  ccc    G   ",
+        "       |t|r             ",
+        "       + |-------|     |",
+        "       |S|.......|    5|",
+        "|+|+|@@|-|-------|-===-|",
+        "|L|L|--|.|rrrrrrr|    6|",
+        "|-|-|....|r      +  G   ",
+        "|L|L|--|.|r rrrr |  h   ",
+        "|+|+|@@|-|r rrrr |k6kkk|",
+        "       |t|r      |!!!!!|",
+        "       + |rGrrrr |     |",
+        "       |S|r rrrr v     |",
+        "|+|+|@@|-|r      v     |"
+      ],
+      "palettes": [ "necropolis_b2" ],
+      "set": [ { "square": "radiation", "amount": [ 1, 5 ], "x": 0, "x2": 23, "y": 0, "y2": 23 } ],
+      "items": {
+        "@": { "item": "army_bed", "chance": 50 },
+        "L": { "item": "army_personal_locker", "chance": 40, "repeat": 2 },
+        "o": { "item": "book_military", "chance": 40, "repeat": 2 },
+        "r": { "item": "military", "chance": 40 }
+      },
+      "place_loot": [
+        { "group": "mags_milspec", "x": [ 12, 15 ], "y": 18, "chance": 30, "repeat": 5 },
+        { "item": "medium_atomic_battery_cell", "x": [ 12, 15 ], "y": 18, "chance": 30, "repeat": 5 },
+        { "item": "plasma", "x": [ 12, 15 ], "y": 18, "chance": 10 },
+        { "group": "ammo_milspec", "x": [ 12, 15 ], "y": 19, "chance": 50, "repeat": 3 },
+        { "group": "drugs_soldier", "x": [ 12, 15 ], "y": 21, "chance": 50, "repeat": 3 }
+      ],
+      "place_monsters": [
+        { "monster": "GROUP_NECROPOLIS_VAULT2", "x": [ 1, 22 ], "y": [ 1, 6 ], "density": 0.1 },
+        { "monster": "GROUP_NECROPOLIS_VAULT2", "x": [ 1, 8 ], "y": [ 6, 22 ], "density": 0.1 }
+      ],
+      "place_monster": [
+        { "group": "GROUP_ZOMBIE_SUPER_SOLDIER_RANDOM", "x": 11, "y": 17 },
+        { "group": "GROUP_ZOMBIE_SUPER_SOLDIER_RANDOM", "x": 16, "y": 20 },
+        { "group": "GROUP_ZOMBIE_SUPER_SOLDIER_RANDOM", "x": 20, "y": 18 },
+        { "group": "GROUP_ZOMBIE_SUPER_SOLDIER_RANDOM", "x": 23, "y": 17 }
+      ]
+    }
+  }
+]

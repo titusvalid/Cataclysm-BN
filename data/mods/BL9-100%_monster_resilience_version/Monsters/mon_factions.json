@@ -1,0 +1,47 @@
+[
+  {
+    "type": "MONSTER_FACTION",
+    "name": "BL9_cultists",
+    "neutral": [ "small_animal", "fish", "animal","zombie" ],
+    "hate": [ "fungus", "BL9_robots" ],
+    "friendly": [ "BL9_military", "cult"]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "BL9_military",
+    "neutral": [ "small_animal", "fish", "animal" ],
+    "hate": [ "fungus", "BL9_robots" ],
+    "friendly": [ "BL9_cultists"]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "BL9_robots",
+    "neutral": [ "small_animal", "fish", "animal" ],
+    "hate": [ "BL9_cultists", "BL9_military" ],
+    "friendly": [ "player" ]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "zombie",
+    "friendly": [ "slime",  "zombie_aquatic" ],
+    "neutral": [ "small_animal", "insect", "fish" ],
+    "by_mood": [ "bee", "BL9_cultists" ]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "zombie_aquatic",
+    "friendly": [ "slime" ],
+    "neutral": [ "small_animal", "insect" ],
+    "by_mood": "bee"
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "slime",
+    "friendly": [ "zombie", "nether"]
+  },
+  {
+    "type": "MONSTER_FACTION",
+    "name": "nether",
+    "friendly": [ "slime"]
+  }
+]

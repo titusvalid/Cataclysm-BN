@@ -1,0 +1,153 @@
+[
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_ROOT",
+    "type": "talk_topic",
+    "dynamic_line": [ "Thank you for opening the door.  I was trapped in here!" ],
+    "responses": [
+      {
+        "text": "This [MISSION] failed, so you're dead.  Sorry.",
+        "condition": { "u_has_var": "u_killed_June_OFanny", "type": "flag", "context": "death", "value": "yes" },
+        "effect": [ "npc_die" ],
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "[MISSION] I'm here to rescue you",
+        "condition": {
+          "and": [
+            { "u_has_mission": "DKZ_MORLOCK_RESCUE_JUNE_OFANNY" },
+            { "not": { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" } }
+          ]
+        },
+        "topic": "TALK_MORLOCK_JUNE_OFANNY_RESCUE"
+      },
+      {
+        "text": "[MISSION] You are saved!",
+        "condition": {
+          "and": [
+            { "not": { "u_has_mission": "DKZ_MORLOCK_RESCUE_JUNE_OFANNY" } },
+            { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" }
+          ]
+        },
+        "effect": [ { "npc_first_topic": "TALK_MORLOCK_JUNE_OFANNY_RESCUED" } ],
+        "opinion": { "trust": 5, "value": 4 },
+        "topic": "TALK_MORLOCK_JUNE_OFANNY_ESCORT_DONE"
+      },
+      {
+        "text": "Alright, lets get going.",
+        "condition": {
+          "and": [
+            { "not": { "u_has_mission": "DKZ_MORLOCK_RESCUE_JUNE_OFANNY" } },
+            { "not": { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" } }
+          ]
+        },
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_ESCORTING_BACK",
+    "type": "talk_topic",
+    "dynamic_line": [ "Lets get back to the safety of the sewer." ],
+    "responses": [
+      {
+        "text": "Lets set a combat strategy…",
+        "condition": {
+          "and": [
+            { "npc_has_var": "temporal_follower", "type": "general", "context": "maquis", "value": "yes" },
+            { "not": { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" } }
+          ]
+        },
+        "topic": "TALK_COMBAT_COMMANDS"
+      },
+      {
+        "text": "Stay here until I come back.",
+        "condition": {
+          "and": [
+            { "npc_has_var": "temporal_follower", "type": "general", "context": "maquis", "value": "yes" },
+            { "u_has_mission": "DKZ_MORLOCK_RETURN_TO_SEWER_CENTRAL" },
+            { "not": { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" } }
+          ]
+        },
+        "topic": "TALK_MORLOCK_JUNE_OFANNY_STAY_PUT"
+      },
+      {
+        "text": "Come with me.",
+        "condition": {
+          "and": [
+            { "npc_has_var": "temporal_follower", "type": "general", "context": "maquis", "value": "yes" },
+            { "u_has_mission": "DKZ_MORLOCK_RETURN_TO_SEWER_CENTRAL" },
+            { "not": { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" } }
+          ]
+        },
+        "topic": "TALK_MORLOCK_JUNE_OFANNY_FOLLOW"
+      },
+      {
+        "text": "[MISSION] You are saved!",
+        "condition": {
+          "and": [
+            { "not": { "u_has_mission": "DKZ_MORLOCK_RESCUE_JUNE_OFANNY" } },
+            { "u_has_var": "u_saved_June_OFanny", "type": "general", "context": "maquis", "value": "yes" }
+          ]
+        },
+        "effect": [ { "npc_first_topic": "TALK_MORLOCK_JUNE_OFANNY_RESCUED" }, { "u_add_effect": "time_since_June_rescued", "duration": "7 days"} ],
+        "opinion": { "trust": 5, "value": 4 },
+        "topic": "TALK_MORLOCK_JUNE_OFANNY_ESCORT_DONE"
+      }
+    ]
+  },
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_RESCUED",
+    "type": "talk_topic",
+    "dynamic_line": [ "Thanks for the rescue.  Don't go too far away though, I might need an escort to another location soon.  It will be a much farther away so you might want to look for a fast way to get there.  The Channel Four News helicopter is still on the roof of the building, but its out of fuel." ],
+    "responses": [ { "text": "I'll check it out.", "topic": "TALK_DONE" } ]
+  },
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_STAY_PUT",
+    "type": "talk_topic",
+    "dynamic_line": [ "Please come back!" ],
+    "responses": [ { "text": "Stay here.", "effect": [ "stop_following" ], "topic": "TALK_DONE" } ]
+  },
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_FOLLOW",
+    "type": "talk_topic",
+    "dynamic_line": [ "Alright I'm following you." ],
+    "responses": [ { "text": "Lets get going.", "effect": [ "follow_only" ], "topic": "TALK_DONE" } ]
+  },
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_RESCUE",
+    "type": "talk_topic",
+    "dynamic_line": [
+      "I want to get back down to the safety of the sewer, but I'm not any use in a fight.  Please make sure the way down to the basement is clear."
+    ],
+    "responses": [
+      {
+        "text": "The way is clear, lets go.",
+        "opinion": { "trust": 2, "value": 5 },
+        "effect": [
+          { "npc_first_topic": "TALK_MORLOCK_JUNE_OFANNY_ESCORTING_BACK" },
+          { "add_mission": "DKZ_MORLOCK_RETURN_TO_SEWER_CENTRAL" },
+          { "npc_add_var": "temporal_follower", "type": "general", "context": "maquis", "value": "yes" }
+        ],
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "//": "-----------------------------------------------------------------------------------------------------------------------",
+    "id": "TALK_MORLOCK_JUNE_OFANNY_ESCORT_DONE",
+    "type": "talk_topic",
+    "dynamic_line": [ "I never thought I would be glad to be in the sewers!  I have to figure out a way to another safehouse." ],
+    "responses": [
+      {
+        "text": "You said it.",
+        "topic": "TALK_DONE"
+      }
+    ]
+  }
+]

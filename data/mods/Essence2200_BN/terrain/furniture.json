@@ -1,0 +1,1580 @@
+[
+  {
+    "type": "furniture",
+    "id": "Foxfmagicaquifer",
+    "name": "magic aquifer portal",
+    "symbol": "T",
+    "looks_like": "t_water_pump",
+    "description": "This glowing portal teleports clean water into any container you place beneath it.",
+    "color": "dark_gray",
+    "move_cost_mod": 1,
+    "coverage": 35,
+    "required_str": 1,
+    "flags": [ "TRANSPARENT" ],
+    "examine_action": "clean_water_source"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfmagicaquiferbad",
+    "name": "magic dirty aquifer portal",
+    "symbol": "T",
+    "looks_like": "t_water_pump",
+    "description": "This glowing portal teleports dirty water into any container you place beneath it.",
+    "color": "dark_gray",
+    "move_cost_mod": 1,
+    "coverage": 35,
+    "required_str": 1,
+    "flags": [ "TRANSPARENT" ],
+    "examine_action": "water_source"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfmagicsaltaquifer",
+    "name": "magic salt water portal",
+    "symbol": "T",
+    "looks_like": "t_water_pump",
+    "description": "This glowing portal teleports salt water into any container you place beneath it.",
+    "color": "dark_gray",
+    "move_cost_mod": 1,
+    "coverage": 35,
+    "required_str": 1,
+    "flags": [ "TRANSPARENT", "SALT_WATER" ],
+    "examine_action": "water_source"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_dig_downstair",
+    "group": "Foxdig_downstair",
+    "category": "DIG",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "30 m",
+    "components": [
+      [ [ "FoxTelekineticrune", 1 ] ]
+    ],
+    "pre_flags": "DIGGABLE",
+    "pre_special": "check_down_OK",
+    "post_special": "done_dig_stair"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_mine_downstair",
+    "group": "Foxmine_downstair",
+    "category": "DIG",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "30 m",
+    "components": [
+      [ [ "FoxTelekineticrune", 1 ] ]
+    ],
+    "pre_special": "check_down_OK",
+    "pre_terrain": "t_rock_floor",
+    "post_special": "done_mine_downstair"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_mine_upstair",
+    "group": "Foxmine_upstair",
+    "category": "DIG",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "30 m",
+    "//": "Helmets are not essential because you're telekinetically removing rocks away from you.",
+    "components": [
+      [ [ "FoxTelekineticrune", 1 ] ]
+    ],
+    "pre_special": "check_up_OK",
+    "pre_terrain": "t_rock",
+    "post_special": "done_mine_upstair"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxdig_downstair",
+    "name": "Telekinetic Dig Downstairs"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxmine_downstair",
+    "name": "Telekinetic Mine Downstairs"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxmine_upstair",
+    "name": "Telekinetic Mine Upstairs"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_destroy_rockfloor",
+    "group": "Foxconjure_destroy_rockfloor",
+    "category": "DIG",
+    "required_skills": [ [ "FoxEssSpellcasting", 4 ] ],
+    "time": "5m",
+    "dark_craftable": true,
+    "pre_terrain": "t_rock_floor",
+    "post_terrain": "t_open_air"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconjure_destroy_rockfloor",
+    "name": "Destroy rock floor into open space"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_water_shallow",
+    "group": "Foxconjure_water_shallow",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "20m",
+    "components": [ [ [ "FoxWaterrune", 5 ] ] ],
+    "dark_craftable": true,
+    "pre_terrain": "t_pit_shallow",
+    "post_terrain": "t_water_sh"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconjure_water_shallow",
+    "name": "Conjure shallow water in pit"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_water_deep",
+    "group": "Foxconjure_water_deep",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "FoxEssSpellcasting", 2 ] ],
+    "time": "20m",
+    "components": [ [ [ "FoxWaterrune", 10 ] ] ],
+    "dark_craftable": true,
+    "pre_terrain": "t_pit_shallow",
+    "post_terrain": "t_water_dp"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconjure_water_deep",
+    "name": "Conjure deep water in pit"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_floating_dirt",
+    "group": "Foxconjure_floating_dirt",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "FoxEssSpellcasting", 6 ] ],
+    "time": "30m",
+    "components": [ [ [ "FoxEarthrune", 10 ] ], [ [ "FoxQuantumrune", 20 ] ] ],
+    "dark_craftable": true,
+    "pre_terrain": "t_open_air",
+    "post_terrain": "t_dirt"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconjure_floating_dirt",
+    "name": "Create floating dirt island"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_dirt_over_water",
+    "group": "Foxconjure_dirt_water",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "20m",
+    "components": [ [ [ "FoxEarthrune", 10 ] ] ],
+    "dark_craftable": true,
+    "pre_flags": "LIQUID",
+    "post_terrain": "t_dirt"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconjure_dirt_water",
+    "name": "Conjure dirt over liquids"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_dirt_on_rock_place",
+    "group": "Foxplace_dirt_on_rock",
+    "category": "CONSTRUCT",
+    "time": "15m",
+    "components": [ [ [ "material_soil", 50 ] ] ],
+    "dark_craftable": true,
+    "pre_terrain": "t_rock_floor",
+    "post_terrain": "t_dirt"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_dirt_on_rock",
+    "name": "Place dirt onto rock"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_dirt_on_rock_conjure",
+    "group": "Foxconjure_dirt_on_rock",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "10m",
+    "components": [ [ [ "FoxTransmutationrune", 5 ] ] ],
+    "dark_craftable": true,
+    "pre_terrain": "t_rock_floor",
+    "post_terrain": "t_dirt"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconjure_dirt_on_rock",
+    "name": "Conjure dirt onto rock"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_soulbench",
+    "name": "soulbench",
+    "description": "A sturdy workbench built out of metal with a pocket dimension installed and 10 souls.",
+    "symbol": "#",
+    "color": "red",
+    "move_cost_mod": 2,
+    "coverage": 50,
+    "required_str": 10,
+    "looks_like": "f_workbench",
+    "flags": [ "TRANSPARENT", "PLACE_ITEM", "MOUNTABLE", "FLAT_SURF", "EASY_DECONSTRUCT" ],
+    "deconstruct": { "items": [ { "item": "Foxsoulbench", "count": 1 } ] },
+    "bash": {
+      "str_min": 35,
+      "str_max": 80,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "Foxsoulbench", "count": 1 }
+      ],
+      "ranged": { "reduction": [ 18, 35 ], "destroy_threshold": 80, "block_unaimed_chance": "50%" }
+    },
+    "examine_action": "workbench",
+    "workbench": { "multiplier": 2, "mass": "5000 kg", "volume": "950L" }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxf_soulbench",
+    "group": "Foxplace_Foxf_soulbench",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "1 m",
+    "components": [ [ [ "Foxsoulbench", 1 ] ] ],
+    "pre_note": "Can be deconstructed without tools.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxf_soulbench"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxf_soulbench",
+    "name": "Place Soulbench"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfessencestill",
+    "name": "essence fractional still",
+    "looks_like": "f_standing_tank",
+    "description": "A fractional still meant for refining essence products.",
+    "symbol": "^",
+    "color": "light_red",
+    "move_cost_mod": 1,
+    "coverage": 40,
+    "required_str": 2,
+    "crafting_pseudo_item": "Foxessencestill",
+    "deconstruct": { "items": [ { "item": "Foxessencestill", "count": 1 } ] },
+    "flags": [ "TRANSPARENT", "NOITEM", "EASY_DECONSTRUCT" ],
+    "bash": { "str_min": 4, "str_max": 8, "sound": "crunch!", "sound_fail": "whump.", "items": [ { "item": "Foxessencestill", "count": 1 } ] }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfessencestill",
+    "group": "Foxplace_Foxfessencestill",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "1 m",
+    "components": [ [ [ "Foxessencestill", 1 ] ] ],
+    "pre_note": "Can be deconstructed without tools.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfessencestill"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfessencestill",
+    "name": "Place Essence Still"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfessencecracker",
+    "name": "essence cracker",
+    "looks_like": "f_standing_tank",
+    "description": "A large barrel meant for cracking tarcrete.",
+    "symbol": "^",
+    "color": "light_red",
+    "move_cost_mod": 1,
+    "coverage": 40,
+    "required_str": 2,
+    "crafting_pseudo_item": "Foxessencecracker",
+    "deconstruct": { "items": [ { "item": "Foxessencecracker", "count": 1 } ] },
+    "flags": [ "TRANSPARENT", "NOITEM", "EASY_DECONSTRUCT" ],
+    "bash": { "str_min": 4, "str_max": 8, "sound": "crunch!", "sound_fail": "whump.", "items": [ { "item": "Foxessencecracker", "count": 1 } ] }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxessencecracker",
+    "group": "Foxplace_Foxfessencecracker",
+    "category": "FURN",
+    "required_skills": [ [ "fabrication", 0 ] ],
+    "time": "1 m",
+    "components": [ [ [ "Foxessencecracker", 1 ] ] ],
+    "pre_note": "Can be deconstructed without tools.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfessencecracker"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfessencecracker",
+    "name": "Place Essence Cracker"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfalloyingbarrel",
+    "looks_like": "f_standing_tank",
+    "name": "grid alloying barrel",
+    "symbol": "U",
+    "description": "An alloying barrel connected to the power grid.",
+    "color": "light_red",
+    "move_cost_mod": -1,
+    "coverage": 10,
+    "required_str": -1,
+    "crafting_pseudo_item": "Foxfake_alloybarrel",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "EASY_DECONSTRUCT" ],
+    "deconstruct": {
+      "items": [ { "item": "Foxalloybarrel", "count": 1 }, { "item": "cable", "charges": 5 } ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 30,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "Foxalloybarrel", "count": 1 },
+        { "item": "cable", "charges": 5 }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfalloyingbarrel",
+    "group": "Foxplace_Foxfalloyingbarrel",
+    "category": "FURN",
+    "required_skills": [ [ "electronics", 1 ] ],
+    "time": "1 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 5 ] ],
+    "components": [ [ [ "Foxalloybarrel", 1 ] ], [ [ "cable", 5 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfalloyingbarrel"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfalloyingbarrel",
+    "name": "Install Alloying Barrel"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfgridmachiningstation",
+    "looks_like": "f_workbench",
+    "name": "grid machining station",
+    "symbol": "U",
+    "description": "A machining station connected to the power grid.",
+    "color": "light_red",
+    "move_cost_mod": -1,
+    "coverage": 10,
+    "required_str": -1,
+    "crafting_pseudo_item": "Foxfake_machiningstation",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "FLAT_SURF", "EASY_DECONSTRUCT" ],
+    "workbench": { "multiplier": 1.4, "mass": "1000 kg", "volume": "950L" },
+    "deconstruct": {
+      "items": [ { "item": "Foxmachiningstation", "count": 1 }, { "item": "cable", "charges": 5 } ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 30,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "Foxmachiningstation", "count": 1 },
+        { "item": "cable", "charges": 5 }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfgridmachiningstation",
+    "group": "Foxplace_Foxfgridmachiningstation",
+    "category": "FURN",
+    "required_skills": [ [ "electronics", 1 ] ],
+    "time": "1 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 5 ] ],
+    "components": [ [ [ "Foxmachiningstation", 1 ] ], [ [ "cable", 5 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfgridmachiningstation"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfgridmachiningstation",
+    "name": "Install Machining Station"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfalloyingbarreladvanced",
+    "looks_like": "f_standing_tank",
+    "name": "grid advanced alloying barrel",
+    "symbol": "U",
+    "description": "An advanced alloying barrel connected to the power grid.",
+    "color": "light_red",
+    "move_cost_mod": -1,
+    "coverage": 10,
+    "required_str": -1,
+    "crafting_pseudo_item": "Foxfake_alloybarreladvanced",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "EASY_DECONSTRUCT" ],
+    "deconstruct": {
+      "items": [ { "item": "Foxalloybarreladvanced", "count": 1 }, { "item": "cable", "charges": 5 } ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 30,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "Foxalloybarreladvanced", "count": 1 },
+        { "item": "cable", "charges": 5 }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfalloyingbarreladvanced",
+    "group": "Foxplace_Foxfalloyingbarreladvanced",
+    "category": "FURN",
+    "required_skills": [ [ "electronics", 1 ] ],
+    "time": "1 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 5 ] ],
+    "components": [ [ [ "Foxalloybarreladvanced", 1 ] ], [ [ "cable", 5 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfalloyingbarreladvanced"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfalloyingbarreladvanced",
+    "name": "Install Advanced Alloying Barrel"
+  },
+  {
+    "id": "Foxdigging_sludgepit",
+    "type": "item_group",
+    "subtype": "collection",
+    "items": [
+      { "item": "Foxmotordewsludge", "count": [ 82, 200 ] }
+    ]
+  },
+  {
+    "type": "terrain",
+    "id": "Foxt_sludgepit",
+    "looks_like": "t_claymound_underground",
+    "name": "sludge pit",
+    "description": "A deep filled pit full of a mud consisting of motordew and particulates, you can build a sludge pump on here if you have one, or dig it up for a mud you can dry into motordew and tarcrete.",
+    "symbol": ".",
+    "color": "light_red",
+    "move_cost": 2,
+    "flags": [ "TRANSPARENT", "DIGGABLE", "FLAT" ],
+    "digging_result": "Foxdigging_sludgepit",
+    "bash": {
+      "sound": "thump",
+      "ter_set": "t_pit",
+      "str_min": 500,
+      "str_max": 900,
+      "str_min_supported": 500,
+      "items": [ { "item": "Foxmotordewsludge", "count": [ 80, 200 ] } ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfgridsludgepump",
+    "looks_like": "t_machinery_light",
+    "name": "grid sludge pump",
+    "symbol": "U",
+    "description": "A sludge pump connected to a natural deposit of motordew. You can easily deconstruct it but you're going to lose the pipeline.",
+    "color": "light_red",
+    "move_cost_mod": -1,
+    "coverage": 10,
+    "required_str": -1,
+    "crafting_pseudo_item": "Foxfake_sludgepump",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "EASY_DECONSTRUCT" ],
+    "deconstruct": {
+      "items": [ { "item": "Foxsludgepump", "count": 1 }, { "item": "cable", "charges": 5 } ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 30,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "Foxsludgepump", "count": 1 },
+        { "item": "cable", "charges": 5 }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfgridsludgepump",
+    "group": "Foxplace_Foxfgridsludgepump",
+    "category": "FURN",
+    "required_skills": [ [ "electronics", 1 ] ],
+    "time": "60 m",
+    "qualities": [ 
+    [ { "id": "SCREW", "level": 1 } ],
+    [ { "id": "HAMMER", "level": 2 } ],
+    [ { "id": "WRENCH", "level": 1 } ],
+    [ { "id": "DIG", "level": 2 } ]
+  ],
+    "using": [ [ "soldering_standard", 5 ] ],
+    "components": [ [ [ "Foxsludgepump", 1 ] ], [ [ "cable", 5 ] ], [ [ "pipe", 10 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_terrain": "Foxt_sludgepit",
+    "post_furniture": "Foxfgridsludgepump"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfgridsludgepump",
+    "name": "Install Sludge Pump"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfgridnanoforge",
+    "looks_like": "f_workbench",
+    "name": "grid nanoforge",
+    "symbol": "U",
+    "description": "A nanoforge connected to the power grid.",
+    "color": "light_red",
+    "move_cost_mod": -1,
+    "coverage": 10,
+    "required_str": -1,
+    "crafting_pseudo_item": "Foxfake_NanoForge",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "EASY_DECONSTRUCT" ],
+    "deconstruct": {
+      "items": [ { "item": "FoxNanoForge", "count": 1 }, { "item": "cable", "charges": 5 } ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 30,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "FoxNanoForge", "count": 1 },
+        { "item": "cable", "charges": 5 }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfgridnanoforge",
+    "group": "Foxplace_Foxfgridnanoforge",
+    "category": "FURN",
+    "required_skills": [ [ "electronics", 1 ] ],
+    "time": "1 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 5 ] ],
+    "components": [ [ [ "FoxNanoForge", 1 ] ], [ [ "cable", 5 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfgridnanoforge"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfgridnanoforge",
+    "name": "Install Nanoforge"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfportalnexusmagic",
+    "name": "portal nexus",
+    "symbol": "T",
+    "looks_like": "tr_telepad",
+    "description": "This nexus allows you to teleport back to this location from the field or other portals.",
+    "color": "dark_gray",
+    "move_cost_mod": 1,
+    "coverage": 35,
+    "required_str": 1,
+    "flags": [ "TRANSPARENT", "TRANSLOCATOR", "NOCOLLIDE" ],
+    "examine_action": "translocator"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfrunecraftingaltar",
+    "looks_like": "f_boulder_small",
+    "name": "runecrafting altar",
+    "description": "A big rock shaped to focus essence and act as a convenient worktable. Adorned with crystallized essence, a magic circle is etched in.",
+    "symbol": "o",
+    "color": "dark_gray",
+    "move_cost_mod": 3,
+    "coverage": 30,
+    "required_str": 10,
+    "crafting_pseudo_item": "Foxrunecraftingaltar",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "TINY" ],
+    "bash": {
+      "str_min": 16,
+      "str_max": 40,
+      "sound": "smash!",
+      "sound_fail": "thump.",
+      "items": [ { "item": "rock", "count": [ 32, 40 ] }, { "item": "Foxcrystallizedessence", "count": [ 0, 10 ] } ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfrunecraftingaltar",
+    "group": "FoxBuild_Foxfrunecraftingaltar",
+    "category": "FURN",
+    "required_skills": [ [ "FoxEssSpellcasting", 1 ] ],
+    "time": "2 h",
+    "components": [ [ [ "rock", 40 ] ], [ [ "Foxcrystallizedessence", 10 ] ] ],
+    "pre_special": "check_empty",
+    "post_furniture": "Foxfrunecraftingaltar"
+  },
+  {
+    "type": "construction_group",
+    "id": "FoxBuild_Foxfrunecraftingaltar",
+    "name": "Construct Runecrafting altar"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_canvas_wall",
+    "looks_like": "f_canvas_wall",
+    "name": "ballistic weave wall",
+    "description": "A wall made of ballistic weave cloth, reinforced with adamantine supports.",
+    "symbol": "#",
+    "color": "blue",
+    "move_cost_mod": -1,
+    "coverage": 95,
+    "required_str": -1,
+    "flags": [ "NOITEM", "BLOCK_WIND", "SUN_ROOF_ABOVE" ],
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "tent_centers": [ "Foxf_groundsheet" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_large_canvas_wall",
+    "looks_like": "f_large_canvas_wall",
+    "name": "ballistic weave wall",
+    "description": "A wall made of ballistic weave cloth, reinforced with adamantine supports.",
+    "symbol": "#",
+    "color": "blue",
+    "move_cost_mod": -1,
+    "coverage": 95,
+    "required_str": -1,
+    "flags": [ "NOITEM", "BLOCK_WIND", "SUN_ROOF_ABOVE" ],
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "collapse_radius": 2,
+      "tent_centers": [ "Foxf_center_groundsheet", "Foxf_center_groundsheetbig" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_canvas_door",
+    "looks_like": "f_canvas_door",
+    "name": "ballistic weave flap",
+    "description": "This ballistic weave flap door could be pulled aside.",
+    "symbol": "+",
+    "color": "blue",
+    "move_cost_mod": -1,
+    "coverage": 95,
+    "required_str": -1,
+    "flags": [ "NOITEM", "DOOR", "BLOCK_WIND", "SUN_ROOF_ABOVE" ],
+    "open": "Foxf_canvas_door_o",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "tent_centers": [ "Foxf_groundsheet" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_canvas_door_o",
+    "looks_like": "f_canvas_door_o",
+    "name": "open ballistic weave flap",
+    "description": "This ballistic weave flap door has been pulled aside.",
+    "symbol": ".",
+    "color": "blue",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT" ],
+    "close": "Foxf_canvas_door",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "tent_centers": [ "Foxf_groundsheet", "Foxf_center_groundsheet", "Foxf_center_groundsheetbig" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_large_canvas_door",
+    "looks_like": "f_large_canvas_door",
+    "name": "canvas flap",
+    "description": "This heavy canvas flap door could be pulled aside.",
+    "symbol": "+",
+    "color": "blue",
+    "move_cost_mod": -1,
+    "coverage": 95,
+    "required_str": -1,
+    "flags": [ "NOITEM", "DOOR", "BLOCK_WIND", "SUN_ROOF_ABOVE" ],
+    "open": "Foxf_large_canvas_door_o",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "collapse_radius": 2,
+      "tent_centers": [ "Foxf_center_groundsheet", "Foxf_center_groundsheetbig" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_large_canvas_door_o",
+    "looks_like": "f_large_canvas_door_o",
+    "name": "open canvas flap",
+    "description": "This heavy canvas flap door has been pulled aside.",
+    "symbol": ".",
+    "color": "blue",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT" ],
+    "close": "Foxf_large_canvas_door",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "collapse_radius": 2,
+      "tent_centers": [ "Foxf_center_groundsheet", "Foxf_center_groundsheetbig" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_groundsheet",
+    "looks_like": "f_groundsheet",
+    "name": "adamantine plating",
+    "description": "This adamantine plating will keep you comfortable.",
+    "symbol": ";",
+    "color": "green",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "INDOORS", "NOCOLLIDE", "SUN_ROOF_ABOVE" ],
+    "examine_action": "portable_structure",
+    "deployed_item": "Foxsmalltentkit",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "items": [ { "item": "Foxsmalltentbroken" } ],
+      "tent_centers": [ "Foxf_groundsheet" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_large_groundsheet",
+    "looks_like": "f_large_groundsheet",
+    "name": "adamantine plating",
+    "description": "This adamantine plating will keep you comfortable.",
+    "symbol": ";",
+    "color": "green",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "INDOORS", "NOCOLLIDE", "SUN_ROOF_ABOVE" ],
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "collapse_radius": 2,
+      "tent_centers": [ "Foxf_center_groundsheet", "Foxf_center_groundsheetbig" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_center_groundsheet",
+    "looks_like": "f_center_groundsheet",
+    "name": "adamantine plating",
+    "description": "This adamantine plating will keep you comfortable.",
+    "symbol": ";",
+    "color": "green",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "INDOORS", "NOCOLLIDE", "SUN_ROOF_ABOVE" ],
+    "examine_action": "portable_structure",
+    "deployed_item": "Foxmediumtentkit",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "collapse_radius": 2,
+      "items": [ { "item": "Foxmediumtentbroken" } ],
+      "tent_centers": [ "Foxf_center_groundsheet" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_center_groundsheetbig",
+    "looks_like": "f_center_groundsheet",
+    "name": "adamantine plating",
+    "description": "This adamantine plating will keep you comfortable.",
+    "symbol": ";",
+    "color": "green",
+    "move_cost_mod": 0,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "INDOORS", "NOCOLLIDE", "SUN_ROOF_ABOVE" ],
+    "examine_action": "portable_structure",
+    "deployed_item": "Foxlargetentkit",
+    "bash": {
+      "str_min": 40,
+      "str_max": 50,
+      "sound": "rrrrip!",
+      "sound_fail": "slap!",
+      "sound_vol": 8,
+      "collapse_radius": 2,
+      "items": [ { "item": "Foxlargetentbroken" } ],
+      "tent_centers": [ "Foxf_center_groundsheetbig" ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_dirtpile",
+    "name": "dirt pile",
+    "description": "A pile of dirt on the floor. I don't know what you were expecting.  You can plant stuff here.",
+    "symbol": "}",
+    "color": "brown",
+    "looks_like": "t_dirtmound",
+    "move_cost_mod": 1,
+    "required_str": -1,
+    "flags": [ "TRANSPARENT", "PLANTABLE", "FLAT", "MOUNTABLE", "EASY_DECONSTRUCT" ],
+    "deconstruct": { "items": [ { "item": "material_soil", "count": 40 } ] },
+    "examine_action": "dirtmound",
+    "plant_data": { "transform": "Foxf_dirtpileseed" }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_dirtpileseed",
+    "copy-from": "Foxf_dirtpile",
+    "name": "freshly-planted dirt pile",
+    "description": "A pile of dirt on the floor.  This one contains some seeds that was recently planted.",
+    "symbol": "}",
+    "color": "brown",
+    "looks_like": "f_plant_seed",
+    "required_str": -1,
+    "examine_action": "aggie_plant",
+    "flags": [ "PLANT", "SEALED", "TRANSPARENT", "CONTAINER", "NOITEM", "TINY", "DONT_REMOVE_ROTTEN", "GROWTH_SEED" ],
+    "plant_data": { "transform": "Foxf_dirtpileseedling", "base": "Foxf_dirtpile" }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_dirtpileseedling",
+    "copy-from": "Foxf_dirtpile",
+    "name": "young dirt pile",
+    "description": "A pile of dirt on the floor.  This one contains a mushroom culture that's just started to grow.",
+    "symbol": "}",
+    "color": "brown",
+    "required_str": -1,
+    "looks_like": "f_plant_seedling",
+    "examine_action": "aggie_plant",
+    "flags": [ "PLANT", "SEALED", "TRANSPARENT", "CONTAINER", "NOITEM", "TINY", "DONT_REMOVE_ROTTEN", "GROWTH_SEEDLING" ],
+    "plant_data": { "transform": "Foxf_dirtpilemature", "base": "Foxf_dirtpile" }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_dirtpilemature",
+    "copy-from": "Foxf_dirtpile",
+    "name": "maturing dirt pile",
+    "description": "A pile of dirt on the floor.  This one contains a plant that'll be ready to harvest soon.",
+    "symbol": "}",
+    "color": "brown",
+    "required_str": -1,
+    "looks_like": "f_plant_mature",
+    "examine_action": "aggie_plant",
+    "flags": [ "PLANT", "SEALED", "TRANSPARENT", "CONTAINER", "NOITEM", "TINY", "DONT_REMOVE_ROTTEN", "GROWTH_MATURE" ],
+    "plant_data": { "transform": "Foxf_dirtpileharvest", "base": "Foxf_dirtpile" }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_dirtpileharvest",
+    "copy-from": "Foxf_dirtpile",
+    "name": "harvestable dirt pile",
+    "description": "A pile of dirt on the floor.  This one has crops you can harvest.",
+    "symbol": "}",
+    "color": "brown",
+    "required_str": -1,
+    "looks_like": "f_plant_harvest",
+    "examine_action": "aggie_plant",
+    "flags": [ "PLANT", "SEALED", "TRANSPARENT", "CONTAINER", "NOITEM", "TINY", "DONT_REMOVE_ROTTEN", "GROWTH_HARVEST" ],
+    "plant_data": { "transform": "Foxf_dirtpile", "base": "Foxf_dirtpile" }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_dirtpile_on_floor",
+    "group": "Foxplace_dirtpile_on_floor",
+    "category": "FURN",
+    "time": "5 m",
+    "components": [ [ [ "material_soil", 40 ] ] ],
+    "dark_craftable": true,
+    "pre_flags": [ "FLAT" ],
+    "post_furniture": "Foxf_dirtpile"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_dirtpile_on_floor",
+    "name": "Place dirt on the floor"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_magicfreezer",
+    "name": "magic freezer",
+    "looks_like": "f_freezer_on",
+    "symbol": "{",
+    "description": "This pocket dimension looks like a freezer and remains a frozen place to preserve your food even without electricity.",
+    "color": "blue",
+    "move_cost_mod": 2,
+    "required_str": 1,
+    "max_volume": "2000 L",
+    "flags": [  "FREEZER", "CONTAINER", "PLACE_ITEM", "EASY_DECONSTRUCT" ],
+    "deconstruct": { "items": [ { "item": "FoxVicPocketDimensionitem", "count": 1 } ] }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_magic_freezer",
+    "group": "Foxplace_magic_freezer",
+    "category": "FURN",
+    "time": "1 m",
+    "components": [ [ [ "FoxVicPocketDimensionitem", 1 ] ] ],
+    "dark_craftable": true,
+    "pre_special": "check_empty",
+    "post_furniture": "Foxf_magicfreezer"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_magic_freezer",
+    "name": "Place magic freezer"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_magic_lamp_off",
+    "symbol": "T",
+    "color": "light_gray",
+    "move_cost_mod": 2,
+    "required_str": 1,
+    "looks_like": "f_floor_lamp",
+    "name": "magic lamp (off)",
+    "deconstruct": { "items": [ { "item": "Foxlightorbbig", "count": 1 } ] },
+    "flags": [ "TRANSPARENT", "PLACE_ITEM", "EASY_DECONSTRUCT" ],
+    "description": "Disguised as a floor lamp, this orb makes light without power. It's off.",
+    "examine_action": "transform",
+    "transforms_into": "Foxf_magic_lamp",
+    "prompt": "Switch on the magic lamp.",
+    "message": "You switch on the magic lamp."
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_magic_lamp",
+    "symbol": "T",
+    "color": "light_gray",
+    "move_cost_mod": 2,
+    "required_str": 1,
+    "name": "magic lamp (on)",
+    "looks_like": "f_floor_lamp_on",
+    "deconstruct": { "items": [ { "item": "Foxlightorbbig", "count": 1 } ] },
+    "flags": [ "TRANSPARENT", "PLACE_ITEM", "EASY_DECONSTRUCT" ],
+    "description": "Disguised as a floor lamp, this orb makes light without power. It's on.",
+    "examine_action": "transform",
+    "transforms_into": "Foxf_magic_lamp_off",
+    "prompt": "Switch off the magic lamp.",
+    "message": "You switch off the magic lamp.",
+    "light_emitted": 160
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_magic_lamp",
+    "group": "Foxplace_magic_lamp",
+    "category": "FURN",
+    "time": "1 m",
+    "components": [ [ [ "Foxlightorbbig", 1 ] ] ],
+    "dark_craftable": true,
+    "pre_special": "check_empty",
+    "post_furniture": "Foxf_magic_lamp_off"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_magic_lamp",
+    "name": "Place magic lamp"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_magic_heater_off",
+    "symbol": "T",
+    "color": "light_gray",
+    "move_cost_mod": 2,
+    "required_str": 1,
+    "looks_like": "f_space_heater_off",
+    "name": "magic heater (off)",
+    "deconstruct": { "items": [ { "item": "FoxEternalFlameboxed", "count": 1 } ] },
+    "flags": [ "TRANSPARENT", "PLACE_ITEM", "EASY_DECONSTRUCT" ],
+    "description": "Disguised as a space heater, your flame makes heat without power. It's off.",
+    "examine_action": "transform",
+    "transforms_into": "Foxf_magic_heater",
+    "prompt": "Switch on the magic heater.",
+    "message": "You switch on the magic heater."
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_magic_heater",
+    "symbol": "T",
+    "color": "light_gray",
+    "move_cost_mod": 2,
+    "required_str": 1,
+    "name": "magic heater (on)",
+    "looks_like": "f_space_heater_on",
+    "deconstruct": { "items": [ { "item": "FoxEternalFlameboxed", "count": 1 } ] },
+    "flags": [ "TRANSPARENT", "PLACE_ITEM", "EASY_DECONSTRUCT", "EMITTER"  ],
+    "emissions": [ "emit_hot_air2_blast" ],
+    "description": "Disguised as a space heater, your flame makes heat without power. It's on.",
+    "examine_action": "transform",
+    "transforms_into": "Foxf_magic_heater_off",
+    "prompt": "Switch off the magic heater.",
+    "message": "You switch off the magic heater."
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_magic_heater_off",
+    "group": "Foxplace_magic_heater_off",
+    "category": "FURN",
+    "time": "1 m",
+    "components": [ [ [ "FoxEternalFlameboxed", 1 ] ] ],
+    "dark_craftable": true,
+    "pre_special": "check_empty",
+    "post_furniture": "Foxf_magic_heater_off"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_magic_heater_off",
+    "name": "Place magic heater"
+  },
+  {
+    "type": "terrain",
+    "id": "Foxt_tarcrete_roof",
+    "name": "tarcrete roof",
+    "description": "A flat, black tarcrete section of rooftop. Heavily resistant to damage, it would take serious explosives to breach.",
+    "symbol": ".",
+    "looks_like": "t_flat_roof",
+    "color": "dark_gray",
+    "move_cost": 2,
+    "flags": [ "TRANSPARENT", "FLAT" ],
+    "bash": { "str_min": 180, "str_max": 460, "sound": "crash!", "sound_fail": "whump!", "bash_below": true }
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxinstall_carbattery",
+    "name": "Install Essence Car Battery"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxinstall_essencestoragebattery",
+    "name": "Install Essence Storage Battery"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_carbattery",
+    "looks_like": "f_battery_large",
+    "name": "mounted essence car battery",
+    "description": "An essence car battery connected to building's electric grid.",
+    "symbol": ":",
+    "color": "blue_white",
+    "move_cost_mod": -1,
+    "coverage": 60,
+    "required_str": -1,
+    "active": [ "battery", { "max_stored": 30000 } ],
+    "examine_action": "check_power",
+    "flags": [ "TRANSPARENT" ],
+    "deconstruct": {
+      "items": [
+        { "item": "solder_wire", "charges": 10 },
+        { "item": "sheet_metal_small", "count": 4 },
+        { "item": "cable", "charges": 5 },
+        { "item": "Foxcarbattery", "count": 1 }
+      ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 20,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "solder_wire", "charges": [ 5, 10 ] },
+        { "item": "scrap", "count": [ 2, 4 ] },
+        { "item": "sheet_metal_small", "count": [ 0, 2 ] },
+        { "item": "cable", "charges": [ 1, 3 ] }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_storagebattery",
+    "looks_like": "f_battery_large",
+    "name": "mounted essence storage battery",
+    "description": "An essence storage battery connected to building's electric grid.",
+    "symbol": ":",
+    "color": "blue_white",
+    "move_cost_mod": -1,
+    "coverage": 60,
+    "required_str": -1,
+    "active": [ "battery", { "max_stored": 270000 } ],
+    "examine_action": "check_power",
+    "flags": [ "TRANSPARENT" ],
+    "deconstruct": {
+      "items": [
+        { "item": "solder_wire", "charges": 10 },
+        { "item": "sheet_metal_small", "count": 4 },
+        { "item": "cable", "charges": 5 },
+        { "item": "Foxessencelargebattery", "count": 1 }
+      ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 20,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "solder_wire", "charges": [ 5, 10 ] },
+        { "item": "scrap", "count": [ 2, 4 ] },
+        { "item": "sheet_metal_small", "count": [ 0, 2 ] },
+        { "item": "cable", "charges": [ 1, 3 ] }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_carbattery",
+    "group": "Foxinstall_carbattery",
+    "category": "WORKSHOP",
+    "required_skills": [ [ "fabrication", 3 ], [ "electronics", 1 ] ],
+    "time": "30 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "components": [ [ [ "sheet_metal_small", 4 ] ], [ [ "cable", 5 ] ], [ [ "Foxcarbattery", 1 ] ] ],
+    "pre_note": "Will only work if constructed in a building with an electric grid.",
+    "pre_special": "check_empty",
+    "post_furniture": "Foxf_carbattery"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_storagebattery",
+    "group": "Foxinstall_essencestoragebattery",
+    "category": "WORKSHOP",
+    "required_skills": [ [ "fabrication", 3 ], [ "electronics", 1 ] ],
+    "time": "35 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "components": [ [ [ "sheet_metal_small", 4 ] ], [ [ "cable", 5 ] ], [ [ "Foxessencelargebattery", 1 ] ] ],
+    "pre_note": "Will only work if constructed in a building with an electric grid.",
+    "pre_special": "check_empty",
+    "post_furniture": "Foxf_storagebattery"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfpreppedcorpsepit",
+    "looks_like": "f_leather_tarp",
+    "name": "covered corpse pit",
+    "symbol": "U",
+    "description": "A corpse pit covered with a leather tarp, now you're ready to do some magic.",
+    "color": "light_red",
+    "move_cost_mod": 0,
+    "required_str": 3,
+    "crafting_pseudo_item": "Foxcorpsepititem",
+    "flags": [ "TRANSPARENT", "EASY_DECONSTRUCT" ],
+    "deconstruct": {
+      "items": [ { "item": "leather_tarp", "count": 1 } ]
+    },
+    "bash": {
+      "str_min": 5,
+      "str_max": 10,
+      "sound": "smash!",
+      "sound_fail": "whump.",
+      "items": [ { "item": "leather_tarp", "count": [ 1, 1 ] } ]
+    }
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconstr_coveredcorpsepit",
+    "name": "Cover corpse pit with tarp"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_coveredcorpsepit",
+    "group": "Foxconstr_coveredcorpsepit",
+    "category": "CONSTRUCT",
+    "time": "1 m",
+    "components": [[ [ "leather_tarp", 1 ] ] ],
+    "pre_note": "Can be deconstructed without tools.",
+    "pre_terrain": "t_pit_corpsed",
+    "post_furniture": "Foxfpreppedcorpsepit"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxf_crystal_panel",
+    "name": "mounted crystal panel",
+    "looks_like": "f_solar_unit",
+    "description": "A mounted solar panel connected to building's electric grid.",
+    "symbol": "#",
+    "color": "yellow",
+    "move_cost_mod": 2,
+    "required_str": -1,
+    "active": [ "solar", { "power": 80 } ],
+    "flags": [ "TRANSPARENT" ],
+    "deconstruct": {
+      "items": [
+        { "item": "solder_wire", "charges": 20 },
+        { "item": "plastic_chunk", "count": 2 },
+        { "item": "steel_chunk", "count": 5 },
+        { "item": "pipe", "count": 4 },
+        { "item": "Foxcrystalpanel", "count": 1 }
+      ]
+    },
+    "bash": {
+      "str_min": 10,
+      "str_max": 20,
+      "sound": "whack!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "solder_wire", "charges": [ 10, 20 ] },
+        { "item": "Foxcrystallizedessence", "count": [ 1, 10 ] },
+        { "item": "scrap", "count": [ 3, 6 ] },
+        { "item": "amplifier", "prob": 50 },
+        { "item": "cable", "charges": [ 10, 15 ] },
+        { "item": "power_supply", "prob": 50 },
+        { "item": "scrap", "count": [ 4, 6 ] },
+        { "item": "plastic_chunk", "count": [ 1, 2 ] },
+        { "item": "steel_chunk", "count": 3 }
+      ]
+    }
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconstr_crystalpanel",
+    "name": "Install Crystal Panel"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_crystalpanel",
+    "group": "Foxconstr_crystalpanel",
+    "category": "WORKSHOP",
+    "required_skills": [ [ "fabrication", 4 ], [ "electronics", 1 ] ],
+    "time": "30 m",
+    "qualities": [ [ { "id": "SCREW", "level": 1 } ] ],
+    "using": [ [ "soldering_standard", 20 ] ],
+    "components": [ [ [ "steel_chunk", 5 ] ], [ [ "plastic_chunk", 2 ] ], [ [ "pipe", 4 ] ], [ [ "Foxcrystalpanel", 1 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_special": "check_empty",
+    "post_furniture": "Foxf_crystal_panel"
+  },
+  {
+    "type": "furniture",
+    "id": "Fox_wreck",
+    "name": "Imperial scrap",
+    "looks_like": "f_wreckage",
+    "description": "Some sort of Imperial vehicle was destroyed here and this is smaller pieces, it's too unwieldy to walk or stand on.",
+    "symbol": "#",
+    "color": "cyan",
+    "move_cost_mod": -1,
+    "coverage": 90,
+    "max_volume": "1000 L",
+    "required_str": -1,
+    "flags": [
+      "CONTAINER",
+      "TRANSPARENT",
+      "SEALED",
+      "ALLOW_FIELD_EFFECT",
+      "SHORT",
+      "RUBBLE"
+    ],
+    "examine_action": "rubble",
+    "bash": {
+      "str_min": 300,
+      "str_max": 400,
+      "sound": "smash!",
+      "sound_fail": "thump.",
+      "items": [
+        { "item": "Foxisteelplate", "damage": [ 1, 3 ] },
+        { "item": "Foximperialsteelchunk", "count": [ 5, 30 ] },
+        { "item": "Foximpmechparts", "count": [ 1, 6 ], "prob": 25 }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Fox_wreckdense",
+    "name": "Imperial wreck",
+    "looks_like": "f_wreckage",
+    "description": "Some sort of Imperial vehicle was destroyed here, it's a dense mess of valuable metal, ocassional electronics, and possibly ballistic weave from the seats.",
+    "symbol": "#",
+    "color": "cyan",
+    "move_cost_mod": -1,
+    "coverage": 90,
+    "max_volume": "1000 L",
+    "required_str": -1,
+    "flags": [
+      "CONTAINER",
+      "SEALED",
+      "ALLOW_FIELD_EFFECT",
+      "SHORT",
+      "RUBBLE"
+    ],
+    "examine_action": "rubble",
+    "bash": {
+      "str_min": 300,
+      "str_max": 400,
+      "sound": "smash!",
+      "sound_fail": "thump.",
+      "items": [
+        { "item": "Foxisteelframe", "damage": [ 1, 3 ] },
+        { "item": "Foxisteelplate", "damage": [ 1, 3 ] },
+        { "item": "Foximperialsteelchunk", "charges": [ 5, 30 ] },
+        { "item": "FoxBallisticWeavescrap", "charges": [ 30, 200 ], "prob": 20 },
+        { "item": "Foximpelectronics", "charges": [ 1, 4 ], "prob": 15 },
+        { "item": "Foximpmicroelectronics", "charges": [ 1, 4 ], "prob": 5 },
+        { "item": "Foximpmechparts", "charges": [ 1, 5 ], "prob": 25 },
+        { "item": "cable", "charges": [ 30, 90 ], "prob": 35 }
+      ]
+    }
+  },
+  {
+    "type": "furniture",
+    "id": "Fox_wreckturbine",
+    "name": "Imperial engine wreck",
+    "looks_like": "f_wreckage",
+    "description": "This is where an engine was, it must have a lot of stuff.",
+    "symbol": "#",
+    "color": "cyan",
+    "move_cost_mod": -1,
+    "coverage": 90,
+    "max_volume": "1000 L",
+    "required_str": -1,
+    "flags": [
+      "CONTAINER",
+      "SEALED",
+      "ALLOW_FIELD_EFFECT",
+      "SHORT",
+      "RUBBLE"
+    ],
+    "examine_action": "rubble",
+    "bash": {
+      "str_min": 300,
+      "str_max": 400,
+      "sound": "smash!",
+      "sound_fail": "thump.",
+      "items": [
+        { "item": "Foxisteelframe", "damage": [ 1, 3 ] },
+        { "item": "Foximperialsteelchunk", "charges": [ 200, 300 ] },
+        { "item": "drivebelt", "charges": [ 1, 2 ], "damage": [ 0, 2 ] },
+        { "item": "cable", "charges": [ 90, 300 ] },
+        { "item": "Foximpelectronics", "charges": [ 5, 30 ] },
+        { "item": "Foximpmicroelectronics", "charges": [ 1, 4 ], "prob": 15 },
+        { "item": "Foximpmechparts", "charges": [ 10, 30 ] }
+      ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "Foxt_Tarcreteroof",
+    "looks_like": "t_thconc_floor",
+    "name": "Tarcrete floor",
+    "description": "A thick section of tarcrete capable of surviving insane punishment.",
+    "symbol": ".",
+    "color": "cyan",
+    "move_cost": 2,
+    "roof": "Foxt_tarcrete_roof",
+    "flags": [ "TRANSPARENT", "SUPPORTS_ROOF", "COLLAPSES", "INDOORS", "FLAT", "ROAD" ],
+    "bash": {
+      "sound": "SMASH!",
+      "ter_set": "t_dirt",
+      "str_min": 600,
+      "str_max": 800,
+      "str_min_supported": 600,
+      "items": [ { "item": "Foxtarcrete", "count": [ 20, 20 ] } ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "Foxt_Tarcretefloor",
+    "looks_like": "t_thconc_floor",
+    "name": "Tarcrete floor (no roof)",
+    "description": "A thick section of tarcrete capable of surviving insane punishment, this doesn't have a roof.",
+    "symbol": ".",
+    "color": "cyan",
+    "move_cost": 2,
+    "flags": [ "TRANSPARENT", "FLAT", "ROAD" ],
+    "bash": {
+      "sound": "SMASH!",
+      "sound_fail": "whump!",
+      "ter_set": "t_dirt",
+      "str_min": 600,
+      "str_max": 800,
+      "str_min_supported": 600,
+      "items": [ { "item": "Foxtarcrete", "count": [ 20, 20 ] } ]
+    }
+  },
+  {
+    "type": "terrain",
+    "id": "Foxt_Tarcretewall",
+    "looks_like": "t_concrete_wall",
+    "name": "Tarcrete wall",
+    "description": "A thick section of tarcrete capable of surviving insane punishment.",
+    "symbol": "LINE_OXOX",
+    "color": "light_gray",
+    "move_cost": 0,
+    "coverage": 100,
+    "roof": "Foxt_tarcrete_roof",
+    "flags": [ "NOITEM", "SUPPORTS_ROOF", "WALL", "MINEABLE", "NO_SCENT", "AUTO_WALL_SYMBOL",  "BLOCK_WIND" ],
+    "connects_to": "WALL",
+    "bash": {
+      "str_min": 600,
+      "str_max": 800,
+      "sound": "SMASH!",
+      "sound_fail": "whump!",
+      "ter_set": "t_dirt",
+      "items": [ { "item": "Foxtarcrete", "count": [ 20, 20 ] } ]
+    }
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconstr_Foxttarcreteroof",
+    "name": "Construct Tarcrete roof"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconstr_Foxttarcretefloor",
+    "name": "Construct Tarcrete floor"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxconstr_Foxttarcretewall",
+    "name": "Construct Tarcrete wall"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxttarcreteroof",
+    "group": "Foxconstr_Foxttarcreteroof",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "fabrication", 4 ] ],
+    "time": "60 m",
+    "using": [ [ "forging_standard", 20 ] ],
+    "qualities": [ [ { "id": "SMOOTH", "level": 1 } ] ],
+    "components": [ [ [ "Foxtarcrete", 10 ] ] ],
+    "pre_terrain": "t_pit_shallow",
+    "post_terrain": "Foxt_Tarcreteroof"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxttarcretefloor",
+    "group": "Foxconstr_Foxttarcretefloor",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "fabrication", 4 ] ],
+    "time": "60 m",
+    "using": [ [ "forging_standard", 20 ] ],
+    "qualities": [ [ { "id": "SMOOTH", "level": 1 } ] ],
+    "components": [ [ [ "Foxtarcrete", 10 ] ] ],
+    "pre_terrain": "t_pit_shallow",
+    "post_terrain": "Foxt_Tarcretefloor"
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxttarcretewall",
+    "group": "Foxconstr_Foxttarcretewall",
+    "category": "CONSTRUCT",
+    "required_skills": [ [ "fabrication", 4 ] ],
+    "time": "60 m",
+    "using": [ [ "forging_standard", 20 ] ],
+    "qualities": [ [ { "id": "SMOOTH", "level": 1 } ] ],
+    "components": [ [ [ "Foxtarcrete", 10 ] ] ],
+    "pre_terrain": "t_pit_shallow",
+    "post_terrain": "Foxt_Tarcretewall"
+  },
+  {
+    "type": "furniture",
+    "id": "Foxfgridnutrientsynthesizer",
+    "looks_like": "t_machinery_light",
+    "name": "grid nutrient synthesizer",
+    "symbol": "U",
+    "description": "A nutrient synthesizer connected to the grid, it will turn dirt into food with high voltage.",
+    "color": "light_red",
+    "move_cost_mod": -1,
+    "coverage": 10,
+    "required_str": -1,
+    "crafting_pseudo_item": "Foxfake_nutrientsynthesizer",
+    "flags": [ "TRANSPARENT", "MOUNTABLE", "EASY_DECONSTRUCT" ],
+    "deconstruct": {
+      "items": [ { "item": "Foxnutrientsynthesizersystem", "count": 1 }, { "item": "cable", "charges": 5 }, { "item": "power_supply", "charges": 1 } ]
+    },
+    "bash": {
+      "str_min": 8,
+      "str_max": 30,
+      "sound": "metal screeching!",
+      "sound_fail": "clang!",
+      "items": [
+        { "item": "Foxnutrientsynthesizersystem", "count": 1 },
+        { "item": "cable", "charges": 5 }
+      ]
+    }
+  },
+  {
+    "type": "construction",
+    "id": "Foxconstr_Foxfgridnutrientsynthesizer",
+    "group": "Foxplace_Foxfgridnutrientsynthesizer",
+    "category": "FURN",
+    "required_skills": [ [ "electronics", 1 ] ],
+    "time": "30 m",
+    "qualities": [ 
+    [ { "id": "SCREW", "level": 1 } ]
+  ],
+    "using": [ [ "soldering_standard", 5 ] ],
+    "components": [ [ [ "Foxnutrientsynthesizersystem", 1 ] ], [ [ "cable", 5 ] ], [ [ "power_supply", 1 ] ] ],
+    "pre_note": "Will only work if constructed in/on a building that has an electric grid with a mounted battery.",
+    "pre_special": "check_empty",
+    "dark_craftable": true,
+    "post_furniture": "Foxfgridnutrientsynthesizer"
+  },
+  {
+    "type": "construction_group",
+    "id": "Foxplace_Foxfgridnutrientsynthesizer",
+    "name": "Install Nutrient Synthesizer"
+  }
+]

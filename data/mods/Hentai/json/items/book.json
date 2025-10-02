@@ -1,0 +1,38 @@
+[
+	{
+		"id": "recipe_hentai",
+		"type": "BOOK",
+		"name": "lab journal-Desire",
+
+		"description": "A study journal written in a strange mishmash of Japanese and English languages.  It begins with a description of the research results of XE037 and its useful methods of utilization, concluding with the birth rate graphs in the United States.  It's stamped \"DENIED\" three times...",
+		"weight": 50,
+		"volume": 2,
+		"price": 125000,
+		"material": [ "paper" ],
+		"symbol": "?",
+		"color": "light_green",
+		"skill": "cooking",
+		"required_level": 8,
+		"max_level": 9,
+		"intelligence": 12,
+		"time": 45,
+		"fun": -2
+	},
+	{
+		"id": "dictionnaire_finfernal",
+		"type": "BOOK",
+		"name": "Dictionnaire Infernal",
+
+		"description": "Written by Jacques Auguste Simon Collin de Plancy, this book describes a wide array of worldly beliefs and folklore such demonology, superstitions, divinations and notable people.",
+		"weight": 368,
+		"volume": 3,
+		"price": 550,
+		"material": [ "paper" ],
+		"symbol": "?",
+		"color": "light_gray",
+		"intelligence": 8,
+		"time": 15,
+		"fun": 1,
+		"flags": [ "INSPIRATIONAL" ]
+	}
+]

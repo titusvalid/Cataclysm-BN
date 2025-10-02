@@ -1,0 +1,74 @@
+[
+  {
+    "type": "GENERIC",
+    "id": "Foxpinebark",
+    "looks_like": "willowbark",
+    "symbol": ",",
+    "color": "brown",
+    "name": { "str": "pinebark" },
+    "//": "MST Extra inspired addition.",
+    "description": "A sheet of bark taken from a pine tree with an edible layer between the bark and wood.  Can be roasted and eaten as is or turned to flour.",
+    "price": "0 cent",
+    "price_postapoc": "0 cent",
+    "material": "wood",
+    "weight": "323 g",
+    "volume": "250 ml",
+    "bashing": 4,
+    "to_hit": 1
+  },
+  {
+    "type": "terrain",
+    "id": "t_tree_pine",
+    "symbol": "4",
+    "color": "green",
+    "copy-from": "t_tree_pine",
+    "harvest_by_season": [
+      {
+        "seasons": [ "spring", "summer", "autumn", "winter" ],
+        "entries": [ { "drop": "pine_bough", "base_num": [ 2, 8 ] }, { "drop": "pinecone", "base_num": [ 1, 4 ] }, { "drop": "stick_long", "base_num": [ 1, 2 ] }, { "drop": "Foxpinebark", "base_num": [ 2, 8 ] } ]
+      }
+    ]
+  },
+  {
+    "id": "Foxediblebark",
+    "type": "COMESTIBLE",
+    "comestible_type": "FOOD",
+    "name": { "str": "Edible bark" },
+    "looks_like": "willowbark",
+    "description": "A piece of the edible layer that you find on tree bark, roasted and ready to eat, containing 100 calories despite which bark it's from.  You can make this into flour if you'd like.",
+    "weight": "200 g",
+    "volume": "250 ml",
+    "price": "0 cent",
+    "price_postapoc": "0 cent",
+    "healthy": 2,
+    "fun": 1,
+    "quench": -5,
+    "material": [ "junk" ],
+    "symbol": "%",
+    "color": "green",
+    "calories": 100,
+    "//": "MST Extra inspired addition. IRL it does have vitamins. I'm just winging it because I don't care enough and it's nice if we implement vitamins again, the calories are equal, I think its fine, its too negligible.",
+    "vitamins": [ [ "calcium", 2 ], [ "iron", 1 ], [ "vitC", 5 ] ]
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "egg_roach",
+    "name": "roach egg",
+    "copy-from": "egg_insect",
+    "color": "white",
+    "symbol": "%",
+    "spoils_in": "5 days",
+    "healthy": -2,
+    "quench": 3,
+    "description": "A egg from a giant roach, a bit bigger than a chicken one.  Incredibly gross.",
+    "price": "80 cent",
+    "material": "egg"
+  },
+  {
+    "type": "COMESTIBLE",
+    "id": "egg_roach_plague",
+    "name": "roach egg",
+    "copy-from": "egg_roach",
+    "healthy": -10
+  }
+]

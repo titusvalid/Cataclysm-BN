@@ -1,0 +1,3351 @@
+[  
+  {
+    "type": "talk_topic",
+    "id": "TALK_CHILD",
+    "dynamic_line": {
+      "npc_has_var": "gender",
+      "type": "typevar",
+      "context": "contextvar",
+      "value": "female",
+      "yes": {
+        "u_male": true,
+        "yes": {
+          "and": [
+            {
+              "npc_has_trait": "SMELLY2",
+              "yes": "<daughter_smelly2_npc>",
+              "no": {
+                "u_has_trait": "SMELLY2",
+                "yes": "<daughter_smelly2_player>",
+                "no": {
+                  "npc_has_trait": "SMELLY",
+                  "yes": "<daughter_smelly1_npc>",
+                  "no": {
+                    "u_has_trait": "SMELLY",
+                    "yes": "<daughter_smelly1_player>",
+                    "no": {
+                      "and": [
+                        {
+                          "u_has_effect": "corrupt",
+                          "yes": "<daughter_player_corrupt>",
+                          "no": ""
+                        },
+                        {
+                          "npc_has_effect": "corrupt",
+                          "yes": "<daughter_father_corrupt>",
+                          "no": ""
+                        },
+                        {
+                          "npc_has_effect": "lust",
+                          "yes": "<daughter_father_lust>",
+                          "no": ""
+                        },
+                        {
+                          "npc_has_trait": "PRETTY",
+                          "yes": "<daughter_pretty_reaction>",
+                          "no": ""
+                        },
+                        {
+                          "npc_has_trait": "BIG_BREAST",
+                          "yes": "<daughter_big_breast>",
+                          "no": ""
+                        },
+                        {
+                          "npc_has_trait": "SMALL_BREAST",
+                          "yes": "<daughter_small_breast>",
+                          "no": ""
+                        },
+                        {
+                          "npc_has_trait": "VIRGIN",
+                          "yes": {
+                            "u_has_var": "flirted_with_daughter",
+                            "type": "general",
+                            "context": "relationship",
+                            "value": "yes",
+                            "yes": "Dad, I know we've been... closer lately. But I'm still... inexperienced. Would you be gentle with me if we ever...?",
+                            "no": "<daughter_to_father_flirty>"
+                          },
+                          "no": "<daughter_to_father_flirty>"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "no": "It's tough out here, Mom, but I'm surviving. Just like you taught me."
+      },
+      "no": "Son dialogue here"
+    },
+    "responses": [
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "u_has_effect": "corrupt"
+            }
+          ]
+        },
+        "text": "These urges I'm feeling...",
+        "topic": "TALK_DAUGHTER_CORRUPT_PLAYER"
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "npc_has_effect": "corrupt"
+            }
+          ]
+        },
+        "text": "You seem different lately...",
+        "topic": "TALK_DAUGHTER_CORRUPT"
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "npc_has_effect": "lust"
+            }
+          ]
+        },
+        "text": "Are you feeling alright?",
+        "topic": "TALK_DAUGHTER_LUST"
+      },
+      {
+        "text": "I'm proud of how you've handled yourself.",
+        "success": {
+          "topic": "TALK_FRIEND"
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "npc_has_trait": "VIRGIN"
+            },
+            {
+              "u_has_var": "flirted_with_daughter",
+              "type": "general",
+              "context": "relationship",
+              "value": "yes"
+            }
+          ]
+        },
+        "text": "Your innocence makes you even more beautiful...",
+        "success": {
+          "topic": "TALK_DAUGHTER_VIRGIN",
+          "opinion": {"trust": 2, "value": 2}
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "or": [
+                {"npc_has_trait": "SMALL_BREAST"},
+                {"npc_has_trait": "BIG_BREAST"},
+                {"npc_has_trait": "MULTI_BREAST"},
+                {"npc_has_trait": "HORNS"},
+                {"npc_has_trait": "HORNS_CURLED"},
+                {"npc_has_trait": "HORNS_POINTED"},
+                {"npc_has_trait": "WINGS_BAT"},
+                {"npc_has_trait": "PALE"},
+                {"npc_has_trait": "FANGS"},
+                {"npc_has_trait": "SCALES"},
+                {"npc_has_trait": "FORKED_TONGUE"}
+              ]
+            }
+          ]
+        },
+        "text": "Your appearance has changed, but you're still beautiful to me.",
+        "success": {
+          "topic": "TALK_DAUGHTER_MUTATION",
+          "opinion": {"trust": 2, "value": 1},
+          "effect": {
+            "u_add_var": "accepting_of_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "or": [
+                {"npc_has_trait": "THRESH_FIEND"},
+                {"npc_has_trait": "WINGS_BAT"},
+                {"npc_has_trait": "HORNS_POINTED"},
+                {"npc_has_trait": "TAIL_FIEND"}
+              ]
+            }
+          ]
+        },
+        "text": "These... demonic changes. Are they affecting your mind too?",
+        "success": {
+          "topic": "TALK_DAUGHTER_FIEND",
+          "opinion": {"trust": 1}
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "npc_has_trait": "PRETTY"
+            }
+          ]
+        },
+        "text": "You've grown into such a beautiful woman.",
+        "success": {
+          "topic": "TALK_DAUGHTER_PRETTY",
+          "opinion": {"trust": 1, "value": 2},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "or": [
+                {"u_has_trait": "FANGS"},
+                {"u_has_trait": "CLAWS"},
+                {"u_has_trait": "SCALES"},
+                {"u_has_trait": "WINGS_BAT"},
+                {"u_has_trait": "HORNS"}
+              ]
+            }
+          ]
+        },
+        "text": "Does my appearance frighten you now?",
+        "success": {
+          "topic": "TALK_PLAYER_MUTATED",
+          "opinion": {"trust": 0, "value": 0}
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "u_has_effect": "corrupt"
+            },
+            {
+              "npc_has_effect": "corrupt"
+            }
+          ]
+        },
+        "text": "We're both changing... becoming something new.",
+        "success": {
+          "topic": "TALK_DAUGHTER_BOTH_CORRUPT",
+          "opinion": {"trust": 1, "value": 2},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic", 
+    "id": ["TALK_FRIEND", "TALK_STRANGER_FRIENDLY", "TALK_FRIEND_GUARD"],
+    "responses": [
+      {
+        "condition": {
+          "and": [
+            { "u_has_trait": "SMELLY2" },
+            {
+              "not": {
+                "npc_has_var": "is_child",
+                "type": "typevar",
+                "context": "contextvar",
+                "value": "yes"
+              }
+            }
+          ]
+        },
+        "text": "<npc_refuse_smelly2>",
+        "topic": "TALK_DONE",
+        "opinion": { "anger": 1, "value": -1 }
+      },
+      {
+        "condition": {
+          "npc_has_var": "is_child",
+          "type": "typevar",
+          "context": "contextvar",
+          "value": "yes"
+        },
+        "text": "[Child dialogue]",
+        "topic": "TALK_CHILD"
+      },
+      {
+        "text": "Would you like to have some fun with me?",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30,
+          "mod": [["TRUST", 3], ["VALUE", 2], ["ANGER", -2]]
+        },
+        "condition": {
+          "and": [
+            {
+              "not": {
+                "npc_has_var": "is_child",
+                "type": "typevar",
+                "context": "contextvar",
+                "value": "yes"
+              }
+            },
+            { "not": { "u_has_trait": "SMELLY2" } }
+          ]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2}
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 2, "trust": -2}
+        }
+      },
+      {
+        "text": "We've grown so close... maybe we could be closer?",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 40,
+          "mod": [["TRUST", 4], ["VALUE", 3], ["ANGER", -4]]
+        },
+        "condition": {
+          "and": [
+            {
+              "npc_has_var": "is_child",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "yes"
+            },
+            {
+              "npc_has_var": "gender",
+              "type": "typevar",
+              "context": "contextvar",
+              "value": "female"
+            },
+            "u_male",
+            {
+              "u_has_var": "flirted_with_daughter",
+              "type": "general",
+              "context": "relationship",
+              "value": "yes"
+            },
+            { "not": { "u_has_trait": "SMELLY2" } }
+          ]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 1, "value": 1},
+          "effect": {"u_add_var": "intimate_with_daughter", "type": "general", "context": "relationship", "value": "yes"}
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 3, "trust": -3}
+        }
+      },
+      {
+        "condition": {
+          "and": [
+            { "not": { "npc_has_trait": "THRESH_FIEND" } },
+            { "not": { "npc_has_var": "is_child", "type": "typevar", "context": "contextvar", "value": "yes" } },
+            { "not": { "npc_has_class": "NC_CHILD" } },
+            { "not": { "npc_has_class": "NC_DD_CHILDREN" } },
+            { "not": { "npc_has_class": "NC_DEMONBEING_SCHOOLGIRL" } },
+            { "not": { "npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN" } },
+            { "not": { "npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN" } },
+            { "not": { "npc_has_class": "NC_ANTHRO_INCUBI_MOREHUMAN" } },
+            { "not": { "npc_has_class": "NC_ANTHRO_INCUBI_LESSHUMAN" } },
+            { "not": { "or": [
+              { "npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_MALE" },
+              { "npc_has_class": "NC_ANTHRO_CANINE_HALF_MALE" },
+              { "npc_has_class": "NC_ANTHRO_CANINE_LESSHUMAN_MALE" },
+              { "npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_MALE" },
+              { "npc_has_class": "NC_ANTHRO_FELINE_HALF_MALE" },
+              { "npc_has_class": "NC_ANTHRO_FELINE_LESSHUMAN_MALE" },
+              { "npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_MALE" },
+              { "npc_has_class": "NC_ANTHRO_URSINE_HALF_MALE" },
+              { "npc_has_class": "NC_ANTHRO_URSINE_LESSHUMAN_MALE" },
+              { "npc_has_class": "NC_ANTHRO_CANINE_MOREHUMAN_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_CANINE_HALF_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_CANINE_LESSHUMAN_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_FELINE_MOREHUMAN_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_FELINE_HALF_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_FELINE_LESSHUMAN_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_URSINE_MOREHUMAN_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_URSINE_HALF_FEMALE" },
+              { "npc_has_class": "NC_ANTHRO_URSINE_LESSHUMAN_FEMALE" }
+            ]}}
+          ]
+        },
+        "text": "[Intro] Tell me about yourself...",
+        "topic": "TALK_FRIEND_INTRO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": ["TALK_STRANGER_NEUTRAL", "TALK_FRIEND", "TALK_STRANGER_FRIENDLY"],
+    "responses": [
+      {
+        "text": "You're going to have some fun with me, whether you like it or not.",
+        "trial": {
+          "type": "INTIMIDATE", 
+          "difficulty": 40,
+          "mod": [["FEAR", 5], ["ANGER", -3]]
+        },
+        "condition": {
+          "not": {
+            "npc_has_var": "is_child",
+            "type": "typevar",
+            "context": "contextvar",
+            "value": "yes"
+          }
+        },
+        "success": {
+          "topic": "TALK_SEX_FORCED",
+          "opinion": {"fear": 5, "trust": -5, "value": -5}
+        },
+        "failure": {
+          "topic": "TALK_SEX_HOSTILE",
+          "effect": "hostile",
+          "opinion": {"anger": 10, "trust": -10}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SEX_WILLING", 
+    "dynamic_line": {
+      "and": [
+        {
+          "u_has_var": "intimate_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes",
+          "yes": "<daughter_father_willing>",
+          "no": {
+            "npc_has_trait": "VIRGIN",
+            "yes": "<fun_stuff_partner_fvirgin>",
+            "no": {
+              "npc_compare_var": "value",
+              "op": ">",
+              "value": 5,
+              "yes": "<fun_stuff_accept>",
+              "no": "<fun_stuff_shy>"
+            }
+          }
+        }
+      ]
+    },
+    "responses": [
+      {
+        "condition": {"npc_has_trait": "VIRGIN"},
+        "text": "Don't worry, I'll be gentle with you...",
+        "trial": {"type": "NONE"},
+        "success": {
+          "topic": "TALK_SEX_FOREPLAY",
+          "effect": [
+            {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+            {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"}
+          ]
+        }
+      },
+      {
+        "condition": {
+          "u_has_var": "intimate_with_daughter",
+          "type": "general",
+          "context": "relationship", 
+          "value": "yes"
+        },
+        "text": "I know this is wrong, but it feels right...",
+        "trial": {"type": "NONE"},
+        "success": {
+          "topic": "TALK_SEX_FOREPLAY",
+          "effect": [
+            {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+            {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"}
+          ]
+        }
+      },
+      {
+        "condition": {
+          "or": [
+            {"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+            {"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"}
+          ]
+        },
+        "text": "I'll feed you with my essence...",
+        "effect": [
+          {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"npc_add_effect": "demon_fed", "duration": "24 h"},
+          {"npc_add_trait": "DEMON_HUNGER"},
+          {"u_add_effect": "corrupt", "duration": "2 h"}
+        ],
+        "opinion": {"trust": 1, "value": 2},
+        "topic": "TALK_DONE"
+      },
+      {
+        "condition": {
+          "npc_has_class": "NC_DEMONBEING_SCHOOLGIRL"
+        },
+        "text": "I'll help your demonic hunger...",
+        "effect": [
+          {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"npc_add_effect": "demon_fed", "duration": "12 h"},
+          {"npc_add_trait": "DEMON_HUNGER"},
+          {"u_add_effect": "corrupt", "duration": "2 h"}
+        ],
+        "opinion": {"trust": 3, "value": 3},
+        "topic": "TALK_DONE"
+      },
+      {
+        "text": "Let's find somewhere more comfortable.",
+        "trial": {"type": "NONE"},
+        "success": {
+          "topic": "TALK_SEX_FOREPLAY",
+          "effect": [
+            {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+            {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"}
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SEX_REFUSE",
+    "dynamic_line": {
+      "and": [
+        {
+          "u_has_var": "flirted_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes",
+          "yes": "<daughter_father_refuse>",
+          "no": {
+            "npc_compare_var": "fear",
+            "op": ">",
+            "value": 5,
+            "yes": "<fun_stuff_fear>",
+            "no": "<fun_stuff_refuse>"
+          }
+        }
+      ]
+    },
+    "responses": [
+      {
+        "text": "I insist.",
+        "trial": {
+          "type": "INTIMIDATE",
+          "difficulty": 40,
+          "mod": [["FEAR", 5], ["ANGER", -3]]
+        },
+        "condition": {
+          "not": {
+            "npc_has_var": "is_child",
+            "type": "typevar",
+            "context": "contextvar",
+            "value": "yes"
+          }
+        },
+        "success": {
+          "topic": "TALK_SEX_FORCED",
+          "opinion": {"fear": 5, "trust": -5, "value": -5}
+        },
+        "failure": {
+          "topic": "TALK_SEX_HOSTILE",
+          "effect": "hostile",
+          "opinion": {"anger": 10, "trust": -10}
+        }
+      },
+      {
+        "text": "I understand.",
+        "trial": {"type": "NONE"},
+        "success": {
+          "topic": "TALK_DONE"
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SEX_FOREPLAY",
+    "dynamic_line": {
+      "and": [
+        {
+          "u_has_var": "intimate_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes",
+          "yes": {
+            "npc_has_trait": "VIRGIN",
+            "yes": "<daughter_father_foreplay>",
+            "no": {
+              "npc_has_trait": "FANGS",
+              "yes": "I've always been your little monster, haven't I, Daddy? These fangs... do they scare you, or excite you?",
+              "no": {
+                "npc_has_trait": "SCALES",
+                "yes": "My skin may be different now, but my heart still beats for you the same way. Feel how warm my scales get when you touch me...",
+                "no": {
+                  "npc_has_trait": "HORNS",
+                  "yes": "Be careful of my horns, Daddy... unless you like it a little dangerous.",
+                  "no": {
+                    "npc_has_trait": "WINGS_BAT",
+                    "yes": "My wings may make me look like a demon, but I'm still your angel... or maybe now I'm your little devil.",
+                    "no": {
+                      "npc_has_trait": "PALE",
+                      "yes": "My skin is so pale now... it shows every mark you leave on me, Daddy.",
+                      "no": {
+                        "npc_has_effect": "corrupt",
+                        "yes": "The corruption is making me feel things I never thought possible... it's like my entire body is on fire for you.",
+                        "no": {
+                          "npc_has_effect": "lust",
+                          "yes": "I've never wanted anyone this badly before... it's almost painful how much I need you right now.",
+                          "no": "<daughter_father_foreplay>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "no": {
+            "npc_has_trait": "VIRGIN",
+            "yes": "<fun_stuff_partner_fvirgin>",
+            "no": ""
+          }
+        },
+        {
+          "u_has_var": "intimate_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes",
+          "yes": "",
+          "no": {
+            "npc_compare_var": "trust",
+            "op": ">",
+            "value": 5,
+            "yes": "<fun_stuff_love>",
+            "no": "<fun_stuff_accept_wanderer>"
+          }
+        }
+      ]
+    },
+    "responses": [
+      {
+        "condition": {
+          "u_has_var": "intimate_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes"
+        },
+        "text": "You'll always be my special girl...",
+        "trial": {"type": "NONE"},
+        "success": {
+          "effect": [
+            {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+            {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"}
+          ],
+          "opinion": {"trust": 1, "value": 1},
+          "topic": "TALK_DONE"
+        }
+      },
+      {
+        "condition": {
+          "or": [
+            {"npc_has_class": "NC_ANTHRO_SUCCUBI_MOREHUMAN"},
+            {"npc_has_class": "NC_ANTHRO_SUCCUBI_LESSHUMAN"}
+          ]
+        },
+        "text": "I want to feel you drain me completely...",
+        "effect": [
+          {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"npc_add_effect": "demon_fed", "duration": "24 h"},
+          {"npc_add_trait": "DEMON_HUNGER"},
+          {"u_add_effect": "corrupt", "duration": "2 h"}
+        ],
+        "opinion": {"trust": 1, "value": 2},
+        "topic": "TALK_DONE"
+      },
+      {
+        "condition": {
+          "npc_has_class": "NC_DEMONBEING_SCHOOLGIRL"
+        },
+        "text": "Give in to your demonic nature and feed on me...",
+        "effect": [
+          {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"npc_add_effect": "demon_fed", "duration": "12 h"},
+          {"npc_add_trait": "DEMON_HUNGER"},
+          {"u_add_effect": "corrupt", "duration": "2 h"}
+        ],
+        "opinion": {"trust": 3, "value": 3},
+        "topic": "TALK_DONE"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SEX_FORCED",
+    "dynamic_line": {
+      "npc_has_trait": "VIRGIN",
+      "yes": "<fun_stuff_virgin_fear>",
+      "no": "<fun_stuff_fear>"
+    },
+    "responses": [
+      {
+        "text": "Do as I say.",
+        "topic": "TALK_DONE",
+        "effect": [
+          {"u_add_var": "start_sex_activity", "type": "general", "context": "sex_dialogue", "value": "yes"},
+          {"u_add_var": "is_love_sex", "type": "general", "context": "sex_dialogue", "value": "no"}
+        ],
+        "opinion": {"fear": 3, "trust": -3}
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_SEX_HOSTILE",
+    "dynamic_line": "<fun_stuff_refuse_rough>",
+    "responses": [
+      {
+        "text": "...",
+        "trial": {"type": "NONE"},
+        "success": {"topic": "TALK_DONE"}
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_CORRUPT_PLAYER",
+    "dynamic_line": "<daughter_player_corrupt>",
+    "responses": [
+      {
+        "text": "We should resist these urges...",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "Maybe we shouldn't fight it...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30,
+          "mod": [["TRUST", 3], ["VALUE", 2]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"trust": -2}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic", 
+    "id": "TALK_DAUGHTER_CORRUPT",
+    "dynamic_line": "<daughter_father_corrupt>",
+    "responses": [
+      {
+        "text": "We should get you help...",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "Let me help you with these feelings...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30,
+          "mod": [["TRUST", 3], ["VALUE", 2]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general", 
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"trust": -2}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_LUST",
+    "dynamic_line": "<daughter_father_lust>",
+    "responses": [
+      {
+        "text": "Try to control yourself...",
+        "topic": "TALK_FRIEND"
+      },
+      {
+        "text": "I could help you release that tension...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30,
+          "mod": [["TRUST", 3], ["VALUE", 2]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"trust": -2}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_VIRGIN",
+    "dynamic_line": "Yes, I've... never been with anyone. I always thought my first time would be special, with someone who truly cared about me.",
+    "responses": [
+      {
+        "text": "I would never pressure you into anything.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 2}
+        }
+      },
+      {
+        "text": "I could show you what it's like... with patience and care.",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30,
+          "mod": [["TRUST", 4], ["VALUE", 3]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"trust": -2, "anger": 1}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_MUTATION",
+    "dynamic_line": "<daughter_mutation_reaction>",
+    "responses": [
+      {
+        "text": "You'll always be my daughter, no matter how you change.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 2, "value": 1}
+        }
+      },
+      {
+        "text": "Your mutations make you even more fascinating to me.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 1, "value": 2},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "condition": {
+          "u_has_var": "flirted_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes"
+        },
+        "text": "Let me show you how beautiful I still find you...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 25,
+          "mod": [["TRUST", 4], ["VALUE", 3]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 1}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_FIEND",
+    "dynamic_line": "<daughter_father_fiend>",
+    "responses": [
+      {
+        "text": "You're still my daughter, no matter what you become.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 2, "value": 1}
+        }
+      },
+      {
+        "text": "There's something darkly beautiful about your transformation.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 1, "value": 2},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "condition": {
+          "u_has_var": "flirted_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes"
+        },
+        "text": "Perhaps we're both becoming something new together...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 20,
+          "mod": [["TRUST", 3], ["VALUE", 3]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 1, "trust": -1}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_PRETTY",
+    "dynamic_line": "You really think so? I've always wondered what you thought about how I look now that I'm grown.",
+    "responses": [
+      {
+        "text": "You remind me of your mother, but even more beautiful.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "I've noticed how others look at you. It makes me... protective.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 1, "value": 1}
+        }
+      },
+      {
+        "condition": {
+          "u_has_var": "flirted_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes"
+        },
+        "text": "I find myself admiring you in ways I probably shouldn't...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 20,
+          "mod": [["TRUST", 3], ["VALUE", 2]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"trust": -1, "anger": 1}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_BREASTS",
+    "dynamic_line": "<daughter_big_breast>",
+    "responses": [
+      {
+        "text": "I'm sorry if I made you uncomfortable. I didn't mean to stare.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 1}
+        }
+      },
+      {
+        "text": "You've grown into a beautiful woman. It's hard not to notice.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 0, "value": 1},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "condition": {
+          "u_has_var": "flirted_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes"
+        },
+        "text": "I've always appreciated a woman with your... features.",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 25,
+          "mod": [["TRUST", 2], ["VALUE", 3]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 1, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 2, "trust": -2}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_PLAYER_MUTATED",
+    "dynamic_line": "<daughter_player_mutated>",
+    "responses": [
+      {
+        "text": "I'm still your father, no matter how I look.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 2}
+        }
+      },
+      {
+        "text": "These changes have made me stronger... better able to protect you.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 1, "value": 1},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "condition": {
+          "u_has_var": "flirted_with_daughter",
+          "type": "general",
+          "context": "relationship",
+          "value": "yes"
+        },
+        "text": "These changes have affected me in many ways... including how I see you.",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 20,
+          "mod": [["TRUST", 3], ["VALUE", 2]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 1, "value": 2},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 1, "trust": -1}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_DAUGHTER_BOTH_CORRUPT",
+    "dynamic_line": "<daughter_both_corrupt>",
+    "responses": [
+      {
+        "text": "We should resist these urges. They're not natural.",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 0, "value": -1}
+        }
+      },
+      {
+        "text": "The corruption is changing us both. Maybe we should explore these new feelings...",
+        "success": {
+          "topic": "TALK_FRIEND",
+          "opinion": {"trust": 0, "value": 2},
+          "effect": {
+            "u_add_var": "flirted_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        }
+      },
+      {
+        "text": "Let's give in to the darkness together...",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 10,
+          "mod": [["TRUST", 3], ["VALUE", 3]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 3, "value": 3},
+          "effect": {
+            "u_add_var": "intimate_with_daughter",
+            "type": "general",
+            "context": "relationship",
+            "value": "yes"
+          }
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 1}
+        }
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_INTRO",
+    "dynamic_line": "What do you want to know about me?",
+    "responses": [
+      {
+        "condition": { "npc_has_effect": "lust" },
+        "text": "Those urges you're feeling... I understand.",
+        "topic": "TALK_FRIEND_LUST"
+      },
+      {
+        "condition": { "npc_has_effect": "corrupt" },
+        "text": "I've noticed changes in you. The darkness is... intriguing.",
+        "topic": "TALK_FRIEND_CORRUPT"
+      },
+      {
+        "condition": {
+          "and": [
+            { "u_has_effect": "corrupt" },
+            { "not": { "npc_has_effect": "corrupt" } }
+          ]
+        },
+        "text": "I'm changing in ways I don't understand...",
+        "topic": "TALK_FRIEND_PLAYER_CORRUPT"
+      },
+      {
+        "condition": { "npc_has_trait": "PRETTY" },
+        "text": "Your beauty is striking, even in this broken world.",
+        "topic": "TALK_FRIEND_PRETTY"
+      },
+      {
+        "condition": { "npc_has_trait": "BIG_BREAST" },
+        "text": "Your chest is... impressive.",
+        "topic": "TALK_FRIEND_BREAST_BIG_NORMAL"
+      },
+      {
+        "condition": { "npc_has_trait": "SMALL_BREAST" },
+        "text": "You're not very buxom, are you?",
+        "topic": "TALK_FRIEND_BREAST_SMALL"
+      },
+      {
+        "condition": { "npc_has_trait": "MULTI_BREAST" },
+        "text": "Your... anatomy is unusual. Has that been difficult to adapt to?",
+        "topic": "TALK_FRIEND_BREAST_MULTI"
+      },
+      {
+        "condition": { "npc_has_trait": "HORNS" },
+        "text": "Those horns look tough. Do they cause you trouble?",
+        "topic": "TALK_FRIEND_HORNS"
+      },
+      {
+        "condition": { "npc_has_trait": "WINGS_BAT" },
+        "text": "How do you manage with those wings?",
+        "topic": "TALK_FRIEND_WINGS_BAT"
+      },
+      {
+        "condition": { "npc_has_trait": "SCALES" },
+        "text": "Are those scales as tough as they look?",
+        "topic": "TALK_FRIEND_SCALES"
+      },
+      {
+        "condition": { "npc_has_trait": "FANGS" },
+        "text": "Tell me about those fangs.",
+        "topic": "TALK_FRIEND_FANGS"
+      },
+      {
+        "condition": { "npc_has_trait": "CLAWS" },
+        "text": "How do you deal with having claws?",
+        "topic": "TALK_FRIEND_CLAWS"
+      },
+      {
+        "condition": { "npc_has_trait": "TAIL_FIEND" },
+        "text": "That tail looks... demonic. Does it have a mind of its own?",
+        "topic": "TALK_FRIEND_TAIL_FIEND"
+      },
+      {
+        "condition": { "npc_has_any_trait": [ "TAIL_STUB", "TAIL_FIN", "TAIL_LONG", "TAIL_CATTLE", "TAIL_RAT", "TAIL_THICK", "TAIL_RAPTOR", "TAIL_FLUFFY", "TAIL_STING", "TAIL_CLUB", "TAIL_RABBIT" ] },
+        "text": "How is life with a tail?",
+        "topic": "TALK_FRIEND_TAIL_GENERIC"
+      },
+      {
+        "condition": { "npc_has_trait": "BARK" },
+        "text": "Your skin looks like bark. Is it durable?",
+        "topic": "TALK_FRIEND_BARK"
+      },
+      {
+        "condition": { "npc_has_trait": "CHITIN" },
+        "text": "That chitinous skin is unusual. Tell me about it.",
+        "topic": "TALK_FRIEND_CHITIN"
+      },
+      {
+        "condition": { "or": [ { "npc_has_trait": "ARM_TENTACLES" }, { "npc_has_trait": "LEG_TENTACLES" } ] },
+        "text": "Tentacles instead of limbs must be challenging.",
+        "topic": "TALK_FRIEND_TENTACLES"
+      },
+      {
+        "condition": { "npc_has_trait": "PAWS" },
+        "text": "How do you manage with paws instead of hands?",
+        "topic": "TALK_FRIEND_PAWS"
+      },
+      {
+        "condition": { "npc_has_trait": "MUZZLE" },
+        "text": "Does that muzzle change how you perceive things?",
+        "topic": "TALK_FRIEND_MUZZLE"
+      },
+      {
+        "condition": { "npc_has_trait": "BEAK" },
+        "text": "How does having a beak affect your daily life?",
+        "topic": "TALK_FRIEND_BEAK"
+      },
+      {
+        "condition": { "npc_has_trait": "PROBOSCIS" },
+        "text": "That proboscis is quite unique. How does it work?",
+        "topic": "TALK_FRIEND_PROBOSCIS"
+      },
+      {
+        "condition": { "npc_has_trait": "ANTENNAE" },
+        "text": "What are those antennae like?",
+        "topic": "TALK_FRIEND_ANTENNAE"
+      },
+      {
+        "condition": { "npc_has_trait": "SPINES" },
+        "text": "Those spines look painful. Are they defensive?",
+        "topic": "TALK_FRIEND_SPINES"
+      },
+      {
+        "condition": { "npc_has_trait": "FLOWERS" },
+        "text": "Are those flowers actually part of you?",
+        "topic": "TALK_FRIEND_FLOWERS"
+      },
+      {
+        "condition": { "npc_has_trait": "VIRGIN" },
+        "text": "In a world like this, I'm surprised you've maintained your innocence.",
+        "topic": "TALK_FRIEND_VIRGIN"
+      },
+      {
+        "condition": { "npc_has_trait": "TERRIFYING" },
+        "text": "Have you noticed people seem afraid of you?",
+        "topic": "TALK_FRIEND_TERRIFYING"
+      },
+      {
+        "condition": { "npc_has_trait": "FORKED_TONGUE" },
+        "text": "That forked tongue is unusual. How does it affect you?",
+        "topic": "TALK_FRIEND_FORKED_TONGUE"
+      },
+      {
+        "condition": { "npc_has_trait": "PALE" },
+        "text": "Your skin is remarkably pale. Is that a recent change?",
+        "topic": "TALK_FRIEND_PALE"
+      },
+      {
+        "condition": { "npc_has_trait": "TROGLO" },
+        "text": "You seem uncomfortable in the daylight. Why is that?",
+        "topic": "TALK_FRIEND_TROGLO"
+      },
+      {
+        "condition": { "or": [{"npc_has_trait": "GROWL"}, {"npc_has_trait": "SNARL"}] },
+          "text": "That growl in your voice - is it voluntary?",
+          "topic": "TALK_FRIEND_GROWL_SNARL"
+      },
+      {
+        "condition": { "npc_has_trait": "HISS" },
+        "text": "You have a pronounced hiss when you speak. Why is that?",
+        "topic": "TALK_FRIEND_HISS"
+      },
+      {
+        "condition": { "npc_has_trait": "UNSTABLE" },
+        "text": "You seem to be changing rapidly. What's happening to you?",
+        "topic": "TALK_FRIEND_UNSTABLE"
+      },
+      {
+        "condition": { "npc_has_trait": "CHAOTIC" },
+        "text": "Your mutations seem chaotic and accelerating. How do you cope?",
+        "topic": "TALK_FRIEND_CHAOTIC"
+      },
+      {
+        "condition": { "npc_has_trait": "HOOVES" },
+        "text": "How do you manage with hooves instead of feet?",
+        "topic": "TALK_FRIEND_HOOVES"
+      },
+      {
+        "condition": { "npc_has_trait": "RAP_TALONS" },
+        "text": "Those talons on your feet look dangerous.",
+        "topic": "TALK_FRIEND_TALONS"
+      },
+      {
+        "condition": { "or": [{"npc_has_trait": "ESTRUS_LUPINE"}, {"npc_has_trait": "ESTRUS_FELINE"}] },
+          "text": "You seem... distracted. Something about breeding cycles?",
+          "topic": "TALK_FRIEND_ESTRUS"
+      },
+      {
+        "condition": { "or": [
+          {"npc_has_trait": "OVIPARITY_BIRD"}, 
+          {"npc_has_trait": "OVIPARITY_LIZARD"}, 
+          {"npc_has_trait": "OVIPARITY_INSECT"}
+        ]},
+        "text": "I've heard your reproductive system changed completely. Is it true?",
+        "topic": "TALK_FRIEND_OVIPARITY"
+      },
+      {
+        "condition": { "npc_has_trait": "OVIPOSITOR" },
+        "text": "That... appendage. Is it an ovipositor?",
+        "topic": "TALK_FRIEND_OVIPOSITOR"
+      },
+      {
+        "condition": { "npc_has_trait": "PYROMANIA" },
+        "text": "I've noticed your obsession with fire. What's that about?",
+        "topic": "TALK_FRIEND_PYROMANIA"
+      },
+      {
+        "condition": { "npc_has_trait": "INFRARED" },
+        "text": "Can you really see heat signatures?",
+        "topic": "TALK_FRIEND_INFRARED"
+      },
+      {
+        "condition": { "npc_has_trait": "DEMON_HUNGER" },
+        "text": "You mentioned normal food doesn't satisfy you anymore...",
+        "topic": "TALK_FRIEND_DEMON_HUNGER"
+      },
+      {
+        "condition": { "npc_has_trait": "MULTI_BREAST" },
+        "text": "Your... anatomy is unusual. Has that been difficult to adapt to?",
+        "topic": "TALK_FRIEND_MULTI_BREAST"
+      },
+      {
+        "condition": { 
+          "or": [
+            { "npc_has_trait": "PSYCHOPATH" },
+            { "npc_has_trait": "CANNIBAL" },
+            { "npc_has_trait": "PYROMANIA" }
+          ] 
+        },
+        "text": "There's something... different about you.",
+        "topic": "TALK_FRIEND_PERSONALITY"
+      },
+      {
+        "condition": { "npc_has_trait": "ELECTRORECEPTORS" },
+        "text": "You seem to sense things before they happen. How?",
+        "topic": "TALK_FRIEND_ELECTRORECEPTORS"
+  },
+  {
+        "condition": { "npc_has_trait": "AMORPHOUS" },
+        "text": "Your body seems to... flow differently. What happened?",
+        "topic": "TALK_FRIEND_AMORPHOUS"
+    },
+      {
+        "condition": { "npc_has_trait": "SLIMY" },
+        "text": "That slime you secrete - is it useful?",
+        "topic": "TALK_FRIEND_SLIMY"
+      },
+      {
+        "condition": { "npc_has_trait": "FEATHERS" },
+        "text": "Those feathers - are they just decorative?",
+        "topic": "TALK_FRIEND_FEATHERS"
+      },
+      {
+        "condition": { "npc_has_trait": "FUR" },
+        "text": "Your fur looks soft. Is it as comfortable as it seems?",
+        "topic": "TALK_FRIEND_FUR"
+  },
+  {
+        "condition": { "npc_has_trait": "RADIOGENIC" },
+        "text": "I've noticed you seem drawn to radioactive areas. Why?",
+        "topic": "TALK_FRIEND_RADIOGENIC"
+      },
+      {
+        "condition": { "npc_has_trait": "GLOWING" },
+        "text": "You literally light up the room. How does that work?",
+        "topic": "TALK_FRIEND_GLOWING"
+      },
+      {
+        "condition": { "npc_has_trait": "ALBINO" },
+        "text": "Your coloration is striking. How has that changed you?",
+        "topic": "TALK_FRIEND_ALBINO"
+  },
+  {
+        "condition": { "npc_has_trait": "TAIL_THICK" },
+        "text": "That's quite a substantial tail. Is it useful?",
+        "topic": "TALK_FRIEND_TAIL_THICK"
+    },
+      {
+        "condition": { "npc_has_trait": "COMPOUND_EYES" },
+        "text": "Your eyes are... complex. What do you see?",
+        "topic": "TALK_FRIEND_COMPOUND_EYES"
+      },
+      {
+        "condition": { "npc_has_trait": "HERBIVORE" },
+        "text": "You've completely changed your diet, haven't you?",
+        "topic": "TALK_FRIEND_HERBIVORE"
+  },
+  {
+        "condition": { "npc_has_trait": "CARNIVORE" },
+        "text": "I've noticed you only eat meat now. How's that changed you?",
+        "topic": "TALK_FRIEND_CARNIVORE"
+      },
+      {
+        "condition": { "npc_has_trait": "PONDEROUS" },
+        "text": "You move with such deliberate slowness. Is that by choice?",
+        "topic": "TALK_FRIEND_PONDEROUS"
+      },
+      {
+        "condition": { "npc_has_trait": "TOUGH" },
+        "text": "Your skin seems unusually resilient. Does that help?",
+        "topic": "TALK_FRIEND_TOUGH"
+  },
+  {
+        "condition": { "npc_has_trait": "WEBBED" },
+        "text": "Are those webs between your digits? Are they useful?",
+        "topic": "TALK_FRIEND_WEBBED"
+      },
+      {
+        "condition": { "npc_has_trait": "WHISKERS" },
+        "text": "Those whiskers seem to twitch at the slightest movement. What do they sense?",
+        "topic": "TALK_FRIEND_WHISKERS"
+      },
+      {
+        "condition": { "npc_has_trait": "NAILS" },
+        "text": "Those nails look almost like weapons. How do you manage?",
+        "topic": "TALK_FRIEND_NAILS"
+  },
+  {
+        "condition": { "npc_has_trait": "SLEEK_SCALES" },
+        "text": "Your scales have such a smooth, reflective quality. Tell me about them.",
+        "topic": "TALK_FRIEND_SLEEK_SCALES"
+      },
+      {
+        "condition": { "npc_has_trait": "PHELLODERM" },
+        "text": "That cork-like covering - is it as protective as it looks?",
+        "topic": "TALK_FRIEND_PHELLODERM"
+      },
+      {
+        "condition": { "npc_has_trait": "THORNS" },
+        "text": "Those thorns look painful. Both for you and anyone who touches you.",
+        "topic": "TALK_FRIEND_THORNS"
+      },
+      {
+        "condition": { "npc_has_trait": "NIGHT_VISION" },
+        "text": "Can you really see me clearly in the dark?",
+        "topic": "TALK_FRIEND_NIGHT_VISION"
+  },
+  {
+        "condition": { "npc_has_trait": "ACIDBLOOD" },
+        "text": "Is that really acid flowing through your veins?",
+        "topic": "TALK_FRIEND_ACID_BLOOD"
+      },
+      {
+        "condition": { "npc_has_trait": "HOLLOW_BONES" },
+        "text": "Your movements seem unusually light and graceful.",
+        "topic": "TALK_FRIEND_HOLLOW_BONES"
+      },
+      {
+        "condition": { "npc_has_trait": "MOUTH_TENTACLES" },
+        "text": "Those tentacles in your mouth... what can they do?",
+        "topic": "TALK_FRIEND_MOUTH_TENTACLES"
+      },
+      {
+        "condition": { "or": [
+          {"npc_has_trait": "BEAUTIFUL"}, 
+          {"npc_has_trait": "BEAUTIFUL2"}, 
+          {"npc_has_trait": "BEAUTIFUL3"}
+        ]},
+        "text": "Your beauty is almost supernatural now.",
+        "topic": "TALK_FRIEND_BEAUTIFUL"
+      },
+      {
+        "condition": { "npc_has_trait": "POISONOUS" },
+        "text": "Is your skin really poisonous to touch?",
+        "topic": "TALK_FRIEND_POISONOUS_SKIN"
+    },
+      {
+        "condition": { "npc_has_trait": "TAIL_STINGER" },
+        "text": "That scorpion-like tail looks dangerous... and interesting.",
+        "topic": "TALK_FRIEND_SCORPION_TAIL"
+      },
+      {
+        "condition": { "npc_has_trait": "STICKY_FINGERS" },
+        "text": "I've noticed you can climb almost anything now.",
+        "topic": "TALK_FRIEND_GECKO_CLINGING"
+  },
+  {
+        "condition": { "npc_has_trait": "WEBBED" },
+        "text": "Those webbed digits look quite sensitive.",
+        "topic": "TALK_FRIEND_MEMBRANES"
+      },
+      {
+        "condition": { "npc_has_trait": "TENTACLES" },
+        "text": "How do you manage all those extra arms?",
+        "topic": "TALK_FRIEND_SQUID_ARMS"
+    },
+      {
+        "condition": { "npc_has_trait": "PHOSPHORESENT" },
+        "text": "You seem to glow softly in the darkness.",
+        "topic": "TALK_FRIEND_PHOSPHORESCENT"
+      },
+      {
+        "condition": { "npc_has_trait": "TRANSPIRATION" },
+        "text": "That mist your body produces... what is it?",
+        "topic": "TALK_FRIEND_TRANSPIRATION"
+      },
+      {
+        "condition": { "npc_has_trait": "COLDBLOOD" },
+        "text": "You seem to seek out warmth constantly.",
+        "topic": "TALK_FRIEND_HEAT_DEPENDENT"
+      },
+      {
+        "condition": { "or": [
+          {"npc_has_trait": "PHEROMONE_MAMMAL"}, 
+          {"npc_has_trait": "PHEROMONE_INSECT"}
+        ]},
+        "text": "There's something about your scent that I find... compelling.",
+        "topic": "TALK_FRIEND_STRONG_PHEROMONES"
+      },
+      {
+        "condition": { "npc_has_trait": "MEMBRANE" },
+        "text": "Those membranes over your eyes are fascinating.",
+        "topic": "TALK_FRIEND_NICTITATING_MEMBRANE"
+  },
+  {
+        "condition": { "npc_has_trait": "CHITIN" },
+        "text": "How does it feel having that armored skin?",
+        "topic": "TALK_FRIEND_CHITINOUS_SKIN"
+      },
+      {
+        "condition": { "npc_has_trait": "REGEN" },
+        "text": "I've noticed how quickly you heal. That must be useful.",
+        "topic": "TALK_FRIEND_REGENERATION"
+      },
+      {
+        "condition": { "npc_has_trait": "HAIR_TENTACLES" },
+        "text": "Your hair... it moves on its own?",
+        "topic": "TALK_FRIEND_PREHENSILE_HAIR"
+    },
+      {
+        "condition": { "npc_has_trait": "GLOWING" },
+        "text": "Those bioluminescent patterns on your skin are beautiful.",
+        "topic": "TALK_FRIEND_BIOLUMINESCENT"
+      },
+      {
+        "condition": { "npc_has_trait": "CLAWS_RETRACT" },
+        "text": "Those retractable claws look dangerous... and interesting.",
+        "topic": "TALK_FRIEND_RETRACTABLE_CLAWS"
+      },
+      {
+        "condition": { "npc_has_trait": "WEB_SPINNER" },
+        "text": "I noticed you can produce silk. That must be useful.",
+        "topic": "TALK_FRIEND_WEBWEAVER"
+      },
+      {
+        "condition": { "npc_has_trait": "MANDIBLES" },
+        "text": "Those mandibles are quite distinctive. How do they work?",
+        "topic": "TALK_FRIEND_MANDIBLES"
+  },
+  {
+        "condition": { "npc_has_trait": "TAIL_STINGER" },
+        "text": "That scorpion-like tail is an impressive adaptation.",
+        "topic": "TALK_FRIEND_SCORPIONTAIL"
+      },
+      {
+        "condition": { "or": [
+          {"npc_has_trait": "LEAVES"},
+          {"npc_has_trait": "PLANTSKIN"}
+        ]},
+        "text": "Your skin has a plant-like quality to it. Can you photosynthesize?",
+        "topic": "TALK_FRIEND_PLANTSKIN"
+    },
+      {
+        "condition": { "npc_has_trait": "ELECTRORECEPTORS" },
+        "text": "I've heard you can generate electricity now. Is that true?",
+        "topic": "TALK_FRIEND_BIOELECTRICITY"
+      },
+      {
+        "condition": { "npc_has_trait": "CRYSTALLINE_SKIN" },
+        "text": "Those crystal formations on your skin are beautiful.",
+        "topic": "TALK_FRIEND_CRYSTALSKIN"
+  },
+  {
+        "condition": { "npc_has_trait": "RESONANT_VOICE" },
+        "text": "Your voice has an unusual quality to it. Almost... vibrating.",
+        "topic": "TALK_FRIEND_RESONANCE"
+      },
+      {
+        "condition": { "or": [
+          {"npc_has_trait": "AMORPHOUS"},
+          {"npc_has_trait": "SLIME_HANDS"}
+        ]},
+        "text": "The way your body moves is unusually fluid and adaptable.",
+        "topic": "TALK_FRIEND_FLUIDADAPTATION"
+      },
+      {
+        "condition": { "npc_has_trait": "HERMAPHRODITE" },
+        "text": "I've heard your body has undergone some... unusual changes.",
+        "topic": "TALK_FRIEND_HERMAPHRODITE"
+      },
+      {
+        "condition": { "or": [
+          {"npc_has_trait": "PHEROMONE_MAMMAL"},
+          {"npc_has_trait": "PHEROMONE_INSECT"}
+        ]},
+        "text": "There's something about you that seems to change depending on who you're with.",
+        "topic": "TALK_FRIEND_ADAPTIVEPHEROMONES"
+      },
+      {
+        "text": "Let's talk about something else.",
+        "topic": "TALK_FRIEND"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TERRIFYING",
+    "dynamic_line": "<friend_terrifying>",
+    "responses": [
+      { "text": "That must be isolating...", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I find that intimidating quality... appealing.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+      },
+      {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FORKED_TONGUE",
+    "dynamic_line": "<friend_forked_tongue>",
+    "responses": [
+      { "text": "That's fascinating. What else has changed?", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I wonder what else that tongue might be good for...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PALE",
+    "dynamic_line": "<friend_pale>",
+    "responses": [
+      { "text": "The night suits you then.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "There's something alluring about your pallor...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TROGLO",
+    "dynamic_line": "<friend_troglo>",
+    "responses": [
+      { "text": "We should travel at night then.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I find creatures of the night fascinating...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_GROWL_SNARL",
+    "dynamic_line": "<friend_growl_snarl>",
+    "responses": [
+      { "text": "It's actually quite impressive.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I find that predatory tone... exciting.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+      },
+      {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HISS",
+    "dynamic_line": "<friend_hiss>",
+    "responses": [
+      { "text": "It gives your speech character.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "There's something seductive about that hiss...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_UNSTABLE",
+    "dynamic_line": "<friend_unstable>",
+    "responses": [
+      { "text": "That must be terrifying to experience.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I'd like to explore your changes more... intimately.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CHAOTIC",
+    "dynamic_line": "<friend_chaotic>",
+    "responses": [
+      { "text": "Each day brings a new you.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I'd like to experience your current form while it lasts...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HOOVES",
+    "dynamic_line": "<friend_hooves>",
+    "responses": [
+      { "text": "They seem quite practical, actually.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "There's something primal about them that I find attractive...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TALONS",
+    "dynamic_line": "<friend_talons>",
+    "responses": [
+      { "text": "They're impressive weapons.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "The danger makes you more... interesting.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ESTRUS",
+    "dynamic_line": "<friend_estrus>",
+    "responses": [
+      { "text": "That sounds difficult to manage.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "Perhaps I could help you with those urges...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+      },
+      {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_OVIPARITY",
+    "dynamic_line": "<friend_oviparity>",
+    "responses": [
+      { "text": "That's a profound transformation.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "These changes make you uniquely... enticing.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_OVIPOSITOR",
+    "dynamic_line": "<friend_ovipositor>",
+    "responses": [
+      { "text": "That's a remarkable adaptation.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I find your unique anatomy... stimulating.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PYROMANIA",
+    "dynamic_line": "<friend_pyromania>",
+    "responses": [
+      { "text": "The fire does have a hypnotic quality.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "Your passion for flame is... arousing.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_INFRARED",
+    "dynamic_line": "<friend_infrared>",
+    "responses": [
+      { "text": "That must give you quite an advantage.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "So you can see my body heat? How... intimate.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_DEMON_HUNGER",
+    "dynamic_line": "<friend_demon_hunger>",
+    "responses": [
+      { "text": "That's an incredible adaptation.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I could help satisfy that hunger...", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MULTI_BREAST",
+    "dynamic_line": "<friend_multi_breast>",
+    "responses": [
+      { "text": "These mutations affect us all differently.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I find your unique anatomy... fascinating.", "topic": "TALK_FRIEND_SEX_PROP" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PERSONALITY",
+    "dynamic_line": {
+      "npc_has_trait": "PSYCHOPATH",
+      "yes": "<friend_personality_psycho>",
+      "no": {
+        "npc_has_trait": "CANNIBAL",
+        "yes": "<friend_personality_cannibal>",
+        "no": "<friend_personality_pyro>"
+      }
+    },
+    "responses": [
+      {
+        "condition": { "npc_has_trait": "PSYCHOPATH" },
+        "text": "Not at all. Empathy is overrated in this world.",
+        "topic": "TALK_FRIEND_PSYCHOPATH"
+      },
+      {
+        "condition": { "npc_has_trait": "CANNIBAL" },
+        "text": "You've eaten human flesh, haven't you?",
+        "topic": "TALK_FRIEND_CANNIBAL"
+      },
+      {
+        "condition": { "npc_has_trait": "PYROMANIA" },
+        "text": "The way you talk about fire... it's almost intimate.",
+        "topic": "TALK_FRIEND_PYRO"
+      },
+      {
+        "text": "Let's talk about something else.",
+        "topic": "TALK_FRIEND_INTRO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PSYCHOPATH",
+    "dynamic_line": {
+      "u_has_trait": "PSYCHOPATH",
+      "yes": "<friend_psychopath_player_psycho>",
+      "no": {
+        "u_has_effect": "corrupt",
+        "yes": "<friend_psychopath_player_corrupt>",
+        "no": "<friend_psychopath_player_normal>"
+      }
+    },
+    "responses": [
+      {
+        "condition": { 
+          "or": [
+            { "u_has_trait": "PSYCHOPATH" },
+            { "u_has_effect": "corrupt" }
+          ] 
+        },
+        "text": "We understand each other perfectly...",
+        "topic": "TALK_FRIEND_SEX_PROP"
+      },
+      {
+        "text": "Let's talk about something else.",
+        "topic": "TALK_FRIEND_INTRO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CANNIBAL",
+    "dynamic_line": {
+      "u_has_trait": "CANNIBAL",
+      "yes": "<friend_cannibal_player_cannibal>",
+      "no": {
+        "u_has_effect": "corrupt",
+        "yes": "<friend_cannibal_player_corrupt>",
+        "no": "<friend_cannibal_player_normal>"
+      }
+    },
+    "responses": [
+      {
+        "condition": { 
+          "or": [
+            { "u_has_trait": "CANNIBAL" },
+            { "u_has_effect": "corrupt" }
+          ] 
+        },
+        "text": "I find your honesty... arousing.",
+        "topic": "TALK_FRIEND_SEX_PROP"
+      },
+      {
+        "text": "Let's talk about something else.",
+        "topic": "TALK_FRIEND_INTRO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PYRO",
+    "dynamic_line": {
+      "u_has_trait": "PYROMANIA",
+      "yes": "<friend_pyro_player_pyro>",
+      "no": {
+        "u_has_effect": "corrupt",
+        "yes": "<friend_pyro_player_corrupt>",
+        "no": "<friend_pyro_player_normal>"
+      }
+    },
+    "responses": [
+      {
+        "condition": { 
+          "or": [
+            { "u_has_trait": "PYROMANIA" },
+            { "u_has_effect": "corrupt" }
+          ] 
+        },
+        "text": "Your passion ignites something in me...",
+        "topic": "TALK_FRIEND_SEX_PROP"
+      },
+      {
+        "text": "Let's talk about something else.",
+        "topic": "TALK_FRIEND_INTRO"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SEX_PROP",
+    "dynamic_line": {
+      "npc_has_trait": "SMELLY2",
+      "yes": "<friend_smelly2_npc>",
+      "no": {
+        "and": [
+          {
+            "npc_has_effect": "lust",
+            "yes": "<npc_sex_prop_lust>",
+            "no": ""
+          },
+          {
+            "npc_has_effect": "corrupt",
+            "yes": "<npc_sex_prop_corrupt>",
+            "no": ""
+          },
+          {
+            "npc_has_trait": "VIRGIN",
+            "yes": "<npc_sex_prop_virgin>",
+            "no": ""
+          },
+          {
+            "u_has_effect": "corrupt",
+            "yes": "<npc_sex_prop_corrupt_player>",
+            "no": ""
+          },
+          {
+            "npc_has_trait": "PRETTY",
+            "yes": "<npc_sex_prop_pretty>",
+            "no": "<npc_sex_prop_default>"
+          }
+        ]
+      }
+    },
+    "responses": [
+      {
+        "text": "Let's find somewhere private.",
+        "trial": {
+          "type": "PERSUADE",
+          "difficulty": 30,
+          "mod": [["TRUST", 3], ["VALUE", 2]]
+        },
+        "success": {
+          "topic": "TALK_SEX_WILLING",
+          "opinion": {"trust": 2, "value": 2}
+        },
+        "failure": {
+          "topic": "TALK_SEX_REFUSE",
+          "opinion": {"anger": 1, "trust": -1}
+        }
+      },
+      {
+        "text": "Actually, I changed my mind.",
+        "topic": "TALK_FRIEND"
+      }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HORNS",
+    "dynamic_line": "<friend_mutations_horns>",
+    "responses": [
+      { "text": "Maybe we could... find other ways to use that strength?", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Interesting. What else has changed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WINGS_BAT",
+    "dynamic_line": "<friend_wings_bat>",
+    "responses": [
+      { "text": "Maybe we could find a more... practical use for them?", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Anything else unusual about you?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SCALES",
+    "dynamic_line": "<friend_scales>",
+    "responses": [
+      { "text": "That toughness is attractive...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you noticed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FANGS",
+    "dynamic_line": "<friend_fangs>",
+    "responses": [
+      { "text": "Maybe you could... bite me sometime?", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Interesting. Anything else?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CLAWS",
+    "dynamic_line": "<friend_claws>",
+    "responses": [
+      { "text": "Perhaps you could scratch my back sometime...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TAIL_FIEND",
+    "dynamic_line": "<friend_tail_fiend>",
+    "responses": [
+      { "text": "There's something alluring about that demonic look...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about yourself.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TAIL_GENERIC", 
+    "dynamic_line": "<friend_tail>",
+    "responses": [
+      { "text": "I find unique features... interesting.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What else is new with you?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BARK",
+    "dynamic_line": "<friend_bark>",
+    "responses": [
+      { "text": "That durability is... appealing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What else makes you unique?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CHITIN",
+    "dynamic_line": "<friend_chitin>",
+    "responses": [
+      { "text": "That natural armor is... intriguing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about these changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TENTACLES",
+    "dynamic_line": "<friend_tentacles>",
+    "responses": [
+      { "text": "I wonder what else those tentacles can do...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other ways have you changed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PAWS",
+    "dynamic_line": "<friend_paws>",
+    "responses": [
+      { "text": "There's something primal about those paws...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other features.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MUZZLE",
+    "dynamic_line": "<friend_muzzle>",
+    "responses": [
+      { "text": "That animalistic look... it's strangely compelling.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What else should I know about you?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BEAK",
+    "dynamic_line": "<friend_beak>",
+    "responses": [
+      { "text": "That beak is sharp... in an interesting way.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "How else have you mutated?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PROBOSCIS",
+    "dynamic_line": "<friend_proboscis>",
+    "responses": [
+      { "text": "I wonder what else that proboscis is good for...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other unique traits do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ANTENNAE",
+    "dynamic_line": "<friend_antennae>",
+    "responses": [
+      { "text": "Those antennae are fascinating...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SPINES",
+    "dynamic_line": "<friend_spines>",
+    "responses": [
+      { "text": "A little danger can be exciting...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "How else are you different now?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FLOWERS",
+    "dynamic_line": "<friend_flowers>",
+    "responses": [
+      { "text": "That natural beauty is captivating...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other surprises do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_THORNS",
+    "dynamic_line": "<friend_thorns>",
+    "responses": [
+      { "text": "That protective nature is... stimulating.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you gone through?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ELECTRORECEPTORS",
+    "dynamic_line": "<friend_electroreceptors>",
+    "responses": [
+      { "text": "The way you sense my... excitement is intriguing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What else have you learned about your mutations?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_AMORPHOUS",
+    "dynamic_line": "<friend_amorphous>",
+    "responses": [
+      { "text": "That flexibility could be... interesting in certain situations.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about your other changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SLIMY",
+    "dynamic_line": "<friend_slimy>",
+    "responses": [
+      { "text": "Those... advantages sound worth exploring.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FEATHERS",
+    "dynamic_line": "<friend_feathers>",
+    "responses": [
+      { "text": "I'd like to feel those sensitive feathers sometime...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FUR",
+    "dynamic_line": "<friend_fur>",
+    "responses": [
+      { "text": "I'd love to feel that soft fur against my skin.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_RADIOGENIC",
+    "dynamic_line": "<friend_radiogenic>",
+    "responses": [
+      { "text": "That raw power flowing through you is... arousing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other fascinating changes have you gone through?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_GLOWING",
+    "dynamic_line": "<friend_glowing>",
+    "responses": [
+      { "text": "I'd love to see how you... illuminate during intimate moments.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other unique traits do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ALBINO",
+    "dynamic_line": "<friend_albino>",
+    "responses": [
+      { "text": "There's something hauntingly beautiful about your appearance.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TAIL_THICK",
+    "dynamic_line": "<friend_tail_thick>",
+    "responses": [
+      { "text": "I'd be curious to explore those... sensitive areas of your tail.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_COMPOUND_EYES",
+    "dynamic_line": "<friend_compound_eyes>",
+    "responses": [
+      { "text": "The idea of you seeing every detail of me is... exciting.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HERBIVORE",
+    "dynamic_line": "<friend_herbivore>",
+    "responses": [
+      { "text": "Your gentler nature is quite attractive.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about yourself.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CARNIVORE",
+    "dynamic_line": "<friend_carnivore>",
+    "responses": [
+      { "text": "That primal hunger in you is... arousing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have happened to you?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PONDEROUS",
+    "dynamic_line": "<friend_ponderous>",
+    "responses": [
+      { "text": "I'd enjoy experiencing your... methodical approach to pleasure.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TOUGH",
+    "dynamic_line": "<friend_tough>",
+    "responses": [
+      { "text": "I'm intrigued by how you might experience more... forceful sensations.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about yourself.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WEBBED",
+    "dynamic_line": "<friend_webbed>",
+    "responses": [
+      { "text": "Those sensitive membranes sound... intriguing to explore.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WHISKERS",
+    "dynamic_line": "<friend_whiskers>",
+    "responses": [
+      { "text": "I'd love to test just how sensitive those whiskers really are...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_NAILS",
+    "dynamic_line": "<friend_nails>",
+    "responses": [
+      { "text": "The potential danger makes you more... exciting.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SLEEK_SCALES",
+    "dynamic_line": "<friend_sleek_scales>",
+    "responses": [
+      { "text": "I'd love to feel those smooth scales against my skin.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you gone through?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PHELLODERM",
+    "dynamic_line": "<friend_phelloderm>",
+    "responses": [
+      { "text": "That unique texture sounds fascinating to explore.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PHOSPHORESCENT",
+    "dynamic_line": "<friend_phosphorescent>",
+    "responses": [
+      { "text": "I'd love to see you glow in the darkness of my room...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TRANSPIRATION",
+    "dynamic_line": "<friend_transpiration>",
+    "responses": [
+      { "text": "The way your mist affects me is... intoxicating.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HEAT_DEPENDENT",
+    "dynamic_line": "<friend_heat_dependent>",
+    "responses": [
+      { "text": "I'd be happy to warm you up... intimately.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other unusual traits.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_STRONG_PHEROMONES",
+    "dynamic_line": "<friend_strong_pheromones>",
+    "responses": [
+      { "text": "Your scent is drawing me in... irresistibly.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_NICTITATING_MEMBRANE",
+    "dynamic_line": "<friend_nictitating_membrane>",
+    "responses": [
+      { "text": "I find your exotic features quite alluring...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CHITINOUS_SKIN",
+    "dynamic_line": "<friend_chitinous_skin>",
+    "responses": [
+      { "text": "I'd like to find those sensitive areas between the plates...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_REGENERATION",
+    "dynamic_line": "<friend_regeneration>",
+    "responses": [
+      { "text": "Your... stamina sounds impressive. I'd like to test it.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other abilities.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PREHENSILE_HAIR",
+    "dynamic_line": "<friend_prehensile_hair>",
+    "responses": [
+      { "text": "The possibilities with those extra appendages are... intriguing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other unusual features do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BIOLUMINESCENT",
+    "dynamic_line": "<friend_bioluminescent>",
+    "responses": [
+      { "text": "I find myself drawn to your glow... hypnotically so.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_RETRACTABLE_CLAWS",
+    "dynamic_line": "<friend_retractable_claws>",
+    "responses": [
+      { "text": "Those light scratches sound... very stimulating.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WEBWEAVER",
+    "dynamic_line": "<friend_webweaver>",
+    "responses": [
+      { "text": "I'd love to experience your silk... intimately.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MANDIBLES",
+    "dynamic_line": "<friend_mandibles>",
+    "responses": [
+      { "text": "I'm curious about those... sensitive mandibles.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SCORPIONTAIL",
+    "dynamic_line": "<friend_scorpiontail>",
+    "responses": [
+      { "text": "I'd like to explore those sensitive spots on your tail...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PLANTSKIN",
+    "dynamic_line": "<friend_plantskin>",
+    "responses": [
+      { "text": "I'd love to help you release some of that... stored energy.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BIOELECTRICITY",
+    "dynamic_line": "<friend_bioelectricity>",
+    "responses": [
+      { "text": "I'd love to feel your electric touch in more... intimate places.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CRYSTALSKIN",
+    "dynamic_line": "<friend_crystalskin>",
+    "responses": [
+      { "text": "I'd like to find all those sensitive crystal formations...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you undergone?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_RESONANCE",
+    "dynamic_line": "<friend_resonance>",
+    "responses": [
+      { "text": "I'd love to feel those vibrations throughout my entire body...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FLUIDADAPTATION",
+    "dynamic_line": "<friend_fluidadaptation>",
+    "responses": [
+      { "text": "I'd love to see just how flexible you can be...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HERMAPHRODITE",
+    "dynamic_line": "<friend_hermaphrodite>",
+    "responses": [
+      { "text": "I'm very curious to experience your unique perspective...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ADAPTIVEPHEROMONES",
+    "dynamic_line": "<friend_adaptivepheromones>",
+    "responses": [
+      { "text": "These pheromones are quite effective... I find myself drawn to you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MEMBRANE_WINGS",
+    "dynamic_line": "<friend_membrane_wings>",
+    "responses": [
+      { "text": "I'd love to feel how sensitive those wings really are...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ELECTRICAL_DISCHARGE",
+    "dynamic_line": "<friend_electrical_discharge>",
+    "responses": [
+      { "text": "That shocking touch of yours sounds very... stimulating.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other abilities.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HEAT_PRODUCTION",
+    "dynamic_line": "<friend_heat_production>",
+    "responses": [
+      { "text": "I'd love to explore your warmth more intimately...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_VENOMOUS_FANGS",
+    "dynamic_line": "<friend_venomous_fangs>",
+    "responses": [
+      { "text": "I'm curious about that euphoric venom of yours...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about your mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PHEROMONE_PRODUCTION",
+    "dynamic_line": "<friend_pheromone_production>",
+    "responses": [
+      { "text": "Your scent is making it hard to focus on anything but you...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you gone through?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SCALED_UNDERSIDE",
+    "dynamic_line": "<friend_scaled_underside>",
+    "responses": [
+      { "text": "I'd like to discover exactly where those scales lead...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BIOLUMINESCENT_DISPLAY",
+    "dynamic_line": "<friend_bioluminescent_display>",
+    "responses": [
+      { "text": "I'd love to see how brightly you can glow during... intense moments.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other abilities do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ADHESIVE_PADS",
+    "dynamic_line": "<friend_adhesive_pads>",
+    "responses": [
+      { "text": "Those creative positions you mentioned sound... intriguing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CONTROLLED_REFLEXES",
+    "dynamic_line": "<friend_controlled_reflexes>",
+    "responses": [
+      { "text": "I'd like to experience that precision and timing firsthand...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me more about yourself.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CHAMELEON_SKIN",
+    "dynamic_line": "<friend_chameleon_skin>",
+    "responses": [
+      { "text": "I'd like to see what colors appear when I touch you more... intimately.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_INFRAVISION",
+    "dynamic_line": "<friend_infravision>",
+    "responses": [
+      { "text": "I find it exciting that you can see my... reactions so clearly.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other abilities do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ENHANCED_HEARING",
+    "dynamic_line": "<friend_enhanced_hearing>",
+    "responses": [
+      { "text": "I wonder what sounds I could make that you'd enjoy hearing...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FANGS",
+    "dynamic_line": "<friend_fangs>",
+    "responses": [
+      { "text": "I'd like to feel those against my skin sometime...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other changes have you experienced?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_RADIOGENIC",
+    "dynamic_line": "<friend_radiogenic>",
+    "responses": [
+      { "text": "I'd like to see if I can handle all that energy of yours.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other mutations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CHLOROMORPH",
+    "dynamic_line": "<friend_chloromorph>",
+    "responses": [
+      { "text": "I'd love to explore that flexible, well-oiled body of yours.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations have you developed?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CRYSTALSKIN",
+    "dynamic_line": "<friend_crystalskin>",
+    "responses": [
+      { "text": "I'd like to discover all those sensitive crystal patches.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "What other mutations do you have?", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WARM_NATURED",
+    "dynamic_line": "<friend_warm_natured>",
+    "responses": [
+      { "text": "I'd love to feel all that heat against my body.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Tell me about your other changes.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FLEET",
+    "dynamic_line": "<friend_fleet>",
+    "responses": [
+      { "text": "I bet that speed and agility translates to... other activities.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's quite an advantage in this world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BIOLUM",
+    "dynamic_line": "<friend_biolum>",
+    "responses": [
+      { "text": "I'd love to see you glow in the darkness of my room...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must be useful for navigating at night.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_GOODHEARING",
+    "dynamic_line": "<friend_goodhearing>",
+    "responses": [
+      { "text": "I wonder what... intimate sounds you might pick up that others miss.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's incredibly useful for detecting threats.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PARKOUR",
+    "dynamic_line": "<friend_parkour>",
+    "responses": [
+      { "text": "Your flexibility must allow for some... interesting positions.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That skill must be invaluable for getting around obstacles.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_QUICK",
+    "dynamic_line": "<friend_quick>",
+    "responses": [
+      { "text": "I hope that quickness doesn't extend to... all activities.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That rapid response must be helpful in combat.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_OPTIMISTIC",
+    "dynamic_line": "<friend_optimistic>",
+    "responses": [
+      { "text": "Your positive energy is... arousing. I'd love to see what excites you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We need more of that outlook in this world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FASTHEALER",
+    "dynamic_line": "<friend_fasthealer>",
+    "responses": [
+      { "text": "That means we could be... vigorous without worry about lasting marks.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's an incredible advantage in this dangerous world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_LIGHTEATER",
+    "dynamic_line": "<friend_lighteater>",
+    "responses": [
+      { "text": "I wonder what other... appetites you might have that need satisfying.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must help with rationing our supplies.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_EASYSLEEPER",
+    "dynamic_line": "<friend_easysleeper>",
+    "responses": [
+      { "text": "I'd like to help you get... thoroughly exhausted before sleep.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's a useful trait when we need to rest in less-than-ideal places.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TOUGH",
+    "dynamic_line": "<friend_tough>",
+    "responses": [
+      { "text": "I find your resilience... exciting. How much intensity can you handle?", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That toughness must have saved your life many times.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_DEFT",
+    "dynamic_line": "<friend_deft>",
+    "responses": [
+      { "text": "Those quick, agile fingers must be... talented in other ways.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That graceful movement is impressive.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_TOLERANCE",
+    "dynamic_line": "<friend_tolerance>",
+    "responses": [
+      { "text": "I wonder what else you can... tolerate for extended periods.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's useful when medicine or alcohol is involved.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_GOURMAND",
+    "dynamic_line": "<friend_gourmand>",
+    "responses": [
+      { "text": "Someone who enjoys... consuming with such enthusiasm intrigues me.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must be helpful for getting proper nutrition these days.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_NONADDICTIVE",
+    "dynamic_line": "<friend_nonaddictive>",
+    "responses": [
+      { "text": "So you could enjoy me repeatedly without... dependency. Interesting.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's a useful trait in this world of temptations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ADRENALINE",
+    "dynamic_line": "<friend_adrenaline>",
+    "responses": [
+      { "text": "I'd like to see what other... situations can trigger that rush in you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must be lifesaving in dangerous situations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WAKEFUL",
+    "dynamic_line": "<friend_wakeful>",
+    "responses": [
+      { "text": "All those extra hours awake... I can think of ways to fill them.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must be convenient for taking watch shifts.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SELFAWARE",
+    "dynamic_line": "<friend_selfaware>",
+    "responses": [
+      { "text": "I find that level of body awareness... stimulating. You know exactly what feels good.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's very useful for monitoring your health.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MASOCHIST",
+    "dynamic_line": "<friend_masochist>",
+    "responses": [
+      { "text": "Pain and pleasure can be... very complementary. I'd like to explore that with you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must help you endure the hardships of this world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_STIMBOOST",
+    "dynamic_line": "<friend_stimboost>",
+    "responses": [
+      { "text": "I wonder what other... stimulation you can handle in high doses.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That tolerance must be useful when you need to stay alert.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_THICKSKIN",
+    "dynamic_line": "<friend_thickskin>",
+    "responses": [
+      { "text": "I wonder if those thicker nerve endings make you more... sensitive to touch.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That natural armor must have saved you many times.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_LIGHTSTEP",
+    "dynamic_line": "<friend_lightstep>",
+    "responses": [
+      { "text": "I like the idea of someone who can move so... quietly into my quarters.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must be very useful for avoiding detection.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_EAGLEEYED",
+    "dynamic_line": "<friend_eagleeyed>",
+    "responses": [
+      { "text": "I like knowing you can see every... detail clearly, even at a distance.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That must be valuable for scouting and navigating.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_WEAKSCENT",
+    "dynamic_line": "<friend_weakscent>",
+    "responses": [
+      { "text": "I wonder what scents you do give off when... aroused.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's quite valuable when avoiding predators.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_LIAR",
+    "dynamic_line": "<friend_liar>",
+    "responses": [
+      { "text": "I'm curious how sincere those... sounds of pleasure would be with you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's a useful skill when dealing with other survivors.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_GLASSJAW",
+    "dynamic_line": "<friend_glassjaw>",
+    "responses": [
+      { "text": "I'd be very gentle with you... in most places, at least.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should be careful to protect your head in combat.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_UNSTYLISH",
+    "dynamic_line": "<friend_unstylish>",
+    "responses": [
+      { "text": "I'd like to see you without any fancy clothes at all...", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That practical approach is probably healthier in this world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BADTEMPER",
+    "dynamic_line": "<friend_badtemper>",
+    "responses": [
+      { "text": "I know some very effective ways to... improve your mood.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "This world gives us all plenty of reasons to be irritable.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HYPEROPIC",
+    "dynamic_line": "<friend_hyperopic>",
+    "responses": [
+      { "text": "I'd be happy to let you examine me... up close where you can see clearly.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should make sure we find backup glasses for you.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SLEEPY",
+    "dynamic_line": "<friend_sleepy>",
+    "responses": [
+      { "text": "You can rest your head on me anytime... among other things.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should make sure you get adequate rest during travels.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ANIMALDISCORD",
+    "dynamic_line": "<friend_animaldiscord>",
+    "responses": [
+      { "text": "I find that wildness in you... exciting. It's primal and raw.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should be careful around wildlife with you around.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_HEAVYSLEEPER",
+    "dynamic_line": "<friend_heavysleeper>",
+    "responses": [
+      { "text": "I wonder what it would take to... wake you up properly.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should make sure someone else is on watch when you sleep.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ASTHMA",
+    "dynamic_line": "<friend_asthma>",
+    "responses": [
+      { "text": "I'd be careful to keep our activities... at a measured pace for you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should always keep backup inhalers for you.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_DISORGANIZED",
+    "dynamic_line": "<friend_disorganized>",
+    "responses": [
+      { "text": "In my quarters, we wouldn't need much organization... just each other.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "I could help you keep your gear better arranged.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BADHEARING",
+    "dynamic_line": "<friend_badhearing>",
+    "responses": [
+      { "text": "That means I can whisper... intimate things without others overhearing us.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should position you where you can see threats rather than hear them.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SLOWLEARNER",
+    "dynamic_line": "<friend_slowlearner>",
+    "responses": [
+      { "text": "Some things are worth... practicing repeatedly until mastered.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That just means you need more time to develop skills.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_INSOMNIA",
+    "dynamic_line": "<friend_insomnia>",
+    "responses": [
+      { "text": "I know some very... physical activities that might help you sleep better.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Those long nights must be difficult to endure.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_VEGETARIAN",
+    "dynamic_line": "<friend_vegetarian>",
+    "responses": [
+      { "text": "I appreciate someone with specific... tastes and preferences.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should make sure to find plant-based food for you.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_THINSKIN",
+    "dynamic_line": "<friend_thinskin>",
+    "responses": [
+      { "text": "That sensitivity must make every touch more... intense for you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should make sure you have proper armor protection.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_LACTOSE",
+    "dynamic_line": "<friend_lactose>",
+    "responses": [
+      { "text": "I'll remember that you need to be... careful with certain white substances.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We'll make sure to avoid dairy products when scavenging.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ANTIJUNK",
+    "dynamic_line": "<friend_antijunk>",
+    "responses": [
+      { "text": "I like that you prefer... natural pleasures over artificial ones.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's probably healthier in the long run anyway.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ANTIWHEAT",
+    "dynamic_line": "<friend_antiwheat>",
+    "responses": [
+      { "text": "There are plenty of... other things I could offer to satisfy your appetite.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We'll make sure to avoid grains when foraging for you.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PROJUNK",
+    "dynamic_line": "<friend_projunk>",
+    "responses": [
+      { "text": "I can think of sweeter... indulgences than candy to satisfy your cravings.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "I'll remember to grab sweet treats when I see them.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MEATARIAN",
+    "dynamic_line": "<friend_meatarian>",
+    "responses": [
+      { "text": "I appreciate someone with a taste for... flesh and primal satisfaction.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We'll focus on hunting meat for you rather than gathering plants.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ANTIFRUIT",
+    "dynamic_line": "<friend_antifruit>",
+    "responses": [
+      { "text": "Don't worry, the pleasures I'd offer are nothing like... forbidden fruit.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We'll avoid fruit when gathering food for you.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BEAUTIFUL",
+    "dynamic_line": "<friend_beautiful>",
+    "responses": [
+      { "text": "Your beauty is breathtaking... I'd love to explore every perfect inch of you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "It's remarkable how you maintain such appearance in this harsh world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SPIRITUAL",
+    "dynamic_line": "<friend_spiritual>",
+    "responses": [
+      { "text": "I'd love to help you experience... transcendence of a different kind.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "Your perspective brings comfort in this chaotic world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_LOVES_BOOKS",
+    "dynamic_line": "<friend_loves_books>",
+    "responses": [
+      { "text": "I know some stories we could... act out together, page by page.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "I'll keep an eye out for books when we're scavenging.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PACKMULE",
+    "dynamic_line": "<friend_packmule>",
+    "responses": [
+      { "text": "I'm curious what other kinds of... loads you can handle effectively.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That capacity is incredibly useful for our scavenging trips.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_STRONGBACK",
+    "dynamic_line": "<friend_strongback>",
+    "responses": [
+      { "text": "Those strong muscles must allow for some... interesting positions.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That strength must be very helpful when carrying supplies.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_FASTLEARNER",
+    "dynamic_line": "<friend_fastlearner>",
+    "responses": [
+      { "text": "I'd love to see how quickly you pick up... new techniques with me.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That ability to learn quickly is invaluable in our situation.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ADDICTIVE",
+    "dynamic_line": "<friend_addictive>",
+    "responses": [
+      { "text": "I think I could be your most... pleasurable dependency yet.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should be careful about substances you encounter.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_ILLITERATE",
+    "dynamic_line": "<friend_illiterate>",
+    "responses": [
+      { "text": "I could teach you other ways to communicate... more intimate ones.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "I can read important information to you when needed.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_DEAF",
+    "dynamic_line": "<friend_deaf>",
+    "responses": [
+      { "text": "With you, I could focus entirely on... physical communication.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should develop some hand signals for dangerous situations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_SLOWHEALER",
+    "dynamic_line": "<friend_slowhealer>",
+    "responses": [
+      { "text": "I'd be exceptionally gentle with you... in most ways.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should be extra careful to prevent injuries for you.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_LIGHTWEIGHT",
+    "dynamic_line": "<friend_lightweight>",
+    "responses": [
+      { "text": "I wonder if you're just as... easily intoxicated by pleasure.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should be careful with your alcohol consumption.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_UNOBSERVANT",
+    "dynamic_line": "<friend_unobservant>",
+    "responses": [
+      { "text": "I could surprise you in many... pleasurable ways when you least expect it.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "We should compensate for your navigational difficulties.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_CANNIBAL",
+    "dynamic_line": "<friend_cannibal>",
+    "responses": [
+      { "text": "There are other ways to... taste a person that might satisfy you.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That's a practical adaptation to this world, I suppose.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_KILLER",
+    "dynamic_line": "<friend_killer>",
+    "responses": [
+      { "text": "That dangerous edge to you is... incredibly arousing.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That killer instinct must be valuable in this deadly world.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_MARTIAL_ARTS",
+    "dynamic_line": "<friend_martial_arts>",
+    "responses": [
+      { "text": "I'd like to see how that physical control applies to... other activities.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That training must be invaluable in combat situations.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_OUTDOORSMAN",
+    "dynamic_line": "<friend_outdoorsman>",
+    "responses": [
+      { "text": "I like someone comfortable getting... wild and natural outdoors.", "topic": "TALK_FRIEND_SEX_PROP" },
+      { "text": "That comfort with the elements is certainly useful now.", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_VIRGIN",
+    "dynamic_line": "<friend_virgin_response>",
+    "responses": [
+      { "text": "Thanks for sharing that with me.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "Maybe you'll find the right person soon...", "topic": "TALK_FRIEND_INTRO" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_PRETTY",
+    "dynamic_line": "<friend_pretty_response>",
+    "responses": [
+      { "text": "You're too kind.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "Maybe we can... appreciate each other more later?", "topic": "TALK_FRIEND_ACTIVE_SEX" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BREAST_BIG_NORMAL",
+    "dynamic_line": "<friend_breast_big_normal_response>",
+    "responses": [
+      { "text": "They certainly are.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "I'd like to get a closer look.", "topic": "TALK_FRIEND_ACTIVE_SEX" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BREAST_SMALL",
+    "dynamic_line": "<friend_breast_small_response>",
+    "responses": [
+      { "text": "Still lovely.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "Size isn't everything.", "topic": "TALK_FRIEND_ACTIVE_SEX" }
+    ]
+  },
+  {
+    "type": "talk_topic",
+    "id": "TALK_FRIEND_BREAST_MULTI",
+    "dynamic_line": "<friend_breast_multi_response>",
+    "responses": [
+      { "text": "It's quite a sight.", "topic": "TALK_FRIEND_INTRO" },
+      { "text": "More to enjoy, I suppose.", "topic": "TALK_FRIEND_ACTIVE_SEX" }
+    ]
+  }
+]

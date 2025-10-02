@@ -1,0 +1,158 @@
+[
+	{
+		"id": "wrapped_condom",
+		"type": "TOOL",
+		"name": "condom (unopened)",
+	
+		"description": "A contraceptive device that fits all sizes.  Take it out of the wrapping first if you want to use it.  ...If there's even someone you could use it on in this world, that is.",
+		"weight": 1,
+		"volume": 0,
+		"price": 100,
+		"material": [ "plastic" ],
+		"symbol": ",",
+		"color": "pink",
+		"use_action": {
+			"target": "condom",
+			"msg": "You unwrap the condom.",
+			"menu_text": "Unwrap",
+			"type": "transform",
+			"target_charges": 1
+		}
+	},
+	{
+		"id": "wrapped_condom_danger",
+		"type": "TOOL",
+		"copy-from": "wrapped_condom",
+		"name": "shoddy condom (unopened)",
+	
+		"description": "A contraceptive device that fits all sizes.  Take it out of the wrapping first if you want to use it.\n* This one seems to be quite <color_yellow>old</color> however.  You should refrain from using it to avoid unnecessary *problems*.",
+		"use_action": {
+			"target": "condom_danger",
+			"msg": "You unwrap the condom.",
+			"menu_text": "Unwrap",
+			"type": "transform",
+			"target_charges": 1
+		}
+	},
+	{
+		"id": "condom",
+		"type": "TOOL",
+		"name": "condom",
+	
+		"description": "A contraceptive device that fits all sizes.  If every person in the world carried it around, its purpose would've been clear by now.",
+		"weight": 1,
+		"volume": 0,
+		"bashing": 1,
+		"cutting": 0,
+		"to_hit": -3,
+		"price": 100,
+		"material": [ "plastic" ],		"//" : "本当はポリイソプレンやラテックス製なのだろうけど、公式のゴム手袋もplasticだし...materials設定するのめんどいし...",
+		"symbol": ",",
+		"color": "pink",
+		"armor_data" : {
+			"covers" : ["leg_l", "leg_r"],
+			"storage" : 0,
+			"warmth" : 0,
+			"environmental_protection" : 0,
+			"encumbrance" : 0,
+			"coverage" : 1,
+			"material_thickness" : 1
+		
+			
+		},
+		"flags": [ "WATER_FRIENDLY", "WATERPROOF", "SKINTIGHT" ],
+		"use_action": [ "IUSE_YIFF" ],
+		"charges_per_use": 1,
+		"max_charges": 1,
+		"initial_charges": 1
+	},
+	{
+		"//" : "あぶない方。使えるけど確率で破れる。",
+		"id": "condom_danger",
+		"type": "TOOL",
+		"copy-from": "condom",
+		"name": "shoddy condom",
+	
+		"description": "A contraceptive device that fits all sizes.  This one practically lost its protective qualities and is likely to break.",
+		"max_charges": 1,
+		"use_action": "IUSE_PET_CUBI"
+	},
+	{
+		"id": "holy_choker",
+		"type": "TOOL",
+		"name": "exorcism choker",
+		"description": "A choker made of blessed silver which can seal the evil in one's heart.  If you manage to put this on a Demon, surely you will be able to make a good friend.",
+		"weight": 10,
+		"volume": 1,
+		"bashing": 0,
+		"cutting": 0,
+		"to_hit": 0,
+		"price": 10000,
+		"material": [ "leather", "silver" ],
+		"symbol": "-",
+		"color": "black",
+		"flags": [ "FANCY" ],
+		"armor_data": {
+			"storage": 0,
+			"warmth": 0,
+			"environmental_protection": 0,
+			"encumbrance": 0,
+			"coverage": 5,
+			"material_thickness": 5
+		},
+		"initial_charges": 1,
+		"charges_per_use": 1,
+		"max_charges": 1,
+		"use_action": "IUSE_PET_CUBI"
+	},
+	{
+		"id": "scroll_of_naming",
+		"type": "TOOL",
+		"name": "scroll of naming",
+		"description": "A scroll used to assign unique names to NPCs. Consumable, disappears after use.",
+		"weight": 10,
+		"volume": 1,
+		"bashing": 0,
+		"cutting": 0,
+		"to_hit": 0,
+		"price": 1,
+		"material": [ "paper", "magic" ],
+		"symbol": "?",
+		"color": "light_gray",
+		"use_action": ["IUSE_NAMING_NPC"],
+		"charges_per_use": 1,
+		"max_charges": 1
+	},
+	{
+		"id": "scroll_of_artifact",
+		"type": "TOOL",
+		"name": "scroll of artifact",
+	
+		"description": "A scroll used to create an artifact.  Consumable, disappears after use.",
+		"weight": 10,
+		"volume": 1,
+		"bashing": 0,
+		"cutting": 0,
+		"to_hit": 0,
+		"price": 1000000,
+		"material": [ "magic" ],
+		"symbol": "?",
+		"color": "light_gray",
+		"use_action": "IUSE_SPAWN_ARTIFACT"
+	},
+	{
+		"id": "bio_onahole",
+		"type": "TOOL",
+		"name": "bio-massager",
+	
+		"description": "Living massaging sleeve made of blob.  On the side of it, there's a portrait of a famous porn actress along with the advertising message: \"Complete reproduction of DNA structure! Genuine feeling, anywhere, anytime, in your pocket!\"",
+		"looks_like": "vibrator",
+		"weight": 453,
+		"volume": 2,
+		"price": 5500,
+		"material": [ "flesh" ],
+		"symbol": ";",
+		"color": "dark_gray",
+		"use_action": "VIBE"
+	}
+]

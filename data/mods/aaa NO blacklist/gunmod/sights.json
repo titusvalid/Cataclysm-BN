@@ -1,0 +1,20 @@
+[
+  {
+    "id": "oicwscope",
+    "type": "GUNMOD",
+    "name": { "str": "6x zoom variable zoom OICW optic" },
+    "description": "The intigrated 6x variable zoom smart optic mounted on the xm-29 rifle",
+    "weight": "0 g",
+    "volume": "0 ml",
+    "price": "0 cent",
+    "material": [ "aluminum", "glass" ],
+    "symbol": ":",
+    "color": "dark_gray",
+    "location": "sights",
+    "install_time": 30000,
+    "sight_dispersion": 0,
+    "aim_speed": 100,
+    "min_skills": [ [ "weapon", 2 ], [ "gun", 4 ] ],
+    "flags": [ "ZOOM", "IRREMOVABLE" ]
+  }
+]

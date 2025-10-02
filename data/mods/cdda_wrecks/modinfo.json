@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "cars_to_wrecks",
+    "name": "Cars to Wrecks",
+    "description": "Changes vehicle spawns to spawn more car wrecks and less cars.",
+    "category": "vehicles",
+    "authors": [ "GiMoe" ],
+    "version": "1.0",
+    "dependencies": [ "bn" ]
+  }
+]

@@ -1,0 +1,15 @@
+[
+	{
+		"type": "MONSTER_FACTION",
+		"name": "fiend",
+		"friendly": [ "cubi", "cult", "BL9_cultists" ],
+		"neutral": [ "small_animal" ]
+	},
+	{
+		"type": "MONSTER_FACTION",
+		"name": "cubi",
+		"friendly": [ "fiend", "cult" ],
+		"by_mood": [ "zombie", "blob", "bot", "BL9_cultists" ],
+		"neutral": [ "animal", "small_animal", "plant" ]
+	}
+]

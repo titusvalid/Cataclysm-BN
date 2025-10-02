@@ -1,0 +1,34 @@
+[
+  {
+    "type": "AMMO",
+    "id": "Foxbangtailpowder",
+    "category": "chems",
+    "price": "2 USD",
+    "price_postapoc": "2 USD",
+    "name": { "str": "bangtail bud powder" },
+    "symbol": "=",
+    "color": "dark_gray",
+    "description": "A strange brown gunpowder created from grinding bangtail buds into powder form.",
+    "container": "bottle_plastic",
+    "material": "powder",
+    "volume": "250 ml",
+    "weight": "1 g",
+    "ammo_type": "components",
+    "count": 400,
+    "effects": [ "COOKOFF" ]
+  },
+  {
+    "type": "GENERIC",
+    "id": "Foxbangtaildried",
+    "category": "chems",
+    "price": "2 USD",
+    "price_postapoc": "2 USD",
+    "name": { "str": "dried bangtail rhizome" },
+    "symbol": "=",
+    "color": "dark_gray",
+    "description": "A dried bangtail rhizome ready for use in drug manufacturing. Dehydrating it seems to have removed its hallucinogenic properties.",
+    "volume": "100 ml",
+    "weight": "100 g",
+    "stackable": true
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "id": "hipoint9mm",
+    "type": "GUN",
+    "copy-from": "hipoint380",
+    "name": { "str": "Hi-Point 9mm" },
+    "description": "For a handgun that's under $200 it's exactly what you would expect. It's heavy and awkward to handle, but it works.",
+    "ammo": "9mm",
+    "magazines": [ [ "9mm", [ "hipoint9mag", "hipoint9carmag", "hipoint9extmag" ] ] ]
+  },
+  {
+    "id": "hipoint9car",
+    "type": "GUN",
+    "copy-from": "hipoint380car",
+    "name": { "str": "Hi-Point 9mm Carbine" },
+    "description": "The Hi-Point 9mm carbine was designed to work in tandem with the Hi-Point 9mm handgun. Both weapons use the same magazines.",
+    "ammo": "9mm",
+    "dispersion": 380,
+    "valid_mod_locations": [ [ "accessories", 4 ], [ "sights", 1 ], [ "mechanism", 2 ], [ "rail", 1 ], [ "underbarrel", 1 ] ],
+    "magazines": [ [ "9mm", [ "hipoint9mag", "hipoint9carmag", "hipoint9extmag" ] ] ]
+  },
+  {
+    "id": "pm-83p",
+    "type": "GUN",
+    "copy-from": "smg_base",
+    "name": { "str": "pm-83p" },
+    "description": "The pm-83p rak is a polish 9x19 pdw issued to vehicle crews and police forces in Poland as a replacement for the pm-63",
+    "weight": "1589 g",
+    "volume": "1 L",
+    "price": "700 USD",
+    "to_hit": -1,
+    "bashing": 3,
+    "material": [ "steel", "plastic" ],
+    "color": "dark_gray",
+    "ammo": "9mm",
+    "dispersion": 500,
+    "durability": 8,
+    "modes": [ [ "DEFAULT", "full-auto", 3 ] ],
+    "barrel_length": 1,
+    "built_in_mods": [ "folding_stock" ],
+    "magazines": [ [ "9mm", [ "rak_9mm_15", "rak_9mm_15" ] ] ]
+  }
+]

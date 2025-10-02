@@ -1,0 +1,26 @@
+[
+  {
+    "type": "construction",
+    "id": "constr_blaze_blob_pit",
+    "group": "get_from_blaze_blob_pit",
+    "category": "OTHER",
+    "time": "1 s",
+    "pre_terrain": "t_pit_corpsed",
+    "post_terrain": "blob_pit",
+    "tools": [
+      [ [ "gloople", -1 ], [ "glooplegrow", -1 ], [ "oozle", -1 ], [ "oozlegrow", -1 ], [ "gray", -1 ], [ "graygrow", -1 ] ]
+    ]
+  },
+  {
+    "type": "construction",
+    "id": "constr_blaze_blob_pit_slime",
+    "group": "get_from_blaze_blob_slime",
+    "category": "OTHER",
+    "time": "1 s",
+    "pre_terrain": "t_slime",
+    "post_terrain": "blob_pit_slime",
+    "tools": [
+      [ [ "gloople", -1 ], [ "glooplegrow", -1 ], [ "oozle", -1 ], [ "oozlegrow", -1 ], [ "gray", -1 ], [ "graygrow", -1 ] ]
+    ]
+  }
+]

@@ -1,0 +1,617 @@
+[
+  {
+    "type": "recipe",
+    "result": "FoxEssenceCooker",
+    "id_suffix": "FoxTooling",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 2,
+    "time": "10 m",
+    "reversible": true,
+    "autolearn": true,
+    "components": [ [ [ "oil_lamp", 1 ] ], [ [ "pilot_light", 1 ] ], [ [ "scrap", 3 ] ], [ [ "duct_tape", 50 ] ] ]
+  },
+  {
+    "result": "Foximpgogglesdetection",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 2,
+    "time": "4 h",
+    "book_learn": [ [ "FoxDeIed", 2 ] ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 2 ] ],
+      [ [ "Foximpmechparts", 1 ] ],
+      [ [ "Foximpmicroelectronics", 4 ] ],
+      [ [ "Foximpelectronics", 3 ] ]
+    ]
+  },
+  {
+    "result": "Foximpgasmask",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 2,
+    "time": "4 h",
+    "book_learn": [ [ "FoxDeIed", 2 ] ],
+    "using": [ [ "soldering_standard", 20 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 2 ] ],
+      [ [ "Foximpmechparts", 1 ] ],
+      [ [ "Foximperialsteelchunk", 1 ] ],
+      [ [ "Foximpmicroelectronics", 10 ] ],
+      [ [ "Foximpelectronics", 6 ] ]
+    ]
+  },
+  {
+    "result": "adv_UPS_off",
+    "type": "recipe",
+    "id_suffix": "FoxTooling",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 2,
+    "time": "4 h",
+    "reversible": true,
+    "book_learn": [ [ "FoxDeIkw", 2 ] ],
+    "using": [ [ "soldering_standard", 10 ], [ "blacksmithing_standard", 10 ] ],
+    "tools": [ [ [ "swage", -1 ] ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxBallisticWeaveSheet", 1 ] ],
+      [ [ "FoxSGAmechparts", 1 ] ],
+      [ [ "FoxSGAelectronics", 5 ] ]
+    ]
+  },
+  {
+    "result": "Foxsewingkitballisticweave",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 3,
+    "time": "1 h",
+    "reversible": true,
+    "autolearn": true,
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 3 ] ]
+    ]
+  },
+  {
+    "result": "FoxSGAlocktopus",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "time": "4 h",
+    "reversible": true,
+    "book_learn": [ [ "FoxmanualSGAgear", 3 ], [ "FoxDeSGAishikawa", 3 ], [ "FoxDeSGAesstechbasic", 3 ] ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxSGAmechparts", 2 ] ],
+      [ [ "FoxSGAelectronics", 4 ] ],
+      [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxSGAdatathief",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "time": "4 h",
+    "reversible": true,
+    "book_learn": [ [ "FoxmanualSGAgear", 3 ], [ "FoxDeSGAishikawa", 3 ], [ "FoxDeSGAesstechbasic", 3 ] ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxSGAmechparts", 1 ] ],
+      [ [ "FoxSGAelectronics", 4 ] ],
+      [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "result": "FoxSGAmesskit",
+    "category": "CC_ELECTRONIC",
+    "subcategory": "CSC_ELECTRONIC_TOOLS",
+    "skill_used": "fabrication",
+    "skills_required": [ [ "electronics", 3 ], [ "survival", 3 ] ],
+    "difficulty": 4,
+    "time": "1 h",
+    "reversible": true,
+    "book_learn": [ [ "FoxmanualSGAgear", 3 ] ],
+    "using": [ [ "soldering_standard", 10 ], [ "blacksmithing_standard", 20 ] ],
+    "qualities": [ { "id": "SCREW", "level": 1 } ],
+    "components": [
+      [ [ "element", 3 ] ],
+      [ [ "amplifier", 1 ] ],
+      [ [ "FoxAdamantinechunk", 3 ] ],
+      [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ],
+      [ [ "cable", 10 ] ]
+    ]
+  },
+  {
+    "result": "FoxSGAdatauplink",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "difficulty": 1,
+    "time": "1 m",
+    "book_learn": [ [ "FoxmanualSGAgear", 1 ] ],
+    "components": [
+      [ [ "FoxSGAdatathief", 1 ] ],
+      [ [ "FoxSGAcipher", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxSGAportaluplink",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "time": "4 h",
+    "reversible": true,
+    "book_learn": [ [ "FoxmanualSGAgear", 3 ], [ "FoxDeSGAishikawa", 3 ], [ "FoxDeSGAesstechbasic", 3 ] ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxSGAmechparts", 1 ] ],
+      [ [ "FoxSGAelectronics", 4 ] ],
+      [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxSGAportaluplink",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "id_suffix": "FoxPrayerBook",
+    "skill_used": "computer",
+    "difficulty": 0,
+    "time": "1 h",
+    "autolearn": true,
+    "tools": [ [ [ "FoxDeSGAkawakamiprayer", -1 ], [ "Fox_spellbooks_Prayer", -1 ] ] ],
+    "components": [
+      [ [ "FoxSGAdatathief", 1 ] ]
+    ]
+  },
+  {
+    "result": "FoxSGAcipher",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "computer",
+    "difficulty": 1,
+    "time": "1 m",
+    "book_learn": [ [ "FoxmanualSGAgear", 1 ] ],
+    "qualities": [ { "id": "FoxSGAopAccess", "level": 1 } ],
+    "components": [
+      [ [ "paper", 1 ] ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbattery",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 1 ], [ "fabrication", 5 ] ],
+    "difficulty": 0,
+    "time": "30 m",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "Foxcrystallizedessence", 2 ] ], [ [ "Foximperialsteelchunk", 5 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbatteryadvanced",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 2,
+    "time": "30 m",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "FoxEssencenormal", 500 ] ], [ [ "Foximperialsteelchunk", 5 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbatterytankbuster",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 2,
+    "time": "45 m",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "FoxEssencenormal", 1000 ] ], [ [ "Foximperialsteelchunk", 10 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbatterydevice",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "result_mult": 2,
+    "time": "1 h 30 m",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "Foxcrystallizedessence", 1 ] ], [ [ "Foximperialsteelchunk", 1 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbatterymicro",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "result_mult": 4,
+    "time": "1 h 30 m",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "Foxcrystallizedessence", 1 ] ], [ [ "Foximperialsteelchunk", 1 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbatterycell",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "time": "2 h",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "Foxcrystallizedessence", 2 ] ], [ [ "Foximperialsteelchunk", 1 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpbatterypack",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 2 ], [ "fabrication", 5 ] ],
+    "difficulty": 3,
+    "time": "3 h",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "Foxcrystallizedessence", 4 ] ], [ [ "Foximperialsteelchunk", 2 ] ] ]
+  },
+  {
+    "type": "recipe",
+    "result": "FoxSGAbatterycell",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "FoxEssTheory", 4 ], [ "fabrication", 6 ] ],
+    "difficulty": 4,
+    "time": "30 m",
+    "autolearn": true,
+    "using": [ [ "welding_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [ [ [ "FoxEssencepure", 250 ] ], [ [ "FoxShadowsteelchunk", 1 ] ] ]
+  },
+  {
+    "result": "Foxessencestill",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "skills_required": [ [ "cooking", 5 ] ],
+    "difficulty": 5,
+    "time": "6 h 30 m",
+    "autolearn": true,
+    "using": [  [ "welding_standard", 40 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "55gal_drum", 3 ] ],
+      [ [ "pipe", 15 ] ],
+      [ [ "scrap", 20 ] ],
+      [ [ "water_faucet", 7 ] ],
+      [ [ "sheet_metal", 12 ] ]
+    ]
+  },
+  {
+    "result": "Foxessencecracker",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "skills_required": [ [ "cooking", 5 ] ],
+    "difficulty": 5,
+    "time": "2 h",
+    "autolearn": true,
+    "using": [  [ "welding_standard", 40 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "55gal_drum", 2 ] ],
+      [ [ "water_faucet", 1 ] ],
+      [ [ "pipe", 5 ] ],
+      [ [ "scrap", 4 ] ],
+      [ [ "sheet_metal", 2 ] ]
+    ]
+  },
+  {
+    "result": "Foxalloybarrel",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "skills_required": [ [ "electronics", 4 ] ],
+    "difficulty": 4,
+    "time": "2 h",
+    "autolearn": true,
+    "using": [  [ "welding_standard", 40 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "55gal_drum", 1 ] ],
+      [ [ "scrap", 50 ] ],
+      [ [ "element", 40 ] ],
+      [ [ "amplifier", 10 ] ],
+      [ [ "cable", 100 ] ],
+      [ [ "Foxtarcrete", 20 ] ]
+    ]
+  },
+  {
+    "result": "Foxalloybarreladvanced",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "skills_required": [ [ "electronics", 4 ] ],
+    "difficulty": 4,
+    "time": "3 h",
+    "autolearn": true,
+    "using": [  [ "welding_standard", 100 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxAdamantinechunk", 80 ] ],
+      [ [ "scrap", 50 ] ],
+      [ [ "element", 40 ] ],
+      [ [ "amplifier", 10 ] ],
+      [ [ "cable", 100 ] ]
+    ]
+  },
+  {
+    "result": "Foxtoolboxmachining",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 8,
+    "time": "36 h",
+    "autolearn": true,
+    "using": [ [ "blacksmithing_standard", 80 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 25 ] ],
+      [ [ "plastic_chunk", 8 ] ]
+    ]
+  },
+  {
+    "result": "FoxtoolboxSGA",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 8,
+    "time": "36 h",
+    "autolearn": true,
+    "using": [ [ "blacksmithing_standard", 80 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxShadowsteelchunk", 25 ] ],
+      [ [ "FoxAdamantinechunk", 4 ] ]
+    ]
+  },
+  {
+    "result": "Foximpsteeldrillbits",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "3 h",
+    "autolearn": true,
+    "using": [ [ "blacksmithing_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "Foximperialsteelchunk", 4 ] ]
+    ]
+  },
+  {
+    "result": "Foxadamantinedrillbits",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "3 h",
+    "autolearn": true,
+    "using": [ [ "blacksmithing_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxAdamantinechunk", 4 ] ]
+    ]
+  },
+  {
+    "result": "Foxshadowsteeldrillbits",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "3 h",
+    "autolearn": true,
+    "using": [ [ "blacksmithing_standard", 10 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "components": [
+      [ [ "FoxShadowsteelchunk", 4 ] ]
+    ]
+  },
+  {
+    "result": "Foxmachiningstation",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "skills_required": [ [ "electronics", 2 ] ],
+    "difficulty": 8,
+    "time": "2 h",
+    "autolearn": true,
+    "using": [  [ "welding_standard", 10 ], [ "blacksmithing_standard", 5 ] ],
+    "qualities": [ { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 }, { "id": "SCREW_FINE", "level": 1 }, { "id": "WRENCH_FINE", "level": 1 } ],
+    "components": [
+      [ [ "cable", 8 ] ],
+      [ [ "steel_chunk", 8 ] ],
+      [ [ "scrap", 16 ] ],
+      [ [ "pipe", 4 ] ],
+      [ [ "motor_small", 1 ] ],
+      [ [ "power_supply", 1 ] ],
+      [ [ "workbench", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxautoinjector",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "fabrication",
+    "difficulty": 6,
+    "time": "2 h",
+    "autolearn": true,
+    "qualities": [ { "id": "ANVIL", "level": 1 }, { "id": "CHISEL", "level": 3 }, { "id": "HAMMER_FINE", "level": 1 } ],
+    "tools": [ [ [ "tongs", -1 ] ], [ [ "swage", -1 ] ], [ [ "pipe", -1 ] ], [ [ "crucible", -1 ], [ "crucible_clay", -1 ] ], [ [ "forge", 50 ] ] ],
+    "components": [
+      [ [ "Foxtarrubber", 1 ] ],
+      [ [ "steel_chunk", 1 ] ],
+      [ [ "glass_shard", 1 ] ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "result": "Foximpwelder",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_TOOLS",
+    "skill_used": "electronics",
+    "difficulty": 3,
+    "time": "30 m",
+    "reversible": true,
+    "decomp_learn": 2,
+    "autolearn": true,
+    "qualities": [ { "id": "SCREW", "level": 1 }, { "id": "SAW_M", "level": 1 } ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "tools": [ [ [ "mold_plastic", -1 ] ], [ [ "surface_heat", 4, "LIST" ] ] ],
+    "components": [
+      [ [ "Foximpmechparts", 1 ] ],
+      [ [ "Foximpelectronics", 4 ] ],
+      [ [ "plastic_chunk", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxhellfiresystem",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_WEAPONS",
+    "skill_used": "FoxEssTech",
+    "skills_required": [ [ "fabrication", 8 ], [ "electronics", 4 ], [ "mechanics", 2 ] ],
+    "difficulty": 2,
+    "time": "3 h 40 m",
+    "decomp_learn": 2,
+    "book_learn": [ [ "FoxDeIkw", 2 ], [ "FoxDeSGAesstheorybasic", 2 ] ],
+    "qualities": [ { "id": "SCREW", "level": 1 }, { "id": "SAW_M", "level": 1 } ],
+    "using": [ [ "soldering_standard", 10 ] ],
+    "tools": [ [ [ "mold_plastic", -1 ] ], [ [ "surface_heat", 4, "LIST" ] ] ],
+    "components": [
+      [ [ "Foximpmechparts", 1 ] ],
+      [ [ "Foximpelectronics", 4 ] ],
+      [ [ "plastic_chunk", 4 ] ]
+    ]
+  },
+  {
+    "result": "Foxselfchargevibrator",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "electronics",
+    "difficulty": 1,
+    "time": "5 m",
+    "autolearn": true,
+    "using": [ [ "soldering_standard", 5 ] ],
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [
+      [ [ "vibrator", 1 ] ],
+      [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ]
+    ]
+  },
+  {
+    "result": "Foxselfchargegame",
+    "type": "recipe",
+    "category": "CC_ESSTECH",
+    "subcategory": "CSC_ESSTECH_TOOLS",
+    "skill_used": "electronics",
+    "difficulty": 1,
+    "time": "5 m",
+    "autolearn": true,
+    "using": [ [ "soldering_standard", 5 ] ],
+    "qualities": [ { "id": "SCREW_FINE", "level": 1 } ],
+    "components": [
+      [ [ "portable_game", 1 ] ],
+      [ [ "FoxSGAessreactortiny", 1 ], [ "FoxMagicCapacitor", 1 ] ]
+    ]
+  },
+  {
+    "type": "recipe",
+    "result": "chemistry_set",
+    "category": "CC_OTHER",
+    "subcategory": "CSC_OTHER_TOOLS",
+    "id_suffix": "FoxTooling",
+    "skill_used": "fabrication",
+    "skills_required": [ "cooking", 3 ],
+    "difficulty": 1,
+    "time": "1 m",
+    "autolearn": true,
+    "flags": [ "BLIND_HARD" ],
+    "book_learn": [ [ "adv_chemistry", 1 ], [ "textbook_chemistry", 1 ], [ "reference_cooking", 1 ] ],
+    "components": [ 
+      [ [ "hotplate", 1 ] ], 
+      [ [ "hose", 3 ] ],
+      [ [ "glasses_safety", 1 ] ],
+      [ [ "bottle_glass", 4 ] ],
+      [ [ "jar_glass", 4 ] ], 
+      [ [ "box_small", 1 ], [ "bag_canvas", 1 ], [ "backpack", 1 ] ]
+    ]
+  }
+]

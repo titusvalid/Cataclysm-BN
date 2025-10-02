@@ -43,6 +43,8 @@
 #include "translations.h"
 #include "units.h"
 #include "weighted_list.h"
+// Expose last mutation direction for UI/debug
+int last_mutation_direction = 0;
 
 static const activity_id ACT_TREE_COMMUNION( "ACT_TREE_COMMUNION" );
 
@@ -117,6 +119,36 @@ bool Character::has_base_trait( const trait_id &b ) const
 {
     // Look only at base traits
     return my_traits.find( b ) != my_traits.end();
+}
+
+bool Character::has_prereqs_met( const trait_id &mut ) const
+{
+    const mutation_branch &mdata = mut.obj();
+    if( !mdata.prereqs.empty() ) {
+        bool has_prereq = false;
+        for( const trait_id &prereq_id : mdata.prereqs ) {
+            if( has_trait( prereq_id ) ) {
+                has_prereq = true;
+                break;
+            }
+        }
+        if( !has_prereq ) {
+            return false;
+        }
+    }
+    if( !mdata.prereqs2.empty() ) {
+        bool has_prereq_2 = false;
+        for( const trait_id &prereq_id : mdata.prereqs2 ) {
+            if( has_trait( prereq_id ) ) {
+                has_prereq_2 = true;
+                break;
+            }
+        }
+        if( !has_prereq_2 ) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Character::toggle_trait( const trait_id &trait_ )
@@ -662,28 +694,23 @@ bool Character::mutation_ok( const trait_id &mutation, bool force_good, bool for
     return true;
 }
 
-static int sum_of_mutation_costs( const Character &c )
+static int sum_of_mutation_points( const Character &c )
 {
-    const auto mutations = c.get_mutations();
+    const auto &mutations = c.get_mutations();
     return std::accumulate( mutations.begin(), mutations.end(), 0, []( int i, const trait_id & tr ) {
-        return i + tr->cost;
+        return i + tr->points;
     } );
 }
 
 // Stat sum + good trait sum - bad trait sum
-static int genetic_score( const Character &c )
+int genetic_score( const Character &c )
 {
     // Assumes 4*8+6 stats
     // TODO: Get actual starting stats
-    return 38 + sum_of_mutation_costs( c );
-}
-
-static float score_difference_to_chance( float diff )
-{
-    const float M_SQRT_PI_2 = std::sqrt( 2 * M_PI );
-    constexpr float mean = 0.0f;
-    constexpr float sigma = 5.0f;
-    return ( 1 / ( sigma * M_SQRT_PI_2 ) ) * exp( -0.5 * pow( ( diff - mean ) / sigma, 2.0 ) );
+    const int stat_total = c.str_max + c.dex_max + c.int_max + c.per_max;
+    int score = std::max( 38, stat_total ) + (sum_of_mutation_points( c ));
+    DebugLog( DL::Info, DC::Game ) << "genetic_score: " << score;
+    return score;
 }
 
 template<class T, class V = typename T::value_type>
@@ -751,8 +778,39 @@ std::map<trait_id, float> Character::mutation_chances() const
     int current_score = genetic_score( *this );
     // 10/10/10/10 in stats, balanced traits, plus tip
     int expected_score = 4 * 10 + 6;
+    current_score = genetic_score( *this );
+    add_msg_if_player( m_debug, "Mutation step: expected_score = %d, current_score = %d", expected_score,
+                       current_score );
     int direction = expected_score - current_score + mutation_value( "mutagen_target_modifier" );
-    add_msg_if_player( m_debug, "Mutation target value: %s", direction );
+
+    // Cache trait presence before mutation operation to ensure correct direction calculation
+    bool robust_present = has_trait( trait_ROBUST );
+    bool chaotic_bad_present = has_trait( trait_CHAOTIC_BAD );
+
+   
+    if( robust_present ) {
+        direction += 10;
+        direction = static_cast<int>(direction * 1.2f);
+    }
+   
+    if( chaotic_bad_present ) {
+        direction -= 30;
+   
+    }
+
+    // Get health value for mutation chance modification
+    int health_val = get_healthy();
+
+    // Apply health effect to direction only
+    if (health_val != 0) {
+        direction += std::clamp(health_val, -200, 200) / 2;
+    }
+
+    // Store original direction for debug output
+    int original_direction = direction;
+    last_mutation_direction = direction;
+
+    add_msg_if_player( m_debug, "Health: %d, genetic direction: %d", health_val, direction );
 
     // Duplicates allowed - they'll increase chances of change
     std::vector<potential_mutation> potential;
@@ -763,17 +821,22 @@ std::map<trait_id, float> Character::mutation_chances() const
         bool thresh_save = base_mdata.threshold;
         bool prof_save = base_mdata.profession;
         bool purify_save = !base_mdata.purifiable;
-        bool can_remove = !thresh_save && !prof_save && !purify_save;
+        bool valid_save = !base_mdata.valid;  // Protect invalid mutations from random removal
+        bool can_remove = !thresh_save && !prof_save && !purify_save && !valid_save;
 
         if( has_trait( base_mutation ) ) {
+            // Replacements
             for( const trait_id &mutation : base_mdata.replacements ) {
-                if( mutation->valid && mutation_ok( mutation, force_good, force_bad ) ) {
+                if( mutation->valid && mutation_ok( mutation, force_good, force_bad ) &&
+                    has_prereqs_met( mutation ) ) {
                     potential.emplace_back( base_mutation, mutation, 3 );
                 }
             }
 
+            // Additions
             for( const trait_id &mutation : base_mdata.additions ) {
-                if( mutation->valid && mutation_ok( mutation, force_good, force_bad ) ) {
+                if( mutation->valid && mutation_ok( mutation, force_good, force_bad ) &&
+                    has_prereqs_met( mutation ) ) {
                     potential.emplace_back( trait_id::NULL_ID(), mutation, 3 );
                 }
             }
@@ -784,8 +847,8 @@ std::map<trait_id, float> Character::mutation_chances() const
             }
         } else {
             // Addition from nothing
-            // Duplicates addition above, but that's OK, we need to handle dupes anyway
-            if( base_mutation->valid && mutation_ok( base_mutation, force_good, force_bad ) ) {
+            if( base_mutation->valid && mutation_ok( base_mutation, force_good, force_bad ) &&
+                has_prereqs_met( base_mutation ) ) {
                 potential.emplace_back( trait_id::NULL_ID(), base_mutation, 1 );
             }
         }
@@ -805,6 +868,12 @@ std::map<trait_id, float> Character::mutation_chances() const
     const std::map<mutation_category_id, float> rem_weighs =
         calc_category_weights( padded_mut_cat_lvl, false );
 
+    float avg_rem_weight = 0.0f;
+    if( !rem_weighs.empty() ) {
+        // All weights sum to 1.0, so average is 1.0 / count
+        avg_rem_weight = 1.0f / rem_weighs.size();
+    }
+
     // Not normalized
     std::map<trait_id, float> chances;
 
@@ -819,19 +888,91 @@ std::map<trait_id, float> Character::mutation_chances() const
             [&add_weighs]( float m, const mutation_category_id & cat ) {
                 return std::max( m, add_weighs.at( cat ) );
             } );
-            float c = score_difference_to_chance( direction + score_diff );
-            chances[pm.to] += c * cat_mod;
+            chances[pm.to] += cat_mod;
         } else if( pm.from.is_valid() ) {
-            float cat_mod = std::accumulate( pm.from->category.begin(), pm.from->category.end(), 0.0f,
-            [&rem_weighs]( float m, const mutation_category_id & cat ) {
-                return std::min( m, rem_weighs.at( cat ) );
-            } );
-            float c = score_difference_to_chance( direction - score_diff );
-            chances[pm.from] += c * cat_mod;
+            float cat_mod;
+            if( pm.from->category.empty() ) {
+                cat_mod = avg_rem_weight;
+            } else {
+                cat_mod = std::accumulate( pm.from->category.begin(), pm.from->category.end(), 1.0f,
+                                           [&rem_weighs]( float m, const mutation_category_id & cat ) {
+                    return std::min( m, rem_weighs.at( cat ) );
+                } );
+            }
+            chances[pm.from] += cat_mod;
         }
     }
 
-    return normalized_map( chances );
+    std::map<trait_id, float> result = normalized_map( chances );
+
+    // Use direction to bias mutation chances
+    if (direction != 0) {
+        // Calculate direction modifier factor (positive for positive direction, negative for negative direction)
+        float direction_factor = static_cast<float>(std::clamp(direction, -200, 200)) / 100.0f;
+        // Apply multiplier to each mutation based on whether it's good or bad
+        for (auto &p : result) {
+            if (p.first->points > 0) {
+                // Good mutations - boosted by positive direction, reduced by negative direction
+                float mult = 1.0f + direction_factor; // +100% max boost or -100% max reduction
+                mult = std::clamp(mult, 0.2f, 2.0f); // Limit extreme effects
+                p.second *= mult;
+            } else if (p.first->points < 0) {
+                // Bad mutations - reduced by positive direction, boosted by negative direction
+                float mult = 1.0f - direction_factor; // -100% max reduction or +100% max boost
+                mult = std::clamp(mult, 0.2f, 2.0f); // Limit extreme effects
+                p.second *= mult;
+            }
+        }
+        // Re-normalize the results
+        result = normalized_map(result);
+    }
+
+    // Debug: show direction value
+    DebugLogFL(DL::Info, DC::Main) << string_format("Mutation direction: %d", direction);
+    /*
+    Loss/gain debug output commented out
+    if (!result.empty()) {
+        std::vector<std::pair<trait_id, float>> potential_losses;
+        std::vector<std::pair<trait_id, float>> potential_gains;
+        // Separate gains and losses
+        for (const auto &p : result) {
+            if (has_trait(p.first)) {
+                potential_losses.emplace_back(p);
+            } else {
+                potential_gains.emplace_back(p);
+            }
+        }
+        // Sort both lists by chance (highest first)
+        std::sort(potential_losses.begin(), potential_losses.end(), 
+            [](const auto &a, const auto &b) { return a.second > b.second; });
+        std::sort(potential_gains.begin(), potential_gains.end(), 
+            [](const auto &a, const auto &b) { return a.second > b.second; });
+        // Show top 3 of each type
+        if (!potential_losses.empty()) {
+            DebugLogFL(DL::Info, DC::Main) << "Top 3 loss chances:";
+            for (int i = 0; i < std::min(3, static_cast<int>(potential_losses.size())); i++) {
+                const trait_id &tid = potential_losses[i].first;
+                float chance = potential_losses[i].second;
+                DebugLogFL(DL::Info, DC::Main) << string_format("  LOSE %s (%+d): %.3f%%", 
+                    tid.str().c_str(), tid->points, chance * 100.0f);
+            }
+        } else {
+            DebugLogFL(DL::Info, DC::Main) << "No loss chances available";
+        }
+        if (!potential_gains.empty()) {
+            DebugLogFL(DL::Info, DC::Main) << "Top 3 gain chances:";
+            for (int i = 0; i < std::min(3, static_cast<int>(potential_gains.size())); i++) {
+                const trait_id &tid = potential_gains[i].first;
+                float chance = potential_gains[i].second;
+                DebugLogFL(DL::Info, DC::Main) << string_format("  GAIN %s (%+d): %.3f%%", 
+                    tid.str().c_str(), tid->points, chance * 100.0f);
+            }
+        } else {
+            DebugLogFL(DL::Info, DC::Main) << "No gain chances available";
+        }
+    }
+    */
+    return result;
 }
 
 void Character::mutate()
@@ -859,9 +1000,11 @@ void Character::mutate()
                 }
                 add_msg_if_player( m_debug, "Selected mutation %s", selected->obj().name().c_str() );
                 if( has_trait( *selected ) ) {
+                    DebugLogFL(DL::Info, DC::Main) << string_format("DIRECT REMOVAL: Removing existing mutation %s", selected->str().c_str());
                     remove_mutation( *selected );
                     break;
                 } else {
+                    DebugLogFL(DL::Info, DC::Main) << string_format("GAINING: Attempting to gain mutation %s", selected->str().c_str());
                     mutate_towards( *selected );
                     break;
                 }
@@ -1070,17 +1213,17 @@ void Character::mutate_category( const mutation_category_id &cat )
     mutate_towards( valid, 2 );
 }
 
-static std::vector<trait_id> get_all_mutation_prereqs( const trait_id &id )
+std::vector<trait_id> get_all_mutation_prereqs( const trait_id &id )
 {
     std::vector<trait_id> ret;
     for( const trait_id &it : id->prereqs ) {
         ret.push_back( it );
-        std::vector<trait_id> these_prereqs = get_all_mutation_prereqs( it );
+        std::vector<trait_id> these_prereqs = ::get_all_mutation_prereqs( it );
         ret.insert( ret.end(), these_prereqs.begin(), these_prereqs.end() );
     }
     for( const trait_id &it : id->prereqs2 ) {
         ret.push_back( it );
-        std::vector<trait_id> these_prereqs = get_all_mutation_prereqs( it );
+        std::vector<trait_id> these_prereqs = ::get_all_mutation_prereqs( it );
         ret.insert( ret.end(), these_prereqs.begin(), these_prereqs.end() );
     }
     return ret;
@@ -1118,7 +1261,7 @@ bool Character::mutate_towards( const trait_id &mut )
     std::vector<trait_id> prereqs2 = mdata.prereqs2;
     std::vector<trait_id> cancel = mdata.cancels;
     std::vector<trait_id> same_type = get_mutations_in_types( mdata.types );
-    std::vector<trait_id> all_prereqs = get_all_mutation_prereqs( mut );
+    std::vector<trait_id> all_prereqs = ::get_all_mutation_prereqs( mut );
 
     // Check mutations of the same type - except for the ones we might need for pre-reqs
     for( const auto &consider : same_type ) {
@@ -1142,6 +1285,7 @@ bool Character::mutate_towards( const trait_id &mut )
     for( size_t i = 0; i < cancel.size(); i++ ) {
         if( !cancel.empty() ) {
             trait_id removed = cancel[i];
+            DebugLogFL(DL::Info, DC::Main) << string_format("CANCELLATION: Gaining %s cancels existing mutation %s", mut.str().c_str(), removed.str().c_str());
             remove_mutation( removed );
             cancel.erase( cancel.begin() + i );
             i--;
@@ -1406,6 +1550,7 @@ void Character::remove_mutation( const trait_id &mut, bool silent )
     }
 
     // This should revert back to a removed base trait rather than simply removing the mutation
+    DebugLogFL(DL::Info, DC::Main) << string_format("DIRECT REMOVAL: Removing mutation %s (%+d points)", mut.str().c_str(), mdata.points);
     unset_mutation( mut );
 
     bool mutation_replaced = false;

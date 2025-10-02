@@ -1,0 +1,135 @@
+[
+  {
+    "type": "mod_tileset",
+    "compatibility": [
+      "UNDEAD_PEOPLE_BASE",
+      "UNDEAD_PEOPLE",
+      "MshockRealXotto",
+      "MSX++DEAD_PEOPLE",
+      "Custom Tileset",
+      "MshockXottoplus"
+    ],
+    "tiles-new": [
+      {
+        "file": "hentai_monster.png",
+        "tiles": [
+          { "id": "mon_lessor_succubi", "fg": 1, "rotates": false },
+          { "id": "mon_succubi", "fg": 2, "rotates": false },
+          { "id": "mon_greater_succubi", "fg": 3, "rotates": false },
+          { "id": "mon_succubi_sadist", "fg": 4, "rotates": false },
+          { "id": "mon_succubi_somnophilia", "fg": 5, "rotates": false },
+          { "id": "mon_succubi_exhibitionism", "fg": 6, "rotates": false },
+          { "id": "mon_succubi_lactophilia", "fg": 7, "rotates": false },
+          { "id": "mon_corrupted_schoolgirl", "fg": 8, "rotates": false },
+          { "id": "mon_corrupted_schoolteacher_female", "fg": 9, "rotates": false },
+          { "id": "mon_lessor_incubi", "fg": 16, "rotates": false },
+          { "id": "mon_incubi", "fg": 17, "rotates": false },
+          { "id": "mon_greater_incubi", "fg": 18, "rotates": false },
+          { "id": "mon_incubi_phalloplas", "fg": 19, "rotates": false },
+          { "id": "mon_incubi_hoplophilia", "fg": 20, "rotates": false },
+          { "id": "mon_goathead_demon", "fg": 64, "rotates": false },
+          
+				  {
+					  "id": "mon_cambion_female",
+					  "fg": 32,
+					  "rotates": false
+				  },
+				  {
+					  "id": "mon_cambion_male",
+					  "fg": 33,
+					  "rotates": false
+				  },
+				  {
+					  "id": "mon_hentai_vinebeast",
+					  "fg": 34,
+					  "rotates": false
+				  }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      },
+      {
+        "file": "hentai_items.png",
+        "tiles": [
+          {
+            "id": "h_semen",
+            "fg": 128,
+            "rotates": false
+          },
+          {
+            "id": "d_cum",
+            "fg": 129,
+            "rotates": false
+          },
+          {
+            "id": ["wrapped_condom", "wrapped_condom_danger"],
+            "fg": 130,
+            "rotates": false
+          },
+          {
+            "id": ["condom", "condom_danger", "used_condom"],
+            "fg": 131,
+            "rotates": false
+          },
+          {
+            "id": "holy_choker",
+            "fg": 132,
+            "rotates": false
+          },
+          {
+            "id": "medieval_bottle",
+            "fg": 133,
+            "rotates": false
+          },
+          {
+            "id": "bio_onahole",
+            "fg": 134,
+            "rotates": false
+          },
+          {
+            "id": ["scroll_of_naming", "scroll_of_artifact"],
+            "fg": 135,
+            "rotates": false
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      },
+      {
+        "file": "hentai_effect.png",
+        "tiles": [
+          { "id": ["overlay_effect_lust", "overlay_effect_corrupt"], "fg": 158 },
+          { "id": ["overlay_effect_dominate", "overlay_effect_movingdoing", "overlay_effect_gotwifed"], "fg": 159 },
+          { "id": "overlay_effect_estrus", "fg": 160 }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": -16
+      },
+      {
+        "file": "hentai_misc.png",
+        "tiles": [
+          {
+            "id": ["player_female", "npc_female"],
+            "fg": 182,
+            "rotates": false
+          },
+          {
+            "id": ["overlay_effect_pregnantcy"],
+            "fg": 182,
+            "rotates": false
+          }
+        ],
+        "sprite_width": 32,
+        "sprite_height": 32,
+        "sprite_offset_x": 0,
+        "sprite_offset_y": 0
+      }
+    ]
+  }
+]

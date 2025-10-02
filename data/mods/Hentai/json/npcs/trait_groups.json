@@ -1,0 +1,467 @@
+[
+	{
+		"type": "trait_group",
+		"id": "NPC_starting_traits",
+		"subtype": "collection",
+		"traits": [
+		  { "trait": "VIRGIN", "prob": 20 },
+		  {
+				"distribution": [ { "trait": "SMALL_BREAST" }, { "trait": "BIG_BREAST" } ],
+				"prob": 33
+		  }
+		]
+	},
+	{
+		"type": "trait_group",
+		"id": "trait_mutant_npc_common",
+		"subtype": "collection",
+		"traits": [
+		  { "trait": "VIRGIN", "prob": 20 },
+		  {
+				"distribution": [ { "trait": "SMALL_BREAST" }, { "trait": "BIG_BREAST" } ],
+				"prob": 33
+		  }
+		]
+	},
+	{
+		"type": "trait_group",
+		"id": "trait_anthro_common_male",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "MASOCHIST", "prob": 10 },
+			{ "trait": "PRETTY", "prob": 50 },
+			{ "trait": "ILLITERATE", "prob": 50 },
+			{ "trait": "VIRGIN", "prob": 20 }
+		]
+	},
+	{
+		"type": "trait_group",
+		"id": "trait_anthro_common_female",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "MASOCHIST", "prob": 10 },
+			{
+				"//" : "確率は高めに。かわいいは正義。例外は無い。",
+				"trait": "PRETTY", "prob": 75
+			},
+			{ "trait": "ILLITERATE", "prob": 50 },
+			{ "trait": "VIRGIN", "prob": 20 },
+			{
+				"distribution": [ { "trait": "SMALL_BREAST" }, { "trait": "BIG_BREAST" } ],
+				"prob": 33
+			}
+		]
+	},
+	{
+		"type": "trait_group",
+		"id": "trait_anthro_common_succubi",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "SPIRITUAL", "prob": 75 },
+			{ "trait": "LIAR", "prob": 50 },
+			{ "trait": "OUTDOORSMAN", "prob": 10 },
+			{ "trait": "BIG_BREAST", "prob": 50 },
+			{ "trait": "MASOCHIST", "prob": 10 },
+			{
+				"distribution": [ { "trait": "NONADDICTIVE" }, { "trait": "ADDICTIVE" } ],
+				"prob": 33
+			},
+			{ "trait": "STYLISH", "prob": 25 },
+			{
+				"distribution": [ { "trait": "WEAKSCENT" }, { "trait": "SMELLY" } ],
+				"prob": 25
+			},
+			{
+				"distribution": [ { "trait": "OPTIMISTIC" }, { "trait": "BADTEMPER" } ],
+				"prob": 10
+			},
+			{
+				"//" : "夢魔がかわいいのは確定的にあきらか。古典で語られる姿は醜かったり老婆だったりが一般的？知るか！アマラ宇宙的に言えば何も問題は無い！",
+				"trait": "PRETTY"
+			},
+			{
+				"//" : "超低確率で貞操持ち。けなげなのか不慣れなのか、どちらにせよ萌える",
+				"trait": "VIRGIN", "prob": 2
+			}
+		]
+	},
+	{
+		"type": "trait_group",
+		"id": "trait_anthro_common_incubi",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "SPIRITUAL", "prob": 75 },
+			{ "trait": "LIAR", "prob": 50 },
+			{ "trait": "OUTDOORSMAN", "prob": 10 },
+			{ "trait": "MASOCHIST", "prob": 10 },
+			{
+				"distribution": [ { "trait": "NONADDICTIVE" }, { "trait": "ADDICTIVE" } ],
+				"prob": 33
+			},
+			{ "trait": "STYLISH", "prob": 10 },
+			{
+				"distribution": [ { "trait": "WEAKSCENT" }, { "trait": "SMELLY" } ],
+				"prob": 25
+			},
+			{
+				"distribution": [ { "trait": "OPTIMISTIC" }, { "trait": "BADTEMPER" } ],
+				"prob": 10
+			},
+			{
+				"//" : "夢魔がかわいいのは確定的にあきらか。古典で語られる姿は醜かったり老婆だったりが一般的？知るか！アマラ宇宙的に言えば何も問題は無い！",
+				"trait": "PRETTY"
+			},
+			{
+				"//" : "超低確率で貞操持ち。けなげなのか不慣れなのか、どちらにせよ萌える",
+				"trait": "VIRGIN", "prob": 2
+			}
+		]
+	},
+
+	{
+		"type": "trait_group",
+		"//" : "ペット(インキュバス・サキュバス)。人間に近い。",
+		"id": "trait_anthro_cubi_morehuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "TAIL_FIEND" },
+			{ "trait": "WINGS_BAT" },
+			{ "trait": "TERRIFYING", "prob": 20 },
+			{ "trait": "TRUTHTELLER", "prob": 10 },
+			{ "trait": "PSYCHOPATH", "prob": 10 },
+			{ "trait": "FANGS", "prob": 10 },
+			{ "trait": "NAILS", "prob": 10 }
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(インキュバス・サキュバス)。わりと悪魔的。",
+		"id": "trait_anthro_cubi_lesshuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "TAIL_FIEND" },
+			{ "trait": "WINGS_BAT" },
+			{ "trait": "TERRIFYING", "prob": 50 },
+			{ "trait": "CANNIBAL", "prob": 10 },
+			{ "trait": "PSYCHOPATH", "prob": 25 },
+			{ "trait": "INFRARED", "prob": 25 },
+			{ "trait": "FANGS", "prob": 25 },
+			{ "trait": "NAILS", "prob": 25 },
+			{
+				"distribution": [ { "trait": "RAP_TALONS" }, { "trait": "HOOVES" } ],
+				"prob": 5
+			}
+		]
+	},
+
+	{
+		"type": "trait_group",
+		"//" : "ペット(犬)。より人間に近い。",
+		"id": "trait_anthro_canine_morehuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "GOODCARDIO", "prob": 20 },
+			{ "trait": "GOURMAND", "prob": 20 },
+			{ "trait": "HEAVYSLEEPER", "prob": 20 },
+			{
+				"//" : "人間に近くてくさいのはちょっとかわいくない...と思うので確立は低め。",
+				"trait": "SMELLY", "prob": 10
+			},
+			{ "trait": "NIGHTVISION2", "prob": 50 },
+			{ "trait": "FANGS", "prob": 25 },
+			{ "trait": "LIGHTFUR", "prob": 10 },
+			{ "trait": "PADDED_FEET", "prob": 50 },
+			{ "trait": "TAIL_FLUFFY" },
+			{
+				"distribution": [ { "trait": "CANINE_EARS" }, { "trait": "LUPINE_EARS" } ]
+			},
+			{ "trait": "PAWS", "prob": 50 },
+			{ "trait": "GROWL", "prob": 10 },
+			{
+				"//" : "確率は高めに。なぜって、そりゃHentai_modですから。",
+				"trait": "ESTRUS_LUPINE", "prob": 50
+			}
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(犬)。半分半分。",
+		"id": "trait_anthro_canine_half",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "GOODCARDIO", "prob": 25 },
+			{ "trait": "GOURMAND", "prob": 25 },
+			{ "trait": "HEAVYSLEEPER", "prob": 25 },
+			{ "trait": "SMELLY", "prob": 50 },
+			{ "trait": "ANIMALDISCORD", "prob": 15 },
+			{ "trait": "NIGHTVISION2", "prob": 75 },
+			{ "trait": "FANGS", "prob": 50 },
+			{
+				"distribution": [ { "trait": "LIGHTFUR" }, { "trait": "LUPINE_FUR" } ],
+				"prob": 75
+			},
+			{ "trait": "PADDED_FEET", "prob": 75 },
+			{ "trait": "TAIL_FLUFFY" },
+			{
+				"distribution": [ { "trait": "CANINE_EARS" }, { "trait": "LUPINE_EARS" } ]
+			},
+			{ "trait": "PALE", "prob": 10 },
+			{
+				"//" : "マズルのありなしでケモ度はぐっと違うと思うのでなるべく抑え目にする。",
+				"trait": "MUZZLE", "prob": 33
+			},
+			{ "trait": "PAWS", "prob": 75 },
+			{
+				"distribution": [ { "trait": "GROWL" }, { "trait": "SNARL" } ],
+				"prob": 20
+			},
+			{ "trait": "SHOUT3", "prob": 10 },
+			{
+				"//" : "Extreme Fetish要素は控えめに...",
+				"trait": "MULTI_BREAST", "prob": 10
+			},
+			{
+				"//" : "確率は高めに。なぜって、そりゃHentai_modですから。",
+				"trait": "ESTRUS_LUPINE", "prob": 75
+			}
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(犬)。より動物に近い。",
+		"id": "trait_anthro_canine_lesshuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "GOODCARDIO", "prob": 30 },
+			{ "trait": "GOURMAND", "prob": 30 },
+			{ "trait": "HEAVYSLEEPER", "prob": 30 },
+			{ "trait": "SMELLY", "prob": 75 },
+			{ "trait": "ANIMALDISCORD", "prob": 30 },
+			{ "trait": "NIGHTVISION2" },
+			{ "trait": "FANGS" },
+			{
+				"distribution": [ { "trait": "LIGHTFUR" }, { "trait": "LUPINE_FUR" } ]
+			},
+			{ "trait": "PADDED_FEET" },
+			{ "trait": "TAIL_FLUFFY" },
+			{
+				"distribution": [ { "trait": "CANINE_EARS" }, { "trait": "LUPINE_EARS" } ],
+				"prob": 33
+			},
+			{ "trait": "STR_UP_3", "prob": 25 },
+			{ "trait": "PALE", "prob": 25 },
+			{ "trait": "MUZZLE" },
+			{ "trait": "PAWS" },
+			{
+				"distribution": [ { "trait": "GROWL" }, { "trait": "SNARL" } ],
+				"prob": 30
+			},
+			{ "trait": "SHOUT3", "prob": 20 },
+			{ "trait": "MULTI_BREAST", "prob": 75 },
+			{ "trait": "ESTRUS_LUPINE" }
+		]
+	},
+
+	{
+		"type": "trait_group",
+		"//" : "ペット(猫)。より人間に近い。",
+		"id": "trait_anthro_feline_morehuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "PARKOUR", "prob": 75 },
+			{ "trait": "MEATARIAN", "prob": 10 },
+			{ "trait": "LIGHTSTEP", "prob": 75 },
+			{
+				"//" : "人間に近くてくさいのはちょっとかわいくない...と思うので確立は低め。",
+				"trait": "SMELLY", "prob": 10
+			},
+			{ "trait": "FEL_EYE", "prob": 50 },
+			{ "trait": "FEL_NV", "prob": 17 },
+			{ "trait": "FANGS", "prob": 25 },
+			{ "trait": "LIGHTFUR", "prob": 10 },
+			{ "trait": "CLAWS_RETRACT", "prob": 25 },
+			{ "trait": "PADDED_FEET", "prob": 50 },
+			{ "trait": "TAIL_LONG" },
+			{ "trait": "FELINE_EARS" },
+			{ "trait": "WHISKERS", "prob": 10 },
+			{
+				"distribution": [ { "trait": "SLEEPY" } ],
+				"prob": 20
+			},
+			{ "trait": "PAWS", "prob": 50 },
+			{ "trait": "CARNIVORE", "prob": 17 },
+			{ "trait": "SNARL", "prob": 10 },
+			{
+				"//" : "確率は高めに。なぜって、そりゃHentai_modですから。",
+				"trait": "ESTRUS_FELINE", "prob": 50
+			}
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(猫)。半分半分。",
+		"id": "trait_anthro_feline_half",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "PARKOUR", "prob": 75 },
+			{ "trait": "MEATARIAN", "prob": 10 },
+			{ "trait": "LIGHTSTEP", "prob": 75 },
+			{ "trait": "SMELLY", "prob": 50 },
+			{ "trait": "FEL_EYE", "prob": 75 },
+			{ "trait": "FEL_NV", "prob": 34 },
+			{ "trait": "FANGS", "prob": 50 },
+			{
+				"distribution": [ { "trait": "LIGHTFUR" }, { "trait": "FELINE_FUR" }, { "trait": "LYNX_FUR" } ],
+				"prob": 75
+			},
+			{ "trait": "CLAWS_RETRACT", "prob": 50 },
+			{ "trait": "PADDED_FEET", "prob": 75 },
+			{ "trait": "TAIL_LONG" },
+			{ "trait": "FELINE_EARS" },
+			{ "trait": "WHISKERS", "prob": 33 },
+			{
+				"distribution": [ { "trait": "SLEEPY" } ],
+				"prob": 25
+			},
+			{ "trait": "PAWS", "prob": 75 },
+			{ "trait": "CARNIVORE", "prob": 34 },
+			{ "trait": "SNARL", "prob": 20 },
+			{
+				"//" : "Extreme Fetish要素は控えめに...",
+				"trait": "MULTI_BREAST", "prob": 10
+			},
+			{
+				"//" : "確率は高めに。なぜって、そりゃHentai_modですから。",
+				"trait": "ESTRUS_FELINE", "prob": 75
+			}
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(猫)。より動物に近い。",
+		"id": "trait_anthro_feline_lesshuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "PARKOUR", "prob": 75 },
+			{ "trait": "MEATARIAN", "prob": 10 },
+			{ "trait": "LIGHTSTEP", "prob": 75 },
+			{ "trait": "SMELLY", "prob": 75 },
+			{ "trait": "FEL_EYE" },
+			{ "trait": "FEL_NV", "prob": 50 },
+			{ "trait": "FANGS" },
+			{
+				"distribution": [ { "trait": "LIGHTFUR" }, { "trait": "FELINE_FUR" }, { "trait": "LYNX_FUR" } ]
+			},
+			{ "trait": "CLAWS_RETRACT" },
+			{ "trait": "PADDED_FEET" },
+			{ "trait": "TAIL_LONG" },
+			{ "trait": "FELINE_EARS" },
+			{ "trait": "WHISKERS", "prob": 75 },
+			{ "trait": "DEX_UP_3", "prob": 25 },
+			{
+				"distribution": [ { "trait": "SLEEPY" }, { "trait": "SLEEPY2" } ],
+				"prob": 30
+			},
+			{ "trait": "PAWS" },
+			{ "trait": "CARNIVORE", "prob": 50 },
+			{ "trait": "SNARL", "prob": 30 },
+			{ "trait": "MULTI_BREAST", "prob": 75 },
+			{ "trait": "ESTRUS_FELINE" }
+		]
+	},
+
+	{
+		"type": "trait_group",
+		"//" : "ペット(熊)。より人間に近い。",
+		"id": "trait_anthro_ursine_morehuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "BADTEMPER", "prob": 25 },
+			{ "trait": "URSINE_EYE", "prob": 50 },
+			{ "trait": "LIGHTFUR", "prob": 10 },
+			{ "trait": "NAILS", "prob": 20 },
+			{ "trait": "PADDED_FEET", "prob": 50 },
+			{ "trait": "TAIL_STUB" },
+			{ "trait": "URSINE_EARS" },
+			{ "trait": "FAT", "prob": 25 },
+			{ "trait": "LARGE", "prob": 25 },
+			{
+				"//" : "人間に近くてくさいのはちょっとかわいくない...と思うので確立は低め。",
+				"trait": "SMELLY", "prob": 10
+			},
+			{ "trait": "PAWS", "prob": 50 },
+			{ "trait": "PONDEROUS1", "prob": 10 },
+			{ "trait": "GROWL", "prob": 10 }
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(熊)。半分半分。",
+		"id": "trait_anthro_ursine_half",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "BADTEMPER", "prob": 25 },
+			{ "trait": "URSINE_EYE", "prob": 75 },
+			{
+				"distribution": [ { "trait": "LIGHTFUR" }, { "trait": "FUR" }, { "trait": "URSINE_FUR" } ],
+				"prob": 75
+			},
+			{
+				"distribution": [ { "trait": "NAILS" }, { "trait": "CLAWS" } ],
+				"prob": 50
+			},
+			{ "trait": "PADDED_FEET", "prob": 75 },
+			{ "trait": "TAIL_STUB" },
+			{ "trait": "URSINE_EARS" },
+			{ "trait": "FAT", "prob": 50 },
+			{ "trait": "LARGE", "prob": 50 },
+			{
+				"distribution": [ { "trait": "SMELLY" }, { "trait": "SMELLY2" } ],
+				"prob": 50
+			},
+			{
+				"//" : "マズルのありなしでケモ度はぐっと違うと思うのでなるべく抑え目にする。",
+				"distribution": [ { "trait": "MUZZLE" }, { "trait": "MUZZLE_BEAR" } ],
+				"prob": 33
+			},
+			{
+				"distribution": [ { "trait": "PAWS" }, { "trait": "PAWS_LARGE" } ],
+				"prob": 75
+			},
+			{ "trait": "PONDEROUS1", "prob": 20 },
+			{ "trait": "GROWL", "prob": 20 }
+		]
+	},
+	{
+		"type": "trait_group",
+		"//" : "ペット(熊)。より動物に近い。",
+		"id": "trait_anthro_ursine_lesshuman",
+		"subtype": "collection",
+		"traits": [
+			{ "trait": "BADTEMPER", "prob": 25 },
+			{ "trait": "URSINE_EYE" },
+			{
+				"distribution": [ { "trait": "LIGHTFUR" }, { "trait": "FUR" }, { "trait": "URSINE_FUR" } ]
+			},
+			{ "trait": "CLAWS", "prob": 75 },
+			{ "trait": "PADDED_FEET" },
+			{ "trait": "TAIL_STUB" },
+			{ "trait": "URSINE_EARS" },
+			{ "trait": "FAT", "prob": 75 },
+			{ "trait": "LARGE", "prob": 75 },
+			{ "trait": "STR_UP_3", "prob": 25 },
+			{
+				"distribution": [ { "trait": "SMELLY" }, { "trait": "SMELLY2" } ],
+				"prob": 75
+			},
+			{
+				"distribution": [ { "trait": "MUZZLE" }, { "trait": "MUZZLE_BEAR" } ]
+			},
+			{
+				"distribution": [ { "trait": "PAWS" }, { "trait": "PAWS_LARGE" } ]
+			},
+			{ "trait": "PONDEROUS1", "prob": 30 },
+			{ "trait": "GROWL", "prob": 30 }
+		]
+	}
+]

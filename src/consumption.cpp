@@ -248,7 +248,8 @@ static int compute_default_effective_kcal( const item &comest, const Character &
         kcal *= 0.6f;
     }
 
-    if( you.has_trait( trait_CARNIVORE ) && comest.has_flag( flag_CARNIVORE_OK ) &&
+    // Remove the CARNIVORE_OK check: only check for blacklisted vitamins
+    if( you.has_trait( trait_CARNIVORE ) &&
         comest.has_any_vitamin( carnivore_blacklist ) ) {
         // TODO: Comment pizza scrapping
         kcal *= 0.5f;
@@ -627,9 +628,12 @@ morale_type Character::allergy_type( const item &food ) const
 
 ret_val<edible_rating> Character::can_eat( const item &food ) const
 {
+    // DEBUG: Start of can_eat
+    //dbg(DL::Info) << string_format("DEBUG can_eat: %s checking %s", name.c_str(), food.tname().c_str());
 
     const auto &comest = food.get_comestible();
     if( !comest ) {
+     //   dbg(DL::Info) << string_format("DEBUG can_eat: %s - not comestible", food.tname().c_str());
         return ret_val<edible_rating>::make_failure( _( "That doesn't look edible." ) );
     }
 
@@ -638,15 +642,18 @@ ret_val<edible_rating> Character::can_eat( const item &food ) const
             ( food.has_flag( flag_FELINE ) && !has_trait( trait_THRESH_FELINE ) ) ||
             ( food.has_flag( flag_LUPINE ) && !has_trait( trait_THRESH_LUPINE ) ) ||
             ( food.has_flag( flag_BIRD ) && !has_trait( trait_THRESH_BIRD ) ) ) {
+            dbg(DL::Info) << string_format("DEBUG can_eat: %s - flagged inedible for this species", food.tname().c_str());
             return ret_val<edible_rating>::make_failure( _( "That doesn't look edible to you." ) );
         }
     }
 
     if( food.is_craft() ) {
+        dbg(DL::Info) << string_format("DEBUG can_eat: %s - is a craft", food.tname().c_str());
         return ret_val<edible_rating>::make_failure( _( "That doesn't look edible in its current form." ) );
     }
 
     if( food.has_own_flag( flag_DIRTY ) ) {
+        dbg(DL::Info) << string_format("DEBUG can_eat: %s - is dirty", food.tname().c_str());
         return ret_val<edible_rating>::make_failure(
                    _( "This is full of dirt after being on the ground." ) );
     }
@@ -674,6 +681,7 @@ ret_val<edible_rating> Character::can_eat( const item &food ) const
                          ? has_charges( comest->tool, 1 )
                          : has_amount( comest->tool, 1 );
         if( !has ) {
+            dbg(DL::Info) << string_format("DEBUG can_eat: %s - missing tool %s", food.tname().c_str(), item::nname( comest->tool ).c_str());
             return ret_val<edible_rating>::make_failure( edible_rating::no_tool,
                     string_format( _( "You need a %s to consume that!" ),
                                    item::nname( comest->tool ) ) );
@@ -692,7 +700,9 @@ ret_val<edible_rating> Character::can_eat( const item &food ) const
                 _( "Ugh, you can't drink that!" ) );
     }
     if( has_trait( trait_CARNIVORE ) && ( compute_effective_nutrients( food ).kcal ) > 0 &&
-        food.has_any_vitamin( carnivore_blacklist ) && !food.has_flag( flag_CARNIVORE_OK ) ) {
+        food.has_any_vitamin( carnivore_blacklist ) /*&& !food.has_flag( flag_CARNIVORE_OK )*/ ) {
+        dbg(DL::Info) << string_format("DEBUG can_eat: %s - carnivore trait blocks food (blacklisted vitamin)", food.tname().c_str());
+        // Remove the CARNIVORE_OK check: only check for blacklisted vitamins
         return ret_val<edible_rating>::make_failure( edible_rating::inedible_mutation,
                 _( "Eww.  Inedible plant stuff!" ) );
     }
@@ -707,18 +717,24 @@ ret_val<edible_rating> Character::can_eat( const item &food ) const
     for( const trait_id &mut : get_mutations() ) {
         if( !food.made_of_any( mut.obj().can_only_eat ) && !mut.obj().can_only_eat.empty() &&
             !food.has_flag( flag_NO_INGEST ) ) {
+            dbg(DL::Info) << string_format("DEBUG can_eat: %s - blocked by mutation %s", food.tname().c_str(), mut.c_str());
             return ret_val<edible_rating>::make_failure( edible_rating::inedible_mutation,
                     _( "You can't eat this." ) );
         }
     }
 
+  //  dbg(DL::Info) << string_format("DEBUG can_eat: %s - can eat SUCCESS", food.tname().c_str());
     return ret_val<edible_rating>::make_success();
 }
 
 ret_val<edible_rating> Character::will_eat( const item &food, bool interactive ) const
 {
+    // DEBUG: Start of will_eat
+    //dbg(DL::Info) << string_format("DEBUG will_eat: %s checking %s", name.c_str(), food.tname().c_str());
+
     const auto ret = can_eat( food );
     if( !ret.success() ) {
+        dbg(DL::Info) << string_format("DEBUG will_eat: %s - can_eat failed: %s", food.tname().c_str(), ret.c_str());
         if( interactive ) {
             add_msg_if_player( m_info, "%s", ret.c_str() );
         }
@@ -762,6 +778,7 @@ ret_val<edible_rating> Character::will_eat( const item &food, bool interactive )
 
     if( ( allergy_type( food ) != MORALE_NULL ) || ( carnivore && food.has_flag( flag_ALLERGEN_JUNK ) &&
             !food.has_flag( flag_CARNIVORE_OK ) ) ) {
+        dbg(DL::Info) << string_format("DEBUG will_eat: %s - allergy detected", food.tname().c_str());
         add_consequence( _( "Your stomach won't be happy (allergy)." ), edible_rating::allergy );
     }
 
@@ -784,7 +801,9 @@ ret_val<edible_rating> Character::will_eat( const item &food, bool interactive )
     }
 
     if( !consequences.empty() ) {
+        dbg(DL::Info) << string_format("DEBUG will_eat: %s - has %d consequences", food.tname().c_str(), static_cast<int>(consequences.size()));
         if( !interactive ) {
+            dbg(DL::Info) << string_format("DEBUG will_eat: %s - returning consequence: %s", food.tname().c_str(), consequences.front().c_str());
             return consequences.front();
         }
         std::string req;
@@ -808,6 +827,7 @@ ret_val<edible_rating> Character::will_eat( const item &food, bool interactive )
         }
     }
     // All checks ended, it's edible (or we're pretending it is)
+    //dbg(DL::Info) << string_format("DEBUG will_eat: %s - will eat SUCCESS", food.tname().c_str());
     return ret_val<edible_rating>::make_success();
 }
 
@@ -1700,7 +1720,6 @@ bool Character::consume_med( item &target )
     target.charges -= amount_used;
     return target.charges <= 0;
 }
-
 consumption_event::consumption_event( const item &food ) : time( calendar::turn )
 {
     type_id = food.typeId();

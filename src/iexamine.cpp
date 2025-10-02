@@ -1,4 +1,5 @@
 #include "iexamine.h"
+#include "vitamin.h"
 
 #include <algorithm>
 #include <array>

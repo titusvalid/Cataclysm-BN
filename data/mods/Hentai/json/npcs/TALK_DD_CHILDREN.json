@@ -1,0 +1,57 @@
+[
+	{
+		"id": "TALK_DD_CHILDREN",
+		"type": "talk_topic",
+		"dynamic_line": {
+			"u_male": "Daddy?"
+		
+		},
+		"responses": [
+			{
+				"text": "That's right, let's travel together!",
+				"success": {
+					"effect": "follow",
+					"opinion": {
+						"trust": 10,
+						"value": 10
+					},
+					"topic": "TALK_DONE"
+				}
+			},
+			{
+				"text": "I'm sorry, but I'm not your parent.",
+				"topic": "TALK_DD_CHILDREN_IAM_NOT_YOUR_FATHER"
+			},
+			{
+				"text": "What on earth happened?",
+				"topic": "TALK_DD_CHILDREN_WHATSTHEHECK"
+			},
+			{
+				"text": "Never mind.",
+				"topic": "TALK_DONE"
+			}
+		]
+	},
+	{
+		"id": "TALK_DD_CHILDREN_IAM_NOT_YOUR_FATHER",
+		"type": "talk_topic",
+		"dynamic_line": "No way!",
+		"responses": [
+			{
+				"text": "(Walk Away)",
+				"topic": "TALK_DONE"
+			}
+		]
+	},
+	{
+		"id": "TALK_DD_CHILDREN_WHATSTHEHECK",
+		"type": "talk_topic",
+		"dynamic_line": "We're saving you time and effort.  You wouldn't want to go through all of this child-rearing for god knows how many in-game years, right?",
+		"responses": [
+			{
+				"text": "I'll just pretend I didn't hear that...",
+				"topic": "TALK_DD_CHILDREN"
+			}
+		]
+	}
+]

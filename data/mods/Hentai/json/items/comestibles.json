@@ -1,0 +1,164 @@
+[
+	{
+		"id": "h_semen",
+		"type": "COMESTIBLE",
+		"name": "human bodily fluid",
+	
+		"weight": 28,
+		"color": "white",
+		"spoils_in": 8,
+		"container": "used_condom",
+		"comestible_type": "DRINK",
+		"symbol": "~",
+		"quench": -5,
+		"healthy": 0,
+		"nutrition": 1,
+		"description": "This liquid definitely belonged to a human.  It's sticky, viscous and also smells.  Yuck!",
+		"price": 0,
+		"material": [ "flesh", "water" ],
+		"volume": 1,
+		"phase": "liquid",
+		"fun": -50,
+
+		"vitamins": [ [ "calcium", 1, 3 ], [ "iron", 1, 3 ], [ "vitC", 3, 8 ], [ "vitB", 1, 3 ] ]
+	},
+	{
+		"id": "d_cum",
+		"type": "COMESTIBLE",
+		"name": "demonic bodily fluid",
+	
+		"weight": 28,
+		"color": "pink",
+		"spoils_in": 8,
+		"container": "used_condom",
+		"comestible_type": "DRINK",
+		"symbol": "~",
+		"quench": -5,
+		"healthy": -1,
+		"nutrition": 1,
+		"description": "This sticky viscous liquid obviously belonged to a non-human being.  Drinking it might cause mutations.",
+		"price": 0,
+		"material": [ "flesh", "water" ],
+		"volume": 1,
+		"phase": "liquid",
+		"fun": -50,
+
+		"vitamins": [ [ "calcium", 6 ], [ "iron", 6 ], [ "vitC", 6 ], [ "vitB", 6 ] ],
+		"use_action" : {
+			"type" : "mutagen",
+			"is_weak" : true
+		}
+	},
+	{
+		"id" : "oc_pill",
+		"type" : "COMESTIBLE",
+		"comestible_type" : "MED",
+		"name" : "birth control pill",
+		"//" : "説明文はほぼWikipedia丸写し。医学的なことはよくわかんないっす",
+		"description" : "A contraceptive pill containing a combination of an estrogen and a progestogen.  When taken correctly, it alters the menstrual cycle to eliminate ovulation and prevent pregnancy.  Take it *before* the act.",
+		"weight" : 1,
+		"volume" : 1,
+		"price" : 500,
+		"charges" : 21,
+		"stack_size" : 200,
+		"symbol" : "!",
+		"color" : "blue",
+		"healthy" : -1,
+		"use_action" : {
+			"type" : "consume_drug",
+			"activation_message" : "You take the birth control pill.",
+			"effects" : [ { "id" : "contraception", "duration" : 14400 } ]
+		},
+		"flags" : "NPC_SAFE"
+	},
+	{
+		"id" : "after_pill",
+		"type" : "COMESTIBLE",
+		"comestible_type" : "MED",
+		"name" : "morning-after pill",
+		"description" : "An emergency contraceptive pill containing levonorgestrel.  It may be used to prevent pregnancy even after the act.  However it is only effective up to 120 hours after intercourse and the effect will fade over time.",
+		"weight" : 1,
+		"volume" : 1,
+		"price" : 500,
+		"charges" : 4,
+		"stack_size" : 200,
+		"symbol" : "!",
+		"color" : "yellow",
+		"healthy" : -3,
+		"//" : "現実では精子の侵入を阻害するのであって殺精子剤の効果は無いってわかってますが、そこまでゲームシステムに組み込むのはさすがに無理っす",
+		"use_action" : {
+			"type" : "consume_drug",
+			"activation_message" : "You take the morning-after pill.",
+			"effects" : [ { "id" : "anthcream", "duration" : 1 } ]
+		},
+		"flags" : "NPC_SAFE"
+	},
+	{
+		"id" : "ts_elixir",
+		"type" : "COMESTIBLE",
+		"comestible_type" : "MED",
+		"name" : "gender bender elixir",
+
+		"description" : "Whoever drinks it will change their gender.",
+		"weight" : 240,
+		"volume" : 1,
+		"container": "medieval_bottle",
+		"price" : 10000,
+		"charges" : 1,
+		"symbol" : "~",
+		"color" : "pink",
+		"use_action" : "IUSE_TS_ELIXIR",
+		"phase": "liquid",
+		"flags" : "TRADER_AVOID"
+	},
+	{
+		"id" : "mutagen_human",
+		"copy-from" : "mutagen_flavor",
+		"type" : "COMESTIBLE",
+		"name" : "human mutagen",
+	
+		"description" : "A rare substance of uncertain origins.  Causes you to mutate into human...  In other words, it will revert any inhuman mutations or genetic abnormalities.",
+		"price" : 600000,
+		"healthy" : 5,
+		"addiction_potential" : 8,
+		"use_action" : "PURIFIER"
+	},
+	{
+		"id" : "iv_mutagen_human",
+		"copy-from" : "iv_mutagen_flavor",
+		"type" : "COMESTIBLE",
+		"name" : "human serum",
+
+		"description" : "A super-concentrated mutagen.  You need a syringe to inject it...  Depending on how you use it, you may be able to *mutate* non-human organisms into humans.",
+		"price" : 900000,
+		"color" : "magenta",
+		"addiction_potential" : 8,
+		"use_action" : ["PURIFY_IV", "IUSE_ANTHROPOMORPH"]
+	},
+	{
+		"id" : "mutagen_fiend",
+		"copy-from" : "mutagen_flavor",
+		"type" : "COMESTIBLE",
+		"name" : "demonic mutagen",
+
+		"description" : "A rare substance of uncertain origins.  Causes you to mutate.",
+		"use_action" : {
+			"type" : "mutagen",
+			"mutation_category" : "FIEND"
+		}
+	},
+	{
+		"id" : "iv_mutagen_fiend",
+		"copy-from" : "iv_mutagen_flavor",
+		"type" : "COMESTIBLE",
+		"name" : "demonic serum",
+
+		"description" : "A super-concentrated mutagen strongly resembling blood.  You need a syringe to inject it...  if you really want to?",
+		"color" : "red",
+		"use_action" : {
+			"type" : "mutagen_iv",
+			"mutation_category" : "FIEND"
+		}
+	}
+
+]

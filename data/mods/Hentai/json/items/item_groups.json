@@ -1,0 +1,398 @@
+[
+	{
+		"type" : "item_group",
+		"id" : "forest",
+		"items":[
+			["used_condom", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "hive_center",
+		"items":[
+			{"item": "h_semen", "prob": 3, "count-min": 10, "count-max": 30, "charges": 1, "container-item": "used_condom"},
+			{"item": "d_cum", "prob": 1, "count-min": 10, "count-max": 30, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "livingroom",
+		"items":[
+			["wrapped_condom", 1],
+			["dictionnaire_finfernal", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "fridge",
+		"items":[
+			{"item": "h_semen", "prob": 1, "charges": 12, "container-item": "jar_3l_glass_sealed"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "bed",
+		"items":[
+			{"item": "wrapped_condom", "prob": 2, "count-min": 1, "count-max": 6},
+			["wrapped_condom", 3],
+			["wrapped_condom_danger", 3],
+			["used_condom", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "bedroom",
+		"items":[
+			["wrapped_condom", 5],
+			["wrapped_condom_danger", 5],
+			["sexy_zipsuit", 5],
+			["dictionnaire_finfernal", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "dresser",
+		"items":[
+			["wrapped_condom", 2],
+			["condom", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "allclothes",
+		"items":[
+			["sexy_zipsuit", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "trash",
+		"items":[
+			["used_condom", 8],
+			["wrapped_condom_danger", 10],
+			{"item": "h_semen", "prob": 3, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "trash_cart",
+		"items":[
+			["used_condom", 8],
+			["wrapped_condom_danger", 10],
+			{"item": "h_semen", "prob": 3, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "behindcounter",
+		"items":[
+			{"item": "h_semen", "prob": 2, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "cop_evidence",
+		"items":[
+			["used_condom", 2],
+			{"item": "h_semen", "prob": 2, "charges": 1, "container-item": "used_condom"},
+			{"item": "d_cum", "prob": 1, "charges": 1, "container-item": "used_condom"},
+			["sexy_zipsuit", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "cubical_office",
+		"items":[
+			["wrapped_condom", 2],
+			["used_condom", 3]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "trash_forest",
+		"items":[
+			["used_condom", 1],
+			["wrapped_condom_danger", 2],
+			{"item": "h_semen", "prob": 1, "charges": 1, "container-item": "used_condom"},
+			{"item": "d_cum", "prob": 1, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "magazines",
+		"items":[
+			["dictionnaire_finfernal", 4]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "novels",
+		"items":[
+			["dictionnaire_finfernal", 4]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "homebooks",
+		"items":[
+			["dictionnaire_finfernal", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "mansion_books",
+		"items":[
+			["dictionnaire_finfernal", 24]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "softdrugs",
+		"items":[
+			["oc_pill", 35],
+			["after_pill", 25]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "harddrugs",
+		"items":[
+			["after_pill", 5]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "hospital_lab",
+		"items":[
+			["oc_pill", 5],
+			["after_pill", 5]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "hospital_bed",
+		"items":[
+			["used_condom", 1],
+			{"item": "h_semen", "prob": 1, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "school",
+		"items":[
+			["wrapped_condom", 2],
+			["oc_pill", 1],
+			["dictionnaire_finfernal", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "church",
+		"items":[
+			["holy_choker", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "art",
+		"items":[
+			["holy_choker", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "medieval",
+		"items":[
+			["holy_choker", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "pawn",
+		"items":[
+			["holy_choker", 3]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "chem_home",
+		"items":[
+			["oc_pill", 3],
+			["after_pill", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "subway",
+		"items":[
+			["wrapped_condom", 1],
+			["wrapped_condom_danger", 3],
+			["used_condom", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "sewer",
+		"items":[
+			["wrapped_condom", 1],
+			["wrapped_condom_danger", 3],
+			["used_condom", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "drugdealers",
+		"items":[
+			["oc_pill", 7],
+			["after_pill", 15]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "museum_misc",
+		"items":[
+			["holy_choker", 30]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "college_camping",
+		"items":[
+			["wrapped_condom", 5],
+			["used_condom", 1],
+			{"item": "h_semen", "prob": 1, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "college_lake",
+		"items":[
+			["wrapped_condom", 5],
+			["used_condom", 1],
+			{"item": "h_semen", "prob": 1, "charges": 1, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "mail",
+		"items":[
+			["dictionnaire_finfernal", 4]
+		]
+	},
+
+	{
+		"type" : "item_group",
+		"id" : "drugs_heal_simple",
+		"items":[
+			["oc_pill", 30],
+			["after_pill", 25]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "creepy",
+		"items":[
+			{"item": "d_cum", "prob": 5, "charges": 1, "count-min": 1, "count-max": 10, "container-item": "used_condom"}
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "sex_lair",
+		"items":[
+			{"item": "wrapped_condom", "prob": 10, "count-min": 1, "count-max": 10},
+			{"item": "used_condom", "prob": 10, "count-min": 1, "count-max": 10},
+			{"item": "h_semen", "prob": 15, "charges": 1, "count-min": 1, "count-max": 10, "container-item": "used_condom"},
+			{"item": "d_cum", "prob": 5, "charges": 1, "count-min": 1, "count-max": 10, "container-item": "used_condom"},
+			["sexy_zipsuit", 10]
+		]
+	},
+
+	{
+		"type" : "item_group",
+		"id" : "chem_lab",
+		"items":[
+			["recipe_hentai", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "mut_lab",
+		"items":[
+			["recipe_hentai", 2],
+			["iv_mutagen_human", 2],
+			["iv_mutagen_fiend", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "mut_iv",
+		"items":[
+			["iv_mutagen_human", 2],
+			["iv_mutagen_fiend", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "goo",
+		"items":[
+			["recipe_hentai", 2],
+			["bio_onahole", 1]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "lab_dorm",
+		"items":[
+			["recipe_hentai", 1],
+			["sexy_zipsuit", 5]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "vault",
+		"items":[
+			["slut_power_suit", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "mil_armor",
+		"items":[
+			["slut_power_suit", 2]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "mil_armor_torso",
+		"items":[
+			["slut_power_suit", 4]
+		]
+	},
+	{
+		"type" : "item_group",
+		"id" : "military",
+		"items":[
+			["slut_power_suit", 4]
+		]
+	},
+
+	{
+		"type" : "item_group",
+		"id" : "rare",
+		"items":[
+			["holy_choker", 10],
+			["slut_power_suit", 50]
+		]
+	},
+
+
+
+
+	{
+		"type" : "item_group",
+		"id" : "abominate_inseminate_metaphor",
+		"items":[
+			["fetus", 1]
+		]
+	}
+]

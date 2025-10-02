@@ -1,0 +1,59 @@
+[
+	{
+		"id": "fake_whip",
+		"type": "GUN",
+		"copy-from": "fake_item",
+		"name": "succubi_whip",
+		"description": "Dummy item used for monster attack.  If you see this, then something went wrong.",
+		"flags": [ "NEVER_JAMS" ],
+		"ammo_effects": [ "BLINDS_EYES", "NEVER_MISFIRES", "WIDE", "BEANBAG" ],
+		"skill": "rifle",
+		"durability": 10,
+		"range" : 3,
+		"dispersion" : 750,
+		"ranged_damage" : {
+			"damage_type": "cut",
+			"amount": 5
+		}
+	},
+	{
+		"id": "d_cumshot",
+		"type": "AMMO",
+		"name": "D_CUMSHOT",
+		"description": "Dummy item used for monster special attack.  If you see this, then something obviously went wrong.",
+		"weight": 40,
+		"volume": 1,
+		"price": 0,
+		"material": [ "flesh", "water" ],
+		"symbol": "~",
+		"color": "pink",
+		"count": 2,
+		"stack_size": 2,
+		"ammo_type": "8x40mm",
+		"range": 25,
+		"damage": 0,
+		"dispersion": 12000,
+		"pierce" : 0,
+		"recoil": 1000,
+		"effects": [ "CUSTOM_EXPLOSION", "NEVER_MISFIRES" ],
+		"explode_in_fire" : false,
+		"explosion" : {
+			"power": 30,
+			"distance_factor": 0.1,
+			"fire" : false,
+			"shrapnel" : {
+
+				"recovery" : 100,
+				"drop" : "d_cum",
+				"casing_mass":0
+			}
+		}
+	},
+	{
+		"id": "fake_prof_pet",
+		"type": "GENERIC",
+		"copy-from": "fake_item",
+		"name": "(Any pet)※Selected at the beginning of the game",
+		"description": "Fake item for managing the flag for profession:man_with_a_pet."
+	}
+]

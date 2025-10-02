@@ -1,0 +1,13 @@
+[
+	{
+		"type": "MOD_INFO",
+		"ident": "mod_hentai",
+		"name": "Hentai Mod",
+		"authors": [ "bob serious" ],
+		"description": "Did you ever want to have a more *intimate* kind of relationship with your favorite characters?  What about getting molested by lewd creatures?  This mod will make those dreams come true.",
+		"category": "magical",
+    "obsolete": false,
+    "lua_api_version": 2,
+    "dependencies": [ "bn" ]
+	}
+]

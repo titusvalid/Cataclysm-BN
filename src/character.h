@@ -1712,6 +1712,8 @@ class Character : public Creature, public location_visitable<Character>
 
         // Gets item in inventory with id
         const item *get_item_with_id( const itype_id &item_id, bool need_charges = false ) const;
+        /** Checks if prerequisites for a mutation are met */
+        bool has_prereqs_met( const trait_id &mut ) const;
 
         // Adds item(s) to inventory
         void add_item_with_id( const itype_id &itype, int count = 1 );

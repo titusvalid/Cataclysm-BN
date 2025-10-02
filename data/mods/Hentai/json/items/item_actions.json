@@ -1,0 +1,32 @@
+[
+	{
+		"type": "item_action",
+		"id": "IUSE_YIFF",
+		"name": "*Use*"
+	},
+	{
+		"type": "item_action",
+		"id": "IUSE_PET_CUBI",
+		"name": "Put it on someone"
+	},
+	{
+		"type": "item_action",
+		"id": "IUSE_TS_ELIXIR",
+		"name": "Drink"
+	},
+	{
+		"type": "item_action",
+		"id": "IUSE_NAMING_NPC",
+		"name": "Use"
+	},
+	{
+		"type": "item_action",
+		"id": "IUSE_ANTHROPOMORPH",
+		"name": "Transform Pet into Human"
+	},
+	{
+		"type": "item_action",
+		"id": "IUSE_SPAWN_ARTIFACT",
+		"name": "Use"
+	}
+]

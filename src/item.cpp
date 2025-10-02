@@ -1934,6 +1934,11 @@ void item::food_info( const item *food_item, std::vector<iteminfo> &info,
             info.emplace_back( "FOOD", space + _( "Quench: " ),
                                food_item->get_comestible()->quench );
         }
+        // Show healthy stat for all comestibles
+        if( parts->test( iteminfo_parts::FOOD_NUTRITION ) ) {
+            int healthy = food_item->get_comestible()->healthy;
+            info.emplace_back( "FOOD", _( "Healthy: " ), healthy );
+        }
     }
 
     const std::pair<int, int> fun_for_food_item = you.fun_for( *food_item );
@@ -6074,7 +6079,7 @@ auto item::calc_rot( time_point time, const units::temperature temp ) const -> t
     time_duration added_rot = 0_seconds;
     // simulation of different age of food at the start of the game and good/bad storage
     // conditions by applying starting variation bonus/penalty of +/- 20% of base shelf-life
-    // positive = food was produced some time before calendar::start and/or bad storage
+    // positive = food was produced some time before calendar::start_of_cataclysm and/or bad storage
     // negative = food was stored in good conditions before calendar::start
     if( last_rot_check <= calendar::start_of_cataclysm ) {
         time_duration spoil_variation = get_shelf_life() * 0.2f;
@@ -7453,7 +7458,21 @@ bool item::is_tool() const
 
 bool item::is_transformable() const
 {
-    return type->use_methods.find( "transform" ) != type->use_methods.end();
+    // Treat any of the standard toggle actors as "transformable" so that generic
+    // code (e.g. NPC auto-toggling) will handle them in the same way, regardless
+    // of which specific JSON actor an item happens to use.
+    static const std::array<std::string_view, 3> toggle_actors = {
+        "transform",        // classic transform actor
+        "set_transform",    // power-armor and similar
+        "set_transformed"   // many power-armor suit components
+    };
+
+    for( const std::string_view actor_id : toggle_actors ) {
+        if( type->use_methods.find( std::string( actor_id ) ) != type->use_methods.end() ) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool item::is_artifact() const

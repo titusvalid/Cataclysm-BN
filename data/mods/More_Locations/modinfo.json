@@ -1,0 +1,12 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "more_locations",
+    "name": "More Locations",
+    "authors": [ "Sunshine" ],
+    "description": "Adds new Z-level buildings and dungeons, including apartment towers with refugees along with bandits, estates, factories, towers, military outposts.  Though, a little bit unpolished, but made with plenty of effort.  Before generating a world, you can remove subfolders to nix unwanted locations.",
+    "category": "buildings",
+    "dependencies": [ "bn" ],
+    "obsolete": false
+  }
+]

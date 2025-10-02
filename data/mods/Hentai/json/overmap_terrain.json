@@ -1,0 +1,92 @@
+[
+	  {
+		"type": "overmap_terrain",
+		"id": "corrupted_school_ne",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_n",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_nw",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_e",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_ce",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_w",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_se",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_s",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	},
+	{
+		"type": "overmap_terrain",
+		"id": "corrupted_school_sw",
+		"name": "corrupted regional school",
+		"sym": "S",
+		"color": "light_blue",
+		"see_cost": 5,
+		"mondensity": 2,
+		"flags": [ "SIDEWALK" ]
+	}
+]

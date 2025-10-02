@@ -1,6 +1,6 @@
 #include "npc.h" // IWYU pragma: associated
 #include "debug.h"
-#define dbg(x) DebugLogFL((x),DC::Game)
+// #define dbg(x) DebugLogFL((x),DC::Game)
 
 #include <algorithm>
 #include <cfloat>
@@ -12,6 +12,7 @@
 #include <numeric>
 #include <ostream>
 #include <tuple>
+#include <unordered_map>
 
 #include "active_item_cache.h"
 #include "activity_handlers.h"
@@ -73,6 +74,10 @@
 #include "visitable.h"
 #include "vpart_position.h"
 #include "vpart_range.h"
+#include "item_search.h"
+
+// Forward declaration for rate_food
+static float rate_food( npc &who, const item &it, int want_nutr, int want_quench, bool parent_requires_unsealing );
 
 static const activity_id ACT_PULP( "ACT_PULP" );
 
@@ -124,6 +129,7 @@ static const itype_id itype_lsd( "lsd" );
 static const itype_id itype_smoxygen_tank( "smoxygen_tank" );
 static const itype_id itype_thorazine( "thorazine" );
 static const itype_id itype_oxygen_tank( "oxygen_tank" );
+static const itype_id itype_UPS( "UPS" );
 
 static constexpr float NPC_DANGER_VERY_LOW = 5.0f;
 static constexpr float NPC_DANGER_MAX = 150.0f;
@@ -195,26 +201,79 @@ bool compare_sound_alert( const dangerous_sound &sound_a, const dangerous_sound 
 
 static bool clear_shot_reach( const tripoint &from, const tripoint &to, bool check_ally = true )
 {
-    std::vector<tripoint> path = line_to( from, to );
-    tripoint target_point = path.back();
-    path.pop_back();
-    if( path.empty() ) {
+    map &here = get_map();
+
+    // Debug: trace the entire path.
+    dbg( DL::Info ) << string_format( "clear_shot_reach: from (%d,%d,%d) to (%d,%d,%d)",
+                                      from.x, from.y, from.z, to.x, to.y, to.z );
+
+    std::vector<tripoint> traj = here.find_clear_path( from, to );
+    if( traj.empty() ) {
+        dbg( DL::Info ) << "clear_shot_reach: find_clear_path returned empty, assuming adjacent.";
         return true;
     }
-    tripoint &last_point = path[0];
-    for( const tripoint &p : path ) {
-        Creature *inter = g->critter_at( p );
-        if( check_ally && inter != nullptr ) {
-            return false;
-        } else if( get_map().impassable( p ) ) {
-            return false;
-        } else if( get_map().obstructed_by_vehicle_rotation( last_point, p ) ) {
+
+    dbg( DL::Info ) << "clear_shot_reach: Path trace follows…";
+    tripoint last_pt = from;
+    for( size_t i = 0; i + 1 < traj.size(); ++i ) {          // skip final (target) tile
+        const tripoint &p = traj[i];
+        dbg( DL::Info ) << string_format( "  path node: (%d,%d,%d) ter: %s, furn: %s",
+                                          p.x, p.y, p.z,
+                                          here.tername( p ), here.furnname( p ) );
+
+        // Hard obstruction (ignore PERMEABLE)
+        if( here.impassable( p ) &&
+            !here.has_flag_ter_or_furn( TFLAG_PERMEABLE, p ) ) {
+            dbg( DL::Info ) << "    BLOCKED by terrain/furniture.";
             return false;
         }
-        last_point = p;
+
+        // Vehicle rotation blocking between nodes
+        if( here.obstructed_by_vehicle_rotation( last_pt, p ) ) {
+            dbg( DL::Info ) << "    BLOCKED by vehicle rotation.";
+            return false;
+        }
+
+        // Optional ally / creature check
+        if( check_ally ) {
+            if( Creature *cr = g->critter_at( p ); cr != nullptr ) {
+                dbg( DL::Info ) << string_format( "    BLOCKED by creature %s.", cr->disp_name() );
+                return false;
+            }
+        }
+
+        last_pt = p;
     }
 
-    return !get_map().obstructed_by_vehicle_rotation( last_point, target_point );
+    // Final segment: vehicle-rotation test
+    if( here.obstructed_by_vehicle_rotation( last_pt, to ) ) {
+        dbg( DL::Info ) << "clear_shot_reach: BLOCKED by vehicle rotation on last segment.";
+        return false;
+    }
+
+    // LOS/corner test
+    if( !here.sees( from, to, rl_dist( from, to ) ) ) {
+        dbg( DL::Info ) << "clear_shot_reach: map::sees returned false. BLOCKED.";
+        return false;
+    }
+
+    // Ally check over entire interior path (already done above, but kept for completeness)
+    if( check_ally ) {
+        std::vector<tripoint> ally_traj = traj;
+        if( !ally_traj.empty() ) {
+            ally_traj.pop_back();
+        }
+        for( const tripoint &p : ally_traj ) {
+            if( Creature *cr = g->critter_at( p ); cr != nullptr ) {
+                dbg( DL::Info ) << string_format( "clear_shot_reach: BLOCKED by ally %s at (%d,%d,%d)",
+                                                  cr->disp_name(), p.x, p.y, p.z );
+                return false;
+            }
+        }
+    }
+
+    dbg( DL::Info ) << "clear_shot_reach: All checks passed. Path is clear.";
+    return true;
 }
 
 tripoint npc::good_escape_direction( bool include_pos )
@@ -390,6 +449,10 @@ void npc::assess_danger()
             def_radius = 1;
         } else if( rules.engagement == combat_engagement::GUARD_ME ) {
             def_radius = 2; // Keep NPC close when guarding player
+        } else if( rules.engagement == combat_engagement::ENGAGE_EXTENDED_MELEE ) {
+            def_radius = 6; // Engage targets up to 6 tiles away
+        } else if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+            def_radius = 10; // Engage targets >3 and <=10 tiles away when skirmishing
         }
     }
 
@@ -417,6 +480,10 @@ void npc::assess_danger()
                 return dist <= max_range;
             case combat_engagement::GUARD_ME: // Allow if enemy is near player OR adjacent to NPC
                 return rl_dist( c.pos(), player_character.pos() ) <= 2 || dist <= 1;
+            case combat_engagement::ENGAGE_EXTENDED_MELEE:
+                return dist <= 6; // Engage if target is within 6 tiles
+            case combat_engagement::ENGAGE_SKIRMISH:
+                return dist > 2 && dist <= 10; // Engage if target is >3 and <=10 tiles
             case combat_engagement::ALL:
                 return true;
         }
@@ -531,16 +598,63 @@ void npc::assess_danger()
         // critter danger is always at least NPC_DANGER_VERY_LOW
         float priority = std::max( critter_danger - 2.0f * ( scaled_distance - 1.0f ),
                                    is_too_close ? critter_danger : 0.0f );
+
+        // Apply proximity boost
+        float old_priority_for_log = priority;
+        float proximity_multiplier = (20.0f / std::max(1.0f, static_cast<float>(dist)));
+        priority *= proximity_multiplier;
+        if (priority > 0.01f) { // Avoid spamming logs for zero-priority targets
+            dbg(DL::Info) << string_format("%s assess_danger (monster): Target %s dist %d. Initial prio: %.2f. Prox mult: %.2f. Prio after prox: %.2f", \
+                                          name, critter.disp_name(), dist, old_priority_for_log, proximity_multiplier, priority);
+        }
+
         // Boost priority if GUARD_ME rule is active and enemy is close to player OR adjacent to NPC
         if( rules.engagement == combat_engagement::GUARD_ME && 
             (rl_dist( critter.pos(), player_character.pos() ) <= 2 || dist <= 1) ) {
             priority = NPC_DANGER_MAX + critter_danger; // Very high priority
         }
-        cur_threat_map[direction_from( pos(), critter.pos() )] += priority;
+        // Moved target selection to AFTER FF/clear shot penalty/bonus
+        // cur_threat_map[direction_from( pos(), critter.pos() )] += priority; 
+        // if( priority > highest_priority ) {
+        // highest_priority = priority;
+        // ai_cache.target = g->shared_from( critter );
+        // ai_cache.danger = critter_danger;
+        // }
+
+        // Adjust priority based on clear shot (no friends in way)
+        bool has_clear_shot_to_target = false; // For final target selection logic
+        if( primary_weapon().is_gun() ) {
+            bool clear_shot_no_friends = wont_hit_friend( critter.pos(), primary_weapon(), false );
+            float old_priority_ff_log = priority; // Store for logging before FF adjustment
+            if( clear_shot_no_friends ) {
+                priority *= 2.5f; // Boost priority significantly for clear shots
+                has_clear_shot_to_target = true;
+                dbg(DL::Info) << string_format("%s assess_danger (monster): Target %s clear shot. Priority %.2f -> %.2f (Boosted x2.5)", name, critter.disp_name(), old_priority_ff_log, priority);
+            } else {
+                priority *= 0.4f; // Penalize heavily if friends are in the way
+                // has_clear_shot_to_target remains false
+                dbg(DL::Info) << string_format("%s assess_danger (monster): Target %s friend in way. Priority %.2f -> %.2f (Penalized x0.4)", name, critter.disp_name(), old_priority_ff_log, priority);
+            }
+        } else { // Not a gun, assume melee or other, no complex FF check, consider it clear for now for selection
+            has_clear_shot_to_target = true; 
+        }
+
+        // Update target if this one is now better after all considerations
+        cur_threat_map[direction_from( pos(), critter.pos() )] += priority; // Still update threat map with final priority
         if( priority > highest_priority ) {
             highest_priority = priority;
             ai_cache.target = g->shared_from( critter );
-            ai_cache.danger = critter_danger;
+            ai_cache.danger = critter_danger; // critter_danger is the base danger before multipliers
+            // Add a log for when a new target is chosen after FF considerations
+            dbg(DL::Info) << string_format("%s assess_danger (monster): NEW BEST TARGET %s with final priority %.2f (clear shot: %d, dist: %d)", 
+                                          name, critter.disp_name(), priority, static_cast<int>(has_clear_shot_to_target), dist);
+        } else {
+            auto locked_target = ai_cache.target.lock();
+            if (locked_target && locked_target.get() == &critter) {
+                // This critter is still the chosen target, but its priority might have been re-evaluated
+                dbg(DL::Info) << string_format("%s assess_danger (monster): Current target %s priority updated to %.2f after FF (clear shot: %d, dist: %d)", 
+                                              name, critter.disp_name(), priority, static_cast<int>(has_clear_shot_to_target), dist);
+            }
         }
     }
 
@@ -579,17 +693,65 @@ void npc::assess_danger()
             float priority = std::max( foe_threat - 2.0f * ( scaled_distance - 1 ),
                                        is_too_close ? std::max( foe_threat, NPC_DANGER_VERY_LOW ) :
                                        0.0f );
+
+            // Apply proximity boost
+            float old_priority_for_log = priority;
+            float proximity_multiplier = (20.0f / std::max(1.0f, static_cast<float>(dist)));
+            priority *= proximity_multiplier;
+            if (priority > 0.01f) { // Avoid spamming logs for zero-priority targets
+                dbg(DL::Info) << string_format("%s assess_danger (hostile char): Target %s dist %d. Initial prio: %.2f. Prox mult: %.2f. Prio after prox: %.2f", \
+                                            name, foe.disp_name(), dist, old_priority_for_log, proximity_multiplier, priority);
+            }
+
             // Boost priority if GUARD_ME rule is active and enemy is close to player OR adjacent to NPC
             if( rules.engagement == combat_engagement::GUARD_ME && 
                 (rl_dist( foe.pos(), player_character.pos() ) <= 2 || dist <= 1) ) {
                 priority = NPC_DANGER_MAX + foe_threat; // Very high priority
             }
-            cur_threat_map[direction_from( pos(), foe.pos() )] += priority;
+            // Moved target selection to AFTER FF/clear shot penalty/bonus
+            // cur_threat_map[direction_from( pos(), foe.pos() )] += priority;
+            // if( priority > highest_priority ) {
+            // warn_about( warning, 1_minutes );
+            // highest_priority = priority;
+            // ai_cache.danger = foe_threat;
+            // ai_cache.target = g->shared_from( foe );
+            // }
+
+            // Adjust priority based on clear shot (no friends in way)
+            bool has_clear_shot_to_target_hostile = false; // For final target selection logic
+            if( primary_weapon().is_gun() ) {
+                bool clear_shot_no_friends = wont_hit_friend( foe.pos(), primary_weapon(), false );
+                float old_priority_ff_log = priority; // Store for logging before FF adjustment
+                if( clear_shot_no_friends ) {
+                    priority *= 2.5f; // Boost priority significantly for clear shots
+                    has_clear_shot_to_target_hostile = true;
+                    dbg(DL::Info) << string_format("%s assess_danger (hostile char): Target %s clear shot. Priority %.2f -> %.2f (Boosted x2.5)", name, foe.disp_name(), old_priority_ff_log, priority);
+                } else {
+                    priority *= 0.4f; // Penalize heavily if friends are in the way
+                    // has_clear_shot_to_target_hostile remains false
+                    dbg(DL::Info) << string_format("%s assess_danger (hostile char): Target %s friend in way. Priority %.2f -> %.2f (Penalized x0.4)", name, foe.disp_name(), old_priority_ff_log, priority);
+                }
+            } else { // Not a gun, assume melee or other, no complex FF check, consider it clear for now for selection
+                 has_clear_shot_to_target_hostile = true;
+            }
+
+            // Update target if this one is now better after all considerations
+            cur_threat_map[direction_from( pos(), foe.pos() )] += priority; // Still update threat map with final priority
             if( priority > highest_priority ) {
                 warn_about( warning, 1_minutes );
                 highest_priority = priority;
-                ai_cache.danger = foe_threat;
+                ai_cache.danger = foe_threat; // foe_threat is the base danger before multipliers
                 ai_cache.target = g->shared_from( foe );
+                // Add a log for when a new target is chosen after FF considerations
+                dbg(DL::Info) << string_format("%s assess_danger (hostile char): NEW BEST TARGET %s with final priority %.2f (clear shot: %d, dist: %d)", 
+                                              name, foe.disp_name(), priority, static_cast<int>(has_clear_shot_to_target_hostile), dist);
+            } else {
+                auto locked_target = ai_cache.target.lock();
+                if (locked_target && locked_target.get() == &foe) {
+                    // This foe is still the chosen target, but its priority might have been re-evaluated
+                    dbg(DL::Info) << string_format("%s assess_danger (hostile char): Current target %s priority updated to %.2f after FF (clear shot: %d, dist: %d)", 
+                                                  name, foe.disp_name(), priority, static_cast<int>(has_clear_shot_to_target_hostile), dist);
+                }
             }
         }
         return foe_threat;
@@ -672,6 +834,10 @@ float npc::character_danger( const Character &u ) const
 
 void npc::regen_ai_cache()
 {
+    // Ensure reload-related caches are refreshed each turn so NPCs can reevaluate reloading
+    clear_npc_ai_info_cache( npc_ai_info::reloadables );
+    clear_npc_ai_info_cache( npc_ai_info::reloadable_cbms );
+
     map &here = get_map();
     auto i = std::begin( ai_cache.sound_alerts );
     while( i != std::end( ai_cache.sound_alerts ) ) {
@@ -724,7 +890,44 @@ void npc::regen_ai_cache()
 
 void npc::move()
 {
-    dbg( DL::Info ) << string_format( "%s entering npc::move() at (%d,%d,%d)", name, pos().x, pos().y, pos().z );
+    /* -------- Powered armor/exosuit idle toggle -------- */
+    static std::unordered_map<const npc *, tripoint> last_pos_map;
+    static std::unordered_map<const npc *, int> idle_turns_map;
+
+    const tripoint cur_pos = pos();
+    if( last_pos_map[this] == cur_pos ) {
+        idle_turns_map[this]++;
+    } else {
+        idle_turns_map[this] = 0;
+        last_pos_map[this] = cur_pos;
+    }
+
+    const bool long_idle = idle_turns_map[this] >= 5; // 5 consecutive turns idle
+
+    // Ensure power-armor / exosuits are toggled appropriately before any other logic
+    const bool suit_should_be_active = !in_sleep_state() && !is_stationary( true ) && !long_idle;
+    for( item *worn_it : worn ) {
+        if( !worn_it ) {
+            continue;
+        }
+        // Debug: log each wearable auto-toggle candidate
+       // dbg( DL::Info ) << string_format( "[NPC suit idle toggle] Evaluating %s | active:%d transformable:%d",
+       //                                   worn_it->tname(), static_cast<int>( worn_it->is_active() ), static_cast<int>( worn_it->is_transformable() ) );
+
+        if( worn_it->is_transformable() ) {
+            const bool needs_toggle = ( suit_should_be_active && !worn_it->is_active() ) ||
+                                      ( !suit_should_be_active && worn_it->is_active() );
+            if( needs_toggle ) {
+                if( worn_it->type->get_use( "transform" ) ) {
+                    worn_it->type->invoke( *this, *worn_it, pos(), "transform" );
+                } else {
+                    worn_it->type->invoke( *this, *worn_it, pos() );
+                }
+            }
+        }
+    }
+
+    // dbg( DL::Info ) << string_format( "%s entering npc::move() at (%d,%d,%d)", name, pos().x, pos().y, pos().z );
 
     // don't just return from this function without doing something
     // that will eventually subtract moves, or change the NPC to a different type of action.
@@ -740,20 +943,20 @@ void npc::move()
     // Remove fire_bad effect check from immediate escape logic
     // bool has_fire_effect = has_effect( effect_npc_fire_bad );
     if( !in_vehicle && sees_danger_here /* || has_fire_effect */ ) {
-        dbg( DL::Info ) << string_format( "%s sees danger field at pos: %d", name, static_cast<int>(sees_danger_here) );
+        // dbg( DL::Info ) << string_format( "%s sees danger field at pos: %d", name, static_cast<int>(sees_danger_here) );
         // Path clearing should only happen if actually standing in danger
         //if( sees_danger_here ) {
         path.clear();
-        dbg( DL::Info ) << string_format( "%s cleared path due to standing in danger field at pos.", name );
+        // dbg( DL::Info ) << string_format( "%s cleared path due to standing in danger field at pos.", name );
         //}
         const tripoint escape_dir = good_escape_direction( sees_danger_here );
-        dbg( DL::Info ) << string_format( "%s calculated escape direction: (%d,%d,%d) from (%d,%d,%d)", name, escape_dir.x, escape_dir.y, escape_dir.z, pos().x, pos().y, pos().z );
+        // dbg( DL::Info ) << string_format( "%s calculated escape direction: (%d,%d,%d) from (%d,%d,%d)", name, escape_dir.x, escape_dir.y, escape_dir.z, pos().x, pos().y, pos().z );
         if( escape_dir != pos() ) {
-            dbg( DL::Info ) << string_format( "%s attempting to move to escape direction (%d,%d,%d)", name, escape_dir.x, escape_dir.y, escape_dir.z );
+            // dbg( DL::Info ) << string_format( "%s attempting to move to escape direction (%d,%d,%d)", name, escape_dir.x, escape_dir.y, escape_dir.z );
             move_to( escape_dir );
             return;
         }
-        dbg( DL::Info ) << string_format( "%s escape direction is same as current pos, not escaping.", name );
+        // dbg( DL::Info ) << string_format( "%s escape direction is same as current pos, not escaping.", name );
     }
 
     regen_ai_cache();
@@ -796,30 +999,36 @@ void npc::move()
     // Check if we should flee based on danger vs bravery
     bool should_flee = ai_cache.danger_assessment > static_cast<float>( personality.bravery );
     bool wanted_to_flee = should_flee; // Track initial intention
-    dbg( DL::Info ) << string_format( "%s assessing flee: danger=%.1f, bravery=%d, should_flee=%d", 
-                                      name, ai_cache.danger_assessment, personality.bravery, static_cast<int>(should_flee) );
+    // dbg( DL::Info ) << string_format( "%s assessing flee: danger=%.1f, bravery=%d, should_flee=%d", 
+                                      // name, ai_cache.danger_assessment, personality.bravery, static_cast<int>(should_flee) );
 
     // Prevent fleeing if holding position, regardless of current location
     if( rules.has_flag( ally_rule::hold_position ) ) {
         if( should_flee ) {
-            dbg( DL::Info ) << string_format( "%s wants to flee (danger %.1f > bravery %d) but is holding position order.", name, ai_cache.danger_assessment, personality.bravery );
+            // dbg( DL::Info ) << string_format( "%s wants to flee (danger %.1f > bravery %d) but is holding position order.", name, ai_cache.danger_assessment, personality.bravery );
         }
         should_flee = false; // Override fleeing decision if hold_position is set
     }
 
     if( should_flee ) {
-        dbg( DL::Info ) << string_format( "%s decided to flee (danger %.1f > bravery %d)", name, ai_cache.danger_assessment, personality.bravery );
+        // dbg( DL::Info ) << string_format( "%s decided to flee (danger %.1f > bravery %d)", name, ai_cache.danger_assessment, personality.bravery );
         say( "<run_away>" ); // Add say call here
         action = method_of_fleeing();
-        dbg( DL::Info ) << string_format( "%s method_of_fleeing() result: %s", name, npc_action_name( action ) );
+        // dbg( DL::Info ) << string_format( "%s method_of_fleeing() result: %s", name, npc_action_name( action ) );
     } else if( wanted_to_flee ) {
         // Log even if fleeing was overridden
         npc_action flee_action_considered = method_of_fleeing();
-        dbg( DL::Info ) << string_format( "%s considered fleeing (action: %s) but was overridden by hold_position.", name, npc_action_name( flee_action_considered ) );
+        // dbg( DL::Info ) << string_format( "%s considered fleeing (action: %s) but was overridden by hold_position.", name, npc_action_name( flee_action_considered ) );
     } else if( has_effect( effect_asthma ) && ( has_charges( itype_inhaler, 1 ) ||
                has_charges( itype_oxygen_tank, 1 ) ||
                has_charges( itype_smoxygen_tank, 1 ) ) ) {
         action = npc_heal;
+    } else if( rules.has_flag( ally_rule::hold_position ) &&
+               goto_to_this_pos &&
+               get_map().getglobal( pos() ) != goto_to_this_pos.value() ) {
+        // Move to the specified hold-position before doing anything else.
+        action = npc_goto_to_this_pos;
+
     } else if( target != nullptr && ai_cache.danger > 0 ) {
         action = method_of_attack();
     } else if( !ai_cache.sound_alerts.empty() && !is_walking_with() ) {
@@ -871,17 +1080,17 @@ void npc::move()
     }
 
     // --> Log before goto_to_this_pos check
-    dbg( DL::Info ) << string_format( "%s BEFORE goto_check: action=%s, is_walking_with=%d, has_goto_target=%d", 
-                                        name, npc_action_name( action ), 
-                                        static_cast<int>( is_walking_with() ),
-                                        static_cast<int>( goto_to_this_pos.has_value() ) );
+    // dbg( DL::Info ) << string_format( "%s BEFORE goto_check: action=%s, is_walking_with=%d, has_goto_target=%d", 
+                                        // name, npc_action_name( action ), 
+                                        // static_cast<int>( is_walking_with() ),
+                                        // static_cast<int>( goto_to_this_pos.has_value() ) );
 
     if( action == npc_undecided && is_walking_with() && goto_to_this_pos ) {
         action = npc_goto_to_this_pos;
     }
 
     // --> Log after goto_to_this_pos check
-    dbg( DL::Info ) << string_format( "%s AFTER goto_check: action=%s", name, npc_action_name( action ) );
+    // dbg( DL::Info ) << string_format( "%s AFTER goto_check: action=%s", name, npc_action_name( action ) );
 
     // check if in vehicle before doing any other follow activities
     if( action == npc_undecided && is_walking_with() && player_character.in_vehicle && !in_vehicle ) {
@@ -890,8 +1099,8 @@ void npc::move()
 
     if( action == npc_undecided && is_walking_with() && rules.has_flag( ally_rule::follow_close ) &&
         rl_dist( pos(), player_character.pos() ) > follow_distance() ) {
-        dbg( DL::Info ) << string_format( "%s deciding npc_follow_player: dist=%d > follow_distance=%d", 
-                                          name, rl_dist( pos(), player_character.pos() ), follow_distance() );
+        // dbg( DL::Info ) << string_format( "%s deciding npc_follow_player: dist=%d > follow_distance=%d", 
+                                          // name, rl_dist( pos(), player_character.pos() ), follow_distance() );
         action = npc_follow_player;
     }
 
@@ -928,7 +1137,7 @@ void npc::move()
         }
     }
     if( action == npc_undecided ) {
-        dbg( DL::Info ) << string_format( "%s entering final undecided block", name );
+        // dbg( DL::Info ) << string_format( "%s entering final undecided block", name );
         // an interrupted activity can cause this situation. stops allied NPCs zooming off
         // like random NPCs
         if( attitude == NPCATT_ACTIVITY && !activity ) {
@@ -990,7 +1199,7 @@ void npc::move()
         action = method_of_attack();
     }
 
-    dbg( DL::Info ) << string_format( "%s decided action: %s (Danger: %.1f)", name, npc_action_name( action ), ai_cache.danger );
+    // dbg( DL::Info ) << string_format( "%s decided action: %s (Danger: %.1f)", name, npc_action_name( action ), ai_cache.danger );
 
     bool is_holding_at_destination = rules.has_flag( ally_rule::hold_position ) &&
                                      goto_to_this_pos.has_value() &&
@@ -1011,7 +1220,7 @@ void npc::move()
         }
 
         if( adjacent_hostile != nullptr ) {
-            dbg( DL::Info ) << string_format( "%s AT DESTINATION, hostile %s adjacent. Overriding action with Melee.", name, adjacent_hostile->disp_name() );
+            // dbg( DL::Info ) << string_format( "%s AT DESTINATION, hostile %s adjacent. Overriding action with Melee.", name, adjacent_hostile->disp_name() );
             action = npc_melee;
             // Ensure the adjacent hostile is the target for execute_action
             ai_cache.target = g->shared_from( *adjacent_hostile ); 
@@ -1045,9 +1254,9 @@ void npc::move()
                 // Only consider it a movement action if target exists and is NOT adjacent
                 if( cur != nullptr && rl_dist( pos(), cur->pos() ) > 1 ) {
                     is_movement_action = true; // Melee requires moving if target not adjacent
-                    dbg( DL::Info ) << string_format( "%s hold check: melee target %s is not adjacent, marking as movement.", name, cur->disp_name() );
+                    // dbg( DL::Info ) << string_format( "%s hold check: melee target %s is not adjacent, marking as movement.", name, cur->disp_name() );
                 } else {
-                    dbg( DL::Info ) << string_format( "%s hold check: melee target is adjacent or null, allowing.", name );
+                    // dbg( DL::Info ) << string_format( "%s hold check: melee target is adjacent or null, allowing.", name );
                 }
                 break;
             }
@@ -1058,21 +1267,21 @@ void npc::move()
         }
 
         if( is_movement_action ) {
-            dbg( DL::Info ) << string_format( "%s AT DESTINATION, holding position, overriding decided movement action '%s' with pause.", name, npc_action_name( action ) );
+            // dbg( DL::Info ) << string_format( "%s AT DESTINATION, holding position, overriding decided movement action '%s' with pause.", name, npc_action_name( action ) );
             action = npc_pause;
         } else {
-            dbg( DL::Info ) << string_format( "%s AT DESTINATION, holding position, decided action '%s' is non-movement, allowing.", name, npc_action_name( action ) );
+            // dbg( DL::Info ) << string_format( "%s AT DESTINATION, holding position, decided action '%s' is non-movement, allowing.", name, npc_action_name( action ) );
         }
     }
 
-    dbg( DL::Info ) << string_format( "%s executing final action: %s", name, npc_action_name( action ) );
+    // dbg( DL::Info ) << string_format( "%s executing final action: %s", name, npc_action_name( action ) );
     execute_action( action );
 
     // --> Add logic for Stay Behind/In Front missions
     // Skip mission movement if holding position
     if( !rules.has_flag( ally_rule::hold_position ) && 
         ( mission == NPC_MISSION_STAY_BEHIND || mission == NPC_MISSION_STAY_IN_FRONT ) ) {
-        dbg( DL::Info ) << string_format( "%s handling mission: %s", name, ( mission == NPC_MISSION_STAY_BEHIND ? "STAY_BEHIND" : "STAY_IN_FRONT" ) );
+        // dbg( DL::Info ) << string_format( "%s handling mission: %s", name, ( mission == NPC_MISSION_STAY_BEHIND ? "STAY_BEHIND" : "STAY_IN_FRONT" ) );
         Character &player = get_player_character();
         map &here = get_map();
         bool prioritize_melee = false;
@@ -1087,7 +1296,7 @@ void npc::move()
                 if (critter != nullptr && attitude_to(*critter) == Attitude::A_HOSTILE) {
                     ai_cache.target = g->shared_from( *critter ); // Ensure we target the adjacent hostile
                     prioritize_melee = true;
-                    dbg( DL::Info ) << string_format( "%s (IN FRONT) found adjacent hostile %s at (%d,%d,%d). Prioritizing melee.", name, critter->disp_name(), p.x, p.y, p.z );
+                    // dbg( DL::Info ) << string_format( "%s (IN FRONT) found adjacent hostile %s at (%d,%d,%d). Prioritizing melee.", name, critter->disp_name(), p.x, p.y, p.z );
                     break; // Found one, no need to check further
                 }
             }
@@ -1152,26 +1361,26 @@ void npc::move()
         if( mission == NPC_MISSION_STAY_BEHIND ) {
             offset = -current_move_dir; // Opposite direction of player movement/facing
             target_pos = current_player_pos + offset; // One tile behind
-            dbg( DL::Info ) << string_format( "%s (BEHIND): Player at (%d,%d,%d), Prev (%d,%d,%d), MoveDir (%d,%d), Target: (%d,%d,%d)", name,
-                                          current_player_pos.x, current_player_pos.y, current_player_pos.z,
-                                          prev_player_pos.x, prev_player_pos.y, prev_player_pos.z,
-                                          current_move_dir.x, current_move_dir.y,
-                                          target_pos.x, target_pos.y, target_pos.z );
+            // dbg( DL::Info ) << string_format( "%s (BEHIND): Player at (%d,%d,%d), Prev (%d,%d,%d), MoveDir (%d,%d), Target: (%d,%d,%d)", name,
+                                          // current_player_pos.x, current_player_pos.y, current_player_pos.z,
+                                          // prev_player_pos.x, prev_player_pos.y, prev_player_pos.z,
+                                          // current_move_dir.x, current_move_dir.y,
+                                          // target_pos.x, target_pos.y, target_pos.z );
         } else { // NPC_MISSION_STAY_IN_FRONT
             offset = current_move_dir; // Same direction as player movement/facing
             target_pos = current_player_pos + offset + offset + offset; // Target THREE tiles in front
-             dbg( DL::Info ) << string_format( "%s (IN FRONT): Player at (%d,%d,%d), Prev (%d,%d,%d), MoveDir (%d,%d), Target: (%d,%d,%d)", name,
-                                          current_player_pos.x, current_player_pos.y, current_player_pos.z,
-                                          prev_player_pos.x, prev_player_pos.y, prev_player_pos.z,
-                                          current_move_dir.x, current_move_dir.y,
-                                          target_pos.x, target_pos.y, target_pos.z );
+             // dbg( DL::Info ) << string_format( "%s (IN FRONT): Player at (%d,%d,%d), Prev (%d,%d,%d), MoveDir (%d,%d), Target: (%d,%d,%d)", name,
+                                          // current_player_pos.x, current_player_pos.y, current_player_pos.z,
+                                          // prev_player_pos.x, prev_player_pos.y, prev_player_pos.z,
+                                          // current_move_dir.x, current_move_dir.y,
+                                          // target_pos.x, target_pos.y, target_pos.z );
         }
 
         // Ensure target Z-level matches player's Z-level
         target_pos.z = current_player_pos.z;
 
         if (prioritize_melee) {
-            dbg( DL::Info ) << string_format( "%s (IN FRONT) overriding movement to melee adjacent hostile %s.", name, current_target() ? current_target()->disp_name() : "UNKNOWN" );
+            // dbg( DL::Info ) << string_format( "%s (IN FRONT) overriding movement to melee adjacent hostile %s.", name, current_target() ? current_target()->disp_name() : "UNKNOWN" );
             action = npc_melee;
             // Fall through to execute_action below
         } else {
@@ -1184,19 +1393,19 @@ void npc::move()
             if( dist_to_target <= 1 || here.impassable( target_pos ) ) {
                  next_mode = character_movemode::CMM_WALK; // Walk (or pause) when close/blocked
                  if ( pos() == target_pos ){
-                      dbg( DL::Info ) << string_format( "%s is at target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                      // dbg( DL::Info ) << string_format( "%s is at target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
                      move_pause();
                  } else if (here.impassable(target_pos)) {
-                     dbg( DL::Info ) << string_format( "%s target relative position (%d,%d,%d) is impassable, pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                     // dbg( DL::Info ) << string_format( "%s target relative position (%d,%d,%d) is impassable, pausing.", name, target_pos.x, target_pos.y, target_pos.z );
                      move_pause(); // Target impassable, just wait
                  } else {
                      // Close but not at target, try to walk there if possible
                      if ( update_path( target_pos ) ) {
                          set_movement_mode( next_mode );
-                         dbg( DL::Info ) << string_format( "%s walking towards close target relative position (%d,%d,%d).", name, target_pos.x, target_pos.y, target_pos.z );
+                         // dbg( DL::Info ) << string_format( "%s walking towards close target relative position (%d,%d,%d).", name, target_pos.x, target_pos.y, target_pos.z );
                          move_to_next();
                      } else {
-                         dbg( DL::Info ) << string_format( "%s failed to find path to close target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                         // dbg( DL::Info ) << string_format( "%s failed to find path to close target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
                          move_pause(); // Can't path, just wait
                      }
                  }
@@ -1205,17 +1414,17 @@ void npc::move()
                 if( update_path( target_pos ) ) {
                      // Always run if distance > 1 and path is found
                      set_movement_mode( character_movemode::CMM_RUN );
-                     dbg( DL::Info ) << string_format( "%s running towards target relative position (%d,%d,%d).", name, target_pos.x, target_pos.y, target_pos.z );
+                     // dbg( DL::Info ) << string_format( "%s running towards target relative position (%d,%d,%d).", name, target_pos.x, target_pos.y, target_pos.z );
                      // Reduce move cost by 50% when running for this mission
                      int moves_before_run = moves;
                      move_to_next();
                      int moves_consumed = moves_before_run - moves;
                      moves += moves_consumed / 2; // Add back half the cost
-                     dbg( DL::Info ) << string_format( "%s run cost reduced: consumed=%d, added_back=%d, final_moves=%d", name, moves_consumed, moves_consumed / 2, moves);
+                     // dbg( DL::Info ) << string_format( "%s run cost reduced: consumed=%d, added_back=%d, final_moves=%d", name, moves_consumed, moves_consumed / 2, moves);
                 } else {
                      // Pathing failed, default to walking (or rather, pausing since can't path)
                      set_movement_mode( character_movemode::CMM_WALK ); // Default to Walk if pathing failed
-                     dbg( DL::Info ) << string_format( "%s failed to find path to target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
+                     // dbg( DL::Info ) << string_format( "%s failed to find path to target relative position (%d,%d,%d), pausing.", name, target_pos.x, target_pos.y, target_pos.z );
                      move_pause(); // Can't path, just wait
                 }
             }
@@ -1236,7 +1445,7 @@ void npc::execute_action( npc_action action )
                                      get_map().getglobal( pos() ) == goto_to_this_pos.value();
 
     if( is_holding_at_destination ) {
-        dbg( DL::Info ) << string_format( "%s is at hold position (%d,%d,%d). Checking action '%s'.", name, pos().x, pos().y, pos().z, npc_action_name( action ) );
+        // dbg( DL::Info ) << string_format( "%s is at hold position (%d,%d,%d). Checking action '%s'.", name, pos().x, pos().y, pos().z, npc_action_name( action ) );
         bool action_allowed = false;
         switch( action ) {
             // Actions that are clearly non-movement
@@ -1261,10 +1470,10 @@ void npc::execute_action( npc_action action )
             case npc_melee: {
                 Creature *cur = current_target();
                 if( cur != nullptr && rl_dist( pos(), cur->pos() ) <= 1 ) {
-                    dbg( DL::Info ) << string_format( "%s allowing adjacent melee while holding position.", name );
+                    // dbg( DL::Info ) << string_format( "%s allowing adjacent melee while holding position.", name );
                     action_allowed = true;
                 } else {
-                    dbg( DL::Info ) << string_format( "%s blocking non-adjacent melee while holding position.", name );
+                    // dbg( DL::Info ) << string_format( "%s blocking non-adjacent melee while holding position.", name );
                 }
                 break;
             }
@@ -1274,22 +1483,22 @@ void npc::execute_action( npc_action action )
         }
 
         if( !action_allowed ) {
-            dbg( DL::Info ) << string_format( "%s overriding action '%s' with pause due to holding position.", name, npc_action_name( action ) );
+            // dbg( DL::Info ) << string_format( "%s overriding action '%s' with pause due to holding position.", name, npc_action_name( action ) );
             action = npc_pause; // Force pause if action wasn't explicitly allowed
         }
     }
 
-    dbg( DL::Info ) << string_format( "%s executing final action: %s", name, npc_action_name( action ) );
+    // dbg( DL::Info ) << string_format( "%s executing final action: %s", name, npc_action_name( action ) );
     int oldmoves = moves;
     tripoint tar = pos();
     Creature *cur = current_target();
 
     // Log details when executing npc_flee
     if( action == npc_flee ) {
-        dbg( DL::Info ) << string_format( "%s attempting to execute npc_flee. Current pos: (%d,%d,%d)", name, pos().x, pos().y, pos().z );
+         dbg( DL::Info ) << string_format( "%s attempting to execute npc_flee. Current pos: (%d,%d,%d)", name, pos().x, pos().y, pos().z );
         // Don't flee if we're holding position
         if( rules.has_flag( ally_rule::hold_position ) ) {
-            dbg( DL::Info ) << string_format( "%s holds position instead of fleeing", name );
+            // dbg( DL::Info ) << string_format( "%s holds position instead of fleeing", name );
             move_pause();
             return;
         }
@@ -1316,9 +1525,15 @@ void npc::execute_action( npc_action action )
         break;
 
         case npc_investigate_sound: {
-            // Don't investigate sounds if we're holding position
+            // Don't investigate sounds if we're holding position via rule,
+            // or if on a static guard/shelter mission.
+            if( mission == NPC_MISSION_GUARD || mission == NPC_MISSION_SHELTER ) {
+                // dbg( DL::Info ) << string_format( "%s on guard/shelter mission (%d) pauses instead of investigating sound", name, mission );
+                move_pause();
+                return;
+            }
             if( rules.has_flag( ally_rule::hold_position ) ) {
-                dbg( DL::Info ) << string_format( "%s holds position instead of investigating sound", name );
+                // dbg( DL::Info ) << string_format( "%s holds position instead of investigating sound", name );
                 move_pause();
                 return;
             }
@@ -1403,13 +1618,69 @@ void npc::execute_action( npc_action action )
             move_pause();
             break;
 
-        case npc_flee:
-            if( path.empty() ) {
-                move_to( tar );
+        case npc_flee: { // Scoped to allow new variable declaration
+            // Original target for flee (usually adjacent, from good_escape_direction)
+            // This 'tar' was set outside the switch if action == npc_flee.
+            tripoint flee_destination = tar;
+
+            // 'cur' is current_target(), set near the top of execute_action
+            if( cur != nullptr && rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+                dbg( DL::Info ) << string_format( "%s EXEC_FLEE: Skirmish flee. Original good_escape_dir target: (%d,%d,%d). Current target: %s at (%d,%d,%d)",
+                                                  name, tar.x, tar.y, tar.z, cur->disp_name(), cur->pos().x, cur->pos().y, cur->pos().z );
+                
+                tripoint my_pos = pos();
+                tripoint target_pos = cur->pos();
+                // Ensure M_PI is available. <cmath> is included.
+                // #define _USE_MATH_DEFINES // May be needed for M_PI with MSVC, but often in <cmath> now.
+                double angle_to_target = atan2( static_cast<double>(target_pos.y - my_pos.y), static_cast<double>(target_pos.x - my_pos.x) );
+                double flee_angle = angle_to_target + M_PI; // Add 180 degrees
+                int flee_distance = 4; // Try to move about 4 tiles away
+
+                flee_destination.x = my_pos.x + static_cast<int>(round(flee_distance * cos(flee_angle)));
+                flee_destination.y = my_pos.y + static_cast<int>(round(flee_distance * sin(flee_angle)));
+                flee_destination.z = my_pos.z; // Keep same z-level for this calculated flee
+
+                dbg( DL::Info ) << string_format( "%s EXEC_FLEE: Calculated skirmish flee_destination: (%d,%d,%d)",
+                                                  name, flee_destination.x, flee_destination.y, flee_destination.z );
+
+                if( flee_destination != pos() ) {
+                    if( update_path( flee_destination, false ) && !path.empty() ) { // no_bashing = false
+                        dbg( DL::Info ) << string_format(
+                                              "%s EXEC_FLEE: Successfully updated path to skirmish flee_destination: (%d,%d,%d). Path length: %d",
+                                              name, flee_destination.x, flee_destination.y, flee_destination.z, path.size() );
+                        move_to_next(); // Take the first step
+                        dbg( DL::Info ) << string_format( "%s EXEC_FLEE: Called move_to_next(). Current pos after: (%d,%d,%d)",
+                                                          name, pos().x, pos().y, pos().z );
+                    } else {
+                        dbg( DL::Info ) << string_format(
+                                              "%s EXEC_FLEE: Failed to update_path to skirmish flee_destination: (%d,%d,%d). Trying good_escape_direction as fallback.",
+                                              name, flee_destination.x, flee_destination.y, flee_destination.z );
+                        // Fallback to original flee logic if pathing to calculated point fails
+                        tripoint fallback_flee_dest = good_escape_direction( false );
+                        if( fallback_flee_dest != pos() ) {
+                            move_to( fallback_flee_dest, false );
+                        } else {
+                            move_pause();
+                        }
+                    }
+                } else {
+                    // If already at the destination (or destination is self), just pause
+                    move_pause();
+                    dbg( DL::Info ) << string_format( "%s EXEC_FLEE: flee_destination is current pos. Pausing.", name );
+                }
+
             } else {
-                move_to_next();
+                // Original flee logic for non-skirmishers, or if cur is null
+                // tar was set by good_escape_direction() before the switch
+                dbg( DL::Info ) << string_format( "%s EXEC_FLEE: Standard flee. Target: (%d,%d,%d)", name, tar.x, tar.y, tar.z );
+                if( tar != pos() ) {
+                    move_to( tar, false );
+                } else {
+                    move_pause();
+                }
             }
             break;
+        }
 
         case npc_reach_attack:
             if( can_use_offensive_cbm() ) {
@@ -1502,17 +1773,17 @@ void npc::execute_action( npc_action action )
         }
         case npc_follow_player:
             update_path( player_character.pos() );
-            dbg( DL::Info ) << string_format( "%s executing npc_follow_player: Current distance=%d, follow_distance()=%d", 
-                                              name, rl_dist( pos(), player_character.pos() ), follow_distance() );
+            // dbg( DL::Info ) << string_format( "%s executing npc_follow_player: Current distance=%d, follow_distance()=%d", 
+                                              // name, rl_dist( pos(), player_character.pos() ), follow_distance() );
             if( static_cast<int>( path.size() ) <= follow_distance() &&
                 player_character.posz() == posz() ) { // We're close enough to u.
-                dbg( DL::Info ) << string_format( "%s is close enough, pausing instead of following.", name );
+                // dbg( DL::Info ) << string_format( "%s is close enough, pausing instead of following.", name );
                 move_pause();
             } else if( !path.empty() ) {
-                dbg( DL::Info ) << string_format( "%s moving to next path point to follow player.", name );
+                // dbg( DL::Info ) << string_format( "%s moving to next path point to follow player.", name );
                 move_to_next();
             } else {
-                dbg( DL::Info ) << string_format( "%s path is empty, pausing instead of following.", name );
+                // dbg( DL::Info ) << string_format( "%s path is empty, pausing instead of following.", name );
                 move_pause();
             }
             // TODO: Make it only happen when it's safe
@@ -1521,7 +1792,7 @@ void npc::execute_action( npc_action action )
 
         case npc_follow_embarked: {
             if( rules.engagement == combat_engagement::GUARD_ME ) {
-                dbg( DL::Info ) << string_format( "%s is in GUARD_ME mode, not following embarked player.", name );
+                // dbg( DL::Info ) << string_format( "%s is in GUARD_ME mode, not following embarked player.", name );
                 move_pause(); // Or perhaps try to follow on foot if player is close?
                 break;
             }
@@ -1639,9 +1910,9 @@ void npc::execute_action( npc_action action )
             break;
 
         case npc_goto_to_this_pos: {
-            dbg( DL::Info ) << string_format( "%s entered npc_goto_to_this_pos case", name );
+            // dbg( DL::Info ) << string_format( "%s entered npc_goto_to_this_pos case", name );
             if( !goto_to_this_pos.has_value() ) {
-                dbg( DL::Error ) << string_format( "%s npc_goto_to_this_pos set to true, but no target set", disp_name() );
+                // dbg( DL::Error ) << string_format( "%s npc_goto_to_this_pos set to true, but no target set", disp_name() );
                 break;
             }
             const tripoint target_pos = get_map().getlocal( goto_to_this_pos.value() );
@@ -1650,14 +1921,14 @@ void npc::execute_action( npc_action action )
             // Set move mode based on distance
             if( dist_to_target > 1 ) {
                 set_movement_mode( character_movemode::CMM_RUN );
-                dbg( DL::Info ) << string_format( "%s running towards target (%d,%d,%d). Distance: %d", name, target_pos.x, target_pos.y, target_pos.z, dist_to_target );
+                // dbg( DL::Info ) << string_format( "%s running towards target (%d,%d,%d). Distance: %d", name, target_pos.x, target_pos.y, target_pos.z, dist_to_target );
             } else {
                 set_movement_mode( character_movemode::CMM_WALK ); // Ensure walking when close or at target
             }
 
             // If we are holding position and have reached the destination, pause.
             if( rules.has_flag( ally_rule::hold_position ) && get_map().getglobal( pos() ) == goto_to_this_pos.value() ) {
-                dbg( DL::Info ) << string_format( "%s reached hold position at %d, %d, %d and is now holding.", name, pos().x, pos().y, pos().z );
+                // dbg( DL::Info ) << string_format( "%s reached hold position at %d, %d, %d and is now holding.", name, pos().x, pos().y, pos().z );
                 move_pause();
                 break;
             }
@@ -1681,7 +1952,7 @@ void npc::execute_action( npc_action action )
         case npc_avoid_friendly_fire:
             // Don't avoid friendly fire if we're holding position
             if( rules.has_flag( ally_rule::hold_position ) ) {
-                dbg( DL::Info ) << string_format( "%s holds position instead of avoiding friendly fire", name );
+                // dbg( DL::Info ) << string_format( "%s holds position instead of avoiding friendly fire", name );
                 move_pause();
                 return;
             }
@@ -1691,7 +1962,7 @@ void npc::execute_action( npc_action action )
         case npc_escape_explosion:
             // Don't escape explosions if we're holding position
             if( rules.has_flag( ally_rule::hold_position ) ) {
-                dbg( DL::Info ) << string_format( "%s holds position instead of escaping explosion", name );
+                // dbg( DL::Info ) << string_format( "%s holds position instead of escaping explosion", name );
                 move_pause();
                 return;
             }
@@ -1723,7 +1994,7 @@ void npc::execute_action( npc_action action )
 
 npc_action npc::method_of_fleeing()
 {
-    dbg( DL::Info ) << string_format( "%s considering method_of_fleeing()", name );
+    // dbg( DL::Info ) << string_format( "%s considering method_of_fleeing()", name );
     if( in_vehicle ) {
         return npc_undecided;
     }
@@ -1732,126 +2003,333 @@ npc_action npc::method_of_fleeing()
 
 npc_action npc::method_of_attack()
 {
-    dbg( DL::Info ) << string_format( "%s considering method_of_attack()", name );
+    // dbg( DL::Info ) << string_format( "%s considering method_of_attack()", name );
     Character &player_character = get_player_character();
     Creature *critter = current_target();
+    // NEW: Skirmish immediate flee check for ANY nearby hostile, independent of selected target.
+    // This is to ensure NPC flees if any hostile gets within minimum skirmish distance.
+    if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+        // Check monsters
+        for( const monster &mon : g->all_monsters() ) {
+            if( !sees( mon ) || attitude_to( mon ) != Attitude::A_HOSTILE ) {
+                continue;
+            }
+            int dist_to_mon = rl_dist( pos(), mon.pos() );
+            if( dist_to_mon <= 2 ) { // Skirmish minimum distance
+                dbg( DL::Info ) << string_format( "%s MOA: SKIRMISH FLEE (monster). Hostile %s at dist %d (<=2). Overriding other attack logic.",
+                                                  name, mon.disp_name(), dist_to_mon );
+                return npc_flee;
+            }
+        }
+        // Check other NPCs
+        for( const npc &other_npc : g->all_npcs() ) {
+            if( &other_npc == this || !sees( other_npc ) || attitude_to( other_npc ) != Attitude::A_HOSTILE ) {
+                continue;
+            }
+            int dist_to_npc = rl_dist( pos(), other_npc.pos() );
+            if( dist_to_npc <= 2 ) {
+                dbg( DL::Info ) << string_format( "%s MOA: SKIRMISH FLEE (NPC). Hostile %s at dist %d (<=2). Overriding other attack logic.",
+                                                  name, other_npc.disp_name(), dist_to_npc );
+                return npc_flee;
+            }
+        }
+        // Check player
+        if( sees( player_character ) && attitude_to( player_character ) == Attitude::A_HOSTILE ) {
+            int dist_to_player = rl_dist( pos(), player_character.pos() );
+            if( dist_to_player <= 2 ) {
+                dbg( DL::Info ) << string_format( "%s MOA: SKIRMISH FLEE (player). Hostile %s at dist %d (<=2). Overriding other attack logic.",
+                                                  name, player_character.disp_name(), dist_to_player );
+                return npc_flee;
+            }
+        }
+    }
+    // END NEW SKIRMISH FLEE CHECK
+
     if( critter == nullptr ) {
-        // This function shouldn't be called...
-        debugmsg( "Ran npc::method_of_attack without a target!" );
+        dbg( DL::Error ) << string_format( "%s: method_of_attack called with null target!", name );
         return npc_pause;
     }
 
     tripoint tar = critter->pos();
     int dist = rl_dist( pos(), tar );
-    const bool has_los = clear_shot_reach( pos(), tar, false );
+    dbg( DL::Info ) << string_format( "%s MOA: Target %s at (%d,%d,%d), dist %d. My pos (%d,%d,%d). Engagement Rule: %d",
+                                      name, critter->disp_name(), tar.x, tar.y, tar.z, dist, pos().x, pos().y, pos().z,
+                                      static_cast<int>( rules.engagement ) );
+
+
+
+    const bool has_general_los = clear_shot_reach( pos(), tar, false ); // Renamed from has_los
     const bool same_z = tar.z == pos().z;
     const int cur_recoil = ranged::recoil_total( *this );
+    // Debug log updated to reflect renamed variable
+    dbg( DL::Info ) << string_format( "%s MOA: has_general_los: %d, same_z: %d, cur_recoil: %d", name, static_cast<int>(has_general_los), static_cast<int>(same_z), cur_recoil );
 
-    // TODO: Change the in_vehicle check to actual "are we driving" check
     const bool dont_move = in_vehicle || rules.engagement == combat_engagement::NO_MOVE ||
                            rules.engagement == combat_engagement::FREE_FIRE;
-    // NPCs engage in free fire can move to avoid allies, but not if they're in a vehicle
     const bool dont_move_ff = in_vehicle || rules.engagement == combat_engagement::NO_MOVE;
     bool can_use_gun = ( ( !is_player_ally() || rules.has_flag( ally_rule::use_guns ) ) &&
                          ( ai_cache.danger >= 3 || emergency() || dist < 0 ) );
     bool use_silent = ( is_player_ally() && rules.has_flag( ally_rule::use_silent ) );
     const bool not_engaged_yet = !critter->has_effect( effect_hit_by_player ) &&
                                  rules.engagement == combat_engagement::HIT;
+    dbg( DL::Info ) << string_format( "%s MOA: dont_move: %d, dont_move_ff: %d, can_use_gun: %d, use_silent: %d, not_engaged_yet: %d",
+                                      name, static_cast<int>(dont_move), static_cast<int>(dont_move_ff), static_cast<int>(can_use_gun),
+                                      static_cast<int>(use_silent), static_cast<int>(not_engaged_yet) );
 
-    // if there's enough of a threat to be here, power up the combat CBMs
     activate_combat_cbms();
 
-
     if( emergency() && alt_attack() ) {
-        add_msg( m_debug, "%s is trying an alternate attack", disp_name() );
+        dbg( DL::Info ) << string_format( "%s MOA: Emergency alt_attack successful. Returning NPC_NOOP.", name );
+        // add_msg( m_debug, "%s is trying an alternate attack", disp_name(), dist ); // Already have m_debug
         return npc_noop;
     }
 
-    // TODO: Add a time check now that wielding takes a lot of time
     if( wield_better_weapon() ) {
-        add_msg( m_debug, "%s is changing weapons", disp_name() );
+        dbg( DL::Info ) << string_format( "%s MOA: Wielded better weapon. Returning NPC_NOOP.", name );
+        // add_msg( m_debug, "%s is changing weapons", disp_name(), dist ); // Already have m_debug
         return npc_noop;
     }
 
-    gun_mode g_mode = cbm_active.is_null() ? primary_weapon().gun_current_mode() :
+    gun_mode g_mode = cbm_active.is_null() ? primary_weapon().gun_current_mode() :\
                       cbm_fake_active->gun_current_mode();
+    std::string gun_mode_name = g_mode ? g_mode->tname() : "none";
+    int shots_remaining = g_mode ? item_funcs::shots_remaining( *this, *g_mode ) : 0;
+    int qty_needed = g_mode ? g_mode.qty : 0;
+    dbg( DL::Info ) << string_format( "%s MOA: Initial gun_mode: '%s', shots_rem: %d, qty_needed: %d", name, gun_mode_name, shots_remaining, qty_needed );
+
+    bool has_clear_ballistic_path = false; // Initialize here
+
     if( !can_use_gun || dist <= 1 ||
         ( g_mode && ( ( use_silent && !g_mode->is_silent() ) ||
-                      ( item_funcs::shots_remaining( *this, *g_mode ) < g_mode.qty ) ) ) ) {
+                      ( shots_remaining < qty_needed ) ) ) ) {
+        if( g_mode ) { // Log why g_mode is being nullified
+            dbg( DL::Info ) << string_format( "%s MOA: Nullifying g_mode. !can_use_gun: %d, dist<=1: %d, use_silent_fail: %d, shots_fail: %d", name,
+                                              static_cast<int>(!can_use_gun), static_cast<int>(dist <= 1),
+                                              static_cast<int>(use_silent && !g_mode->is_silent()), static_cast<int>(shots_remaining < qty_needed) );
+        }
         g_mode = gun_mode();
+        gun_mode_name = "none"; // Update for logging
     }
+    dbg( DL::Info ) << string_format( "%s MOA: Final gun_mode: '%s'", name, gun_mode_name );
 
-    // reach attacks are silent and consume no ammo so prefer these if available
     int reach_range = primary_weapon().reach_range( *this );
-    if( reach_range > 1 && reach_range >= dist && clear_shot_reach( pos(), tar ) ) {
-        add_msg( m_debug, "%s is trying a reach attack", disp_name() );
+    bool can_reach_attack = reach_range > 1 && reach_range >= dist && clear_shot_reach( pos(), tar );
+    dbg( DL::Info ) << string_format( "%s MOA: Reach attack check: reach_range: %d, dist: %d, clear_shot_reach_to_tar: %d. Result: %d",
+                                      name, reach_range, dist, static_cast<int>(clear_shot_reach( pos(), tar )), static_cast<int>(can_reach_attack) );
+    if( can_reach_attack ) {
+        dbg( DL::Info ) << string_format( "%s MOA: Trying reach attack. Returning NPC_REACH_ATTACK.", name );
+        // add_msg( m_debug, "%s is trying a reach attack", disp_name(), dist ); // Already have m_debug
         return npc_reach_attack;
     }
 
-    // if the best mode is within the confident range try for a shot
-    if( g_mode && sees( *critter ) && has_los &&
-        g_mode->gun_range( true ) >= dist && confident_gun_mode_range( g_mode, cur_recoil ) >= dist ) {
-        if( wont_hit_friend( tar, *g_mode, false ) ) {
-            add_msg( m_debug, "%s is trying to shoot someone", disp_name() );
-            return npc_shoot;
+    bool shoot_cond_gmode = static_cast<bool>(g_mode);
+    bool shoot_cond_sees = shoot_cond_gmode && sees( *critter );
 
-        } else {
-            if( !dont_move_ff ) {
-                add_msg( m_debug, "%s is trying to avoid friendly fire", disp_name() );
-                return npc_avoid_friendly_fire;
-            }
-        }
+    // Ballistic path check specifically for guns
+    if (shoot_cond_sees) { // Only check ballistic path if we have a gun and general sight
+        // Use projectile_path_clear for more accurate ballistic trajectory checking
+        has_clear_ballistic_path = clear_shot_reach(pos(), critter->pos(), false);
+        dbg( DL::Info ) << string_format( "%s MOA: Ballistic path check: projectile_path_clear() to (%d,%d,%d) was %s clear.",
+                                          name, critter->pos().x, critter->pos().y, critter->pos().z, has_clear_ballistic_path ? "" : "NOT" );
     }
 
-    if( !primary_weapon().ammo_sufficient() && can_reload_current() ) {
-        add_msg( m_debug, "%s is reloading", disp_name() );
+    // Use has_clear_ballistic_path for gun shooting condition, otherwise has_general_los for other LOS needs
+    bool shoot_cond_los_ok = shoot_cond_sees && (g_mode ? has_clear_ballistic_path : has_general_los);
+    bool shoot_cond_gun_range = shoot_cond_los_ok && g_mode->gun_range( true ) >= dist; // Basic check if gun can even reach
+
+    // Determine if accuracy is acceptable for shooting
+    bool shoot_accuracy_is_acceptable = shoot_cond_gun_range && confident_gun_mode_range( g_mode, cur_recoil ) >= dist;
+    if( !shoot_accuracy_is_acceptable && shoot_cond_gun_range && /* Check base gun range again before overriding for skirmish */
+        rules.engagement == combat_engagement::ENGAGE_SKIRMISH && dist > 2 && dist <= 10 ) {
+        // For skirmishers in their 4-10 tile engagement band, allow shooting even if not perfectly confident,
+        // as long as it's within the gun's maximum range. This makes them prioritize taking a shot.
+        shoot_accuracy_is_acceptable = true; // Override confidence requirement
+        dbg( DL::Info ) << string_format( "%s MOA: Skirmisher in engage band (dist %d), overriding confidence for shooting. Gun max range %d vs dist %d.",
+                                          name, dist, g_mode->gun_range(true), dist );
+    }
+
+    bool shoot_cond_final_accuracy_ok = shoot_accuracy_is_acceptable; // This now incorporates the potential override
+
+    bool shoot_cond_wont_hit_friend = false;
+    if (shoot_cond_final_accuracy_ok) { // Check this before wont_hit_friend
+        shoot_cond_wont_hit_friend = wont_hit_friend( tar, *g_mode, false );
+    }
+
+    // Updated debug log to use shoot_cond_los_ok
+    dbg( DL::Info ) << string_format( "%s MOA: Shoot checks: gmode:%d, sees:%d, los_ok:%d (ballistic_path:%d/general_los:%d), gun_range_ok:%d, final_acc_ok:%d, wont_hit_friend:%d",
+                                      name, static_cast<int>(shoot_cond_gmode), static_cast<int>(shoot_cond_sees), static_cast<int>(shoot_cond_los_ok),
+                                      static_cast<int>(has_clear_ballistic_path), static_cast<int>(has_general_los), // Log both for clarity
+                                      static_cast<int>(shoot_cond_gun_range), static_cast<int>(shoot_cond_final_accuracy_ok), static_cast<int>(shoot_cond_wont_hit_friend) );
+
+    if( shoot_cond_wont_hit_friend ) { // True if all previous shoot_cond_* were also true (clear shot, no friend in way, accuracy met with override)
+        dbg( DL::Info ) << string_format( "%s MOA: Conditions met for shoot (clear shot). Returning NPC_SHOOT.", name );
+        // add_msg( m_bad, "%s is trying to shoot someone", disp_name(), dist );
+        return npc_shoot;
+    } else if( shoot_cond_final_accuracy_ok && !shoot_cond_wont_hit_friend ) { // Confident/Override to shoot, BUT friend in way
+        dbg( DL::Info ) << string_format( "%s MOA: Shoot viable (acc_ok %d) but friend in way. Ally rule avoid_friendly_fire is: %d. dont_move_ff: %d",
+                                          name, static_cast<int>(shoot_cond_final_accuracy_ok), static_cast<int>(rules.has_flag(ally_rule::avoid_friendly_fire)), static_cast<int>(dont_move_ff) );
+        // ally_rule::avoid_friendly_fire == false means "Don't worry about FF / shoot anyway"
+        if( !rules.has_flag(ally_rule::avoid_friendly_fire) ) {
+            dbg( DL::Info ) << string_format( "%s MOA: Friend in way, but rule says don't worry. Returning NPC_SHOOT anyway.", name );
+            return npc_shoot; // Shoot even with friend in path
+        } else if( !dont_move_ff ) { // Player wants to avoid FF (rule is true) AND NPC can move to do so
+            dbg( DL::Info ) << string_format( "%s MOA: Trying to avoid friendly fire (rule active, can move). Returning NPC_AVOID_FRIENDLY_FIRE.", name );
+            // add_msg( m_debug, "%s is trying to avoid friendly fire", disp_name(), dist );
+            return npc_avoid_friendly_fire;
+        }
+        // If rule says worry AND cannot move to avoid, then fall through (don't shoot).
+        dbg( DL::Info ) << string_format( "%s MOA: Friend in way, rule says worry, but cannot move to avoid. Not shooting.", name );
+    }
+
+
+    bool needs_reload = !primary_weapon().ammo_sufficient() && can_reload_current();
+    dbg( DL::Info ) << string_format( "%s MOA: Reload check: needs_reload: %d (ammo_suff: %d, can_reload_curr: %d)",
+                                      name, static_cast<int>(needs_reload), static_cast<int>(primary_weapon().ammo_sufficient()), static_cast<int>(can_reload_current()) );
+    if( needs_reload ) {
+        dbg( DL::Info ) << string_format( "%s MOA: Needs reload. Returning NPC_RELOAD.", name );
+        // add_msg( m_debug, "%s is reloading", disp_name(), dist ); // Already have m_debug
         return npc_reload;
     }
 
-    if( dist == 1 && same_z ) {
-        add_msg( m_debug, "%s is trying a melee attack", disp_name() );
+    bool can_melee = dist == 1 && same_z;
+    dbg( DL::Info ) << string_format( "%s MOA: Melee check: dist_is_1: %d, same_z: %d. Result: %d",
+                                      name, static_cast<int>(dist == 1), static_cast<int>(same_z), static_cast<int>(can_melee) );
+    if( can_melee ) {
+        dbg( DL::Info ) << string_format( "%s MOA: Trying melee attack. Returning NPC_MELEE.", name );
+        // add_msg( m_debug, "%s is trying a melee attack", disp_name(), dist ); // Already have m_debug
         return npc_melee;
     }
 
-    // TODO: Needs a check for transparent but non-passable tiles on the way
     int effective_range = g_mode ? confident_gun_mode_range( g_mode,
                           ranged::get_most_accurate_sight( *this, *g_mode ) ) : 0;
-    if( g_mode && sees( *critter ) && ranged::aim_per_move( *this, *g_mode, recoil ) > 0 &&
-        effective_range >= dist ) {
-        add_msg( m_debug, "%s is aiming", disp_name() );
+    // Corrected aim_per_move to use cur_recoil as 'recoil' is not in scope
+    bool aim_cond_gmode = static_cast<bool>(g_mode);
+    bool aim_cond_sees = aim_cond_gmode && sees( *critter );
+    // For aim, also check wont_hit_friend. If aiming would hit a friend, don't aim.
+    bool aim_cond_wont_hit_friend = aim_cond_sees && wont_hit_friend( tar, *g_mode, false );
+    bool aim_cond_aim_per_move = aim_cond_wont_hit_friend && ranged::aim_per_move( *this, *g_mode, cur_recoil ) > 0;
+    bool aim_cond_eff_range = aim_cond_aim_per_move && effective_range >= dist;
+
+    dbg( DL::Info ) << string_format( "%s MOA: Aim checks: gmode:%d, sees:%d, wont_hit_friend:%d, aim_per_move_pos:%d, eff_range_ok:%d. EffectiveRange: %d",
+                                      name, static_cast<int>(aim_cond_gmode), static_cast<int>(aim_cond_sees), static_cast<int>(aim_cond_wont_hit_friend),
+                                      static_cast<int>(aim_cond_aim_per_move && !(aim_cond_wont_hit_friend && ranged::aim_per_move( *this, *g_mode, cur_recoil ) <= 0) ), // Log specific aim_per_move > 0 part
+                                      static_cast<int>(aim_cond_eff_range), effective_range );
+
+    if( aim_cond_eff_range ) { // True if all previous aim_cond_* were also true
+        dbg( DL::Info ) << string_format( "%s MOA: Conditions met for aim. Returning NPC_AIM.", name );
+        // add_msg( m_debug, "%s is aiming", disp_name(), dist ); // Already have m_debug
         if( critter->is_player() && player_character.sees( *this ) ) {
             add_msg( m_bad, _( "%s takes aim at you!" ), disp_name() );
         }
         return npc_aim;
     }
-    add_msg( m_debug, "%s can't figure out what to do", disp_name() );
-    return ( dont_move || !same_z || not_engaged_yet ) ? npc_undecided : npc_melee;
+
+    // NEW: For skirmishers that are outside their preferred engagement band (dist > 10),
+    // attempt to reposition instead of pausing so they can close the gap and get a viable shot.
+    if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH && dist > 10 && !dont_move_ff ) {
+        // Only attempt if we actually have a ranged weapon mode to use when we get there.
+        if( g_mode ) {
+            dbg( DL::Info ) << string_format( "%s MOA: Skirmisher is %d tiles from target (>10). Repositioning to better range. Returning NPC_AVOID_FRIENDLY_FIRE.",
+                                              name, dist );
+            return npc_avoid_friendly_fire;
+        }
+    }
+
+    dbg( DL::Info ) << string_format( "%s MOA: Entering Skirmish Pause Logic. Engagement Rule: %d, dist: %d (band %d-%d)",
+                                      name, static_cast<int>(rules.engagement), dist, 4, 10 );
+    if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH && dist > 2 && dist <= 10 ) {
+        bool could_have_shot = false;
+        bool could_have_aimed = false;
+
+        // Re-evaluating shoot conditions for logging and precise pause decision
+        if( shoot_cond_wont_hit_friend ) { // This means all shoot conditions were met
+             could_have_shot = true;
+        }
+        dbg( DL::Info ) << string_format( "%s MOA: Skirmish Pause Logic: Re-eval 'could_have_shot': %d (based on prior full check)", name, static_cast<int>(could_have_shot) );
+
+        // Re-evaluating aim conditions for logging and precise pause decision
+        if ( aim_cond_eff_range ) { // This means all aim conditions were met
+            could_have_aimed = true;
+        }
+        dbg( DL::Info ) << string_format( "%s MOA: Skirmish Pause Logic: Re-eval 'could_have_aimed': %d (based on prior full check)", name, static_cast<int>(could_have_aimed) );
+
+
+        const int skirmish_min_standoff_dist = 3;
+        dbg( DL::Info ) << string_format( "%s MOA: Skirmish Pause check: !could_have_shot: %d, !could_have_aimed: %d, dist (%d) <= skirmish_min_standoff_dist (%d): %d",
+                                          name, static_cast<int>(!could_have_shot), static_cast<int>(!could_have_aimed),
+                                          dist, skirmish_min_standoff_dist, static_cast<int>(dist <= skirmish_min_standoff_dist) );
+        if( !could_have_shot && !could_have_aimed && dist <= skirmish_min_standoff_dist ) {
+            dbg( DL::Info ) << string_format( "%s MOA: Skirmish Pause Logic: At min standoff, couldn't shoot/aim. Pausing. Returning NPC_PAUSE.", name );
+            // add_msg( m_debug, "%s skirmishing at min standoff (%d tiles) but cannot effectively shoot/aim, pausing.", disp_name(), dist ); // Already have m_debug
+            return npc_pause;
+        }
+        dbg( DL::Info ) << string_format( "%s MOA: Skirmish Pause Logic: Not pausing (either could shoot/aim, or dist > min_standoff, or not right conditions).", name );
+    }
+
+    // If ENGAGE_SKIRMISH is active and we haven't decided an action yet (e.g., flee, shoot, aim, or specific skirmish pause),
+    // we should not default to melee. Prefer to pause or reposition (handled by npc_pause or later default_move_action if undecided).
+    if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+        dbg( DL::Info ) << string_format( "%s MOA: Skirmish rule active, preventing fallthrough to default melee. Dist: %d. Returning NPC_PAUSE.", name, dist );
+        return npc_pause;
+    }
+
+    dbg( DL::Info ) << string_format( "%s MOA: No specific action decided. Defaulting. dont_move: %d, !same_z: %d, not_engaged_yet: %d",
+                                      name, static_cast<int>(dont_move), static_cast<int>(!same_z), static_cast<int>(not_engaged_yet) );
+    // add_msg( m_debug, "%s can\\'t figure out what to do", disp_name() ); // Already have m_debug
+    npc_action final_action = ( dont_move || !same_z || not_engaged_yet ) ? npc_undecided : npc_melee;
+    dbg( DL::Info ) << string_format( "%s MOA: Final action: %s", name, npc_action_name( final_action ) );
+    return final_action;
 }
 
 npc_action npc::address_needs()
 {
-    dbg( DL::Info ) << string_format( "%s considering address_needs()", name );
+    // dbg( DL::Info ) << string_format( "%s considering address_needs()", name );
     return address_needs( ai_cache.danger );
 }
 
 static bool wants_to_reload( const npc &who, const item &it )
 {
+    // Special case: disposable battery powered items (UPS, flashlights, etc.).
+    static const ammotype battery_ammo( "battery" );
+    if( it.ammo_type() == battery_ammo && !it.has_flag( flag_RECHARGE ) ) {
+        return it.ammo_remaining() == 0;
+    }
+
     if( !who.can_reload( it ) ) {
         return false;
     }
 
     const int required = it.ammo_required();
-    // TODO: Add bandolier check here, once they can be reloaded
-    if( required < 1 && !it.is_magazine() ) {
-        return false;
+    const int remaining = it.ammo_remaining();
+
+    // For magazines, simply top-off when not full.
+    if( it.is_magazine() ) {
+        return remaining < it.ammo_capacity();
     }
 
-    const int remaining = it.ammo_remaining();
+    // Tools (e.g. UPS) that have per-use drain or continuous drain (required == 0):
+    if( required < 1 ) {
+        return remaining == 0;
+    }
+
+    // Standard case (guns, tools with per-use drain).
     return remaining < required || remaining < it.ammo_capacity();
 }
 
 static bool wants_to_reload_with( const item &weap, const item &ammo, bool danger )
 {
+    // Do not reload if the selected ammo offers no increase in remaining charges.
+    if( ammo.ammo_remaining() <= weap.ammo_remaining() ) {
+        return false;
+    }
+
+    // Skip disposable batteries (magazines of ammo type battery without RECHARGE flag)
+    static const ammotype battery_ammo( "battery" );
+    if( ammo.is_magazine() && ammo.ammo_type() == battery_ammo && !ammo.has_flag( flag_RECHARGE ) ) {
+        // Only swap in a fresh battery when the current one is fully drained
+        return weap.ammo_remaining() == 0;
+    }
+
     // Only reload loose ammo if gun has integral magazine or not in danger.
     bool combat_reload = !ammo.is_magazine() && ( danger || weap.magazine_integral() );
     // If in danger, only swap magazines if ammo is both greater and it's sufficient for a shot
@@ -1968,9 +2446,31 @@ void npc::adjust_power_cbms()
 
 void npc::activate_combat_cbms()
 {
+    // First, ensure defensive combat bionics are active
     for( const bionic_id &cbm_id : defense_cbms ) {
         activate_bionic_by_id( cbm_id );
     }
+
+    // Auto-activate worn power-armor / exosuit gear when entering combat
+    for( item *worn_it : worn ) {
+        if( !worn_it ) {
+            continue;
+        }
+        // Debug: log combat auto-activation candidates
+        dbg( DL::Info ) << string_format( "[NPC combat auto-activate] Checking %s | active:%d transformable:%d",
+                                          worn_it->tname(), static_cast<int>( worn_it->is_active() ), static_cast<int>( worn_it->is_transformable() ) );
+
+        if( !worn_it->is_active() && worn_it->is_transformable() ) {
+            // Attempt activation – typically toggles the suit on and consumes any required charges
+            if( worn_it->type->get_use( "transform" ) ) {
+                worn_it->type->invoke( *this, *worn_it, pos(), "transform" );
+            } else {
+                worn_it->type->invoke( *this, *worn_it, pos() );
+            }
+        }
+    }
+
+    // Offense / weapon CBMs last so they benefit from any defensive power usage above
     if( can_use_offensive_cbm() ) {
         check_or_use_weapon_cbm();
     }
@@ -2172,12 +2672,10 @@ healing_options npc::patient_assessment( const Character &c )
 
 npc_action npc::address_needs( float danger )
 {
-    dbg( DL::Info ) << string_format( "%s considering address_needs()", name );
+    // dbg( DL::Info ) << string_format( "%s considering address_needs()", name );
     Character &player_character = get_player_character();
-    // rng because NPCs are not meant to be hypervigilant hawks that notice everything
-    // and swing into action with alarming alacrity.
-    // no sometimes they are just looking the other way, sometimes they hestitate.
-    // ( also we can get huge performance boosts )
+    map &here = get_map();
+
     if( one_in( 3 ) ) {
         healing_options try_to_fix_me = patient_assessment( *this );
         if( try_to_fix_me.any_true() ) {
@@ -2227,7 +2725,9 @@ npc_action npc::address_needs( float danger )
         }
     }
 
-    if( one_in( 3 ) && can_reload_current() ) {
+    bool no_visible_hostiles = current_target() == nullptr;
+    if( can_reload_current() && ( no_visible_hostiles || one_in( 3 ) ) ) {
+        dbg( DL::Info ) << string_format( "%s address_needs: Reload trigger hit (hostiles: %d).", name, static_cast<int>( !no_visible_hostiles ) );
         return npc_reload;
     }
 
@@ -2237,6 +2737,132 @@ npc_action npc::address_needs( float danger )
     if( !reloadable.is_null() ) {
         do_reload( reloadable );
         return npc_noop;
+    }
+
+    // NPCs consume from environment if sufficiently hungry/thirsty, an ally, and a random check passes
+    if( one_in( 30 ) &&
+        is_player_ally() &&
+        ( get_thirst() > thirst_levels::slaked ||
+          get_stored_kcal() + stomach.get_calories() < max_stored_kcal() - 700 ) ) {
+
+        dbg( DL::Info ) << string_format(
+            "%s (ally) is hungry/thirsty (Thirst: %d, Hunger related val: %d), checking 3x3 area for food.",
+            name.c_str(), get_thirst(), static_cast<int>( max_stored_kcal() - ( get_stored_kcal() + stomach.get_calories() ) ) );
+
+        int want_nutr = std::max<int>( 0, ( max_stored_kcal() - ( get_stored_kcal() + stomach.get_calories() ) ) / 10 );
+        int want_quench = std::max( 0, get_thirst() );
+
+        struct found_item_info {
+            /* Pointer to the actual edible/drinkable item that we want to consume. */
+            item *item_ptr = nullptr;
+            /* If the item is inside another item (e.g. sealed jar), store a pointer to that parent. */
+            item *parent_container_ptr = nullptr;
+            /* Absolute map location where the top-level stack (or vehicle part) resides. */
+            tripoint loc_tripoint;
+            /* Vehicle pointer (if the item comes from a vehicle). */
+            vehicle *veh_ptr = nullptr;
+            /* Part index inside the vehicle. */
+            int part_idx = -1;
+            /* Cached food rating for quick comparisons. */
+            float food_rating = 0.0f;
+            /* Whether the parent container is non-resealable and therefore needed unsealing. */
+            bool parent_requires_unsealing = false;
+        };
+        found_item_info best_item_found;
+
+        for( int dx = -1; dx <= 1; ++dx ) { // Reduced to 3x3 area (dx/dy from -1 to 1)
+            for( int dy = -1; dy <= 1; ++dy ) {
+                tripoint current_tile_pos = pos() + point( dx, dy );
+                //dbg( DL::Info ) << string_format( "%s: Checking tile (%d, %d, %d)", name.c_str(), current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+
+                // Ground items
+                for( item *ground_item_ptr : here.i_at( current_tile_pos ) ) {
+                    if( ground_item_ptr && ground_item_ptr->is_food() ) {
+                        bool can_consume_check = can_consume( *ground_item_ptr );
+                        bool will_eat_check = will_eat( *ground_item_ptr, false ).success();
+                        //dbg( DL::Info ) << string_format( "%s pre-rate_food (ground): Item: %s, can_consume: %d, will_eat: %d", name.c_str(), ground_item_ptr->tname().c_str(), static_cast<int>( can_consume_check ), static_cast<int>( will_eat_check ) );
+                        float current_rating = rate_food( *this, *ground_item_ptr, want_nutr, want_quench, false );
+                        if( current_rating > 0.0f && ( !best_item_found.item_ptr || current_rating > best_item_found.food_rating ) ) {
+                            //dbg( DL::Info ) << string_format( "%s: New best ground item: %s (rating: %.2f) at (%d,%d,%d)", name.c_str(), ground_item_ptr->tname().c_str(), current_rating, current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+                            best_item_found = { ground_item_ptr, nullptr, current_tile_pos, nullptr, -1, current_rating, false };
+                        }
+                    }
+                    if( ground_item_ptr && ground_item_ptr->is_container() && !ground_item_ptr->contents.empty() ) {
+                        //dbg( DL::Debug ) << string_format( "%s: Checking container %s on ground at (%d,%d,%d)", name.c_str(), ground_item_ptr->tname().c_str(), current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+                        bool parent_requires_unsealing = false;
+                        if( ground_item_ptr->is_container() && ground_item_ptr->type->container && ground_item_ptr->type->container->unseals_into.is_valid() ) {
+                            parent_requires_unsealing = true;
+                        }
+                        for( item *contained_item_ptr : ground_item_ptr->contents.all_items_top() ) {
+                            if( contained_item_ptr && contained_item_ptr->is_food() ) {
+                                bool can_consume_check_cont = can_consume( *contained_item_ptr );
+                                bool will_eat_check_cont = will_eat( *contained_item_ptr, false ).success();
+                                //dbg( DL::Info ) << string_format( "%s pre-rate_food (ground cont.): Item: %s, can_consume: %d, will_eat: %d, parent_unseals: %d", name.c_str(), contained_item_ptr->tname().c_str(), static_cast<int>( can_consume_check_cont ), static_cast<int>( will_eat_check_cont ), static_cast<int>( parent_requires_unsealing ) );
+                                float current_rating = rate_food( *this, *contained_item_ptr, want_nutr, want_quench, parent_requires_unsealing );
+                                if( current_rating > 0.0f && ( !best_item_found.item_ptr || current_rating > best_item_found.food_rating ) ) {
+                                    //dbg( DL::Info ) << string_format( "%s: New best item in ground container: %s (rating: %.2f) at (%d,%d,%d)", name.c_str(), contained_item_ptr->tname().c_str(), current_rating, current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+                                    best_item_found = { contained_item_ptr, ground_item_ptr, current_tile_pos, nullptr, -1, current_rating, parent_requires_unsealing };
+                                }
+                            }
+                        }
+                    }
+                }
+                // Vehicle items
+                if( optional_vpart_position vp = here.veh_at( current_tile_pos ) ) {
+                    vehicle *current_veh = &vp->vehicle();
+                    //dbg( DL::Debug ) << string_format( "%s: Checking vehicle at (%d,%d,%d)", name.c_str(), current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+                    for( int i = 0; i < current_veh->part_count(); ++i ) {
+                        if( !current_veh->part_flag( i, "CARGO" ) ) { continue; }
+                        //dbg( DL::Debug ) << string_format( "%s: Checking cargo part %d in vehicle", name.c_str(), i );
+                        for( item *veh_item_ptr : current_veh->get_items( i ) ) {
+                            if( veh_item_ptr && veh_item_ptr->is_food() ) {
+                                bool can_consume_check_veh = can_consume( *veh_item_ptr );
+                                bool will_eat_check_veh = will_eat( *veh_item_ptr, false ).success();
+                                //dbg( DL::Info ) << string_format( "%s pre-rate_food (veh): Item: %s, can_consume: %d, will_eat: %d", name.c_str(), veh_item_ptr->tname().c_str(), static_cast<int>( can_consume_check_veh ), static_cast<int>( will_eat_check_veh ) );
+                                float current_rating = rate_food( *this, *veh_item_ptr, want_nutr, want_quench, false );
+                                if( current_rating > 0.0f && ( !best_item_found.item_ptr || current_rating > best_item_found.food_rating ) ) {
+                                    //dbg( DL::Info ) << string_format( "%s: New best vehicle item: %s (rating: %.2f) in veh part %d at (%d,%d,%d)", name.c_str(), veh_item_ptr->tname().c_str(), current_rating, i, current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+                                    best_item_found = { veh_item_ptr, nullptr, current_tile_pos, current_veh, i, current_rating, false };
+                                }
+                            }
+                            if( veh_item_ptr && veh_item_ptr->is_container() && !veh_item_ptr->contents.empty() ) {
+                                //dbg( DL::Debug ) << string_format( "%s: Checking container %s in vehicle part %d", name.c_str(), veh_item_ptr->tname().c_str(), i );
+                                bool parent_requires_unsealing = false;
+                                if( veh_item_ptr->is_container() && veh_item_ptr->type->container && veh_item_ptr->type->container->unseals_into.is_valid() ) {
+                                    parent_requires_unsealing = true;
+                                }
+                                for( item *contained_item_ptr : veh_item_ptr->contents.all_items_top() ) {
+                                    if( contained_item_ptr && contained_item_ptr->is_food() ) {
+                                        bool can_consume_check_veh_cont = can_consume( *contained_item_ptr );
+                                        bool will_eat_check_veh_cont = will_eat( *contained_item_ptr, false ).success();
+                                        //dbg( DL::Info ) << string_format( "%s pre-rate_food (veh cont.): Item: %s, can_consume: %d, will_eat: %d, parent_unseals: %d", name.c_str(), contained_item_ptr->tname().c_str(), static_cast<int>( can_consume_check_veh_cont ), static_cast<int>( will_eat_check_veh_cont ), static_cast<int>( parent_requires_unsealing ) );
+                                        float current_rating = rate_food( *this, *contained_item_ptr, want_nutr, want_quench, parent_requires_unsealing );
+                                        if( current_rating > 0.0f && ( !best_item_found.item_ptr || current_rating > best_item_found.food_rating ) ) {
+                                            //dbg( DL::Info ) << string_format( "%s: New best item in vehicle container: %s (rating: %.2f) in veh part %d at (%d,%d,%d)", name.c_str(), contained_item_ptr->tname().c_str(), current_rating, i, current_tile_pos.x, current_tile_pos.y, current_tile_pos.z );
+                                            best_item_found = { contained_item_ptr, veh_item_ptr, current_tile_pos, current_veh, i, current_rating, parent_requires_unsealing };
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if( best_item_found.item_ptr ) {
+            //dbg( DL::Info ) << string_format( "%s: Found best item to consume: %s from tripoint (%d,%d,%d)", name.c_str(), best_item_found.item_ptr->tname().c_str(), best_item_found.loc_tripoint.x, best_item_found.loc_tripoint.y, best_item_found.loc_tripoint.z );
+            item *item_to_consume_ptr = best_item_found.item_ptr;
+
+            //dbg( DL::Info ) << string_format( "%s: Consuming %s via standard consume() API", name.c_str(), item_to_consume_ptr->tname().c_str() );
+
+            // Let core game logic handle all effects, charge decrementing and container cleanup.
+            consume( *item_to_consume_ptr );
+
+            return npc_noop;
+        } else {
+            dbg( DL::Info ) << string_format( "%s (ally) performed environmental food search but found nothing suitable in 3x3 area.", name.c_str() );
+        }
     }
 
     // Extreme thirst or hunger, bypass safety check.
@@ -2257,7 +2883,7 @@ npc_action npc::address_needs( float danger )
         return npc_undecided;
     }
 
-    if( one_in( 3 ) && ( get_thirst() > thirst_levels::thirsty ||
+    if( one_in( 3 ) && ( get_thirst() > thirst_levels::slaked ||
                          get_stored_kcal() + stomach.get_calories() < max_stored_kcal() * 0.95 ) ) {
         if( consume_food() ) {
             return npc_noop;
@@ -2313,7 +2939,7 @@ npc_action npc::address_needs( float danger )
 
 npc_action npc::address_player()
 {
-    dbg( DL::Info ) << string_format( "%s considering address_player()", name );
+    // dbg( DL::Info ) << string_format( "%s considering address_player()", name );
     Character &player_character = get_player_character();
     if( ( attitude == NPCATT_TALK ) && sees( player_character ) ) {
         if( player_character.in_sleep_state() ) {
@@ -2537,7 +3163,10 @@ bool npc::wont_hit_friend( const tripoint &tar, const item &it, bool throwing ) 
     units::angle target_angle = coord_to_angle( pos(), tar );
 
     // TODO: Base on dispersion
-    units::angle safe_angle = 30_degrees;
+    units::angle safe_angle = 15_degrees; 
+    // Add a general log entry when this function is called
+    dbg( DL::Info ) << string_format( "%s wont_hit_friend: Checking target at (%d,%d,%d) with item %s. Base safe_angle: %.1f deg", 
+                                  name, tar.x, tar.y, tar.z, it.tname(), units::to_degrees( safe_angle ) );
 
     for( const auto &fr : ai_cache.friends ) {
         const shared_ptr_fast<Creature> ally_p = fr.lock();
@@ -2550,18 +3179,26 @@ bool npc::wont_hit_friend( const tripoint &tar, const item &it, bool throwing ) 
         units::angle safe_angle_ally = safe_angle;
         int ally_dist = rl_dist( pos(), ally.pos() );
         if( ally_dist < 3 ) {
-            safe_angle_ally += ( 3 - ally_dist ) * 30_degrees;
+            safe_angle_ally += ( 3 - ally_dist ) * 15_degrees; // Reduced proximity bonus
         }
 
         units::angle ally_angle = coord_to_angle( pos(), ally.pos() );
         units::angle angle_diff = units::fabs( ally_angle - target_angle );
         angle_diff = std::min( 360_degrees - angle_diff, angle_diff );
+
+        dbg( DL::Info ) << string_format( "%s wont_hit_friend: Target (%d,%d). Ally %s at (%d,%d), dist %d. TargetAngle: %.1f, AllyAngle: %.1f, AngleDiff: %.1f. SafeAngleAlly: %.1f deg. Hit? %d", 
+                                      name, tar.x, tar.y, ally.disp_name(), ally.pos().x, ally.pos().y, ally_dist, 
+                                      units::to_degrees( target_angle ), units::to_degrees( ally_angle ), units::to_degrees( angle_diff ), 
+                                      units::to_degrees( safe_angle_ally ), static_cast<int>( angle_diff < safe_angle_ally ) );
+
         if( angle_diff < safe_angle_ally ) {
             // TODO: Disable NPC whining is it's other NPC who prevents aiming
+            dbg( DL::Info ) << string_format( "%s wont_hit_friend: Ally %s IS in the way of target (%d,%d). Returning FALSE.", name, ally.disp_name(), tar.x, tar.y );
             return false;
         }
     }
 
+    dbg( DL::Info ) << string_format( "%s wont_hit_friend: No ally found in the way for target (%d,%d). Returning TRUE.", name, tar.x, tar.y );
     return true;
 }
 
@@ -2618,7 +3255,7 @@ bool npc::aim()
 
 bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
 {
-    dbg( DL::Info ) << string_format( "%s attempting update_path() to %d, %d, %d", name, p.x, p.y, p.z );
+    // // dbg( DL::Info ) << string_format( "%s attempting update_path() to %d, %d, %d", name, p.x, p.y, p.z );
     if( p == pos() ) {
         path.clear();
         return true;
@@ -2632,14 +3269,22 @@ bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
         const tripoint &last = path[path.size() - 1];
         if( last == p && ( path[0].z != posz() || rl_dist( path[0], pos() ) <= 1 ) ) {
             // Our path already leads to that point, no need to recalculate
-            dbg( DL::Info ) << string_format( "%s path already leads to target %d, %d, %d. No update needed.", name, p.x, p.y, p.z );
+            // // dbg( DL::Info ) << string_format( "%s path already leads to target %d, %d, %d. No update needed.", name, p.x, p.y, p.z );
             return true;
         }
     }
 
-    dbg( DL::Info ) << string_format( "%s calculating new path from (%d,%d,%d) to (%d,%d,%d)", name, pos().x, pos().y, pos().z, p.x, p.y, p.z );
-    auto new_path = get_map().route( pos(), p, get_legacy_pathfinding_settings( no_bashing ),
-                                     get_legacy_path_avoid() );
+    // // dbg( DL::Info ) << string_format( "%s calculating new path from (%d,%d,%d) to (%d,%d,%d)", name, pos().x, pos().y, pos().z, p.x, p.y, p.z );
+    // auto new_path = get_map().route( pos(), p, get_legacy_pathfinding_settings( no_bashing ),
+    //                                  get_legacy_path_avoid() );
+
+    // // dbg( DL::Info ) << string_format( "%s PRE-CALL Pathfinding::route. Target: (%d,%d,%d). no_bashing: %d", name, p.x, p.y, p.z, static_cast<int>(no_bashing) );
+    auto pf_pair = get_pathfinding_pair( no_bashing );
+    // Pass the extra_g_costs from the RouteSettings if they exist, or an empty map
+    // pf_pair.first.extra_g_costs could be populated here if needed from something like get_legacy_path_avoid()
+    auto new_path = Pathfinding::route( pos(), p, pf_pair.first, pf_pair.second );
+    // // dbg( DL::Info ) << string_format( "%s POST-CALL Pathfinding::route. Route size: %zu. Target: (%d,%d,%d)", name, new_path.size(), p.x, p.y, p.z );
+
     if( new_path.empty() ) {
         if( !ai_cache.sound_alerts.empty() ) {
             ai_cache.sound_alerts.erase( ai_cache.sound_alerts.begin() );
@@ -2648,7 +3293,7 @@ bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
         }
         add_msg( m_debug, "Failed to path %d,%d,%d->%d,%d,%d",
                  posx(), posy(), posz(), p.x, p.y, p.z );
-        dbg( DL::Info ) << string_format( "%s path calculation FAILED from (%d,%d,%d) to (%d,%d,%d)", name, pos().x, pos().y, pos().z, p.x, p.y, p.z );
+        // // dbg( DL::Info ) << string_format( "%s path calculation FAILED from (%d,%d,%d) to (%d,%d,%d)", name, pos().x, pos().y, pos().z, p.x, p.y, p.z );
     }
 
     while( !new_path.empty() && new_path[0] == pos() ) {
@@ -2657,11 +3302,11 @@ bool npc::update_path( const tripoint &p, const bool no_bashing, bool force )
 
     if( !new_path.empty() || force ) {
         path = std::move( new_path );
-        dbg( DL::Info ) << string_format( "%s path calculation SUCCEEDED from (%d,%d,%d) to (%d,%d,%d). Path size: %d", name, pos().x, pos().y, pos().z, p.x, p.y, p.z, path.size() );
+        // // dbg( DL::Info ) << string_format( "%s path calculation SUCCEEDED from (%d,%d,%d) to (%d,%d,%d). Path size: %d", name, pos().x, pos().y, pos().z, p.x, p.y, p.z, path.size() );
         return true;
     }
 
-    dbg( DL::Info ) << string_format( "%s path update failed or resulted in empty path (and not forced).", name );
+    // // dbg( DL::Info ) << string_format( "%s path update failed or resulted in empty path (and not forced).", name );
     return false;
 }
 
@@ -2685,8 +3330,8 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
 {
     tripoint p = pt;
     map &here = get_map();
-    bool ceiling_blocking_climb = !here.has_floor_or_support( pos() ) ||
-                                  here.has_floor_or_support( p + tripoint_above );
+
+    bool ceiling_blocking_climb = !here.has_floor_or_support( pos() );
     if( sees_dangerous_field( p )
         || ( nomove != nullptr && nomove->find( p ) != nomove->end() ) ) {
         // Find the best alternative neighbor field instead.
@@ -2937,14 +3582,14 @@ void npc::move_to( const tripoint &pt, bool no_bashing, std::set<tripoint> *nomo
 
 void npc::move_to_next()
 {
-    dbg( DL::Info ) << string_format( "%s attempting move_to_next()", name );
+    // dbg( DL::Info ) << string_format( "%s attempting move_to_next()", name );
     while( !path.empty() && pos() == path[0] ) {
         path.erase( path.begin() );
     }
 
     if( path.empty() ) {
-        add_msg( m_debug, "npc::move_to_next() called with an empty path or path "
-                 "containing only current position" );
+        add_msg( m_debug, "npc::move_to_next() called with an empty path or "
+                 "path containing only current position" );
         move_pause();
         return;
     }
@@ -2957,46 +3602,147 @@ void npc::move_to_next()
 
 void npc::avoid_friendly_fire()
 {
-    // TODO: To parameter
-    const tripoint &tar = current_target()->pos();
-    // Calculate center of weight of friends and move away from that
-    tripoint center;
-    for( const auto &fr : ai_cache.friends ) {
-        if( shared_ptr_fast<Creature> fr_p = fr.lock() ) {
-            center += fr_p->pos();
+    Creature *critter_target = current_target();
+    if( !critter_target ) {
+        move_pause();
+        return;
+    }
+    tripoint enemy_pos = critter_target->pos();
+    map &here = get_map(); // For g->passable and here.impassable
+
+    dbg(DL::Info) << string_format("%s avoid_friendly_fire: SKIRMISH REPOSITION. Current pos: (%d,%d,%d). Target %s at (%d,%d,%d).",
+                                  disp_name(), pos().x, pos().y, pos().z, critter_target->disp_name(), enemy_pos.x, enemy_pos.y, enemy_pos.z );
+
+    std::vector<tripoint> candidate_spots;
+    std::vector<int> radii_to_check;
+    if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+        radii_to_check = {3,6,10};
+    } else {
+        radii_to_check = {2,4,6};
+    }
+
+    for( int radius : radii_to_check ) {
+        dbg(DL::Info) << string_format("%s avoid_friendly_fire: Checking ring with radius %d around enemy at (%d,%d,%d)",
+                                      disp_name(), radius, enemy_pos.x, enemy_pos.y, enemy_pos.z);
+        for( const tripoint &spot_around_enemy : closest_points_first( enemy_pos, radius ) ) {
+            if( rl_dist( enemy_pos, spot_around_enemy ) != radius ) {
+                continue;
+            }
+            candidate_spots.push_back(spot_around_enemy);
         }
     }
 
-    float friend_count = ai_cache.friends.size();
-    center.x = std::round( center.x / friend_count );
-    center.y = std::round( center.y / friend_count );
-    center.z = std::round( center.z / friend_count );
+    tripoint best_spot = pos();
+    bool spot_found = false;
+    int best_spot_dist_to_npc = INT_MAX;
+    int best_spot_tier = 3; // 1: confident, 2: max gun, 3: fallback/none
 
-    std::vector<tripoint> candidates = closest_points_first( pos(), 1 );
-    candidates.erase( candidates.begin() );
-    std::sort( candidates.begin(), candidates.end(),
-    [&tar, &center]( const tripoint & l, const tripoint & r ) {
-        return ( rl_dist( l, tar ) - rl_dist( l, center ) ) <
-               ( rl_dist( r, tar ) - rl_dist( r, center ) );
-    } );
+    dbg(DL::Info) << string_format("%s avoid_friendly_fire: Evaluating %d total candidate spots from rings around enemy.", disp_name(), candidate_spots.size());
 
-    for( const auto &pt : candidates ) {
-        if( can_move_to( pt ) ) {
-            move_to( pt );
-            return;
+    // Get gun info for skirmisher tiering
+    const item *gun = nullptr;
+    gun_mode gmode;
+    int confident_range = 0;
+    int max_gun_range = 0;
+    int cur_recoil = 0;
+    if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+        gun = &primary_weapon();
+        gmode = gun ? gun->gun_current_mode() : gun_mode();
+        cur_recoil = ranged::recoil_total( *this );
+        if( gmode ) {
+            confident_range = confident_shoot_range( *gmode, cur_recoil );
+            max_gun_range = gmode->gun_range( true );
         }
     }
 
-    /* If we're still in the function at this point, maneuvering can't help us. So,
-     * might as well address some needs.
-     * We pass a <danger> value of NPC_DANGER_VERY_LOW + 1 so that we won't start
-     * eating food (or, god help us, sleeping).
-     */
-    npc_action action = address_needs( NPC_DANGER_VERY_LOW + 1 );
-    if( action == npc_undecided ) {
+    for( const tripoint &candidate_pos : candidate_spots ) {
+        int dist_candidate_to_enemy = rl_dist( candidate_pos, enemy_pos );
+        int current_candidate_tier = 3;
+        if( rules.engagement == combat_engagement::ENGAGE_SKIRMISH ) {
+            if( dist_candidate_to_enemy < 4 || dist_candidate_to_enemy > 10 ) {
+                dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Spot (%d,%d,%d) failed skirmish range check (dist %d to enemy). Skipping.",
+                                                  disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z, dist_candidate_to_enemy);
+                continue;
+            }
+            if( !gmode ) {
+                dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Spot (%d,%d,%d) - no valid gun mode. Skipping.",
+                                                  disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z);
+                continue;
+            }
+            if( dist_candidate_to_enemy <= confident_range ) {
+                current_candidate_tier = 1;
+            } else if( dist_candidate_to_enemy <= max_gun_range ) {
+                current_candidate_tier = 2;
+            } else {
+                dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Spot (%d,%d,%d) outside max gun range (dist %d, max %d). Skipping.",
+                                                  disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z, dist_candidate_to_enemy, max_gun_range);
+                continue;
+            }
+        } else {
+            if( dist_candidate_to_enemy < 2 ) {
+                dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Spot (%d,%d,%d) too close (dist %d to enemy, non-skirmish). Skipping.",
+                                                  disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z, dist_candidate_to_enemy);
+                continue;
+            }
+            current_candidate_tier = 1;
+        }
+
+        if( !is_clear_shot_from( candidate_pos, enemy_pos, primary_weapon(), false ) ) {
+            dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Spot (%d,%d,%d) has no clear shot to enemy. Skipping.",
+                                              disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z);
+            continue;
+        }
+
+        if( here.impassable( candidate_pos ) ) {
+            dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Spot (%d,%d,%d) is impassable. Skipping.",
+                                              disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z);
+            continue;
+        }
+        
+        int dist_npc_to_candidate = rl_dist( pos(), candidate_pos );
+        bool new_best = false;
+        if( current_candidate_tier < best_spot_tier ) {
+            new_best = true;
+        } else if( current_candidate_tier == best_spot_tier && dist_npc_to_candidate < best_spot_dist_to_npc ) {
+            new_best = true;
+        }
+        if( new_best ) {
+            if (candidate_pos == pos()) {
+                dbg(DL::Debug) << string_format("%s avoid_friendly_fire: Candidate spot (%d,%d,%d) is current position. Skipping unless it's the only option.",
+                                                  disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z);
+                if (spot_found) continue;
+            }
+            auto pf_pair = get_pathfinding_pair( !rules.has_flag( ally_rule::allow_bash ) );
+            std::vector<tripoint> temp_path = Pathfinding::route( pos(), candidate_pos, pf_pair.first, pf_pair.second );
+            if( temp_path.empty() && candidate_pos != pos() ) {
+                dbg(DL::Info) << string_format("%s avoid_friendly_fire: Candidate spot (%d,%d,%d) is valid but no path from current NPC pos. Skipping.",
+                                                  disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z);
+                continue;
+            }
+            dbg(DL::Info) << string_format("%s avoid_friendly_fire: Found valid spot (%d,%d,%d). Dist to enemy: %d. Dist from NPC: %d. Tier: %d. Prev best dist: %d, prev best tier: %d",
+                                              disp_name(), candidate_pos.x, candidate_pos.y, candidate_pos.z, dist_candidate_to_enemy, dist_npc_to_candidate, current_candidate_tier, best_spot_dist_to_npc, best_spot_tier);
+            best_spot = candidate_pos;
+            best_spot_dist_to_npc = dist_npc_to_candidate;
+            best_spot_tier = current_candidate_tier;
+            spot_found = true;
+        }
+    }
+
+    if( spot_found && best_spot != pos() ) {
+        dbg(DL::Info) << string_format("%s avoid_friendly_fire: Best spot found at (%d,%d,%d). Moving.",
+                                      disp_name(), best_spot.x, best_spot.y, best_spot.z );
+        if( update_path( best_spot, false ) && !path.empty() ) {
+            move_to_next();
+        } else {
+            dbg(DL::Info) << string_format("%s avoid_friendly_fire: Pathing to best_spot (%d,%d,%d) failed or path empty, even after it seemed reachable. Pausing.",
+                                              disp_name(), best_spot.x, best_spot.y, best_spot.z);
         move_pause();
     }
-    execute_action( action );
+        return;
+    }
+
+    dbg(DL::Info) << string_format("%s avoid_friendly_fire: No suitable new spot found around enemy. Pausing.", disp_name());
+    move_pause();
 }
 
 void npc::escape_explosion()
@@ -3052,7 +3798,7 @@ void npc::move_away_from( const tripoint &pt, bool no_bash_atk, std::set<tripoin
 
 void npc::move_pause()
 {
-    dbg( DL::Info ) << string_format( "%s calling move_pause()", name );
+    // dbg( DL::Info ) << string_format( "%s calling move_pause()", name );
     // make sure we're using the best weapon
     if( has_new_items ) {
         scan_new_items();
@@ -3740,7 +4486,7 @@ bool npc::do_player_activity()
             return true;
         }
     }
-    // the multi-activity types can sometimes cancel the activity, and return without using up any moves.
+    // the multi-activity types can sometimes cancel the activity, and return without using any moves.
     // ( when they are setting a destination etc. )
     // normally this isn't a problem, but in the main game loop, if the NPC has a huge backlog of moves;
     // then each of these occurrences will nudge the infinite loop counter up by one.
@@ -4197,88 +4943,110 @@ void npc::use_painkiller()
 }
 
 // We want our food to:
-// Provide enough nutrition and quench
-// Not provide too much of either (don't waste food)
-// Not be unhealthy
-// Not have side effects
-// Be eaten before it rots (favor soon-to-rot perishables)
-static float rate_food( const item &it, int want_nutr, int want_quench )
+// • Provide enough nutrition and quench
+// • Avoid wasting either
+// • Ignore unhealthy / unsafe items
+// • Prefer food that will spoil soon
+static float rate_food( npc &who, const item &it,
+                        int want_nutr, int want_quench,
+                        bool parent_requires_unsealing )
 {
     const auto &food = it.get_comestible();
     if( !food ) {
         return 0.0f;
     }
 
-    if( food->parasites && !it.has_flag( flag_NO_PARASITES ) ) {
-        return 0.0;
-    }
+    /* -------------- hard safety filters -------------- */
+    if( it.is_tainted() )                                           return 0.0f;
+    if( it.has_flag( flag_id( "RADIOACTIVE" ) ) )                   return 0.0f;
+    if( it.has_flag( flag_id( "UNSAFE_CONSUME" ) ) )                return 0.0f;
+    if( it.type->get_use( "mutagen" ) != nullptr )                  return 0.0f;
+    if( it.has_vitamin( vitamin_id( "mutant_toxin" ) ) )            return 0.0f;
+    if( food->parasites && !it.has_flag( flag_NO_PARASITES ) )      return 0.0f;
 
-    int nutr = food->get_default_nutr();
-    int quench = food->quench;
+    if( !who.can_consume( it ) )                     return 0.0f;
+    if( !who.will_eat( it, false ).success() )       return 0.0f;
 
-    if( nutr <= 0 && quench <= 0 ) {
-        // Not food - may be salt, drugs etc.
-        return 0.0f;
-    }
+    int  nutr   = food->get_default_nutr();
+    int  quench = food->quench;
+    if( nutr <= 0 && quench <= 0 )                   return 0.0f;
 
-    if( !it.type->use_methods.empty() ) {
-        // TODO: Get a good method of telling apart:
-        // raw meat (parasites - don't eat unless mutant)
-        // zed meat (poison - don't eat unless mutant)
-        // alcohol (debuffs, health drop - supplement diet but don't bulk-consume)
-        // caffeine (fine to consume, but expensive and prevents sleep)
-        // hallucination mushrooms (NPCs don't hallucinate, so don't eat those)
-        // honeycomb (harmless iuse)
-        // royal jelly (way too expensive to eat as food)
-        // mutagenic crap (don't eat, we want player to micromanage muties)
-        // marloss (NPCs don't turn fungal)
-        // weed brownies (small debuff)
-        // seeds (too expensive)
-
-        // For now skip all of those
-        return 0.0f;
-    }
+    if( !it.type->use_methods.empty() )              return 0.0f;
 
     double relative_rot = it.get_relative_rot();
-    if( relative_rot >= 1.0f ) {
-        // TODO: Allow sapro mutants to eat it anyway and make them prefer it
-        return 0.0f;
+    if( relative_rot >= 1.0 )                        return 0.0f;   // rotten
+
+    /* -------------- base weight ----------------------- */
+    float weight = std::max( 1.0, 10.0 * relative_rot );            // closer to rot ⇒ higher
+
+    if( it.get_comestible_fun() < 0 )   weight /= ( -it.get_comestible_fun() ) + 1;
+    if( food->healthy < 0 )            weight /= ( -food->healthy   ) + 1;
+
+    /* -------------- spoilage preference --------------- */
+    time_duration shelf_life = food->spoils;
+    if( shelf_life == 0_turns ) {           // non-perishable
+        weight *= 0.40f;
+    } else if( shelf_life <= 2_days ) {     // very perishable
+        weight *= 3.00f;
+    } else if( shelf_life > 14_days ) {     // long shelf-life
+        weight *= 0.70f;
+    }
+    /* -------------------------------------------------- */
+
+
+
+    const bool item_is_unopening_container =
+        it.is_container() && it.type->container &&
+        it.type->container->unseals_into.is_valid();
+
+    const bool item_requires_transform = ( it.type->get_use( "transform" ) != nullptr );
+
+    // Defer heavy penalties for sealed / transform-required food until after
+    // all bonuses have been applied, so they are not cancelled out by large
+    // thirst or hunger bonuses later in the function.
+    float seal_penalty_factor = 1.0f;
+    if( item_is_unopening_container || parent_requires_unsealing ) {
+        // Food is inside a sealed container (either itself, or via its parent).
+        // Apply a *very* heavy penalty so NPCs will strongly prefer other
+        // available options and only select sealed food as a genuine last
+        // resort when nothing else is suitable.
+        seal_penalty_factor = 0.02f;  // 98 % penalty
+    } else if( item_requires_transform ) {
+        // Food requires an explicit transform action (e.g. opening a jar).
+        // Penalise, but not as severely because no can-opener style action is
+        // needed and these are frequently resealable.
+        seal_penalty_factor = 0.25f;  // 75 % penalty
     }
 
-    float weight = std::max( 1.0, 10.0 * relative_rot );
-    if( it.get_comestible_fun() < 0 ) {
-        // This helps to avoid eating stuff like flour
-        weight /= ( -it.get_comestible_fun() ) + 1;
-    }
-
-    if( food->healthy < 0 ) {
-        weight /= ( -food->healthy ) + 1;
-    }
-
-    // Avoid wasting quench values unless it's about to rot away
-    if( relative_rot < 0.9f && quench > want_quench ) {
+    /* quench / nutrition fine-tuning */
+    if( relative_rot < 0.90 && quench > want_quench ) {
         weight -= ( 1.0f - relative_rot ) * ( quench - want_quench );
     }
-
     if( quench < 0 && want_quench > 0 && want_nutr < want_quench ) {
-        // Avoid stuff that makes us thirsty when we're more thirsty than hungry
-        weight = weight * want_nutr / want_quench;
+        weight *= static_cast<float>( want_nutr ) / std::max( 1, want_quench );
     }
 
+    /* thirst bonus – if we are thirsty we should value positive-quench drinks.  This
+       bonus is applied *after* all penalties so that sealed/non-sealed differences
+       still matter.  Each 5 points of useful quench (capped by how much we want)
+       adds roughly +1 to the final weight. */
+
+    if( quench > 0 && want_quench > 0 ) {
+        int effective_quench = std::min( quench, want_quench );
+        weight += static_cast<float>( effective_quench ) / 5.0f;
+    }
+
+    /* avoid overeating unless nearly rotten */
     if( nutr > want_nutr ) {
-        // TODO: Allow overeating in some cases
-        if( nutr >= 5 ) {
-            return 0.0f;
-        }
-
-        if( relative_rot < 0.9f ) {
-            weight /= nutr - want_nutr;
-        }
+        if( nutr >= 5 )          return 0.0f;          // large waste
+        if( relative_rot < 0.90 ) weight /= ( nutr - want_nutr );
     }
 
-    if( it.poison > 0 ) {
-        weight -= it.poison;
-    }
+    if( it.poison > 0 )          weight -= it.poison;
+
+    // Finally apply any seal/transform penalty so that it always takes effect
+    // after other adjustments (like thirst bonuses) have been calculated.
+    weight *= seal_penalty_factor;
 
     return weight;
 }
@@ -4293,7 +5061,7 @@ bool npc::consume_food()
     for( size_t i = 0; i < slice.size(); i++ ) {
         const item &it = *slice[i]->front();
         if( const item *food_item = it.get_food() ) {
-            float cur_weight = rate_food( *food_item, want_hunger, want_quench );
+            float cur_weight = rate_food( *this, *food_item, want_hunger, want_quench, false );
             // Note: will_eat is expensive, avoid calling it if possible
             if( cur_weight > best_weight && will_eat( *food_item ).success() ) {
                 best_weight = cur_weight;
@@ -4598,9 +5366,7 @@ void npc::set_omt_destination()
         return;
     }
 
-    DebugLog( DL::Info, DC::Main ) << "npc::set_omt_destination - new goal for NPC [" << get_name()
-                                   << "] with [" << get_need_str_id( needs.front() )
-                                   << "] is [" << dest_type << "] in " << goal.to_string() << ".";
+
 }
 
 void npc::go_to_omt_destination()
@@ -4754,7 +5520,8 @@ const Creature *npc::current_target() const
 
 Creature *npc::current_target()
 {
-    // TODO: As above.
+    // TODO: Arguably we should return a shared_ptr to ensure that the returned
+    // object stays alive while the caller uses it.  Not doing that for now.
     return ai_cache.target.lock().get();
 }
 
@@ -4767,7 +5534,8 @@ const Creature *npc::current_ally() const
 
 Creature *npc::current_ally()
 {
-    // TODO: As above.
+    // TODO: Arguably we should return a shared_ptr to ensure that the returned
+    // object stays alive while the caller uses it.  Not doing that for now.
     return ai_cache.ally.lock().get();
 }
 
@@ -5000,7 +5768,8 @@ void npc::do_reload( item &it )
     moves -= reload_time;
     recoil = MAX_RECOIL;
 
-    if( get_player_character().sees( *this ) ) {
+    // Don't spam when NPCs top up their power source; skip message for UPS tools.
+    if( get_player_character().sees( *this ) && !it.has_flag( flag_IS_UPS ) ) {
         add_msg( _( "%1$s reloads their %2$s." ), name, it.tname() );
         sfx::play_variant_sound( "reload", it.typeId().str(), sfx::get_heard_volume( pos() ),
                                  sfx::get_heard_angle( pos() ) );
@@ -5066,4 +5835,70 @@ bool npc::adjust_worn()
 void npc::set_movement_mode( character_movemode new_mode )
 {
     move_mode = new_mode;
+}
+
+
+bool npc::is_clear_shot_from( const tripoint &shooter_pos, const tripoint &target_pos,
+                              const item &weapon, bool throwing ) const
+{
+    // if we have no gun, or no ammo, then we can't shoot friend or foe
+    if( !throwing && ( !weapon.is_gun() || !weapon.ammo_sufficient() ) ) {
+        return true;
+    }
+    // If no friends, no friendly fire possible.
+    if( ai_cache.friends.empty() ) {
+        return true;
+    }
+
+    // Add line-of-sight check first: Can we even hit the target from shooter_pos?
+    if( !clear_shot_reach( shooter_pos, target_pos ) ) {
+        dbg(DL::Info) << string_format("%s is_clear_shot_from: No clear path from HYPOTHETICAL (%d,%d,%d) to target (%d,%d,%d). Returning FALSE.",
+                                      disp_name(), shooter_pos.x, shooter_pos.y, shooter_pos.z, target_pos.x, target_pos.y, target_pos.z );
+        return false;
+    }
+
+    units::angle target_angle_val = coord_to_angle( shooter_pos, target_pos );
+
+    units::angle base_safe_angle = 12_degrees;
+    // Log for the function entry and base safe angle, now that LoS to target is confirmed.
+    dbg(DL::Info) << string_format("%s is_clear_shot_from: Checking target at (%d,%d,%d) from HYPOTHETICAL (%d,%d,%d) with item %s. Path clear. Base safe_angle: %.1f deg",
+                                  disp_name(), target_pos.x, target_pos.y, target_pos.z, shooter_pos.x, shooter_pos.y, shooter_pos.z, weapon.tname(), units::to_degrees(base_safe_angle));
+
+    for( const auto &fr : ai_cache.friends ) {
+        const shared_ptr_fast<Creature> ally_p = fr.lock();
+        if( !ally_p ) {
+            continue;
+        }
+        const Creature &ally = *ally_p;
+        if( ally.is_dead_state() || ally.pos() == target_pos || ally.pos() == shooter_pos ) {
+            continue;
+        }
+
+        units::angle current_safe_angle_ally = base_safe_angle;
+        int ally_dist_val = rl_dist( shooter_pos, ally.pos() );
+        if( ally_dist_val < 3 ) {
+            current_safe_angle_ally += ( 3 - ally_dist_val ) * 12_degrees;
+        }
+
+        units::angle ally_angle_val = coord_to_angle( shooter_pos, ally.pos() );
+        units::angle angle_diff_val = units::fabs( ally_angle_val - target_angle_val );
+        angle_diff_val = std::min( 360_degrees - angle_diff_val, angle_diff_val );
+
+        bool would_hit_this_ally = angle_diff_val < current_safe_angle_ally &&
+                                   rl_dist( shooter_pos, ally.pos() ) <= rl_dist( shooter_pos, target_pos );
+
+        dbg(DL::Info) << string_format("%s is_clear_shot_from: Target (%d,%d). Ally %s at (%d,%d), dist %d. TargetAngle: %.1f, AllyAngle: %.1f, AngleDiff: %.1f. SafeAngleAlly: %.1f deg. Hit? %d",
+                                      disp_name(), target_pos.x, target_pos.y,
+                                      ally.disp_name(), ally.pos().x, ally.pos().y, ally_dist_val,
+                                      units::to_degrees(target_angle_val), units::to_degrees(ally_angle_val), units::to_degrees(angle_diff_val),
+                                      units::to_degrees(current_safe_angle_ally), static_cast<int>(would_hit_this_ally) );
+
+        if( would_hit_this_ally ) {
+            dbg(DL::Info) << string_format("%s is_clear_shot_from: Ally %s WOULD BE in the way of target (%d,%d) from shooter_pos (%d,%d). Returning FALSE.",
+                                          disp_name(), ally.disp_name(), target_pos.x, target_pos.y, shooter_pos.x, shooter_pos.y);
+            return false;
+        }
+    }
+
+    return true;
 }

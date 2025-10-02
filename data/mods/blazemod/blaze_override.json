@@ -1,0 +1,128 @@
+[
+  {
+    "id": "flamethrower",
+    "copy-from": "flamethrower",
+    "type": "vehicle_part",
+    "name": { "str": "manual flamethrower" },
+    "broken_symbol": "#"
+  },
+  {
+    "id": "auto_m1918",
+    "copy-from": "mounted_m1918",
+    "type": "vehicle_part",
+    "name": { "str": "BAR turret" },
+    "symbol": "t",
+    "broken_symbol": "#",
+    "color": "brown",
+    "size": "10 L"
+  },
+  {
+    "id": "am249",
+    "copy-from": "m249",
+    "type": "vehicle_part",
+    "name": { "str": "M249 turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "aplasma_gun",
+    "copy-from": "plasma_gun",
+    "type": "vehicle_part",
+    "name": { "str": "plasma turret" },
+    "broken_symbol": "#"
+  },
+  {
+    "id": "afusion_gun",
+    "copy-from": "fusion_gun",
+    "type": "vehicle_part",
+    "name": { "str": "fusion turret" },
+    "broken_symbol": "#",
+    "size": "2500 ml"
+  },
+  {
+    "id": "am2browning",
+    "copy-from": "mounted_browning",
+    "type": "vehicle_part",
+    "name": { "str": "M2 Browning turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_m240",
+    "copy-from": "mounted_m240",
+    "type": "vehicle_part",
+    "name": { "str": "M240 turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_m60",
+    "copy-from": "mounted_m60",
+    "type": "vehicle_part",
+    "name": { "str": "M60 turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_abzats",
+    "copy-from": "mounted_bigun",
+    "type": "vehicle_part",
+    "name": { "str": "auto-shotgun turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_m134",
+    "copy-from": "mounted_m134",
+    "type": "vehicle_part",
+    "name": { "str": "M134D-H Minigun turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_mk19",
+    "copy-from": "mounted_mk19",
+    "type": "vehicle_part",
+    "name": { "str": "Mark 19 turret" },
+    "broken_symbol": "#",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_rm614",
+    "copy-from": "mounted_rm614",
+    "type": "vehicle_part",
+    "name": { "str": "RM614 turret" },
+    "broken_symbol": "#",
+    "broken_color": "light_gray",
+    "size": "10 L"
+  },
+  {
+    "id": "auto_rm298",
+    "copy-from": "mounted_rm298",
+    "type": "vehicle_part",
+    "name": { "str": "RM298 turret" },
+    "broken_symbol": "#",
+    "broken_color": "light_gray",
+    "size": "10 L"
+  },
+  {
+    "id": "awatercannon",
+    "copy-from": "watercannon",
+    "type": "vehicle_part",
+    "name": { "str": "water cannon turret" },
+    "broken_symbol": "#"
+  },
+  {
+    "id": "pool_ball",
+    "copy-from": "pool_ball",
+    "type": "AMMO",
+    "name": { "str": "pool ball" },
+    "count": 1,
+    "ammo_type": "h_projectile",
+    "range": 6,
+    "damage": { "damage_type": "bash", "amount": 23 },
+    "dispersion": 30,
+    "effects": [ "BEANBAG" ],
+    "dont_recover_one_in": 10
+  }
+]
